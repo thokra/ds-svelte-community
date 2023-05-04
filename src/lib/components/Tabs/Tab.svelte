@@ -1,0 +1,73 @@
+<script lang="ts">
+	import { getContext, onMount } from "svelte";
+	import { Focus, classes, focusable } from "../helpers";
+	import BodyShort from "../typography/BodyShort.svelte";
+	import { contextKey, type TabContext } from "./Tabs.svelte";
+
+	export let value: string;
+
+	const ctx = getContext<TabContext>(contextKey);
+	const currentValue = ctx.value;
+	const activeTab = ctx.activeTab;
+	let self: HTMLElement;
+
+	onMount(() => {
+		ctx.register(self, value);
+	});
+
+	const handleKeydown = (e: KeyboardEvent) => {
+		let base = 0;
+		if (ctx.loop) {
+			base |= Focus.Wrap;
+		}
+		if (e.key === "ArrowLeft") {
+			e.preventDefault();
+			focusable(ctx.tabs, base | Focus.Previous);
+		} else if (e.key === "ArrowRight") {
+			e.preventDefault();
+			focusable(ctx.tabs, base | Focus.Next);
+		} else if (e.key === "Home") {
+			// PageUp not defined by
+			e.preventDefault();
+			focusable(ctx.tabs, base | Focus.First);
+		} else if (e.key === "End") {
+			e.preventDefault();
+			focusable(ctx.tabs, base | Focus.Last);
+		}
+	};
+
+	const handleFocus = () => {
+		ctx.focusOn(self);
+		if (ctx.selectionFollowsFocus) {
+			ctx.activate(value);
+		}
+	};
+
+	const handleBlur = () => {
+		ctx.blur(self);
+	};
+</script>
+
+<button
+	bind:this={self}
+	class={classes(
+		$$restProps,
+		"navds-tabs__tab",
+		`navds-tabs__tab--${ctx.size}`,
+		`navds-tabs__tab-icon--${ctx.iconPosition}`,
+	)}
+	class:navds-tabs__tab--icon-only={$$slots.icon && !$$slots.default}
+	type="button"
+	role="tab"
+	aria-selected={$currentValue == value}
+	tabindex={$activeTab == self ? 0 : -1}
+	on:click={() => ctx.activate(value)}
+	on:keydown={handleKeydown}
+	on:focus={handleFocus}
+	on:blur={handleBlur}
+>
+	<BodyShort as="span" class="navds-tabs__tab-inner" size={ctx.size}>
+		<slot name="icon" />
+		<slot />
+	</BodyShort>
+</button>
