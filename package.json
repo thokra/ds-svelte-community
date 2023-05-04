@@ -1,6 +1,7 @@
 {
 	"name": "ds-svelte",
 	"version": "0.0.1",
+	"homepage": "https://nais.github.io/ds-svelte",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
