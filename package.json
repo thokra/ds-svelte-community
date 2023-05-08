@@ -1,7 +1,9 @@
 {
-	"name": "ds-svelte",
-	"version": "0.0.1",
+	"name": "@nais/ds-svelte",
+	"version": "0.0.3",
 	"homepage": "https://nais.github.io/ds-svelte",
+	"repository": "https://github.com/nais/ds-svelte.git",
+	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -33,9 +35,7 @@
 	},
 	"devDependencies": {
 		"@navikt/aksel-icons": "^2.9.6",
-		"@navikt/ds-css": "^2.9.6",
 		"@navikt/ds-tailwind": "^2.9.6",
-		"@navikt/ds-tokens": "^2.9.6",
 		"@storybook/addon-a11y": "^7.0.8",
 		"@storybook/addon-essentials": "^7.0.8",
 		"@storybook/addon-interactions": "^7.0.8",
@@ -56,7 +56,6 @@
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-storybook": "^0.6.12",
 		"eslint-plugin-svelte3": "^4.0.0",
-		"gh-pages": "^5.0.0",
 		"normalize.css": "^8.0.1",
 		"postcss": "^8.4.23",
 		"prettier": "^2.8.8",
@@ -76,6 +75,8 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"locally-unique-id-generator": "^0.1.5"
+		"locally-unique-id-generator": "^0.1.5",
+		"@navikt/ds-css": "^2.9.6",
+		"@navikt/ds-tokens": "^2.9.6"
 	}
 }
