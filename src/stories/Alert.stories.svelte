@@ -20,6 +20,14 @@
 		},
 	}}
 	args={{ variant: "info" }}
+	parameters={{
+		componentSubtitle: "**asdf**",
+		docs: {
+			description: {
+				component: "Alerts **are** used to notify users of important information.",
+			},
+		},
+	}}
 />
 
 <Template let:args>

@@ -1,5 +1,6 @@
 import "@navikt/ds-css/index.css";
 import "@navikt/ds-tokens/dist/tokens.css";
+import "./custom.css";
 import type { Preview } from "@storybook/svelte";
 
 const preview: Preview = {

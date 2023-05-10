@@ -1,14 +1,31 @@
-<script>
+<script lang="ts">
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	import { Accordion, AccordionItem } from "$lib/components/Accordion";
 	import Link from "$lib/components/Link.svelte";
 </script>
 
-<Meta title="ds-svelte/Accordion" component={Accordion} subcomponents={AccordionItem} />
+<Meta
+	title="ds-svelte/Accordion"
+	component={Accordion}
+	argTypes={{
+		variant: {
+			control: "select",
+			options: ["default", "neutral"],
+		},
+		size: {
+			control: "select",
+			options: ["large", "medium", "small"],
+		},
+		headingSize: {
+			control: "select",
+			options: ["large", "medium", "small", "xsmall"],
+		},
+	}}
+/>
 
-<Template>
-	<Accordion>
+<Template let:args>
+	<Accordion {...args}>
 		<AccordionItem>
 			<span slot="heading">Accordion header text</span>
 			Magna aliquip aliquip fugiat nostrud nostrud velit pariatur veniam officia laboris voluptate officia
