@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import { Accordion, AccordionItem } from "$lib/components/Accordion";
+	import { Accordion, AccordionItem } from "$lib";
 	import Link from "$lib/components/Link.svelte";
+
+	import source from "./examples/Accordion.svelte?raw";
 </script>
 
 <Meta
@@ -27,7 +29,7 @@
 <Template let:args>
 	<Accordion {...args}>
 		<AccordionItem>
-			<span slot="heading">Accordion header text</span>
+			<svelte:fragment slot="heading">Accordion header text</svelte:fragment>
 			Magna aliquip aliquip fugiat nostrud nostrud velit pariatur veniam officia laboris voluptate officia
 			pariatur. <Link href="#Lorem">Lorem est</Link> ex anim velit occaecat nisi qui nostrud sit consectetur
 			consectetur officia nostrud ullamco. Est ex duis proident nostrud elit qui laborum anim minim eu
@@ -40,8 +42,14 @@
 			adipisicing eiusmod id.
 		</AccordionItem>
 
+		<AccordionItem open={true}>
+			<svelte:fragment slot="heading">Default open</svelte:fragment>
+			Exercitation quis commodo cillum eiusmod eiusmod. Do laborum qui proident commodo adipisicing eiusmod
+			id.
+		</AccordionItem>
+
 		<AccordionItem>
-			<span slot="heading">Accordion header text</span>
+			<svelte:fragment slot="heading">Accordion header text</svelte:fragment>
 			Magna aliquip aliquip fugiat nostrud nostrud velit pariatur veniam officia laboris voluptate officia
 			pariatur. <Link href="#Lorem">Lorem est</Link> ex anim velit occaecat nisi qui nostrud sit consectetur
 			consectetur officia nostrud ullamco. Est ex duis proident nostrud elit qui laborum anim minim eu
@@ -56,4 +64,4 @@
 	</Accordion>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />

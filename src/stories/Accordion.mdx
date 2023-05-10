@@ -1,8 +1,8 @@
-import { ArgTypes, Primary, Stories, Canvas, Meta, Controls } from "@storybook/addon-docs";
+import { ArgTypes, Story, Canvas, Meta, Controls } from "@storybook/addon-docs";
 
 import Accordion from "./Accordion.stories.svelte";
 
-import AccordionItem from "../lib/components/Accordion/AccordionItem.svelte";
+import { AccordionItem } from "$lib";
 
 <Meta of={Accordion} />
 
@@ -13,13 +13,15 @@ the content below.
 
 Read more about when to use it in [Aksel - Accordion](https://aksel.nav.no/komponenter/core/accordion)
 
-<Primary />
+<Canvas>
+	<Story id="ds-svelte-accordion--default" />
+</Canvas>
 
 ## Properties
 
 ### Accordion
 
-<ArgTypes displayName="Asdf" />
+<ArgTypes />
 
 ### AccordionItem
 
