@@ -34,6 +34,18 @@
 			options: ["button", "a"],
 		},
 	}}
+	parameters={{
+		docs: {
+			description: {
+				component: `
+Button lets the user perform an action.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/button).
+
+`,
+			},
+		},
+	}}
 />
 
 <Template let:args>

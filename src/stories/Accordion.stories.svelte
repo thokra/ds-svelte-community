@@ -28,38 +28,35 @@
 
 <Template let:args>
 	<Accordion {...args}>
-		<AccordionItem>
-			<svelte:fragment slot="heading">Accordion header text</svelte:fragment>
-			Magna aliquip aliquip fugiat nostrud nostrud velit pariatur veniam officia laboris voluptate officia
-			pariatur. <Link href="#Lorem">Lorem est</Link> ex anim velit occaecat nisi qui nostrud sit consectetur
-			consectetur officia nostrud ullamco. Est ex duis proident nostrud elit qui laborum anim minim eu
-			eiusmod. Veniam in nostrud sunt tempor velit incididunt sint ex dolor qui velit id eu. Deserunt
-			magna sunt velit in. Est exercitation id cillum qui do. Minim adipisicing nostrud commodo proident
-			occaecat aliquip nulla anim proident reprehenderit. Magna ipsum officia veniam cupidatat duis veniam
-			dolore reprehenderit mollit velit. Ut consequat commodo minim occaecat id pariatur. Nisi enim tempor
-			laborum commodo. Tempor sit quis nostrud eu cupidatat sunt commodo reprehenderit irure deserunt
-			eiusmod ipsum. Exercitation quis commodo cillum eiusmod eiusmod. Do laborum qui proident commodo
-			adipisicing eiusmod id.
+		<AccordionItem heading="Accordion header text">
+			Magna aliquip aliquip fugiat nostrud nostrud velit pariatur veniam officia laboris voluptate
+			officia pariatur. <Link href="#Lorem">Lorem est</Link> ex anim velit occaecat nisi qui nostrud
+			sit consectetur consectetur officia nostrud ullamco. Est ex duis proident nostrud elit qui laborum
+			anim minim eu eiusmod. Veniam in nostrud sunt tempor velit incididunt sint ex dolor qui velit id
+			eu. Deserunt magna sunt velit in. Est exercitation id cillum qui do. Minim adipisicing nostrud
+			commodo proident occaecat aliquip nulla anim proident reprehenderit. Magna ipsum officia veniam
+			cupidatat duis veniam dolore reprehenderit mollit velit. Ut consequat commodo minim occaecat id
+			pariatur. Nisi enim tempor laborum commodo. Tempor sit quis nostrud eu cupidatat sunt commodo reprehenderit
+			irure deserunt eiusmod ipsum. Exercitation quis commodo cillum eiusmod eiusmod. Do laborum qui
+			proident commodo adipisicing eiusmod id.
 		</AccordionItem>
 
-		<AccordionItem open={true}>
-			<svelte:fragment slot="heading">Default open</svelte:fragment>
-			Exercitation quis commodo cillum eiusmod eiusmod. Do laborum qui proident commodo adipisicing eiusmod
-			id.
+		<AccordionItem open={true} heading="Default open">
+			Exercitation quis commodo cillum eiusmod eiusmod. Do laborum qui proident commodo adipisicing
+			eiusmod id.
 		</AccordionItem>
 
-		<AccordionItem>
-			<svelte:fragment slot="heading">Accordion header text</svelte:fragment>
-			Magna aliquip aliquip fugiat nostrud nostrud velit pariatur veniam officia laboris voluptate officia
-			pariatur. <Link href="#Lorem">Lorem est</Link> ex anim velit occaecat nisi qui nostrud sit consectetur
-			consectetur officia nostrud ullamco. Est ex duis proident nostrud elit qui laborum anim minim eu
-			eiusmod. Veniam in nostrud sunt tempor velit incididunt sint ex dolor qui velit id eu. Deserunt
-			magna sunt velit in. Est exercitation id cillum qui do. Minim adipisicing nostrud commodo proident
-			occaecat aliquip nulla anim proident reprehenderit. Magna ipsum officia veniam cupidatat duis veniam
-			dolore reprehenderit mollit velit. Ut consequat commodo minim occaecat id pariatur. Nisi enim tempor
-			laborum commodo. Tempor sit quis nostrud eu cupidatat sunt commodo reprehenderit irure deserunt
-			eiusmod ipsum. Exercitation quis commodo cillum eiusmod eiusmod. Do laborum qui proident commodo
-			adipisicing eiusmod id.
+		<AccordionItem heading="Accordion header text">
+			Magna aliquip aliquip fugiat nostrud nostrud velit pariatur veniam officia laboris voluptate
+			officia pariatur. <Link href="#Lorem">Lorem est</Link> ex anim velit occaecat nisi qui nostrud
+			sit consectetur consectetur officia nostrud ullamco. Est ex duis proident nostrud elit qui laborum
+			anim minim eu eiusmod. Veniam in nostrud sunt tempor velit incididunt sint ex dolor qui velit id
+			eu. Deserunt magna sunt velit in. Est exercitation id cillum qui do. Minim adipisicing nostrud
+			commodo proident occaecat aliquip nulla anim proident reprehenderit. Magna ipsum officia veniam
+			cupidatat duis veniam dolore reprehenderit mollit velit. Ut consequat commodo minim occaecat id
+			pariatur. Nisi enim tempor laborum commodo. Tempor sit quis nostrud eu cupidatat sunt commodo reprehenderit
+			irure deserunt eiusmod ipsum. Exercitation quis commodo cillum eiusmod eiusmod. Do laborum qui
+			proident commodo adipisicing eiusmod id.
 		</AccordionItem>
 	</Accordion>
 </Template>

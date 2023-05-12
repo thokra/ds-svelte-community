@@ -21,10 +21,12 @@
 	}}
 	args={{ variant: "info" }}
 	parameters={{
-		componentSubtitle: "**asdf**",
 		docs: {
 			description: {
-				component: "Alerts **are** used to notify users of important information.",
+				component: `
+Alert is a notification component that creates focus around a response message without necessarily interrupting the user's task flow.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/alert).`,
 			},
 		},
 	}}

@@ -7,6 +7,7 @@
 	import { GetAccordionContext } from "./Accordion.svelte";
 
 	export let open = false;
+	export let heading: string = "";
 
 	const ctx = GetAccordionContext();
 
@@ -14,8 +15,10 @@
 		open = !open;
 	};
 
-	if (!$$slots.heading) {
-		console.error("<AccordionItem> was used without content in the 'heading' slot");
+	if (!$$slots.heading && !heading) {
+		console.error(
+			"<AccordionItem> was used without content in the 'heading' slot or `heading` prop",
+		);
 	}
 
 	if (!ctx) {
@@ -38,7 +41,7 @@
 			/>
 		</div>
 		<Heading size={$ctx?.headingSize} as="span" class="navds-accordion__header-content">
-			<slot name="heading" />
+			<slot name="heading">{heading}</slot>
 		</Heading>
 	</button>
 

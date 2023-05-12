@@ -52,6 +52,9 @@
 	 */
 	export let id = "cb-" + newUniqueId();
 
+	/**
+	 * Controlled state for checkboxes.
+	 */
 	export let checked = false;
 
 	type Events = {
@@ -61,14 +64,14 @@
 	};
 	const dispatch = createEventDispatcher<Events>();
 	const ctx = GetCheckboxGroupContext();
-	const values = ctx?.groupControlled ? ctx.values : null;
+	const values = ctx && ctx.groupControlled ? ctx.values : null;
 
-	$: checked = values ? $values?.includes(value) || false : checked;
+	$: checked = values && $values ? $values.includes(value) || false : checked;
 
-	const hasErrorStore = ctx?.hasError;
-	$: hasError = $hasErrorStore || error;
+	const hasErrorStore = ctx ? ctx.hasError : null;
+	$: hasError = hasErrorStore ? $hasErrorStore : error;
 
-	size = size ? size : ctx?.size || "medium";
+	size = size ? size : ctx ? ctx.size : "medium";
 </script>
 
 <div
@@ -86,9 +89,12 @@
 		bind:checked
 		{value}
 		on:change={(e) => {
-			if (ctx?.groupControlled) {
+			if (ctx && ctx.groupControlled) {
 				ctx.change(value);
 			}
+			/**
+			 * Trigger when the checkbox changes. Will pass the event object as argument.
+			 */
 			dispatch("change", e);
 		}}
 		on:click
@@ -96,6 +102,9 @@
 	<label for={id} class="navds-checkbox__label">
 		<span class="navds-checkbox__content" class:navds-sr-only={hideLabel}>
 			<BodyShort as="span" {size}>
+				<!--
+					Label content
+				-->
 				<slot />
 			</BodyShort>
 			{#if description}
