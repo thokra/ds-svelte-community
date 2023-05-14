@@ -1,6 +1,5 @@
 <script>
 	import ConfirmationPanel from "$lib/components/ConfirmationPanel.svelte";
-	import Link from "$lib/components/Link.svelte";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 </script>
 
@@ -10,8 +9,8 @@
 	<ConfirmationPanel {...args}>
 		<svelte:fragment slot="label">Checkbox label text</svelte:fragment>
 
-		Ipsum voluptate pariatur <Link href="#test">testlink</Link> anim officia minim ut mollit voluptate
-		exercitation nulla mollit.
+		Ipsum voluptate pariatur <a href="#test">test link</a> anim officia minim ut mollit voluptate exercitation
+		nulla mollit.
 	</ConfirmationPanel>
 </Template>
 

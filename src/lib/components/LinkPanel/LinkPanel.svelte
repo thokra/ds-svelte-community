@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { HTMLAnchorAttributes, SvelteHTMLElements } from "svelte/elements";
-	import { classes, omit } from "../helpers";
-	import Panel from "../Panel.svelte";
 	import ChevronRight from "$lib/icons/ChevronRight.svelte";
+	import type { HTMLAnchorAttributes, SvelteHTMLElements } from "svelte/elements";
+	import Panel from "../Panel.svelte";
+	import { classes, omit } from "../helpers";
 
 	export let border = true;
 	export let as: keyof SvelteHTMLElements = "a";
@@ -20,7 +20,7 @@
 	{as}
 	{border}
 	{href}
-	class={classes($$restProps, "navds-link-panel")}
+	class={classes($$restProps, "unstyled", "navds-link-panel")}
 >
 	<div class="navds-link-panel__content">
 		<slot />
