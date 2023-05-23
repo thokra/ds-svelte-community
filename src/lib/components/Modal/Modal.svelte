@@ -1,7 +1,6 @@
 <script lang="ts">
 	import "@navikt/ds-css/modal.css";
 
-	import { browser } from "$app/environment";
 	import type { HTMLDialogAttributes } from "svelte/elements";
 	import { classes, omit } from "../helpers";
 	import Button from "../Button.svelte";
@@ -17,12 +16,10 @@
 	$: if (dialog && !open) dialog.close();
 
 	$: {
-		if (browser) {
-			if (dialog && open) {
-				window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
-			} else {
-				window.document.getElementsByTagName("body")[0].style.overflow = "auto";
-			}
+		if (dialog && open) {
+			window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
+		} else {
+			window.document.getElementsByTagName("body")[0].style.overflow = "auto";
 		}
 	}
 

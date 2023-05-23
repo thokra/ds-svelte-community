@@ -106,6 +106,16 @@
 				class="navds-search__input navds-search__input--{variant} navds-text-field__input navds-body-short navds-body-{size}"
 				on:keypress={handleInputKeypress}
 				on:change
+				on:input
+				on:blur
+				on:mousedown
+				on:mouseup
+				on:keydown
+				on:keyup
+				on:keypress
+				on:focus
+				on:focusin
+				on:focusout
 			/>
 			{#if value && clearButton}
 				<button type="button" class="navds-search__button-clear" on:click={handleClearClick}>
