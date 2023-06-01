@@ -3,6 +3,7 @@
 
 	import Pagination from "$lib/components/Pagination/Pagination.svelte";
 	import { sizes } from "$lib/components/Pagination/type";
+	import source from "./examples/Pagination.svelte?raw";
 
 	let page = 1;
 
@@ -57,7 +58,7 @@ Current page. If set will require implementation of \`on:change\` event.
 	<Pagination {...args} page={args.page ?? page} on:change={pageChange} />
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Small" args={{ size: "small" }} />
 

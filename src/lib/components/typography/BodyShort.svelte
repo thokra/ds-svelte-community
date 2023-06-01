@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { SvelteHTMLElements } from "svelte/elements";
 	import { classes } from "../helpers";
 
 	/**
@@ -15,7 +16,7 @@
 	/**
 	 * Tag to use for the body
 	 */
-	export let as = "p";
+	export let as: keyof SvelteHTMLElements = "p";
 </script>
 
 <svelte:element

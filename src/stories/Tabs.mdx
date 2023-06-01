@@ -1,0 +1,35 @@
+import { ArgTypes, Primary, Meta, Controls, Stories } from "@storybook/addon-docs";
+
+import Tabs from "./Tabs.stories.svelte";
+
+import { Tab, TabList, TabPanel } from "$lib";
+
+<Meta of={Tabs} />
+
+# Tabs
+
+Tabs are used to switch between panels on a page. This helps users navigate between related content without changing context. The component consists of a row of tab buttons. A tab button is always selected, because a panel is always displayed.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/tabs).
+
+_Note: This component does not yet follow all best practices regarding accessibility._
+
+<Primary />
+
+## Properties
+
+### Tabs
+
+<Controls />
+
+### TabList
+
+<ArgTypes of={TabList} />
+
+### Tab
+
+<ArgTypes of={Tab} />
+
+### TabPanel
+
+<ArgTypes of={TabPanel} />

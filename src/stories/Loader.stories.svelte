@@ -3,6 +3,7 @@
 
 	import Loader from "$lib/components/Loader/Loader.svelte";
 	import { sizes, variants } from "$lib/components/Loader/type";
+	import source from "./examples/Loader.svelte?raw";
 </script>
 
 <Meta
@@ -32,4 +33,4 @@
 	<Loader {...args} />
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />

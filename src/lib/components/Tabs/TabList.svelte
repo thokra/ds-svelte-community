@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { ChevronLeft as Left, ChevronRight as Right } from "$lib/icons";
 	import { onMount } from "svelte";
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
+	import type { TabListProps } from "./type";
+
+	type $$Props = TabListProps;
 
 	let width: number | undefined;
 	let tabList: HTMLElement;
@@ -59,6 +62,7 @@
 		on:scroll={() => {
 			updateSteppers();
 		}}
+		{...omit($$restProps, "class", "role", "aria-orientation")}
 		class={classes($$restProps, "navds-tabs__tablist")}
 		role="tablist"
 		aria-orientation="horizontal"

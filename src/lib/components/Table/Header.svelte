@@ -1,7 +1,10 @@
 <script lang="ts">
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
+	import type { HeaderProps } from "./type";
+	type $$Props = HeaderProps;
 </script>
 
-<thead {...$$restProps} class={classes($$restProps, "navds-table__header")}>
+<thead {...omit($$restProps, "class")} class={classes($$restProps, "navds-table__header")}>
+	<!-- Content -->
 	<slot />
 </thead>

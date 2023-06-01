@@ -1,52 +1,38 @@
-<script lang="ts" context="module">
-	import { writable, type Readable } from "svelte/store";
-
-	export type TabContext = {
-		value: Readable<string>;
-		loop: boolean;
-		iconPosition: "left" | "top";
-		size: "medium" | "small";
-		selectionFollowsFocus: boolean;
-		tabs: HTMLElement[];
-		activeTab: Readable<HTMLElement>;
-		activate: (value: string) => void;
-		register: (el: HTMLElement, value: string) => void;
-		focusOn: (el: HTMLElement) => void;
-		blur: (el: HTMLElement) => void;
-	};
-
-	export const contextKey = "tab";
-</script>
-
 <script lang="ts">
 	import { setContext } from "svelte";
-	import { classes } from "../helpers";
+	import { writable } from "svelte/store";
+	import { classes, omit } from "../helpers";
+	import {
+		contextKey,
+		type TabContext,
+		type TabsProps,
+		type iconPositions,
+		type sizes,
+	} from "./type";
 
+	type $$Props = TabsProps;
 	/**
-	 * Changes padding and font-size
+	 * Changes padding and font-size.
 	 */
-	export let size: TabContext["size"] = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 
 	/**
-	 * Controlled selected value
+	 * Controlled selected value.
 	 */
 	export let value: string;
 
 	/**
-	 * Automatically activates tab on focus/navigation
-	 * @default false
+	 * Automatically activates tab on focus/navigation.
 	 */
 	export let selectionFollowsFocus = false;
 	/**
-	 * Loops back to start when navigating past last item
-	 * @default false
+	 * Loops back to start when navigating past last item.
 	 */
 	export let loop = false;
 	/**
-	 * Icon position in Tab
-	 * @default "left"
+	 * Icon position in Tab.
 	 */
-	export let iconPosition: TabContext["iconPosition"] = "left";
+	export let iconPosition: (typeof iconPositions)[number] = "left";
 
 	const activeValue = writable<string>(value);
 	$: activeValue.set(value);
@@ -87,6 +73,10 @@
 	});
 </script>
 
-<div dir="ltr" class={classes($$restProps, "navds-tabs", `navds-tabs--${size}`)} {...$$restProps}>
+<div
+	{...omit($$restProps, "class", "dir")}
+	dir="ltr"
+	class={classes($$restProps, "navds-tabs", `navds-tabs--${size}`)}
+>
 	<slot />
 </div>

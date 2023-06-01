@@ -2,16 +2,46 @@
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	import { ToggleGroup, ToggleGroupItem } from "$lib/components/ToggleGroup";
+	import { sizes, variants } from "$lib/components/ToggleGroup/type";
 	import {
 		EnvelopeClosed as Email,
 		EnvelopeOpen as EmailOpened,
 		Paperplane as Send,
 	} from "$lib/icons";
+	import source from "./examples/ToggleGroup.svelte?raw";
 
 	let value = "unread";
 </script>
 
-<Meta title="components/ToggleGroup" component={ToggleGroup} />
+<Meta
+	title="components/ToggleGroup"
+	component={ToggleGroup}
+	argTypes={{
+		size: {
+			control: "select",
+			options: sizes,
+			table: { type: { summary: sizes.join(" | ") } },
+			description: "Changes padding and font-size.",
+		},
+		value: {
+			control: "text",
+			type: { name: "string", required: true },
+			table: { type: { summary: "string" } },
+			description: "Controlled selected value.",
+		},
+		label: {
+			control: "text",
+			table: { type: { summary: "string" } },
+			description: "Label describing ToggleGroup.",
+		},
+		variant: {
+			control: "select",
+			options: variants,
+			table: { type: { summary: variants.join(" | ") } },
+			description: "Changes design and interaction-visuals.",
+		},
+	}}
+/>
 
 <Template let:args>
 	<div class="colgap">
@@ -35,7 +65,7 @@
 	</div>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Neutral" args={{ variant: "neutral" }} />
 <Story name="Small" args={{ size: "small" }} />

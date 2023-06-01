@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Body, DataCell, Header, HeaderCell, Row, Table } from "$lib/components/Table";
-	import type { SortState } from "$lib/components/Table/Table.svelte";
+	import { Table, Tbody, Td, Th, Thead, Tr, type SortState } from "$lib";
+	import { tableSizes } from "$lib/components/Table/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+	import source from "./examples/Table.svelte?raw";
 
 	const data = [
 		{
@@ -52,29 +53,50 @@
 	let orderedData = orderData();
 </script>
 
-<Meta title="components/Table" component={Table} />
+<Meta
+	title="components/Table"
+	component={Table}
+	argTypes={{
+		size: {
+			control: "select",
+			options: tableSizes,
+			description: "Changes padding.",
+		},
+		zebraStripes: {
+			control: "boolean",
+			description: "Zebra striped table.",
+		},
+		sort: {
+			control: "none",
+			description: "Sort state.",
+			table: {
+				type: { summary: "SortState" },
+			},
+		},
+	}}
+/>
 
 <Template let:args>
 	<Table {...args}>
-		<Header>
+		<Thead>
 			{#each Object.keys(data[0]) as key}
-				<HeaderCell scope="col">{key[0].toUpperCase() + key.slice(1)}</HeaderCell>
+				<Th scope="col">{key[0].toUpperCase() + key.slice(1)}</Th>
 			{/each}
-		</Header>
+		</Thead>
 
-		<Body>
+		<Tbody>
 			{#each data as row}
-				<Row>
-					<HeaderCell scope="row">{row.name}</HeaderCell>
-					<DataCell>{row.phone}</DataCell>
-					<DataCell>{row.expiry}</DataCell>
-				</Row>
+				<Tr>
+					<Th scope="row">{row.name}</Th>
+					<Td>{row.phone}</Td>
+					<Td>{row.expiry}</Td>
+				</Tr>
 			{/each}
-		</Body>
+		</Tbody>
 	</Table>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Small" args={{ size: "small" }} />
 
@@ -105,22 +127,22 @@
 			orderedData = orderData();
 		}}
 	>
-		<Header>
+		<Thead>
 			{#each Object.keys(data[0]) as key}
-				<HeaderCell scope="col" sortable={true} sortKey={key}>
+				<Th scope="col" sortable={true} sortKey={key}>
 					{key[0].toUpperCase() + key.slice(1)}
-				</HeaderCell>
+				</Th>
 			{/each}
-		</Header>
+		</Thead>
 
-		<Body>
+		<Tbody>
 			{#each orderedData as row}
-				<Row>
-					<HeaderCell scope="row">{row.name}</HeaderCell>
-					<DataCell>{row.phone}</DataCell>
-					<DataCell>{row.expiry}</DataCell>
-				</Row>
+				<Tr>
+					<Th scope="row">{row.name}</Th>
+					<Td>{row.phone}</Td>
+					<Td>{row.expiry}</Td>
+				</Tr>
 			{/each}
-		</Body>
+		</Tbody>
 	</Table>
 </Story>

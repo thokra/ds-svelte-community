@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { getContext } from "svelte";
-	import { classes } from "../helpers";
-	import Label from "../typography/Label.svelte";
-	import type { ToggleGroupContext } from "./ToggleGroup.svelte";
+	import { Label } from "$lib";
+	import { classes, omit } from "../helpers";
+	import { getToggleGroupContext, type ToggleGroupItemProps } from "./type";
 
+	type $$Props = ToggleGroupItemProps;
+
+	/**
+	 * Value of this tab.
+	 */
 	export let value: string;
 
-	const ctx = getContext<ToggleGroupContext>("toggleGroup");
+	const ctx = getToggleGroupContext();
 	let active = ctx.value;
 
 	$: state = $active === value ? "on" : "off";
@@ -20,35 +24,38 @@
 	// This feels hacky
 	function keydown(e: KeyboardEvent) {
 		const btn = e.target as HTMLElement;
+		if (!btn) return;
 
 		if (e.key == "ArrowLeft" || e.key == "ArrowUp") {
-			if (!btn?.previousElementSibling) {
-				if (btn.parentElement?.lastElementChild) {
-					(btn.parentElement?.lastElementChild as HTMLElement)?.focus();
+			if (!btn.previousElementSibling) {
+				if (btn.parentElement && btn.parentElement.lastElementChild) {
+					(btn.parentElement.lastElementChild as HTMLElement).focus();
 				}
 				return;
 			}
 
 			const pes = btn.previousElementSibling as HTMLElement;
-			pes?.focus();
+			if (!pes) return;
+			pes.focus();
 		}
 
 		if (e.key == "ArrowRight" || e.key == "ArrowDown") {
-			if (!btn?.nextElementSibling) {
-				if (btn.parentElement?.firstElementChild) {
-					(btn.parentElement?.firstElementChild as HTMLElement)?.focus();
+			if (!btn.nextElementSibling) {
+				if (btn.parentElement && btn.parentElement.firstElementChild) {
+					(btn.parentElement.firstElementChild as HTMLElement).focus();
 				}
 				return;
 			}
 
 			const nes = btn.nextElementSibling as HTMLElement;
-			nes?.focus();
+			if (!nes) return;
+			nes.focus();
 		}
 	}
 </script>
 
 <button
-	{...$$restProps}
+	{...omit($$restProps, "class", "data-state", "role", "aria-checked", "tabindex")}
 	class={classes($$restProps, "navds-toggle-group__button")}
 	data-state={state}
 	role="radio"

@@ -1,38 +1,36 @@
-<script lang="ts" context="module">
-	import type { Readable } from "svelte/store";
-
-	export type ToggleGroupContext = {
-		value: Readable<string>;
-		size: "medium" | "small";
-	};
-</script>
-
 <script lang="ts">
+	import { Label } from "$lib";
 	import { createEventDispatcher, onDestroy, setContext } from "svelte";
 	import { writable } from "svelte/store";
-	import { classes } from "../helpers";
-	import Label from "../typography/Label.svelte";
+	import { classes, omit } from "../helpers";
+	import {
+		contextKey,
+		type ToggleGroupContext,
+		type ToggleGroupProps,
+		type sizes,
+		type variants,
+	} from "./type";
+
+	type $$Props = ToggleGroupProps;
 
 	/**
-	 * Changes padding and font-size
-	 * @default "medium"
+	 * Changes padding and font-size.
 	 */
-	export let size: "medium" | "small" = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 	/**
-	 * Controlled selected value
+	 * Controlled selected value.
 	 */
 	export let value: string;
 
 	/**
-	 * Label describing ToggleGroup
+	 * Label describing ToggleGroup.
 	 */
 	export let label = "";
 
 	/**
-	 * Changes design and interaction-visuals
-	 * @default "action"
+	 * Changes design and interaction-visuals.
 	 */
-	export let variant: "action" | "neutral" = "action";
+	export let variant: (typeof variants)[number] = "action";
 
 	const currentValue = writable<string>(value);
 
@@ -47,7 +45,7 @@
 		}
 	}
 
-	setContext<ToggleGroupContext>("toggleGroup", {
+	setContext<ToggleGroupContext>(contextKey, {
 		value: currentValue,
 		size,
 	});
@@ -59,7 +57,7 @@
 	onDestroy(unsubscribe);
 </script>
 
-<div class={classes($$restProps, "navds-toggle-group__wrapper")}>
+<div {...omit($$restProps, "class")} class={classes($$restProps, "navds-toggle-group__wrapper")}>
 	{#if label}
 		<Label {size} class="navds-toggle-group__label">{label}</Label>
 	{/if}
@@ -69,6 +67,7 @@
 		dir="ltr"
 		class="navds-toggle-group navds-toggle-group--{size} navds-toggle-group--{variant}"
 	>
+		<!-- One or more `<ToggleGroupItem>`-->
 		<slot />
 	</div>
 </div>

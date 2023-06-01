@@ -85,7 +85,6 @@
 	$: steps = getSteps(page);
 
 	const handlePageChange = (page: number) => {
-		// Called when the page changes
 		dispatch("change", { page });
 	};
 </script>

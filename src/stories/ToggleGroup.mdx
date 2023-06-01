@@ -1,0 +1,27 @@
+import { ArgTypes, Primary, Meta, Controls, Stories } from "@storybook/addon-docs";
+
+import ToggleGroup from "./ToggleGroup.stories.svelte";
+
+import { ToggleGroupItem } from "$lib";
+
+<Meta of={ToggleGroup} />
+
+# ToggleGroup
+
+ToggleGroup lets the user make choices that affect the content of the page. The component consists of a group of buttons that are connected and only one button can be selected at a time.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/toggle-group).
+
+<Primary />
+
+## Properties
+
+### ToggleGroup
+
+<Controls />
+
+### ToggleGroupItem
+
+<ArgTypes of={ToggleGroupItem} />
+
+<Stories includePrimary={false} />

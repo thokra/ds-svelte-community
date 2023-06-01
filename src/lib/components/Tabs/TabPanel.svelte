@@ -1,19 +1,21 @@
 <script lang="ts">
-	import { getContext } from "svelte";
-	import { classes } from "../helpers";
-	import { contextKey, type TabContext } from "./Tabs.svelte";
+	import { classes, omit } from "../helpers";
+	import { getTabsContext, type TabPanelProps } from "./type";
+
+	type $$Props = TabPanelProps;
 
 	export let value: string;
 
-	const ctx = getContext<TabContext>(contextKey);
+	const ctx = getTabsContext();
 	const currentValue = ctx.value;
 </script>
 
 <div
+	{...omit($$restProps, "class", "role", "tabindex", "hidden")}
 	role="tabpanel"
 	tabindex="0"
 	class={classes($$restProps, "navds-tabs__tabpanel")}
-	hidden={$currentValue != value}
+	hidden={$currentValue != value ? true : undefined}
 >
 	<slot />
 </div>

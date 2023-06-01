@@ -10,36 +10,36 @@
 	import SelectedIcon from "./SelectedIcon.svelte";
 
 	/**
-	 * If enabled shows the label and description for screenreaders only
+	 * If enabled shows the label and description for screenreaders only.
 	 */
 	export let hideLabel = false;
 	/**
-	 * Toggles loading state with loader-component on switch
+	 * Toggles loading state with loader-component on switch.
 	 */
 	export let loading = false;
 	/**
-	 * Positions switch on left/right side of label
+	 * Positions switch on left/right side of label.
 	 * @default "left"
 	 */
 	export let position: "left" | "right" = "left";
 	/**
-	 * Adds a description to extend labling of Switch
+	 * Adds a description to extend labling of Switch.
 	 */
 	export let description = "";
 
 	/**
-	 * Changes font-size, padding and gaps
+	 * Changes font-size, padding and gaps.
 	 */
 	export let size: "medium" | "small" = "medium";
 
 	/**
-	 * Disables element
-	 * @note Avoid using if possible for accessibility purposes
+	 * Disables element.
+	 * @note Avoid using if possible for accessibility purposes.
 	 */
 	export let disabled = false;
 
 	/**
-	 * Checked state
+	 * Checked state.
 	 */
 	export let checked = false;
 
@@ -58,6 +58,7 @@
 		class={classes($$restProps, "navds-switch__input")}
 		{id}
 		on:change
+		on:mousedown
 	/>
 	<span class="navds-switch__track">
 		<span class="navds-switch__thumb">

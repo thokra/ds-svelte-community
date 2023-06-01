@@ -1,21 +1,21 @@
 <script lang="ts">
 	import { ArrowDown as Down, ArrowUp as Up, ArrowsUpDown as UpDown } from "$lib/icons";
-	import { classes } from "../helpers";
-	import { getTableContext } from "./Table.svelte";
+	import { classes, omit } from "../helpers";
+	import { aligns, getTableContext, type TableCellProps } from "./type";
+
+	type $$Props = TableCellProps;
 
 	/**
-	 * Content alignment inside cell
-	 * @default "left"
+	 * Content alignment inside cell.
 	 */
-	export let align: "left" | "center" | "right" = "left";
+	export let align: (typeof aligns)[number] = "left";
 
 	/**
-	 * Key to sort by
+	 * Key to sort by.
 	 */
 	export let sortKey = "";
 	/**
-	 * Column is sortable, adds indicators to show sorting
-	 * @default false
+	 * Column is sortable, adds indicators to show sorting.
 	 */
 	export let sortable = false;
 
@@ -29,7 +29,7 @@
 </script>
 
 <th
-	{...$$restProps}
+	{...omit($$restProps, "class")}
 	class={classes(
 		$$restProps,
 		"navds-table__header-cell",
@@ -45,6 +45,7 @@
 			class="navds-table__sort-button"
 			on:click={sortable && sortKey ? () => ctx.changeSort(sortKey) : undefined}
 		>
+			<!-- Content -->
 			<slot />
 			{#if $sort?.orderBy == sortKey}
 				{#if $sort.direction == "ascending"}
@@ -57,6 +58,7 @@
 			{/if}
 		</button>
 	{:else}
+		<!-- Content -->
 		<slot />
 	{/if}
 </th>

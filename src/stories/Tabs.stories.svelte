@@ -1,7 +1,9 @@
 <script>
 	import { Tab, TabList, TabPanel, Tabs } from "$lib/components/Tabs";
+	import { iconPositions, sizes } from "$lib/components/Tabs/type";
 	import { EnvelopeOpen as Email, ClockDashed as Historic, Paperplane as Send } from "$lib/icons";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+	import source from "./examples/Tabs.svelte?raw";
 
 	let active = "log";
 
@@ -10,11 +12,46 @@
 	let x2wide = false;
 </script>
 
-<Meta title="components/Tabs" component={Tabs} />
+<Meta
+	title="components/Tabs"
+	component={Tabs}
+	argTypes={{
+		value: {
+			control: "text",
+			description: "Controlled selected value.",
+			type: { name: "string", required: true },
+			table: {
+				type: { summary: "string" },
+			},
+		},
+		size: {
+			control: "select",
+			options: sizes,
+			description: "Changes padding and font-size.",
+			table: {
+				type: { summary: sizes.join("|") },
+			},
+		},
+		selectionFollowsFocus: {
+			description: "Automatically activates tab on focus/navigation.",
+		},
+		loop: {
+			description: "Loops back to start when navigating past last item.",
+		},
+		iconPosition: {
+			control: "select",
+			options: iconPositions,
+			description: "Icon position in Tab.",
+			table: {
+				type: { summary: iconPositions.join("|") },
+			},
+		},
+	}}
+/>
 
-<Template>
+<Template let:args>
 	<div class="wrapper">
-		<Tabs bind:value={active}>
+		<Tabs {...args} bind:value={active}>
 			<TabList>
 				<Tab value="log">Log</Tab>
 				<Tab value="inbox">Inbox</Tab>
@@ -85,7 +122,7 @@
 	</div>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Scroll">
 	<button

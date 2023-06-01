@@ -1,43 +1,40 @@
 <script lang="ts">
-	import { classes } from "./helpers";
-	import Detail from "./typography/Detail.svelte";
+	import { Detail } from "$lib";
+	import { classes } from "../helpers";
+	import type { placements } from "./type";
 
 	/**
-	 * Open state for tooltip
+	 * Open state for tooltip.
 	 */
 	export let open = false;
 
 	/**
-	 * Orientation for tooltip
-	 * @default "top"
+	 * Orientation for tooltip.
 	 */
-	export let placement: "top" | "right" | "bottom" | "left" = "top";
+	export let placement: (typeof placements)[number] = "top";
 	/**
-	 * Toggles rendering of arrow
+	 * Toggles rendering of arrow.
 	 * @default true
 	 */
 	export let arrow = true;
 	/**
-	 * Distance from anchor to tooltip
-	 * @default 10px with arrow, 2px without arrow
+	 * Distance from anchor to tooltip.
 	 */
 	export let offset = 10;
 	/**
-	 * Text-content inside tooltip
+	 * Text-content inside tooltip.
 	 */
 	export let content: string;
 	/**
 	 * Sets max allowed character length.
-	 * @default 80
 	 */
 	export let maxChar = 80;
 	/**
-	 * Adds a delay in milliseconds before opening tooltip
-	 * @default 150
+	 * Adds a delay in milliseconds before opening tooltip.
 	 */
 	export let delay = 150;
 	/**
-	 * List of Keyboard-keys for shortcuts
+	 * List of Keyboard-keys for shortcuts.
 	 */
 	export let keys: string[] = [];
 
@@ -111,9 +108,9 @@
 	};
 
 	const calculateArrowStyles = (
-		width: number,
-		height: number,
-		tooltipWidth: number,
+		_width: number,
+		_height: number,
+		_tooltipWidth: number,
 		tooltipHeight: number,
 		position: typeof placement,
 	) => {
@@ -164,6 +161,7 @@
 	bind:clientWidth={width}
 	bind:clientHeight={height}
 >
+	<!-- Content to which the tooltip will activate -->
 	<slot />
 
 	{#if open}

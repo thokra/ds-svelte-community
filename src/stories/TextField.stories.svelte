@@ -1,20 +1,80 @@
 <script lang="ts">
-	import TextField from "$lib/components/TextField.svelte";
+	import { TextField } from "$lib";
+	import { sizes, types } from "$lib/components/TextField/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-
-	let types: ("number" | "email" | "password" | "tel" | "text" | "url")[] = [
-		"number",
-		"email",
-		"password",
-		"tel",
-		"text",
-		"url",
-	];
+	import source from "./examples/TextField.svelte?raw";
 
 	let errorValue = "";
 </script>
 
-<Meta title="components/TextField" component={TextField} />
+<Meta
+	title="components/TextField"
+	component={TextField}
+	argTypes={{
+		value: {
+			control: { type: "text" },
+			description: "Controlled value.",
+			table: {
+				type: {
+					summary: "string | number",
+				},
+			},
+		},
+		htmlSize: {
+			control: { type: "number" },
+			description: "Size of the input element.",
+			table: {
+				type: {
+					summary: "number",
+				},
+			},
+		},
+		hideLabel: {
+			description: "If enabled shows the label and description for screenreaders only.",
+		},
+		type: {
+			control: "select",
+			options: types,
+			description: "Type of the input element.",
+			table: {
+				type: {
+					summary: types.join(" | "),
+				},
+			},
+		},
+		error: {
+			description: "Error message for element.",
+		},
+		errorId: {
+			control: "text",
+			description: "Override internal errorId.",
+			table: { type: { summary: "string" } },
+		},
+		size: {
+			control: "select",
+			options: sizes,
+			description: "Changes font-size, padding and gaps.",
+			table: {
+				type: {
+					summary: sizes.join(" | "),
+				},
+			},
+		},
+		disabled: {
+			control: "boolean",
+			description:
+				"Disables the input element.\n\n*Note: Avoid using if possible for accessibility purposes*",
+			table: {
+				type: {
+					summary: "boolean",
+				},
+			},
+		},
+		id: {
+			description: "Override internal id.",
+		},
+	}}
+/>
 
 <Template let:args>
 	<div class="colgap">
@@ -37,7 +97,7 @@
 	</div>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Error">
 	<div class="colgap">

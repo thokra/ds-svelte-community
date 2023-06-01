@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
 	import XMark from "$lib/icons/XMark.svelte";
 	import type { HTMLDialogAttributes } from "svelte/elements";
 	import Button from "../Button/Button.svelte";
@@ -33,7 +32,7 @@
 	$: if (dialog && !open) dialog.close();
 
 	$: {
-		if (browser) {
+		if (window) {
 			if (dialog && open) {
 				window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
 			} else {

@@ -3,55 +3,53 @@
 </script>
 
 <script lang="ts">
-	import { classes } from "./helpers";
-	import BodyLong from "./typography/BodyLong.svelte";
-	import Detail from "./typography/Detail.svelte";
-	import ErrorMessage from "./typography/ErrorMessage.svelte";
-	import Label from "./typography/Label.svelte";
+	import { BodyLong, Detail, ErrorMessage, Label } from "$lib";
+	import { classes } from "../helpers";
+	import type { sizes, types } from "./type";
 
 	/**
-	 * Controlled value
+	 * Controlled value.
 	 */
 	export let value: string | number = "";
 
 	/**
-	 * Exposes the HTML size attribute
+	 * Exposes the HTML size attribute.
 	 */
 	export let htmlSize: number | undefined = undefined;
 
 	/**
-	 * If enabled shows the label and description for screenreaders only
+	 * If enabled shows the label and description for screenreaders only.
 	 */
 	export let hideLabel = false;
 
 	/**
-	 * Type of form control. Picking the correct type helps user fill inn their required information
+	 * Type of form control. Picking the correct type helps user fill inn their required information.
 	 */
-	export let type: "number" | "email" | "password" | "tel" | "text" | "url" = "text";
+	export let type: (typeof types)[number] = "text";
 
 	/**
-	 * Error message for element
+	 * Error message for element.
 	 */
 	export let error = "";
 
 	/**
-	 * Override internal errorId
+	 * Override internal errorId.
 	 */
 	export let errorId = "tf-" + newUniqueId();
 
 	/**
-	 * Changes font-size, padding and gaps
+	 * Changes font-size, padding and gaps.
 	 */
-	export let size: "medium" | "small" = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 
 	/**
-	 * Disables element
-	 * @note Avoid using if possible for accessibility purposes
+	 * Disables element.
+	 * @note Avoid using if possible for accessibility purposes.
 	 */
 	export let disabled = false;
 
 	/**
-	 * Override internal id
+	 * Override internal id.
 	 */
 	export let id = "tf-" + newUniqueId();
 

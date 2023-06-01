@@ -1,53 +1,29 @@
-<script lang="ts" context="module">
-	const contextKey = Symbol("TableContext");
-
-	export const getTableContext = () => {
-		const context = getContext<TableContext>(contextKey);
-		if (!context) {
-			throw new Error("Element must be child of Table");
-		}
-		return context;
-	};
-
-	export type TableContext = {
-		size: "medium" | "small";
-		zebraStripes: boolean;
-		sort: Readable<SortState | undefined>;
-		changeSort: (sortKey: string) => void;
-	};
-
-	export interface SortState {
-		orderBy: string;
-		direction: "ascending" | "descending";
-	}
-</script>
-
 <script lang="ts">
-	import { createEventDispatcher, getContext, setContext } from "svelte";
-	import { writable, type Readable } from "svelte/store";
-	import { classes } from "../helpers";
+	import { createEventDispatcher, setContext } from "svelte";
+	import { writable } from "svelte/store";
+	import type { SortState } from ".";
+	import { classes, omit } from "../helpers";
+	import { contextKey, type TableContext, type TableProps, type tableSizes } from "./type";
+
+	type $$Props = TableProps;
 
 	/**
-	 * Changes padding
+	 * Changes padding.
 	 * @default "medium"
 	 */
-	export let size: TableContext["size"] = "medium";
+	export let size: (typeof tableSizes)[number] = "medium";
 	/**
-	 * Zebra striped table
+	 * Zebra striped table.
 	 * @default false
 	 */
 	export let zebraStripes = false;
 	/**
-	 * Sort state
+	 * Sort state.
 	 */
 	export let sort: SortState | undefined = undefined;
 
 	let sortState = writable<SortState | undefined>(sort);
 	$: sortState.set(sort);
-	// /**
-	//  * Callback whens sort state changes
-	//  */
-	// onSortChange?: (sortKey?: string) => void;
 
 	const sortDispatch = createEventDispatcher<{
 		sortChange: { key: string };
@@ -64,9 +40,10 @@
 </script>
 
 <table
-	{...$$restProps}
+	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-table", `navds-table--${size}`)}
 	class:navds-table--zebra-stripes={zebraStripes}
 >
+	<!-- Content -->
 	<slot />
 </table>

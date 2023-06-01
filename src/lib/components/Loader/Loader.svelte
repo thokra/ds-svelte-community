@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import type { sizes, variants } from "./type";
+	import type { Props, sizes, variants } from "./type";
+
+	type $$Props = Props;
+
 	/**
 	 * Changes Loader width/height
 	 * 64px | 40px | 32px | 24px | 20px | 16px

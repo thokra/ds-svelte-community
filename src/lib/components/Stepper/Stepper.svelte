@@ -1,50 +1,22 @@
-<script lang="ts" context="module">
-	import { getContext } from "svelte";
-
-	export type StepperContext = {
-		activeStep: Readable<number>;
-		orientation: "horizontal" | "vertical";
-		interactive: boolean;
-
-		steps: Readable<HTMLElement[]>;
-		register: (el: HTMLElement) => void;
-		unregister: (el: HTMLElement) => void;
-		setStep: (step: number, event: MouseEvent) => void;
-	};
-
-	const contextKey = Symbol("StepperContext");
-	export const getStepperContext = (): StepperContext => {
-		const context = getContext<StepperContext>(contextKey);
-		if (!context) {
-			throw new Error("Element must be child of Stepper");
-		}
-		return context;
-	};
-</script>
-
 <script lang="ts">
+	import { createEventDispatcher, setContext } from "svelte";
+	import { writable } from "svelte/store";
 	import { classes } from "../helpers";
-	import { setContext, createEventDispatcher } from "svelte";
-	import { writable, type Readable } from "svelte/store";
+	import { contextKey, type Props, type StepperContext, type orientations } from "./type";
+
+	type $$Props = Props;
 
 	/**
 	 * The direction the component grows.
 	 */
-	export let orientation: StepperContext["orientation"] = "vertical";
+	export let orientation: (typeof orientations)[number] = "vertical";
 	/**
 	 * Current active step.
 	 * @note Stepper index starts at 1, not 0
 	 */
 	export let activeStep = 1;
 	/**
-	 * Callback for next activeStep
-	 * @note Stepper index starts at 1, not 0
-	 */
-	// onStepChange?: (step: number) => void;
-
-	/**
 	 * Makes stepper non-interactive if false
-	 * @default true
 	 */
 	export let interactive = true;
 
@@ -52,12 +24,14 @@
 
 	const active = writable<number>(activeStep);
 	$: active.set(activeStep);
+	const interactiveStore = writable<boolean>(interactive);
+	$: interactiveStore.set(interactive);
 
 	let steps = writable<HTMLElement[]>([]);
 	const context: StepperContext = {
 		activeStep: active,
 		orientation,
-		interactive,
+		interactive: interactiveStore,
 		steps,
 		register: (el: HTMLElement) => {
 			steps.update((steps) => [...steps, el]);
@@ -78,5 +52,6 @@
 	class={classes($$restProps, "navds-stepper")}
 	class:navds-stepper--horizontal={orientation === "horizontal"}
 >
+	<!-- List of `<Step />` -->
 	<slot />
 </ol>

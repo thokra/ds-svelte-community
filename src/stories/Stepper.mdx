@@ -1,0 +1,27 @@
+import { ArgTypes, Primary, Meta, Controls, Stories } from "@storybook/addon-docs";
+
+import Stepper from "./Stepper.stories.svelte";
+
+import { Step } from "$lib";
+
+<Meta of={Stepper} />
+
+# Stepper
+
+Stepper can be used to indicate where the user is in a process. Can be used for navigation patterns between steps, or for a visual guide on progression. The component itself should be a supplement to other patterns or indicators, and should not be the only way to navigate a solution.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/stepper).
+
+<Primary />
+
+## Properties
+
+### Stepper
+
+<Controls />
+
+### Step
+
+<ArgTypes of={Step} />
+
+<Stories includePrimary={false} />

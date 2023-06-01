@@ -1,22 +1,43 @@
 <script lang="ts">
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import Button from "$lib/components/Button/Button.svelte";
-	import Tooltip from "$lib/components/Tooltip.svelte";
-	import PrinterSmall from "$lib/icons/PrinterSmall.svelte";
+	import { Button, Tooltip } from "$lib";
+	import { placements } from "$lib/components/Tooltip/type";
+	import { PrinterSmall } from "$lib/icons";
 </script>
 
 <Meta
 	title="components/Tooltip"
 	component={Tooltip}
 	argTypes={{
+		open: {
+			description: "Open state for tooltip.",
+		},
 		placement: {
 			control: "select",
-			options: ["top", "bottom", "left", "right"],
+			options: placements,
+			table: { type: { summary: placements.join(" | ") } },
+			description: "Orientation for tooltip.",
+		},
+		arrow: {
+			description: "Show arrow for tooltip.",
+		},
+		offset: {
+			description: "Distance from anchor to tooltip.\n\nDefault 10px.",
 		},
 		content: {
 			control: "text",
-			type: "string",
+			description: "Text-content inside tooltip.",
+			type: { name: "string", required: true },
+		},
+		maxChar: {
+			description: "Sets max allowed character length.",
+		},
+		delay: {
+			description: "Adds a delay in milliseconds before opening tooltip.",
+		},
+		keys: {
+			description: "List of Keyboard-keys for shortcuts.",
 		},
 	}}
 	args={{

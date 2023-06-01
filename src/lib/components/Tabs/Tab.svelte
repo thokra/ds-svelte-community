@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { getContext, onMount } from "svelte";
-	import { Focus, classes, focusable } from "../helpers";
+	import { onMount } from "svelte";
+	import { Focus, classes, focusable, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
-	import { contextKey, type TabContext } from "./Tabs.svelte";
+	import { getTabsContext, type TabProps } from "./type";
+
+	type $$Props = TabProps;
 
 	export let value: string;
 
-	const ctx = getContext<TabContext>(contextKey);
+	const ctx = getTabsContext();
 	const currentValue = ctx.value;
 	const activeTab = ctx.activeTab;
 	let self: HTMLElement;
@@ -50,6 +52,7 @@
 
 <button
 	bind:this={self}
+	{...omit($$restProps, "class", "type", "role", "aria-selected", "tabindex")}
 	class={classes(
 		$$restProps,
 		"navds-tabs__tab",
