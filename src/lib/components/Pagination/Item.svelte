@@ -9,11 +9,6 @@
 	export let selected = false;
 
 	/**
-	 * The page the item represents
-	 */
-	export let page: number;
-
-	/**
 	 * Changes padding, height and font-size
 	 * @default medium
 	 */

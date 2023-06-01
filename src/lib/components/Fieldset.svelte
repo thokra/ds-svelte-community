@@ -31,10 +31,10 @@
 <script lang="ts">
 	import { setContext } from "svelte";
 	import { classes } from "./helpers";
-	import Label from "./typography/Label.svelte";
 	import BodyLong from "./typography/BodyLong.svelte";
 	import Detail from "./typography/Detail.svelte";
 	import ErrorMessage from "./typography/ErrorMessage.svelte";
+	import Label from "./typography/Label.svelte";
 
 	/**
 	 * If enabled shows the legend and description for screenreaders only
@@ -45,7 +45,7 @@
 	 * Toggles error propagation to child-elements
 	 * @default true
 	 */
-	export let errorPropagation = true;
+	// export let errorPropagation = true;
 
 	/**
 	 * Error message for element

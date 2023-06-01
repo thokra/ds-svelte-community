@@ -41,6 +41,12 @@
 	 */
 	export let keys: string[] = [];
 
+	$: {
+		if (content.length > maxChar) {
+			console.warn(`Tooltip: content exceeds maxChar (${maxChar}). Content: ${content}`);
+		}
+	}
+
 	let timeout: ReturnType<typeof setTimeout>;
 
 	function handleMouseEnter() {
