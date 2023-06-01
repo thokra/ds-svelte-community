@@ -4,7 +4,7 @@
 	import Label from "$lib/components/typography/Label.svelte";
 </script>
 
-<Meta title="ds-svelte/Typography/Label" component={Label} />
+<Meta title="typography/Label" component={Label} />
 
 <Template let:args>
 	<Label {...args}>Some text</Label>

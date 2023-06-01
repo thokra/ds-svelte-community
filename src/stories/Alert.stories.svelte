@@ -1,33 +1,43 @@
 <script>
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import Alert from "$lib/components/Alert.svelte";
+	import Alert from "$lib/components/Alert/Alert.svelte";
+	import { sizes, variants } from "$lib/components/Alert/type";
 	import BodyLong from "$lib/components/typography/BodyLong.svelte";
 	import Heading from "$lib/components/typography/Heading.svelte";
+
+	import source from "./examples/Alert.svelte?raw";
 </script>
 
 <Meta
-	title="ds-svelte/Alert"
+	title="components/Alert"
 	component={Alert}
 	argTypes={{
 		variant: {
 			control: "select",
-			options: ["error", "warning", "info", "success"],
+			options: variants,
+
+			description: "Changes colors and icon usage when changed",
+			table: {
+				type: { summary: variants.join(" | ") },
+				defaultValue: { summary: "info" },
+			},
 		},
 		size: {
 			control: "select",
-			options: ["medium", "small"],
-		},
-	}}
-	args={{ variant: "info" }}
-	parameters={{
-		docs: {
-			description: {
-				component: `
-Alert is a notification component that creates focus around a response message without necessarily interrupting the user's task flow.
+			options: sizes,
 
-Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/alert).`,
+			description: "Changes padding and font-sizes",
+			table: {
+				type: { summary: sizes.join(" | ") },
+				defaultValue: { summary: "medium" },
 			},
+		},
+		fullWidth: {
+			description: "Removes border-radius",
+		},
+		inline: {
+			description: "Removes background from Alert",
 		},
 	}}
 />
@@ -36,10 +46,10 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	<Alert {...args}>Id elit esse enim reprehenderit enim nisi veniam nostrud.</Alert>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
-<Story name="With Heading">
-	<Alert>
+<Story name="With Heading" let:args>
+	<Alert {...args}>
 		<Heading spacing size="small" level="3">Aliquip duis est in commodo pariatur</Heading>
 		<BodyLong>
 			Ullamco ullamco laborum et commodo sint culpa cupidatat culpa qui laboris ex. Labore ex

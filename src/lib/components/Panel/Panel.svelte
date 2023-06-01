@@ -1,22 +1,20 @@
 <script lang="ts">
-	import type { HTMLAnchorAttributes, SvelteHTMLElements } from "svelte/elements";
-	import { classes, omit } from "./helpers";
+	import type { SvelteHTMLElements } from "svelte/elements";
+	import { classes, omit } from "../helpers";
+	import type { Props } from "./type";
+
+	type $$Props = Props;
 
 	/**
-	 * Adds a border to panel when true
+	 * Adds a border to panel when true.
 	 * @default false
 	 */
 	export let border = false;
 
 	/**
-	 * HTML element to render as
+	 * HTML element to render as.
 	 */
 	export let as: keyof SvelteHTMLElements = "div";
-
-	interface $$Props extends HTMLAnchorAttributes {
-		border: boolean;
-		as: keyof SvelteHTMLElements;
-	}
 </script>
 
 <svelte:element
@@ -26,5 +24,6 @@
 		"navds-panel--border": border,
 	})}
 >
+	<!-- Panel content -->
 	<slot />
 </svelte:element>

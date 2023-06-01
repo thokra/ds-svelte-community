@@ -3,15 +3,15 @@
 
 	import { ToggleGroup, ToggleGroupItem } from "$lib/components/ToggleGroup";
 	import {
-		EnvelopeOpen as EmailOpened,
 		EnvelopeClosed as Email,
+		EnvelopeOpen as EmailOpened,
 		Paperplane as Send,
 	} from "$lib/icons";
 
 	let value = "unread";
 </script>
 
-<Meta title="ds-svelte/ToggleGroup" component={ToggleGroup} />
+<Meta title="components/ToggleGroup" component={ToggleGroup} />
 
 <Template let:args>
 	<div class="colgap">

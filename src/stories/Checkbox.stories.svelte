@@ -1,5 +1,6 @@
 <script>
 	import { Checkbox } from "$lib";
+	import { sizes } from "$lib/components/Checkbox/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	let child1 = false;
@@ -7,7 +8,7 @@
 </script>
 
 <Meta
-	title="ds-svelte/Checkbox"
+	title="components/Checkbox"
 	component={Checkbox}
 	parameters={{
 		docs: {
@@ -15,6 +16,7 @@
 				component: `
 We use Checkbox and CheckboxGroup when users need to be able to select multiple options.
 
+This can also be controlled through CheckboxGroup.
 
 Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/checkbox).
 
@@ -49,16 +51,15 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 		},
 		size: {
 			control: "select",
-			options: ["small", "medium"],
+			options: sizes,
 			description: "Changes font-size, padding and gaps",
 			table: {
-				type: { summary: "medium | small" },
+				type: { summary: sizes.join(" | ") },
 				defaultValue: { summary: "medium" },
 			},
 		},
 		disabled: {
-			control: "boolean",
-			description: "Disables element Avoid using if possible for accessibility purposes",
+			description: "Disables element. Avoid using if possible for accessibility purposes",
 		},
 		id: {
 			control: "text",
@@ -68,7 +69,8 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 				defaultValue: { summary: "cb-[calculated]" },
 			},
 		},
-		checked: { control: "boolean" },
+		checked: { description: "Controlled state for checkboxes." },
+		class: { description: "Class to add to checkbox wrapper." },
 	}}
 	args={{
 		value: "some_value",

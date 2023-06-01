@@ -4,7 +4,7 @@
 	import StepperWithHeader from "./StepperWithHeader.svelte";
 </script>
 
-<Meta title="ds-svelte/Stepper" component={Stepper} />
+<Meta title="components/Stepper" component={Stepper} />
 
 <Story name="Default">
 	<StepperWithHeader />

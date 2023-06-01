@@ -1,30 +1,26 @@
 <script lang="ts">
-	import "@navikt/ds-css/button.css";
-	import Loader from "./Loader.svelte";
-	import { classes, omit } from "./helpers";
-	import Label from "./typography/Label.svelte";
+	import Loader from "../Loader/Loader.svelte";
+	import { classes, omit } from "../helpers";
+	import Label from "../typography/Label.svelte";
+	import type { Props } from "./type";
 
 	/**
 	 * Changes design and interaction-visuals
 	 */
-	export let variant:
-		| "primary"
-		| "primary-neutral"
-		| "secondary"
-		| "secondary-neutral"
-		| "tertiary"
-		| "tertiary-neutral"
-		| "danger" = "primary";
+	export let variant: Props["variant"] = "primary";
+
 	/**
 	 * Changes padding, height and font-size
 	 * @default medium
 	 */
-	export let size: "medium" | "small" | "xsmall" = "medium";
+	export let size: Props["size"] = "medium";
+
 	/**
 	 * Prevent the user from interacting with the button: it cannot be pressed or focused.
 	 * @note Avoid using if possible for accessibility purposes
 	 */
-	export let disabled = false;
+	export let disabled: Props["disabled"] = false;
+
 	/**
 	 * Replaces button content with a Loader component, keeps width
 	 * @default false
@@ -34,14 +30,16 @@
 	/**
 	 * Tag to use for the button
 	 */
-	export let as: "button" | "a" = "button";
+	export let as: Props["as"] = "button";
 
 	/**
 	 * Icon only
 	 */
 	export let iconOnly = false;
 
-	export let el: HTMLButtonElement | HTMLAnchorElement | undefined = undefined;
+	let el: HTMLButtonElement | HTMLAnchorElement | undefined = undefined;
+
+	type $$Props = Props;
 
 	let overrideWidth = 0;
 
@@ -61,21 +59,27 @@
 	class:navds-button--disabled={disabled || overrideWidth > 0}
 	class:navds-button--icon-only={iconOnly ||
 		(($$slots["icon-left"] || $$slots["icon-right"]) && !$$slots.default)}
+	class:unstyled={as === "a"}
 	bind:this={el}
 	on:click
+	on:mouseenter
+	on:mouseleave
 >
 	{#if overrideWidth}
 		<Loader {size} />
 	{:else}
 		{#if $$slots["icon-left"]}
+			<!-- Place icon to the left of the content -->
 			<span class="navds-button__icon"><slot name="icon-left" /></span>
 		{/if}
 		{#if $$slots.default && !iconOnly}
 			<Label as="span" size={size === "medium" ? "medium" : "small"} aria-live="polite">
+				<!-- button content -->
 				<slot />
 			</Label>
 		{/if}
 		{#if $$slots["icon-right"]}
+			<!-- Place icon to the right of the content -->
 			<span class="navds-button__icon"><slot name="icon-right" /></span>
 		{/if}
 	{/if}

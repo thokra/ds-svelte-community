@@ -1,13 +1,43 @@
 <script>
 	import { Select } from "$lib/components/Select";
+	import { sizes } from "$lib/components/Select/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+	import source from "./examples/Select.svelte?raw";
 
 	let selected = "";
 
 	$: error = selected ? null : "Please choose a country";
 </script>
 
-<Meta title="ds-svelte/Select" component={Select} />
+<Meta
+	title="components/Select"
+	component={Select}
+	argTypes={{
+		htmlSize: {
+			control: "number",
+			description: "Exposes the HTML size attribute",
+			table: { type: { summary: "number" } },
+		},
+		label: { description: "Label for select" },
+		hideLabel: {
+			description: "Hides label and description for screen readers only.",
+		},
+		style: {
+			description: "Sets inline-style on select wrapper.",
+		},
+		size: {
+			control: "select",
+			options: sizes,
+			description: "Changes font-size, padding and gaps.",
+		},
+		disabled: {
+			description:
+				"Disables element.\n\n**Note:** Avoid using if possible for accessibility purposes.",
+		},
+		error: { description: "Error message for element" },
+		value: { description: "Selected value" },
+	}}
+/>
 
 <Template let:args>
 	<div class="example">
@@ -20,7 +50,7 @@
 	</div>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Small" args={{ size: "small" }} />
 

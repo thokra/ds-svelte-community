@@ -4,7 +4,7 @@
 	import Heading from "$lib/components/typography/Heading.svelte";
 </script>
 
-<Meta title="ds-svelte/Typography/Heading" component={Heading} />
+<Meta title="typography/Heading" component={Heading} />
 
 <Template let:args>
 	<Heading {...args}>Some text</Heading>

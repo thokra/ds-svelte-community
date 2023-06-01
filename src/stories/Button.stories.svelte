@@ -1,58 +1,66 @@
 <script lang="ts">
-	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-
-	import Button from "$lib/components/Button.svelte";
+	import Button from "$lib/components/Button/Button.svelte";
+	import { sizes, variants } from "$lib/components/Button/type";
 	import { Star } from "$lib/icons";
-
-	const variants = [
-		"primary",
-		"primary-neutral",
-		"secondary",
-		"secondary-neutral",
-		"tertiary",
-		"tertiary-neutral",
-		"danger",
-	];
+	import { action } from "@storybook/addon-actions";
+	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+	import source from "./examples/Button.svelte?raw";
 </script>
 
 <Meta
-	title="ds-svelte/Button"
+	title="components/Button"
 	component={Button}
 	argTypes={{
 		variant: {
 			control: "select",
 			options: variants,
+
+			description: "Changes design and interaction-visuals",
+			table: {
+				type: { summary: variants.join(" | ") },
+				defaultValue: { summary: "primary" },
+			},
 		},
 		size: {
 			control: "select",
-			options: ["medium", "small", "xsmall"],
+			options: sizes,
+
+			description: "Changes font-size, padding and gaps",
+			table: {
+				type: { summary: sizes.join(" | ") },
+				defaultValue: { summary: "medium" },
+			},
 		},
-		disabled: { control: "boolean" },
-		loading: { control: "boolean" },
+		disabled: {
+			description: "Disables element. Avoid using if possible for accessibility purposes",
+		},
+		loading: {
+			description: "Replaces button content with a Loader component, keeps width",
+		},
+
 		as: {
 			control: "select",
 			options: ["button", "a"],
+
+			description: "Tag to use for the button",
 		},
-	}}
-	parameters={{
-		docs: {
-			description: {
-				component: `
-Button lets the user perform an action.
 
-Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/button).
-
-`,
-			},
+		iconOnly: {
+			description: "Icon only",
 		},
 	}}
 />
 
 <Template let:args>
-	<Button {...args}>Button text</Button>
+	<Button
+		{...args}
+		on:click={action("Button clicked")}
+		on:mouseenter={action("Mouse entered button")}
+		on:mouseleave={action("Mouse left button")}>Button text</Button
+	>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Small" args={{ size: "small" }} />
 
@@ -63,13 +71,23 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 <Story name="Disabled" args={{ disabled: true }} />
 
 <Story name="Icon" args={{ variant: "secondary" }} let:args>
-	<Button {...args}>
+	<Button
+		{...args}
+		on:click={action("Button clicked")}
+		on:mouseenter={action("Mouse entered button")}
+		on:mouseleave={action("Mouse left button")}
+	>
 		<Star slot="icon-left" aria-label="Stjerne" />
 	</Button>
 </Story>
 
 <Story name="Icon W text" args={{ variant: "danger" }} let:args>
-	<Button {...args}>
+	<Button
+		{...args}
+		on:click={action("Button clicked")}
+		on:mouseenter={action("Mouse entered button")}
+		on:mouseleave={action("Mouse left button")}
+	>
 		<Star slot="icon-left" aria-label="Stjerne" />
 		Button text
 	</Button>

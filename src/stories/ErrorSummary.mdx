@@ -1,0 +1,27 @@
+import { ArgTypes, Primary, Meta, Controls, Stories } from "@storybook/addon-docs";
+
+import ErrorSummary from "./ErrorSummary.stories.svelte";
+
+import { ErrorSummaryItem } from "$lib";
+
+<Meta of={ErrorSummary} />
+
+# ErrorSummary
+
+ErrorSummary gives the user a summary list of validation errors they need to fix before continuing.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/errorsummary).
+
+<Primary />
+
+## Properties
+
+### ErrorSummary
+
+<Controls />
+
+### ErrorSummaryItem
+
+<ArgTypes of={ErrorSummaryItem} />
+
+<Stories includePrimary={false} />

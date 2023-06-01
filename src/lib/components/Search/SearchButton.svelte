@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { MagnifyingGlass as Search } from "$lib/icons";
-	import Button from "../Button.svelte";
+	import Button from "../Button/Button.svelte";
 	import { classes } from "../helpers";
 
 	export let size: "medium" | "small" = "medium";

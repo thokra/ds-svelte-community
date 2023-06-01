@@ -8,9 +8,8 @@
 </script>
 
 <script lang="ts">
-	import "@navikt/ds-css/toggle-group.css";
-	import { writable } from "svelte/store";
 	import { createEventDispatcher, onDestroy, setContext } from "svelte";
+	import { writable } from "svelte/store";
 	import { classes } from "../helpers";
 	import Label from "../typography/Label.svelte";
 

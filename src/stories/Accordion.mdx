@@ -1,4 +1,4 @@
-import { ArgTypes, Story, Canvas, Meta, Controls } from "@storybook/addon-docs";
+import { ArgTypes, Primary, Meta, Controls, Stories } from "@storybook/addon-docs";
 
 import Accordion from "./Accordion.stories.svelte";
 
@@ -13,16 +13,16 @@ the content below.
 
 Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/accordion).
 
-<Canvas>
-	<Story id="ds-svelte-accordion--default" />
-</Canvas>
+<Primary />
 
 ## Properties
 
 ### Accordion
 
-<ArgTypes />
+<Controls />
 
 ### AccordionItem
 
 <ArgTypes of={AccordionItem} />
+
+<Stories includePrimary={false} />

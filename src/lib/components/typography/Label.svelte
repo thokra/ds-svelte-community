@@ -1,5 +1,4 @@
 <script lang="ts">
-	import "@navikt/ds-css/typography.css";
 	import { classes } from "../helpers";
 
 	/**

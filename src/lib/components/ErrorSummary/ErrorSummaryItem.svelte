@@ -1,15 +1,16 @@
 <script lang="ts">
 	import type { HTMLAnchorAttributes } from "svelte/elements";
-
-	export let href: string;
+	import { omit } from "../helpers";
 
 	interface $$Props extends HTMLAnchorAttributes {
 		href: string;
 	}
+
+	export let href: string;
 </script>
 
 <li>
-	<a {...$$restProps} class="navds-error-summary__list-item" {href}>
+	<a {...omit($$restProps, "class")} class={"navds-error-summary__list-item"} {href}>
 		<slot />
 	</a>
 </li>

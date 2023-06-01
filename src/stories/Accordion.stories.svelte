@@ -1,26 +1,40 @@
 <script lang="ts">
-	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-
 	import { Accordion, AccordionItem } from "$lib";
-
+	import { headingSizes, sizes, variants } from "$lib/components/Accordion/type";
+	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Accordion.svelte?raw";
 </script>
 
 <Meta
-	title="ds-svelte/Accordion"
+	title="components/Accordion"
 	component={Accordion}
 	argTypes={{
 		variant: {
 			control: "select",
-			options: ["default", "neutral"],
+			options: variants,
+
+			description: "The variant of the accordion.",
+			table: {
+				type: { summary: variants.join(" | ") },
+			},
 		},
 		size: {
 			control: "select",
-			options: ["large", "medium", "small"],
+			options: sizes,
+
+			description: "The size of the accordion.",
+			table: {
+				type: { summary: sizes.join(" | ") },
+			},
 		},
 		headingSize: {
 			control: "select",
-			options: ["large", "medium", "small", "xsmall"],
+			options: headingSizes,
+
+			description: "The size of the accordion heading.",
+			table: {
+				type: { summary: headingSizes.join(" | ") },
+			},
 		},
 	}}
 />

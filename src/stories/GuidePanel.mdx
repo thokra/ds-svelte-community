@@ -1,0 +1,26 @@
+import { Stories, Primary, Meta, Controls, ArgTypes } from "@storybook/addon-docs";
+
+import GuidePanel from "./GuidePanel.stories.svelte";
+import { Guide } from "$lib";
+
+<Meta of={GuidePanel} />
+
+# GuidePanel
+
+GuidePanel is used to give a friendly welcome and introduction to the user.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/guidepanel).
+
+<Primary />
+
+## Properties
+
+### GuidePanel
+
+<Controls />
+
+### Guide
+
+<ArgTypes of={Guide} />
+
+<Stories includePrimary={false} />

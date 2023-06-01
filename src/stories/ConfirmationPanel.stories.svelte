@@ -1,9 +1,38 @@
 <script>
-	import ConfirmationPanel from "$lib/components/ConfirmationPanel.svelte";
+	import ConfirmationPanel from "$lib/components/ConfirmationPanel/ConfirmationPanel.svelte";
+	import { sizes } from "$lib/components/ConfirmationPanel/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+	import source from "./examples/ConfirmationPanel.svelte?raw";
 </script>
 
-<Meta title="ds-svelte/ConfirmationPanel" component={ConfirmationPanel} />
+<Meta
+	title="components/ConfirmationPanel"
+	component={ConfirmationPanel}
+	argTypes={{
+		error: {
+			description: "Error message for element.",
+		},
+		errorId: {
+			description: "Override internal errorId.",
+		},
+		size: {
+			control: "select",
+			options: sizes,
+
+			description: "Changes font-size, padding and gaps.",
+		},
+		value: {
+			description: "The value of the HTML element.",
+		},
+		id: {
+			description: "Override internal id.",
+		},
+
+		checked: {
+			description: "Wether the checkbox is checked, can be used with `bind:checked`.",
+		},
+	}}
+/>
 
 <Template let:args>
 	<ConfirmationPanel {...args}>
@@ -14,7 +43,7 @@
 	</ConfirmationPanel>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Checked initially" args={{ checked: true }} />
 

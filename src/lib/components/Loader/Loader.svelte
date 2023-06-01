@@ -1,37 +1,33 @@
 <script lang="ts">
-	import "@navikt/ds-css/loader.css";
+	import { classes, omit } from "../helpers";
+	import type { sizes, variants } from "./type";
 	/**
 	 * Changes Loader width/height
 	 * 64px | 40px | 32px | 24px | 20px | 16px
-	 * @default "medium"
 	 */
-	export let size: "3xlarge" | "2xlarge" | "xlarge" | "large" | "medium" | "small" | "xsmall" =
-		"medium";
+	export let size: (typeof sizes)[number] = "medium";
 	/**
 	 * Title prop on svg
-	 * @default "venter..."
 	 */
-	export let title = "venter...";
+	export let title = "waiting...";
 	/**
 	 * Sets svg-background to transparent
-	 * @default false
 	 */
 	export let transparent = false;
 	/**
 	 * Colored variants for Loader
-	 * @default "neutral"
 	 */
-	export let variant: "neutral" | "interaction" | "inverted" = "neutral";
+	export let variant: (typeof variants)[number] = "neutral";
 </script>
 
 <svg
-	class="navds-loader navds-loader--{size} navds-loader--{variant}"
+	{...omit($$restProps, "class")}
+	class={classes($$restProps, `navds-loader navds-loader--${size}`, `navds-loader--${variant}`)}
 	class:navds-loader--transparent={transparent}
 	focusable="false"
 	viewBox="0 0 50 50"
 	preserveAspectRatio="xMidYMid"
 	aria-label={title}
-	{...$$restProps}
 >
 	<circle
 		class="navds-loader__background"

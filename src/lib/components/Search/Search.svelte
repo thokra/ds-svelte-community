@@ -9,49 +9,62 @@
 </script>
 
 <script lang="ts">
-	import { classes } from "../helpers";
-	import Label from "../typography/Label.svelte";
-	import BodyShort from "../typography/BodyShort.svelte";
-	import { MagnifyingGlass as SearchIcon, XMark as Close } from "$lib/icons";
-	import SearchButton from "./SearchButton.svelte";
+	import { XMark as Close, MagnifyingGlass as SearchIcon } from "$lib/icons";
 	import { createEventDispatcher } from "svelte";
+	import { classes } from "../helpers";
+	import BodyShort from "../typography/BodyShort.svelte";
+	import Label from "../typography/Label.svelte";
+	import SearchButton from "./SearchButton.svelte";
+	import type { Props } from "./type";
+
+	type $$Props = Props;
 
 	/**
-	 * Search label
+	 * Search label.
 	 * @note Will be hidden by default, is required for accessibility reasons.
 	 */
 	export let label: string;
 	/**
-	 * Shows label and description for screen readers only
-	 * @default true
+	 * Shows label and description for screen readers only.
 	 */
 	export let hideLabel = true;
 
 	/**
-	 * aria-label on clear button
-	 * @default "Clear"
+	 * aria-label on clear button.
 	 */
 	export let clearButtonLabel = "Clear";
 
 	/**
 	 * If false, removes clear-button option from input.
-	 * @default true
 	 */
 	export let clearButton = true;
 	/**
 	 * Changes button-variant, "simple" removes button
-	 * @default "primary"
 	 */
 	export let variant: "primary" | "secondary" | "simple" = "primary";
 
+	/**
+	 * Adds a description to extend labling of a field.
+	 */
 	export let description = "";
 
+	/**
+	 * Size of input.
+	 */
 	export let size: "medium" | "small" = "medium";
 
+	/**
+	 * Value of input.
+	 */
 	export let value = "";
 
-	let hasError = false;
+	/**
+	 * Disables element
+	 * @note Avoid using if possible for accessibility purposes
+	 */
 	export let disabled = false;
+
+	let hasError = false;
 
 	const baseID = "search-" + newUniqueId();
 
@@ -64,16 +77,18 @@
 	}>();
 
 	function handleClearClick(event: MouseEvent) {
+		// Called when clear is triggered
 		dispatcher("clear", { event: { trigger: "Click", event } });
 		value = "";
-		input?.focus();
+		if (input) input.focus();
 	}
 
 	function handleInputKeypress(event: KeyboardEvent) {
 		if (event.key === "Escape" && value == "") {
+			// Called when clear is triggered
 			dispatcher("clear", { event: { trigger: "Escape", event } });
 			value = "";
-			input?.focus();
+			if (input) input.focus();
 			event.preventDefault();
 		}
 	}
@@ -84,7 +99,7 @@
 	class:navds-search--error={hasError}
 	class:navds-search--disabled={disabled}
 >
-	<Label for={baseID} {size} class={classes($$restProps, "navds-form-field__label", srOnlyClass)}>
+	<Label for={baseID} {size} class={classes({}, "navds-form-field__label", srOnlyClass)}>
 		{label}
 	</Label>
 	{#if description}
@@ -98,6 +113,7 @@
 				<SearchIcon aria-hidden class="navds-search__search-icon" />
 			{/if}
 			<!-- svelte-ignore a11y-no-redundant-roles -->
+			<!-- Called when input is changed -->
 			<input
 				bind:this={input}
 				bind:value
@@ -127,11 +143,13 @@
 			{/if}
 		</div>
 
-		{#if $$slots.default}
-			<slot />
-		{:else if variant != "simple"}
-			<SearchButton on:click {disabled} {variant} {size} />
-		{/if}
+		<!-- Place for custom button -->
+		<slot>
+			{#if variant != "simple"}
+				<!-- Called when search button is clicked -->
+				<SearchButton on:click {disabled} {variant} {size} />
+			{/if}
+		</slot>
 	</div>
 	<div class="navds-form-field__error" aria-relevant="additions removals" aria-live="polite">
 		<!-- {showErrorMsg && (

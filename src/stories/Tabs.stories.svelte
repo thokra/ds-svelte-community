@@ -10,7 +10,7 @@
 	let x2wide = false;
 </script>
 
-<Meta title="ds-svelte/Tabs" component={Tabs} />
+<Meta title="components/Tabs" component={Tabs} />
 
 <Template>
 	<div class="wrapper">

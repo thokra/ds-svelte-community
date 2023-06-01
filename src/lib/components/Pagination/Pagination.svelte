@@ -1,15 +1,18 @@
 <script lang="ts">
+	import { ChevronLeft as Back, ChevronRight as Next } from "$lib/icons";
 	import { createEventDispatcher } from "svelte";
-	import { ChevronLeft as Back, ChevronRight as Next } from "../../icons";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
 	import Item from "./Item.svelte";
+	import type { Props, sizes } from "./type";
+
+	type $$Props = Props;
 
 	/**
-	 * Current page
-	 * @note Pagination indexing starts at 1
+	 * Current page. If set will require implementation of `on:change` event.
+	 * @note Pagination indexing starts at 1.
 	 */
-	export let page: number;
+	export let page: number = 1;
 	/**
 	 * Number of always visible pages before and after the current page.
 	 * @default 1
@@ -22,39 +25,36 @@
 	export let boundaryCount = 1;
 
 	/**
-	 * Total number of pages
+	 * Total number of pages.
 	 */
 	export let count: number;
 
 	/**
-	 * Changes padding, height and font-size
+	 * Changes padding, height and font-size.
 	 */
-	export let size: "medium" | "small" | "xsmall" = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 
 	/**
-	 * Next label
+	 * Next label.
 	 */
 	export let nextText = "Next";
 
 	/**
-	 * Previous label
+	 * Previous label.
 	 */
 	export let prevText = "Previous";
 
 	/**
-	 * Show next and previous buttons with text
+	 * Show next and previous buttons with text.
 	 */
 	export let prevNextTexts = false;
 
 	type Events = {
-		/**
-		 * Called when the page changes
-		 */
 		change: { page: number };
 	};
 	const dispatch = createEventDispatcher<Events>();
 
-	export const getSteps = (page: number) => {
+	const getSteps = (page: number) => {
 		const range = (start: number, end: number) =>
 			Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
@@ -69,13 +69,15 @@
 		);
 		const siblingsEnd = siblingsStart + siblingCount * 2;
 
+		const nullish = (a: any, b: any) => (a == null ? b : a);
+
 		return [
 			...startPages,
-			siblingsStart - (startPages[startPages.length - 1] ?? 0) === 2
+			siblingsStart - nullish(startPages[startPages.length - 1], 0) === 2
 				? siblingsStart - 1
 				: "ellipsis",
 			...range(siblingsStart, siblingsEnd),
-			(endPages[0] ?? count + 1) - siblingsEnd === 2 ? siblingsEnd + 1 : "ellipsis",
+			nullish(endPages[0], count + 1) - siblingsEnd === 2 ? siblingsEnd + 1 : "ellipsis",
 			...endPages,
 		];
 	};
@@ -83,7 +85,7 @@
 	$: steps = getSteps(page);
 
 	const handlePageChange = (page: number) => {
-		console.log("Handle page change", page);
+		// Called when the page changes
 		dispatch("change", { page });
 	};
 </script>

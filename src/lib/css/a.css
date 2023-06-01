@@ -1,47 +1,47 @@
 a:not(.unstyled) {
-  color: var(--ac-link-text, var(--a-text-action));
-  text-decoration: underline;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--a-spacing-1);
+	color: var(--ac-link-text, var(--a-text-action));
+	text-decoration: underline;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--a-spacing-1);
 }
 
 .navds-alert a:not(.unstyled),
 .navds-confirmation-panel a:not(.unstyled) {
-  color: var(--a-text-default);
+	color: var(--a-text-default);
 }
 
 a:not(.unstyled):hover {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 a:not(.unstyled):focus-visible {
-  outline: none;
-  color: var(--ac-link-focus-text, var(--a-text-on-action));
-  text-decoration: none;
-  background-color: var(--ac-link-focus-bg, var(--a-border-focus));
-  box-shadow: 0 0 0 2px var(--ac-link-focus-border, var(--a-border-focus));
+	outline: none;
+	color: var(--ac-link-focus-text, var(--a-text-on-action));
+	text-decoration: none;
+	background-color: var(--ac-link-focus-bg, var(--a-border-focus));
+	box-shadow: 0 0 0 2px var(--ac-link-focus-border, var(--a-border-focus));
 }
 
 @supports not selector(:focus-visible) {
-  a:not(.unstyled):focus {
-    outline: none;
-    color: var(--ac-link-focus-text, var(--a-text-on-action));
-    text-decoration: none;
-    background-color: var(--ac-link-focus-bg, var(--a-border-focus));
-    box-shadow: 0 0 0 2px var(--ac-link-focus-border, var(--a-border-focus));
-  }
+	a:not(.unstyled):focus {
+		outline: none;
+		color: var(--ac-link-focus-text, var(--a-text-on-action));
+		text-decoration: none;
+		background-color: var(--ac-link-focus-bg, var(--a-border-focus));
+		box-shadow: 0 0 0 2px var(--ac-link-focus-border, var(--a-border-focus));
+	}
 }
 
 a:not(.unstyled):active {
-  outline: none;
-  color: var(--ac-link-active-text, var(--a-text-on-action));
-  text-decoration: none;
-  background-color: var(--ac-link-active-bg, var(--a-border-focus));
-  box-shadow: 0 0 0 2px var(--ac-link-active-border, var(--a-border-focus));
+	outline: none;
+	color: var(--ac-link-active-text, var(--a-text-on-action));
+	text-decoration: none;
+	background-color: var(--ac-link-active-bg, var(--a-border-focus));
+	box-shadow: 0 0 0 2px var(--ac-link-active-border, var(--a-border-focus));
 }
 
 a:not(.unstyled) svg {
-  color: inherit;
-  flex-shrink: 0;
+	color: inherit;
+	flex-shrink: 0;
 }

@@ -3,7 +3,7 @@
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 </script>
 
-<Meta title="ds-svelte/Switch" component={Switch} />
+<Meta title="components/Switch" component={Switch} />
 
 <Template let:args>
 	<Switch {...args}>Label</Switch>

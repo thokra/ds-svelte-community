@@ -3,12 +3,11 @@
 </script>
 
 <script lang="ts">
-	import { classes } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
+	import { createEventDispatcher } from "svelte";
 	import BodyLong from "../typography/BodyLong.svelte";
+	import BodyShort from "../typography/BodyShort.svelte";
 	import Detail from "../typography/Detail.svelte";
 	import { GetCheckboxGroupContext } from "./CheckboxGroup.svelte";
-	import { createEventDispatcher } from "svelte";
 
 	/**
 	 * Adds error indication on checkbox
@@ -57,6 +56,12 @@
 	 */
 	export let checked = false;
 
+	/**
+	 * Class to add to checkbox wrapper
+	 */
+	let klass = "";
+	export { klass as class };
+
 	type Events = {
 		change: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
@@ -75,7 +80,7 @@
 </script>
 
 <div
-	class={classes($$restProps, "navds-checkbox", `navds-checkbox--${size}`)}
+	class={[klass, "navds-checkbox", `navds-checkbox--${size}`].filter((v) => v != "").join(" ")}
 	class:navds-checkbox--error={hasError}
 	class:navds-checkbox--disabled={disabled}
 >

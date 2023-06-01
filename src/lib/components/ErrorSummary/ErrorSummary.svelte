@@ -3,30 +3,33 @@
 </script>
 
 <script lang="ts">
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
 	import Heading from "../typography/Heading.svelte";
+	import type { Props, headingTags, sizes } from "./type";
+
+	type $$Props = Props;
 
 	/**
-	 * Changes padding and font-sizes
+	 * Changes padding and font-sizes.
 	 */
-	export let size: "small" | "medium" = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 
 	/**
-	 * Heading text
+	 * Heading text.
 	 */
 	export let heading: string;
 
 	/**
-	 * Allows setting a different HTML h-tag
+	 * Allows setting a different HTML h-tag.
 	 */
-	export let headingTag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" = "h2";
+	export let headingTag: (typeof headingTags)[number] = "h2";
 
 	const headingID = "es-" + newUniqueId();
 </script>
 
 <section
-	{...$$restProps}
+	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-error-summary", `navds-error-summary--${size}`)}
 	tabIndex={-1}
 	aria-live="polite"

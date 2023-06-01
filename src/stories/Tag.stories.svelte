@@ -23,7 +23,7 @@
 	];
 </script>
 
-<Meta title="ds-svelte/Tag" component={Tag} />
+<Meta title="components/Tag" component={Tag} />
 
 <Template let:args>
 	<div class="rowgapwrap">

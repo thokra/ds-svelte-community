@@ -7,7 +7,7 @@
 		"Deserunt veniam eu fugiat ad est occaecat aliqua nisi aliquip. Aute amet occaecat ex aliqua irure elit labore pariatur. Proident pariatur proident pariatur magna consequat velit id commodo quis sunt tempor ullamco aliquip pariatur.";
 </script>
 
-<Meta title="ds-svelte/Typography/BodyLong" component={BodyLong} />
+<Meta title="typography/BodyLong" component={BodyLong} />
 
 <Template let:args>
 	<BodyLong {...args}>{text}</BodyLong>

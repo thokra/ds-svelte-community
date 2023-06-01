@@ -3,48 +3,51 @@
 </script>
 
 <script lang="ts">
-	import { Expand } from "$lib/icons";
-	import { classes } from "../helpers";
+	import { ChevronDown } from "$lib/icons";
+	import { classes, omit } from "../helpers";
 	import BodyLong from "../typography/BodyLong.svelte";
 	import Detail from "../typography/Detail.svelte";
 	import ErrorMessage from "../typography/ErrorMessage.svelte";
 	import Label from "../typography/Label.svelte";
+	import type { Props, sizes } from "./type";
+
+	type $$Props = Props;
 
 	/**
-	 * Exposes the HTML size attribute
+	 * Exposes the HTML size attribute.
 	 */
-	export let htmlSize: number | null = null;
+	export let htmlSize: number = 0;
 	/**
-	 * Label for select
+	 * Label for select.
 	 */
 	export let label = "";
 	/**
-	 * If enabled shows the label and description for screenreaders only
+	 * If enabled shows the label and description for screenreaders only.
 	 */
 	export let hideLabel = false;
 	/**
-	 * Sets inline-style on select wrapper
+	 * Sets inline-style on select wrapper.
 	 */
 	export let style = "";
 
 	/**
-	 * Changes font-size, padding and gaps
+	 * Changes font-size, padding and gaps.
 	 */
-	export let size: "medium" | "small" = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 
 	/**
-	 * Disables element
-	 * @note Avoid using if possible for accessibility purposes
+	 * Disables element.
+	 * @note Avoid using if possible for accessibility purposes.
 	 */
 	export let disabled = false;
 
 	/**
-	 * Error message for element
+	 * Error message for element.
 	 */
 	export let error = "";
 
 	/**
-	 * Selected value
+	 * Selected value.
 	 */
 	export let value = "";
 
@@ -68,6 +71,7 @@
 	{#if $$slots.description}
 		{#if size === "medium"}
 			<BodyLong class="navds-form-field__description {srOnlyClass}" size="small" as="div">
+				<!-- Extra description -->
 				<slot name="description" />
 			</BodyLong>
 		{:else}
@@ -78,11 +82,8 @@
 	{/if}
 
 	<div class="navds-select__container" {style}>
-		<!-- {...omit(rest, ["error", "errorId", "size"])} -->
-		<!-- {...inputProps} -->
-		<!-- ref={ref} -->
 		<select
-			{id}
+			{...omit($$restProps, "class")}
 			bind:value
 			class={classes(
 				$$restProps,
@@ -91,13 +92,15 @@
 				`navds-body--${size ?? "medium"}`,
 			)}
 			size={htmlSize}
+			{id}
 			{disabled}
 			aria-invalid={hasError}
 			aria-describedby={hasError ? errorID : undefined}
 		>
+			<!-- List of `<option>` -->
 			<slot />
 		</select>
-		<Expand class="navds-select__chevron" aria-hidden />
+		<ChevronDown class="navds-select__chevron" aria-hidden />
 	</div>
 
 	<div

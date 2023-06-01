@@ -1,10 +1,10 @@
 import type { SvelteComponentTyped } from "svelte";
 
 declare class SvgComponent extends SvelteComponentTyped<
-  svelte.JSX.SVGProps<SVGSVGElement>,
-  {},
-  { default: {} }
-  > {}
+	svelte.JSX.SVGProps<SVGSVGElement>,
+	{},
+	{ default: {} }
+> {}
 
 export const Airplane: typeof SvgComponent;
 export const AirplaneFill: typeof SvgComponent;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Body, DataCell, Header, HeaderCell, Row, Table } from "$lib/components/Table";
-	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import type { SortState } from "$lib/components/Table/Table.svelte";
+	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	const data = [
 		{
@@ -52,7 +52,7 @@
 	let orderedData = orderData();
 </script>
 
-<Meta title="ds-svelte/Table" component={Table} />
+<Meta title="components/Table" component={Table} />
 
 <Template let:args>
 	<Table {...args}>

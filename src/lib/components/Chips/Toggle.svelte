@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { Checkmark } from "$lib/icons";
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
+	import type { ToggleProps } from "./type";
+
+	type $$Props = ToggleProps;
 
 	/**
 	 * Toggles aria-pressed and visual-changes
@@ -8,19 +11,14 @@
 	export let selected = false;
 
 	/**
-	 * Tag to use for the element
-	 */
-	export let as = "button";
-
-	/**
 	 * The content of the chip
 	 */
 	export let value: string;
 </script>
 
-<svelte:element
-	this={as}
-	{...$$restProps}
+<!-- Called when the user clicks the toggle -->
+<button
+	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-chips__chip", "navds-chips__toggle")}
 	class:navds-chips--icon-left={selected}
 	aria-pressed={selected}
@@ -30,5 +28,6 @@
 		<Checkmark aria-hidden class="navds-chips__toggle-icon" />
 	{/if}
 
-	<span class="navds-chips__chip-text">{value}</span>
-</svelte:element>
+	<!-- Content of the ToggleChip. Falls back to `value` prop if no content. -->
+	<span class="navds-chips__chip-text"><slot>{value}</slot></span>
+</button>

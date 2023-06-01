@@ -1,21 +1,24 @@
 <script lang="ts">
-	import { Checkbox } from "./Checkbox";
-	import { classes } from "./helpers";
-	import BodyLong from "./typography/BodyLong.svelte";
-	import ErrorMessage from "./typography/ErrorMessage.svelte";
+	import { Checkbox } from "../Checkbox";
+	import { classes, omit } from "../helpers";
+	import BodyLong from "../typography/BodyLong.svelte";
+	import ErrorMessage from "../typography/ErrorMessage.svelte";
+	import type { Props } from "./type";
+
+	type $$Props = Props;
 
 	/**
-	 * Error message for element
+	 * Error message for element.
 	 */
 	export let error = "";
 
 	/**
-	 * Override internal errorId
+	 * Override internal errorId.
 	 */
 	export let errorId = "";
 
 	/**
-	 * Changes font-size, padding and gaps
+	 * Changes font-size, padding and gaps.
 	 */
 	export let size: "medium" | "small" = "medium";
 
@@ -25,14 +28,18 @@
 	export let value = "";
 
 	/**
-	 * Override internal id
+	 * Override internal id.
 	 */
 	export let id = "";
 
+	/**
+	 * Wether the checkbox is checked, can be used with `bind:checked`.
+	 */
 	export let checked = false;
 </script>
 
 <div
+	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-confirmation-panel", "navds-form-field")}
 	class:navds-confirmation-panel--small={size === "small"}
 	class:navds-confirmation-panel--error={error != ""}
@@ -46,10 +53,12 @@
 				id={`confirmation-panel-${id}`}
 				as="div"
 			>
+				<!-- Description -->
 				<slot />
 			</BodyLong>
 		{/if}
 		<Checkbox bind:checked {value} error={!!error} {size}>
+			<!-- Label text -->
 			<slot name="label" />
 		</Checkbox>
 	</div>

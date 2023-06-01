@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { CheckmarkCircleFill as SuccessFilled } from "$lib/icons";
 	import { onMount } from "svelte";
+	import { omit } from "../helpers";
 	import Label from "../typography/Label.svelte";
 	import { getStepperContext } from "./Stepper.svelte";
 
@@ -49,12 +50,13 @@
 	<span class="navds-stepper__line navds-stepper__line--1" />
 	<svelte:element
 		this={as}
-		{...$$restProps}
+		{...omit($$restProps, "class")}
 		class="navds-stepper__step"
 		class:navds-stepper__step--active={index == $activeStep}
 		class:navds-stepper__step--behind={index < $activeStep}
 		class:navds-stepper__step--non-interactive={!interactive}
 		class:navds-stepper__step--completed={completed}
+		class:unstyled={as == "a"}
 		aria-current={index == $activeStep}
 		on:click={interactive ? handleClick : null}
 	>

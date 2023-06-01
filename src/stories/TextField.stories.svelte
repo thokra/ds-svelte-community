@@ -14,7 +14,7 @@
 	let errorValue = "";
 </script>
 
-<Meta title="ds-svelte/TextField" component={TextField} />
+<Meta title="components/TextField" component={TextField} />
 
 <Template let:args>
 	<div class="colgap">

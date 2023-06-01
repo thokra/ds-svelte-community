@@ -5,19 +5,22 @@
 		CheckmarkCircleFill as SuccessFilled,
 		ExclamationmarkTriangleFill as WarningFilled,
 	} from "$lib/icons";
-	import { classes } from "./helpers";
-	import BodyLong from "./typography/BodyLong.svelte";
+	import { classes, omit } from "../helpers";
+	import BodyLong from "../typography/BodyLong.svelte";
+	import type { Props } from "./type";
+
+	type $$Props = Props;
 
 	/**
 	 * Changes colors and icon usage when changed
 	 */
-	export let variant: "error" | "warning" | "info" | "success" = "info";
+	export let variant: Props["variant"] = "info";
 
 	/**
 	 * Changes padding and font-sizes
 	 * @default medium
 	 */
-	export let size: "medium" | "small" = "medium";
+	export let size: Props["size"] = "medium";
 	/**
 	 * Removes border-radius
 	 * @default false
@@ -31,10 +34,10 @@
 </script>
 
 <div
+	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-alert", `navds-alert--${variant}`, `navds-alert--${size}`)}
 	class:navds-alert--full-width={fullWidth}
 	class:navds-alert--inline={inline}
-	{...$$restProps}
 >
 	{#if variant == "error"}
 		<ErrorFilled class="navds-alert__icon" />
@@ -46,6 +49,7 @@
 		<SuccessFilled class="navds-alert__icon" />
 	{/if}
 	<BodyLong as="div" {size} class="navds-alert__wrapper">
+		<!-- Alert content -->
 		<slot />
 	</BodyLong>
 </div>

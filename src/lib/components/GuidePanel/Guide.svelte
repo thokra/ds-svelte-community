@@ -1,20 +1,21 @@
 <script lang="ts">
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
 	import DefaultIllustration from "./Illustration.svelte";
+	import type { GuideProps, sizes } from "./type";
+
+	type $$Props = GuideProps;
 
 	/**
 	 * Predefined size properties for illustration
-	 * @default "medium"
 	 */
-	export let size: "small" | "medium" = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 </script>
 
-<div {...$$restProps} class={classes($$restProps, "navds-guide")}>
+<div {...omit($$restProps, "class")} class={classes($$restProps, "navds-guide")}>
 	<div class="navds-guide__illustration navds-guide__illustration--{size}">
-		{#if $$slots.illustration}
-			<slot name="illustration" />
-		{:else}
+		<!-- Custom illustration -->
+		<slot name="illustration">
 			<DefaultIllustration />
-		{/if}
+		</slot>
 	</div>
 </div>

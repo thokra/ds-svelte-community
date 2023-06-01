@@ -1,12 +1,25 @@
 <script>
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import Panel from "$lib/components/Panel.svelte";
+	import Panel from "$lib/components/Panel/Panel.svelte";
 	import BodyLong from "$lib/components/typography/BodyLong.svelte";
 	import Heading from "$lib/components/typography/Heading.svelte";
+
+	import source from "./examples/Panel.svelte?raw";
 </script>
 
-<Meta title="ds-svelte/Panel" component={Panel} />
+<Meta
+	title="components/Panel"
+	component={Panel}
+	argTypes={{
+		border: {
+			description: "Adds a border around the panel.",
+		},
+		as: {
+			description: "HTML element to render as.",
+		},
+	}}
+/>
 
 <Template let:args>
 	<Panel {...args}>
@@ -20,5 +33,5 @@
 	</Panel>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 <Story name="Border" args={{ border: true }} />

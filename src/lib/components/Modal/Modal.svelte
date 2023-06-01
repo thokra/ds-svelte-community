@@ -1,14 +1,31 @@
 <script lang="ts">
-	import "@navikt/ds-css/modal.css";
-
-	import type { HTMLDialogAttributes } from "svelte/elements";
-	import { classes, omit } from "../helpers";
-	import Button from "../Button.svelte";
+	import { browser } from "$app/environment";
 	import XMark from "$lib/icons/XMark.svelte";
+	import type { HTMLDialogAttributes } from "svelte/elements";
+	import Button from "../Button/Button.svelte";
+	import { classes, omit } from "../helpers";
 
+	interface $$Props extends HTMLDialogAttributes {
+		open: boolean;
+		isModal?: boolean;
+		closeButton?: boolean;
+	}
+
+	/**
+	 * Set open to `true` to open the dialog. Set to `false` to close it.
+	 * Recommended to use with `bind:open`.
+	 */
 	export let open: boolean;
-	export let isModal = true;
+
+	/**
+	 * Removes close-button(X) when false.
+	 */
 	export let closeButton = true;
+
+	/**
+	 * Set to `true` to make the dialog modal.
+	 */
+	export let isModal = true;
 
 	let dialog: HTMLDialogElement;
 
@@ -16,17 +33,13 @@
 	$: if (dialog && !open) dialog.close();
 
 	$: {
-		if (dialog && open) {
-			window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
-		} else {
-			window.document.getElementsByTagName("body")[0].style.overflow = "auto";
+		if (browser) {
+			if (dialog && open) {
+				window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
+			} else {
+				window.document.getElementsByTagName("body")[0].style.overflow = "auto";
+			}
 		}
-	}
-
-	interface $$Props extends HTMLDialogAttributes {
-		open: boolean;
-		isModal?: boolean;
-		closeButton?: boolean;
 	}
 </script>
 
@@ -40,14 +53,13 @@
 >
 	{#if open}
 		<div class="navds-modal__content">
+			<!-- Modal content -->
 			<slot />
 		</div>
 	{/if}
 	{#if closeButton}
 		<Button
-			class={classes({}, "navds-modal__button", {
-				"navds-modal__button--shake": isModal,
-			})}
+			class={classes({}, "navds-modal__button", "navds-modal__button--shake")}
 			on:click={() => (open = false)}
 			size="small"
 			variant="tertiary"

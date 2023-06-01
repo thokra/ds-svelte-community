@@ -1,11 +1,6 @@
 <script lang="ts" context="module">
 	import { getContext } from "svelte";
-
-	export type AccordionContext = {
-		variant: "default" | "neutral";
-		headingSize: "large" | "medium" | "small" | "xsmall";
-		size: "large" | "medium" | "small";
-	};
+	import type { AccordionContext, Props } from "./type";
 
 	const contextKey = Symbol("AccordionContext");
 
@@ -15,13 +10,15 @@
 </script>
 
 <script lang="ts">
-	import { classes, omit } from "../helpers";
 	import { setContext } from "svelte";
 	import { writable, type Readable } from "svelte/store";
+	import { classes, omit } from "../helpers";
 
-	export let variant: AccordionContext["variant"] = "default";
-	export let headingSize: AccordionContext["headingSize"] = "small";
-	export let size: AccordionContext["size"] = "medium";
+	export let variant: Props["variant"] = "default";
+	export let headingSize: Props["headingSize"] = "small";
+	export let size: Props["size"] = "medium";
+
+	type $$Props = Props;
 
 	const ctx: AccordionContext = {
 		variant,
@@ -44,5 +41,6 @@
 	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-accordion", `navds-accordion--${size}`)}
 >
+	<!-- List of AccordionItem -->
 	<slot />
 </div>

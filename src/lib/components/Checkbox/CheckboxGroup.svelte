@@ -1,16 +1,8 @@
 <script lang="ts" context="module">
 	import newUniqueId from "locally-unique-id-generator";
-	import Fieldset from "../Fieldset.svelte";
 	import { getContext } from "svelte";
-	import type { Readable } from "svelte/store";
-
-	export type CheckboxGroupContext = {
-		change: (value: any) => void;
-		groupControlled: boolean;
-		values: Readable<any[]>;
-		hasError: Readable<boolean>;
-		size: "medium" | "small";
-	};
+	import Fieldset from "../Fieldset.svelte";
+	import type { CheckboxGroupContext, Props, sizes } from "./type";
 
 	const contextKey = Symbol("CheckboxGroupContext");
 
@@ -23,51 +15,63 @@
 </script>
 
 <script lang="ts">
-	import { classes } from "../helpers";
+	import { hasContext, setContext } from "svelte";
 	import { writable } from "svelte/store";
-	import { setContext, hasContext } from "svelte";
+	import { classes } from "../helpers";
+
+	type $$Props = Props;
 
 	/**
 	 * Controlled state for checkboxes.
 	 */
-	export let value: any[] = [];
+	export let value: unknown[] = [];
 
 	/**
-	 * If enabled shows the legend and description for screen readers only
+	 * If enabled shows the legend and description for screen readers only.
 	 */
 	export let hideLegend = false;
 
 	/**
-	 * Error message for element
+	 * Error message for element.
 	 */
-	export let error: any = false;
+	export let error = "";
 
 	/**
-	 * Override internal errorId
+	 * Override internal errorId.
 	 */
 	export let errorId: string = "";
 
 	/**
-	 * Changes font-size, padding and gaps
+	 * Changes font-size, padding and gaps.
 	 */
-	export let size: CheckboxGroupContext["size"] = "medium";
+	export let size: (typeof sizes)[number] = "medium";
 
 	/**
-	 * Disables element @note Avoid using if possible for accessibility purposes
+	 * Disables element @note Avoid using if possible for accessibility purposes.
 	 */
 	export let disabled = false;
 
 	/**
-	 * Override internal id
+	 * Override internal id.
 	 */
 	export let id = "cbg-" + newUniqueId();
 
-	const valuesStore = writable<any[]>(value);
+	/**
+	 * Legend of the fieldset.
+	 */
+	export let legend = "";
+
+	/**
+	 * Description of the fieldset.
+	 */
+	export let description = "";
+
+	const valuesStore = writable<unknown[]>(value);
 	$: value = $valuesStore;
 	const errorStore = writable<boolean>(!!error);
 
 	const ctx: CheckboxGroupContext = {
-		change: (value: any) => {
+		change: (value: unknown) => {
 			if ($valuesStore.includes(value)) {
 				valuesStore.update((values) => values.filter((v) => v !== value));
 			} else {
@@ -93,9 +97,13 @@
 	{size}
 	class={classes($$restProps, "navds-checkbox-group", `navds-checkbox-group--${size}`)}
 >
-	<svelte:fragment slot="legend"><slot name="legend" /></svelte:fragment>
-	<svelte:fragment slot="description"><slot name="description" /></svelte:fragment>
+	<!-- Legend of the fieldset, fallback to `legend` prop. -->
+	<svelte:fragment slot="legend"><slot name="legend">{legend}</slot></svelte:fragment>
+	<!-- Description of the fieldset, fallback to `description` prop. -->
+	<svelte:fragment slot="description"><slot name="description">{description}</slot></svelte:fragment
+	>
 	<div class="navds-checkboxes">
+		<!-- Content of the fieldset -->
 		<slot />
 	</div>
 </Fieldset>

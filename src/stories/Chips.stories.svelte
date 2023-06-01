@@ -1,6 +1,8 @@
 <script>
-	import { Chips, Removable, Toggle } from "$lib/components/Chips";
+	import { Chips, RemovableChip, ToggleChip } from "$lib/components/Chips";
+	import { sizes } from "$lib/components/Chips/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+	import source from "./examples/Chips.svelte?raw";
 
 	let values = [
 		{ name: "Norwegian", selected: true },
@@ -11,13 +13,27 @@
 	];
 </script>
 
-<Meta title="ds-svelte/Chips" component={Chips} />
+<Meta
+	title="components/Chips"
+	component={Chips}
+	argTypes={{
+		size: {
+			control: "select",
+			options: sizes,
+
+			description: "The variant of the accordion.",
+			table: {
+				type: { summary: sizes.join(" | ") },
+			},
+		},
+	}}
+/>
 
 <Template let:args>
 	<Chips {...args}>
 		{#each values as value}
 			<li>
-				<Removable
+				<RemovableChip
 					value={value.name}
 					on:delete={() => {
 						values = values.filter((v) => v !== value);
@@ -28,14 +44,14 @@
 	</Chips>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 <Story name="Small" args={{ size: "small" }} />
 
 <Story name="Checked">
 	<div class="colspan">
 		<Chips>
 			{#each values as value}
-				<Toggle
+				<ToggleChip
 					value={value.name}
 					selected={value.selected}
 					on:click={() => {
@@ -43,13 +59,13 @@
 					}}
 				>
 					{value.name}
-				</Toggle>
+				</ToggleChip>
 			{/each}
 		</Chips>
 
 		<Chips size="small">
 			{#each values as value}
-				<Toggle
+				<ToggleChip
 					value={value.name}
 					selected={value.selected}
 					on:click={() => {
@@ -57,7 +73,7 @@
 					}}
 				>
 					{value.name}
-				</Toggle>
+				</ToggleChip>
 			{/each}
 		</Chips>
 	</div>

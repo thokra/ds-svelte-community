@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import Button from "$lib/components/Button.svelte";
+	import Button from "$lib/components/Button/Button.svelte";
 	import Tooltip from "$lib/components/Tooltip.svelte";
 	import PrinterSmall from "$lib/icons/PrinterSmall.svelte";
 </script>
 
 <Meta
-	title="ds-svelte/Tooltip"
+	title="components/Tooltip"
 	component={Tooltip}
 	argTypes={{
 		placement: {

@@ -1,11 +1,66 @@
 <script>
-	import { CheckboxGroup, Checkbox } from "$lib/components/Checkbox";
+	import { Checkbox, CheckboxGroup } from "$lib/components/Checkbox";
+	import { sizes } from "$lib/components/Checkbox/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
+	import source from "./examples/CheckboxGroup.svelte?raw";
 
 	let groupControlValue = ["1"];
 </script>
 
-<Meta title="ds-svelte/CheckboxGroup" component={CheckboxGroup} />
+<Meta
+	title="components/CheckboxGroup"
+	component={CheckboxGroup}
+	argTypes={{
+		error: {
+			description: "Error message for element.",
+		},
+		errorId: {
+			description: "Override internal errorId.",
+		},
+		hideLegend: {
+			description: "If enabled shows the legend and description for screen readers only.",
+		},
+		value: {
+			control: "object",
+			type: { name: "array", value: { name: "string" }, required: true },
+
+			description: "Controlled state for checkboxes.",
+			table: {
+				type: { summary: "array" },
+			},
+		},
+		description: {
+			control: "text",
+			description: "Description of the fieldset.",
+		},
+		size: {
+			control: "select",
+			options: sizes,
+			description: "Changes font-size, padding and gaps.",
+			table: {
+				type: { summary: sizes.join(" | ") },
+				defaultValue: { summary: "medium" },
+			},
+		},
+		disabled: {
+			description: "Disables element. Avoid using if possible for accessibility purposes.",
+		},
+		id: {
+			control: "text",
+			description: "Override internal id.",
+			table: {
+				type: { summary: "string" },
+				defaultValue: { summary: "cbg-[calculated]" },
+			},
+		},
+		legend: {
+			description: "Legend of the fieldset.",
+		},
+	}}
+	args={{
+		value: ["2"],
+	}}
+/>
 
 <Template let:args>
 	<CheckboxGroup {...args}>
@@ -16,7 +71,7 @@
 	</CheckboxGroup>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Group control">
 	<CheckboxGroup bind:value={groupControlValue}>

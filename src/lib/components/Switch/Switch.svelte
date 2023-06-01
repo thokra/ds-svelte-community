@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import Loader from "../Loader.svelte";
+	import Loader from "../Loader/Loader.svelte";
 	import { classes } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
 	import Detail from "../typography/Detail.svelte";

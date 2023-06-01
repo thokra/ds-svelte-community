@@ -1,0 +1,23 @@
+import { Stories, Primary, Meta, Controls } from "@storybook/addon-docs";
+
+import CopyButton from "./CopyButton.stories.svelte";
+
+<Meta of={CopyButton} />
+
+# CopyButton
+
+Allow users to copy text to clipboard.
+
+**Note:**
+This differs from the `@navikt/ds-react` implementation in that it uses the `navigator.clipboard` API instead of the `document.execCommand("copy")` API.
+This is to simplify code and support up-to-date browsers only. If you support IE or older browsers, reach out.
+
+<Primary />
+
+## Properties
+
+### CopyButton
+
+<Controls />
+
+<Stories includePrimary={false} />

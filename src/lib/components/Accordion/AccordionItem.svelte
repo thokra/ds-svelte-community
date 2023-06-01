@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { ChevronDown } from "$lib/icons";
 	import { slide } from "svelte/transition";
+	import { omit } from "../helpers";
 	import BodyLong from "../typography/BodyLong.svelte";
 	import Heading from "../typography/Heading.svelte";
-	import { omit } from "../helpers";
 	import { GetAccordionContext } from "./Accordion.svelte";
+	import type { ItemProps } from "./type";
+
+	type $$Props = ItemProps;
 
 	export let open = false;
 	export let heading: string = "";
@@ -41,6 +44,7 @@
 			/>
 		</div>
 		<Heading size={$ctx?.headingSize} as="span" class="navds-accordion__header-content">
+			<!-- Heading. Falls back to `heading` prop if not defined. -->
 			<slot name="heading">{heading}</slot>
 		</Heading>
 	</button>
@@ -48,6 +52,7 @@
 	{#if open}
 		<div transition:slide={{ duration: 300 }}>
 			<BodyLong as="div" class="navds-accordion__content">
+				<!-- Content of the accordion -->
 				<slot />
 			</BodyLong>
 		</div>

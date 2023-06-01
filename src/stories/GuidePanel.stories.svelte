@@ -1,13 +1,19 @@
 <script>
 	import { GuidePanel } from "$lib/components/GuidePanel";
-	import { Sun, Sun as Moon } from "$lib/icons";
+	import { Sun as Moon, Sun } from "$lib/icons";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-
-	let child1 = false;
-	let child2 = false;
+	import source from "./examples/GuidePanel.svelte?raw";
 </script>
 
-<Meta title="ds-svelte/GuidePanel" component={GuidePanel} />
+<Meta
+	title="components/GuidePanel"
+	component={GuidePanel}
+	argTypes={{
+		poster: {
+			description: "Poster positions guide-illustration above content.",
+		},
+	}}
+/>
 
 <Template let:args>
 	<GuidePanel {...args}>
@@ -17,7 +23,7 @@
 	</GuidePanel>
 </Template>
 
-<Story name="Default" />
+<Story name="Default" {source} />
 
 <Story name="Poster" args={{ poster: true }} />
 

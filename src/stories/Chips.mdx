@@ -1,0 +1,33 @@
+import { ArgTypes, Primary, Stories, Meta, Controls } from "@storybook/addon-docs";
+
+import Chips from "./Chips.stories.svelte";
+
+import { RemovableChip, ToggleChip } from "$lib";
+
+<Meta of={Chips} />
+
+# Chips
+
+We often have needs for actions that are not "primary" or that it does not fit
+to use Buttons. Chips are small interactive components that manipulate data or
+display of data.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/chips).
+
+<Primary />
+
+## Properties
+
+### Chips
+
+<Controls />
+
+### RemovableChip
+
+<ArgTypes of={RemovableChip} />
+
+### ToggleChip
+
+<ArgTypes of={ToggleChip} />
+
+<Stories includePrimary={false} />

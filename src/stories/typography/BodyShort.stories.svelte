@@ -6,7 +6,7 @@
 	const text = "Deserunt veniam eu fugiat ad est occaecat aliqua nisi aliquip.";
 </script>
 
-<Meta title="ds-svelte/Typography/BodyShort" component={BodyShort} />
+<Meta title="typography/BodyShort" component={BodyShort} />
 
 <Template let:args>
 	<BodyShort {...args}>{text}</BodyShort>
