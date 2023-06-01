@@ -39,7 +39,7 @@
 	/**
 	 * Override internal errorId.
 	 */
-	export let errorId: string = "";
+	export let errorId = "";
 
 	/**
 	 * Changes font-size, padding and gaps.

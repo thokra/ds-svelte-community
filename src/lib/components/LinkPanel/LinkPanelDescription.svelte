@@ -3,7 +3,7 @@
 	import { classes, omit } from "../helpers";
 	import BodyLong from "../typography/BodyLong.svelte";
 
-	interface $$Props extends HTMLAttributes<HTMLDivElement> {}
+	type $$Props = HTMLAttributes<HTMLDivElement>;
 </script>
 
 <BodyLong

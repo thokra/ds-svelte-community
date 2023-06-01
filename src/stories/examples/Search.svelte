@@ -8,6 +8,6 @@
 	let value = "";
 </script>
 
-<form on:submit>
+<form on:submit={submit}>
 	<Search label="Search this page" bind:value />
 </form>

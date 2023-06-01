@@ -12,7 +12,7 @@
 	 * Current page. If set will require implementation of `on:change` event.
 	 * @note Pagination indexing starts at 1.
 	 */
-	export let page: number = 1;
+	export let page = 1;
 	/**
 	 * Number of always visible pages before and after the current page.
 	 * @default 1
@@ -69,7 +69,7 @@
 		);
 		const siblingsEnd = siblingsStart + siblingCount * 2;
 
-		const nullish = (a: any, b: any) => (a == null ? b : a);
+		const nullish = <T>(a: T, b: T): T => (a == null ? b : a);
 
 		return [
 			...startPages,

@@ -9,8 +9,14 @@
 
 	type $$Props = ItemProps;
 
+	/**
+	 * Whether the accordion item is open or not.
+	 */
 	export let open = false;
-	export let heading: string = "";
+	/**
+	 * Heading of the accordion item.
+	 */
+	export let heading = "";
 
 	const ctx = GetAccordionContext();
 

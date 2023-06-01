@@ -16,7 +16,7 @@
 	/**
 	 * Exposes the HTML size attribute.
 	 */
-	export let htmlSize: number = 0;
+	export let htmlSize = 0;
 	/**
 	 * Label for select.
 	 */

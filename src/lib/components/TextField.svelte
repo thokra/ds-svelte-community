@@ -5,9 +5,9 @@
 <script lang="ts">
 	import { classes } from "./helpers";
 	import BodyLong from "./typography/BodyLong.svelte";
-	import Label from "./typography/Label.svelte";
 	import Detail from "./typography/Detail.svelte";
 	import ErrorMessage from "./typography/ErrorMessage.svelte";
+	import Label from "./typography/Label.svelte";
 
 	/**
 	 * Controlled value
@@ -56,8 +56,6 @@
 	export let id = "tf-" + newUniqueId();
 
 	const inputDescriptionId = `tf-desc-${id}`;
-
-	const inputType = type;
 
 	$: srOnlyClass = hideLabel ? " navds-sr-only" : "";
 	$: inputProps = {
