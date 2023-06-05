@@ -225,6 +225,16 @@
 	</Tabs>
 </Story>
 
+<Story name="Tab links">
+	<Tabs value={"/page/2"}>
+		<TabList>
+			<Tab as="a" href="#/page/1" value="/page/1">Page 1</Tab>
+			<Tab as="a" href="#/page/1" value="/page/2">Page 2</Tab>
+			<Tab as="a" href="#/page/1" value="/page/3">Page 3</Tab>
+		</TabList>
+	</Tabs>
+</Story>
+
 <style>
 	.examplePanelWrapper {
 		height: 100px;

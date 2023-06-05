@@ -28,8 +28,13 @@ _Note: This component does not yet follow all best practices regarding accessibi
 
 ### Tab
 
+Tab can be rendered with `as="a"` to render a link instead of a button. In this mode it requires an `href` property, and will not change tab selection when clicked.
+You will need to control the selected tab via `<Tabs value={}>`.
+
 <ArgTypes of={Tab} />
 
 ### TabPanel
 
 <ArgTypes of={TabPanel} />
+
+<Stories includePrimary={false} />

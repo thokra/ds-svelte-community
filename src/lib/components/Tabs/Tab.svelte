@@ -2,11 +2,12 @@
 	import { onMount } from "svelte";
 	import { Focus, classes, focusable, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
-	import { getTabsContext, type TabProps } from "./type";
+	import { ases, getTabsContext, type TabProps } from "./type";
 
 	type $$Props = TabProps;
 
 	export let value: string;
+	export let as: (typeof ases)[number] = "button";
 
 	const ctx = getTabsContext();
 	const currentValue = ctx.value;
@@ -40,7 +41,7 @@
 
 	const handleFocus = () => {
 		ctx.focusOn(self);
-		if (ctx.selectionFollowsFocus) {
+		if (as != "a" && ctx.selectionFollowsFocus) {
 			ctx.activate(value);
 		}
 	};
@@ -50,7 +51,8 @@
 	};
 </script>
 
-<button
+<svelte:element
+	this={as}
 	bind:this={self}
 	{...omit($$restProps, "class", "type", "role", "aria-selected", "tabindex")}
 	class={classes(
@@ -60,11 +62,12 @@
 		`navds-tabs__tab-icon--${ctx.iconPosition}`,
 	)}
 	class:navds-tabs__tab--icon-only={$$slots.icon && !$$slots.default}
+	class:unstyled={as === "a"}
 	type="button"
 	role="tab"
 	aria-selected={$currentValue == value}
 	tabindex={$activeTab == self ? 0 : -1}
-	on:click={() => ctx.activate(value)}
+	on:click={() => as != "a" && ctx.activate(value)}
 	on:keydown={handleKeydown}
 	on:focus={handleFocus}
 	on:blur={handleBlur}
@@ -73,4 +76,10 @@
 		<slot name="icon" />
 		<slot />
 	</BodyShort>
-</button>
+</svelte:element>
+
+<style>
+	a {
+		text-decoration: none;
+	}
+</style>
