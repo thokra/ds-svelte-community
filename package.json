@@ -1,6 +1,6 @@
 {
 	"name": "@nais/ds-svelte",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"homepage": "https://nais.github.io/ds-svelte",
 	"repository": "https://github.com/nais/ds-svelte.git",
 	"license": "MIT",
@@ -19,17 +19,57 @@
 		"storybook:docs": "storybook dev --docs",
 		"generate-icons": "./hack/generate-icons.sh"
 	},
+	"publishConfig": {
+		"types": "./dist/index.d.ts",
+		"exports": {
+			".": {
+				"types": "./dist/index.d.ts",
+				"svelte": "./dist/index.js",
+				"default": "./dist/index.js"
+			},
+			"./icons": {
+				"types": "./dist/icons/index.d.ts",
+				"import": "./dist/icons/index.js",
+				"svelte": "./dist/icons/index.js"
+			},
+			"./css": {
+				"default": "./dist/css/index.css"
+			},
+			"typesVersions": {
+				">4.0": {
+					"index.d.ts": [
+						"./dist/index.d.ts"
+					],
+					"icons": [
+						"./dist/icons/index.d.ts"
+					]
+				}
+			}
+		}
+	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
 			"svelte": "./dist/index.js"
 		},
 		"./icons": {
 			"types": "./dist/icons/index.d.ts",
+			"import": "./dist/icons/index.js",
 			"svelte": "./dist/icons/index.js"
 		},
 		"./css": {
 			"default": "./dist/css/index.css"
+		}
+	},
+	"typesVersions": {
+		">4.0": {
+			"index.d.ts": [
+				"./dist/index.d.ts"
+			],
+			"icons": [
+				"./dist/icons/index.d.ts"
+			]
 		}
 	},
 	"files": [
