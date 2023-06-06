@@ -12,7 +12,7 @@
 	import { Loader } from "$lib";
 	import { XMark as Close, MagnifyingGlass as SearchIcon } from "$lib/icons";
 	import { createEventDispatcher } from "svelte";
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
 	import Label from "../typography/Label.svelte";
 	import SearchButton from "./SearchButton.svelte";
@@ -75,7 +75,7 @@
 
 	const baseID = "search-" + newUniqueId();
 
-	let srOnlyClass = hideLabel ? "navds-sr-only" : "";
+	$: srOnlyClass = hideLabel ? "navds-sr-only" : "";
 
 	let input: HTMLInputElement | undefined;
 
@@ -128,6 +128,7 @@
 			<!-- svelte-ignore a11y-no-redundant-roles -->
 			<!-- Called when input is changed -->
 			<input
+				{...omit($$restProps, "class", "value", "type", "role")}
 				bind:this={input}
 				bind:value
 				type="search"

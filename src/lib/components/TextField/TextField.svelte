@@ -4,8 +4,10 @@
 
 <script lang="ts">
 	import { BodyLong, Detail, ErrorMessage, Label } from "$lib";
-	import { classes } from "../helpers";
-	import type { sizes, types } from "./type";
+	import { classes, omit } from "../helpers";
+	import type { Props, sizes, types } from "./type";
+
+	type $$Props = Props;
 
 	/**
 	 * Controlled value.
@@ -61,6 +63,7 @@
 		"aria-invalid": (error ? "true" : "false") as "true" | "false",
 		class: "navds-text-field__input navds-body-short navds-body-" + size,
 		size: htmlSize,
+		...omit($$restProps, "id", "class", "aria-invalid", "size"),
 	};
 </script>
 

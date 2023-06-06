@@ -1,9 +1,9 @@
-import type { HTMLAttributes } from "svelte/elements";
+import type { HTMLInputAttributes } from "svelte/elements";
 
 export const sizes = ["medium", "small"] as const;
 export const variants = ["primary", "secondary", "simple"] as const;
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface Props extends Omit<HTMLInputAttributes, "size"> {
 	label: string;
 	hideLabel?: boolean;
 	clearButtonLabel?: string;
