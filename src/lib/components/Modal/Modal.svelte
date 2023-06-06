@@ -1,6 +1,8 @@
 <script lang="ts">
 	import XMark from "$lib/icons/XMark.svelte";
+	import { onMount } from "svelte";
 	import type { HTMLDialogAttributes } from "svelte/elements";
+	import { writable } from "svelte/store";
 	import Button from "../Button/Button.svelte";
 	import { classes, omit } from "../helpers";
 
@@ -31,15 +33,17 @@
 	$: if (dialog && open) isModal ? dialog.showModal() : dialog.show();
 	$: if (dialog && !open) dialog.close();
 
-	$: {
-		if (window) {
-			if (dialog && open) {
+	const openStore = writable(open);
+	$: openStore.set(open);
+	onMount(() => {
+		return openStore.subscribe((value) => {
+			if (dialog && value) {
 				window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
 			} else {
 				window.document.getElementsByTagName("body")[0].style.overflow = "auto";
 			}
-		}
-	}
+		});
+	});
 </script>
 
 <dialog
