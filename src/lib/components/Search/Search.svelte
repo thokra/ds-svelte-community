@@ -9,6 +9,7 @@
 </script>
 
 <script lang="ts">
+	import { Loader } from "$lib";
 	import { XMark as Close, MagnifyingGlass as SearchIcon } from "$lib/icons";
 	import { createEventDispatcher } from "svelte";
 	import { classes } from "../helpers";
@@ -64,6 +65,12 @@
 	 */
 	export let disabled = false;
 
+	/**
+	 * Loading state.
+	 * @note Non-standard. Only available in ds-svelte.
+	 */
+	export let loading = false;
+
 	let hasError = false;
 
 	const baseID = "search-" + newUniqueId();
@@ -110,7 +117,13 @@
 	<div class="navds-search__wrapper">
 		<div class="navds-search__wrapper-inner">
 			{#if variant == "simple"}
-				<SearchIcon aria-hidden class="navds-search__search-icon" />
+				{#if loading}
+					<span class="navds-search__search-icon" style="height:50%;">
+						<Loader />
+					</span>
+				{:else}
+					<SearchIcon aria-hidden class="navds-search__search-icon" />
+				{/if}
 			{/if}
 			<!-- svelte-ignore a11y-no-redundant-roles -->
 			<!-- Called when input is changed -->
@@ -147,7 +160,7 @@
 		<slot>
 			{#if variant != "simple"}
 				<!-- Called when search button is clicked -->
-				<SearchButton on:click {disabled} {variant} {size} />
+				<SearchButton on:click {disabled} {variant} {size} {loading} />
 			{/if}
 		</slot>
 	</div>

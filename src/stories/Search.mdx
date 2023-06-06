@@ -1,5 +1,5 @@
 import { Stories, Primary, Meta, Controls, ArgTypes } from "@storybook/addon-docs";
-
+import { SearchButton } from "$lib";
 import Search from "./Search.stories.svelte";
 
 <Meta of={Search} />
@@ -17,5 +17,7 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 ### Search
 
 <Controls />
+
+<ArgTypes of={SearchButton} />
 
 <Stories includePrimary={false} />

@@ -13,4 +13,5 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
 	size?: (typeof sizes)[number];
 	value?: string;
 	disabled?: boolean;
+	loading?: boolean;
 }

@@ -3,19 +3,32 @@
 	import Button from "../Button/Button.svelte";
 	import { classes } from "../helpers";
 
+	/**
+	 * Size of button.
+	 */
 	export let size: "medium" | "small" = "medium";
 
+	/**
+	 * Button variant
+	 */
 	export let variant: "primary" | "secondary" = "primary";
 
+	/**
+	 * Disables element
+	 */
 	export let disabled = false;
+	/**
+	 * Loading state
+	 */
+	export let loading = false;
 </script>
 
-<!-- todo: Fix bug with ordering, border radius from `navds-search__button-search` is overridden -->
 <Button
 	type="submit"
 	on:click
 	{size}
 	{variant}
+	{loading}
 	class={classes($$restProps, "navds-search__button-search")}
 	{disabled}><Search slot="icon-left" /></Button
 >

@@ -1,5 +1,6 @@
 <script>
 	import { Search } from "$lib/components/Search";
+	import SearchButton from "$lib/components/Search/SearchButton.svelte";
 	import { sizes, variants } from "$lib/components/Search/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Search.svelte?raw";
@@ -53,6 +54,10 @@
 			description:
 				"Disables element\n\n**Note:** Avoid using if possible for accessibility purposes",
 		},
+		loading: {
+			control: "boolean",
+			description: "Loading state.\n\n**Note:** Non-standard. Only available in ds-svelte.",
+		},
 	}}
 	args={{
 		label: "Search something",
@@ -66,3 +71,13 @@
 </Template>
 
 <Story name="Default" {source} />
+
+<Story name="Custom button">
+	<Search label="Search">
+		<SearchButton variant="secondary" loading={true} />
+	</Search>
+</Story>
+
+<Story name="Simple loading">
+	<Search label="Search" variant="simple" loading />
+</Story>
