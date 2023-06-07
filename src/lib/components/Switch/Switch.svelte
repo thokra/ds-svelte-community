@@ -57,8 +57,10 @@
 		type="checkbox"
 		class={classes($$restProps, "navds-switch__input")}
 		{id}
+		on:click
 		on:change
 		on:mousedown
+		on:beforeinput
 	/>
 	<span class="navds-switch__track">
 		<span class="navds-switch__thumb">
