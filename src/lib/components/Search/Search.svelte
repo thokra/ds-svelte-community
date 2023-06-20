@@ -67,7 +67,7 @@
 
 	/**
 	 * Loading state.
-	 * @note Non-standard. Only available in ds-svelte.
+	 * @note Non-standard. Only available in ds-svelte-community.
 	 */
 	export let loading = false;
 

@@ -56,7 +56,8 @@
 		},
 		loading: {
 			control: "boolean",
-			description: "Loading state.\n\n**Note:** Non-standard. Only available in ds-svelte.",
+			description:
+				"Loading state.\n\n**Note:** Non-standard. Only available in ds-svelte-community.",
 		},
 	}}
 	args={{

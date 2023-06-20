@@ -1,8 +1,8 @@
 {
-	"name": "@nais/ds-svelte",
+	"name": "@nais/ds-svelte-community",
 	"version": "0.1.8",
-	"homepage": "https://nais.github.io/ds-svelte",
-	"repository": "https://github.com/nais/ds-svelte.git",
+	"homepage": "https://nais.github.io/ds-svelte-community",
+	"repository": "https://github.com/nais/ds-svelte-community.git",
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
@@ -17,7 +17,8 @@
 		"storybook": "storybook dev -p 6006 --no-open",
 		"build:storybook": "storybook build",
 		"storybook:docs": "storybook dev --docs",
-		"generate-icons": "./hack/generate-icons.sh"
+		"generate-icons": "./hack/generate-icons.sh",
+		"gar-login": "npx google-artifactregistry-auth"
 	},
 	"publishConfig": {
 		"types": "./dist/index.d.ts",

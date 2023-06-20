@@ -1,4 +1,4 @@
-# ds-svelte
+# ds-svelte-community
 
 A Svelte component library for [Aksel](https://aksel.nav.no).
 
@@ -35,10 +35,13 @@ You can preview the production build with `npm run preview`.
 
 ## Publishing
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+The package is hosted on Google Artifact Registry. To publish a new version:
 
-To publish your library to [npm](https://www.npmjs.com):
+Update the version in `package.json` and commit the change.
+
+Then run:
 
 ```bash
-npm publish
+npm run gar-login
+npm run publish
 ```
