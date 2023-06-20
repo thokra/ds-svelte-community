@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Button, TextField } from "$lib";
-	import Skeleton from "$lib/components/Skeleton/Skeleton.svelte";
+	import { Button, Skeleton, TextField } from "$lib";
 	import { variants } from "$lib/components/Skeleton/type";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	// import source from "./examples/Button.svelte?raw";

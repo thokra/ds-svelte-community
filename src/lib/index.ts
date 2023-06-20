@@ -18,6 +18,7 @@ export * from "./components/Pagination";
 export { default as Panel } from "./components/Panel/Panel.svelte";
 export * from "./components/Search";
 export * from "./components/Select";
+export * from "./components/Skeleton";
 export * from "./components/Stepper";
 export * from "./components/Switch";
 export * from "./components/Table";
