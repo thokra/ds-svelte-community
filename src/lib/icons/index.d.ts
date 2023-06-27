@@ -1,8 +1,12 @@
 import type { SvelteComponentTyped } from "svelte";
+import type { SVGAttributes } from "svelte/elements";
 
 declare class SvgComponent extends SvelteComponentTyped<
-	svelte.JSX.SVGProps<SVGSVGElement>,
-	{},
+	SVGAttributes<SVGSVGElement> & {
+		// Support data-* attributes in Svelte 3
+		[key: `data-${string}`]: any;
+	},
+	Record<string, any>,
 	{ default: {} }
 > {}
 
@@ -172,12 +176,14 @@ export const ChevronLeftCircleFill: typeof SvgComponent;
 export const ChevronLeftDouble: typeof SvgComponent;
 export const ChevronLeftDoubleCircle: typeof SvgComponent;
 export const ChevronLeftDoubleCircleFill: typeof SvgComponent;
+export const ChevronLeftFirst: typeof SvgComponent;
 export const ChevronRight: typeof SvgComponent;
 export const ChevronRightCircle: typeof SvgComponent;
 export const ChevronRightCircleFill: typeof SvgComponent;
 export const ChevronRightDouble: typeof SvgComponent;
 export const ChevronRightDoubleCircle: typeof SvgComponent;
 export const ChevronRightDoubleCircleFill: typeof SvgComponent;
+export const ChevronRightLast: typeof SvgComponent;
 export const ChevronUp: typeof SvgComponent;
 export const ChevronUpCircle: typeof SvgComponent;
 export const ChevronUpCircleFill: typeof SvgComponent;

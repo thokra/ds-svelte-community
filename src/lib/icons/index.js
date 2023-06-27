@@ -164,12 +164,14 @@ export { default as ChevronLeftCircleFill } from "./ChevronLeftCircleFill.svelte
 export { default as ChevronLeftDouble } from "./ChevronLeftDouble.svelte";
 export { default as ChevronLeftDoubleCircle } from "./ChevronLeftDoubleCircle.svelte";
 export { default as ChevronLeftDoubleCircleFill } from "./ChevronLeftDoubleCircleFill.svelte";
+export { default as ChevronLeftFirst } from "./ChevronLeftFirst.svelte";
 export { default as ChevronRight } from "./ChevronRight.svelte";
 export { default as ChevronRightCircle } from "./ChevronRightCircle.svelte";
 export { default as ChevronRightCircleFill } from "./ChevronRightCircleFill.svelte";
 export { default as ChevronRightDouble } from "./ChevronRightDouble.svelte";
 export { default as ChevronRightDoubleCircle } from "./ChevronRightDoubleCircle.svelte";
 export { default as ChevronRightDoubleCircleFill } from "./ChevronRightDoubleCircleFill.svelte";
+export { default as ChevronRightLast } from "./ChevronRightLast.svelte";
 export { default as ChevronUp } from "./ChevronUp.svelte";
 export { default as ChevronUpCircle } from "./ChevronUpCircle.svelte";
 export { default as ChevronUpCircleFill } from "./ChevronUpCircleFill.svelte";

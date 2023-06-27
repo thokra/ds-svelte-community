@@ -77,4 +77,8 @@
 		z-index: var(--a-z-index-modal);
 		background-color: var(--ac-modal-backdrop, var(--a-surface-backdrop, rgba(0, 0, 0, 0.65)));
 	}
+
+	.navds-modal {
+		position: fixed;
+	}
 </style>
