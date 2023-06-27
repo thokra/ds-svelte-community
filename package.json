@@ -1,6 +1,6 @@
 {
 	"name": "@nais/ds-svelte-community",
-	"version": "0.1.9",
+	"version": "0.1.10",
 	"homepage": "https://nais.github.io/ds-svelte-community",
 	"repository": "https://github.com/nais/ds-svelte-community.git",
 	"license": "MIT",
@@ -79,7 +79,7 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^3.59.1"
+		"svelte": "^3.59.1 || ^4.0.0-0"
 	},
 	"devDependencies": {
 		"@navikt/aksel-icons": "^4.1.4",
