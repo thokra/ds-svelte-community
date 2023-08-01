@@ -1,4 +1,6 @@
 <script>
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	import Panel from "$lib/components/Panel/Panel.svelte";

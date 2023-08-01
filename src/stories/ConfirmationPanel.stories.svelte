@@ -1,6 +1,8 @@
 <script>
 	import ConfirmationPanel from "$lib/components/ConfirmationPanel/ConfirmationPanel.svelte";
 	import { sizes } from "$lib/components/ConfirmationPanel/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/ConfirmationPanel.svelte?raw";
 </script>

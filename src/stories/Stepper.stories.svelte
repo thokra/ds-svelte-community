@@ -2,6 +2,8 @@
 	import { Heading } from "$lib";
 	import { Step, Stepper } from "$lib/components/Stepper";
 	import { orientations } from "$lib/components/Stepper/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/StepperWithHeader.svelte?raw";
 

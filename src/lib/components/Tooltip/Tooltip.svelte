@@ -160,6 +160,7 @@
 	on:mouseleave={handleMouseLeave}
 	bind:clientWidth={width}
 	bind:clientHeight={height}
+	role="tooltip"
 >
 	<!-- Content to which the tooltip will activate -->
 	<slot />

@@ -46,11 +46,12 @@
 	});
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <dialog
 	{...omit($$restProps, "class")}
 	bind:this={dialog}
 	on:close={() => (open = false)}
-	on:mousedown|self={() => dialog.close()}
+	on:click|self={() => dialog.close()}
 	class={classes($$restProps)}
 	class:navds-modal={open}
 >

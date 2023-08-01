@@ -1,4 +1,6 @@
 <script>
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	import Alert from "$lib/components/Alert/Alert.svelte";

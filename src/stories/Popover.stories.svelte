@@ -1,4 +1,6 @@
 <script lang="ts">
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	import Popover from "$lib/components/Popover.svelte";

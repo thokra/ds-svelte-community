@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Table, Tbody, Td, Th, Thead, Tr, type SortState } from "$lib";
 	import { tableSizes } from "$lib/components/Table/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Table.svelte?raw";
 

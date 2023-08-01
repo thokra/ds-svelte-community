@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Button, Skeleton, TextField } from "$lib";
 	import { variants } from "$lib/components/Skeleton/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	// import source from "./examples/Button.svelte?raw";
 </script>
@@ -77,8 +79,11 @@
 
 <style>
 	.card {
-		box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,
-			rgba(0, 0, 0, 0.1) 0px 2px 4px -2px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px;
+		box-shadow:
+			rgb(255, 255, 255) 0px 0px 0px 0px,
+			rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,
+			rgba(0, 0, 0, 0.1) 0px 2px 4px -2px,
+			rgba(0, 0, 0, 0.1) 0px 4px 6px -1px;
 		padding: 1.5rem;
 		border-radius: 0.5rem;
 		width: 14rem;

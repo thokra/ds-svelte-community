@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Accordion, AccordionItem } from "$lib";
 	import { headingSizes, sizes, variants } from "$lib/components/Accordion/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Accordion.svelte?raw";
 </script>

@@ -2,6 +2,8 @@
 	import { Tab, TabList, TabPanel, Tabs } from "$lib/components/Tabs";
 	import { iconPositions, sizes } from "$lib/components/Tabs/type";
 	import { EnvelopeOpen as Email, ClockDashed as Historic, Paperplane as Send } from "$lib/icons";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Tabs.svelte?raw";
 
@@ -134,12 +136,12 @@
 	</button>
 	<Tabs value={x2active} style={!x2wide ? "max-width: 300px" : ""}>
 		<TabList>
-			{#each new Array(x2num) as _, i}
+			{#each new Array(x2num).map((_, i) => i) as i}
 				<Tab value={`tab${i}`}>Tab{i}</Tab>
 			{/each}
 		</TabList>
 
-		{#each new Array(x2num) as _, i}
+		{#each new Array(x2num).map((_, i) => i) as i}
 			<TabPanel value={`tab${i}`}>
 				<div class="examplePanelWrapper examplePanel1">Tab {i} content</div>
 			</TabPanel>

@@ -1,6 +1,8 @@
 <script>
 	import { Chips, RemovableChip, ToggleChip } from "$lib/components/Chips";
 	import { sizes } from "$lib/components/Chips/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Chips.svelte?raw";
 

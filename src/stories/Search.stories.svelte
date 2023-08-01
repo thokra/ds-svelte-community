@@ -2,6 +2,8 @@
 	import { Search } from "$lib/components/Search";
 	import SearchButton from "$lib/components/Search/SearchButton.svelte";
 	import { sizes, variants } from "$lib/components/Search/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Search.svelte?raw";
 

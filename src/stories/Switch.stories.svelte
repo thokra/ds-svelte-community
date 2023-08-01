@@ -1,5 +1,7 @@
 <script>
 	import { Switch } from "$lib/components/Switch";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Switch.svelte?raw";
 </script>

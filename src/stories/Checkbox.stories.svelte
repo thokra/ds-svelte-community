@@ -1,6 +1,8 @@
 <script>
 	import { Checkbox } from "$lib";
 	import { sizes } from "$lib/components/Checkbox/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	let child1 = false;

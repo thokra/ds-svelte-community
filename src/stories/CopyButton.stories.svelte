@@ -4,6 +4,8 @@
 	import { Moon } from "$lib/icons";
 	import Star from "$lib/icons/Star.svelte";
 	import { action } from "@storybook/addon-actions";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 </script>
 

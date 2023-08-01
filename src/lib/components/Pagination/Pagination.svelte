@@ -69,7 +69,7 @@
 		);
 		const siblingsEnd = siblingsStart + siblingCount * 2;
 
-		const nullish = <T>(a: T, b: T): T => (a == null ? b : a);
+		const nullish = <T,>(a: T, b: T): T => (a == null ? b : a);
 
 		return [
 			...startPages,
@@ -118,7 +118,7 @@
 				{/if}
 			</Item>
 		</li>
-		{#each steps as step, i}
+		{#each steps as step}
 			{@const n = Number(step)}
 			{#if isNaN(n)}
 				<li class="navds-pagination__ellipsis">

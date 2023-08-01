@@ -61,6 +61,8 @@
 		class:unstyled={as == "a"}
 		aria-current={index == $activeStep}
 		on:click={isInteractive ? handleClick : null}
+		role="button"
+		tabindex={isInteractive ? 0 : undefined}
 	>
 		{#if completed}
 			<SuccessFilled aria-hidden class="navds-stepper__circle navds-stepper__circle--success" />

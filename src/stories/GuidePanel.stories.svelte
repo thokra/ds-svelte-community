@@ -1,6 +1,8 @@
 <script>
 	import { GuidePanel } from "$lib/components/GuidePanel";
 	import { Sun as Moon, Sun } from "$lib/icons";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/GuidePanel.svelte?raw";
 </script>

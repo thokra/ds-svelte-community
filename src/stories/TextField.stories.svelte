@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { TextField } from "$lib";
 	import { sizes, types } from "$lib/components/TextField/type";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/TextField.svelte?raw";
 

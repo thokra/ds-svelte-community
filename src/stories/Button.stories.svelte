@@ -3,6 +3,8 @@
 	import { sizes, variants } from "$lib/components/Button/type";
 	import { Star } from "$lib/icons";
 	import { action } from "@storybook/addon-actions";
+	// eslint-disable-next-line
+	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Button.svelte?raw";
 </script>

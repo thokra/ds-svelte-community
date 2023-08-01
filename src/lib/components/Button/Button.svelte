@@ -64,6 +64,9 @@
 	on:click
 	on:mouseenter
 	on:mouseleave
+	role="button"
+	aria-disabled={disabled || overrideWidth > 0}
+	tabindex={disabled ? undefined : 0}
 >
 	{#if overrideWidth}
 		<Loader {size} />
