@@ -64,9 +64,8 @@
 	on:click
 	on:mouseenter
 	on:mouseleave
-	role="button"
-	aria-disabled={disabled || overrideWidth > 0}
-	tabindex={disabled ? undefined : 0}
+	role={as != "button" ? "button" : undefined}
+	disabled={disabled || overrideWidth > 0 ? true : undefined}
 >
 	{#if overrideWidth}
 		<Loader {size} />
@@ -76,7 +75,7 @@
 			<span class="navds-button__icon"><slot name="icon-left" /></span>
 		{/if}
 		{#if $$slots.default && !iconOnly}
-			<Label as="span" size={size === "medium" ? "medium" : "small"} aria-live="polite">
+			<Label as="span" size={size === "medium" ? "medium" : "small"}>
 				<!-- button content -->
 				<slot />
 			</Label>
