@@ -4,7 +4,7 @@ import React from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import Accordion, { type TestProps } from "./Accordion.test.svelte";
 
-describe.concurrent("Alert", () => {
+describe.concurrent("Accordion", () => {
 	it("renders Accordion Removable similar to ds-react", () => {
 		const props = {
 			items: [
@@ -26,8 +26,10 @@ describe.concurrent("Alert", () => {
 			}),
 			opts: {
 				ignoreElementFromB(tag) {
-					if (tag == "title") {
-						return true;
+					if (tag.tagName) {
+						if (tag.tagName.toLowerCase() == "title") {
+							return true;
+						}
 					}
 					return false;
 				},
@@ -39,14 +41,15 @@ describe.concurrent("Alert", () => {
 
 					return value;
 				},
-				compareAttrs(tag, name) {
-					if (tag == "svg" && name == "aria-labelledby") {
+				compareAttrs(node, attr) {
+					const tag = node.tagName.toLowerCase();
+					if (tag == "svg" && attr == "aria-labelledby") {
 						return false;
 					}
-					if (tag == "svg" && name == "aria-label") {
+					if (tag == "svg" && attr == "aria-label") {
 						return false;
 					}
-					if (tag == "path" && name == "d") {
+					if (tag == "path" && attr == "d") {
 						return false;
 					}
 					return true;

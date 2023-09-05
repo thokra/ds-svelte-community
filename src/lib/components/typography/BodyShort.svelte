@@ -22,8 +22,7 @@
 <svelte:element
 	this={as}
 	{...$$restProps}
-	class={classes($$restProps, "navds-body-short")}
-	class:navds-body-short--small={size == "small"}
+	class={classes($$restProps, "navds-body-short", `navds-body-short--${size}`)}
 	class:navds-typo--spacing={spacing}
 >
 	<slot />

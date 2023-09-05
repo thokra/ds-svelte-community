@@ -90,7 +90,7 @@
 <!-- svelte-ignore a11y-role-supports-aria-props -->
 <fieldset
 	{...$$restProps}
-	aria-invalid={error ? "true" : "false"}
+	aria-invalid={error ? "true" : undefined}
 	class={classes($$restProps, "navds-fieldset", `navds-fieldset--${size}`)}
 	class:navds-fieldset--error={!!error}
 >

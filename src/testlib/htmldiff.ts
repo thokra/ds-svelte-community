@@ -18,12 +18,16 @@ export type DiffOptions = {
 	/**
 	 * Select which attributes to compare.
 	 */
-	compareAttrs?: (tag: string, name: string) => boolean;
+	compareAttrs?: (node: HTMLElement, attr: string) => boolean;
 
 	/**
 	 * Select which elements to ignore.
 	 */
-	ignoreElementFromB?: (tag: string) => boolean;
+	ignoreElementFromA?: (tag: HTMLElement) => boolean;
+	/**
+	 * Select which elements to ignore.
+	 */
+	ignoreElementFromB?: (tag: HTMLElement) => boolean;
 };
 
 const defaultOpts: DiffOptions = {
@@ -32,187 +36,92 @@ const defaultOpts: DiffOptions = {
 	ignoreClasses: ["unstyled"],
 };
 
-function compareClasses(
-	diffs: Map<string, string>,
-	a: HTMLElement,
-	b: HTMLElement,
-	path: string,
-	opts: DiffOptions,
-) {
-	const aclasses = a.classList;
-	if (opts.ignoreClasses) {
-		aclasses.remove(...opts.ignoreClasses);
-	}
-	const bclasses = b.classList;
-	aclasses.forEach((c) => {
-		if (!bclasses.contains(c)) {
-			diffs.set(path, "Excess class in a: " + c);
-		}
-	});
-	bclasses.forEach((c) => {
-		if (!aclasses.contains(c)) {
-			diffs.set(path, "Missing class in a: " + c);
-		}
-	});
-}
-
-function attrList(attrs: NamedNodeMap, tag: string, opts: DiffOptions) {
-	if (!opts.compareAttrs) {
-		return attrs;
-	}
-
-	const toRemove: string[] = [];
-	for (let i = 0; i < attrs.length; i++) {
-		const aattr = attrs[i];
-		if (!opts.compareAttrs(tag, aattr.name)) {
-			toRemove.push(aattr.name);
-		}
-	}
-	toRemove.forEach((name) => {
-		attrs.removeNamedItem(name);
-	});
-	return attrs;
-}
-
-function compareAttributes(
-	diffs: Map<string, string>,
-	a: HTMLElement,
-	b: HTMLElement,
-	path: string,
-	opts: DiffOptions,
-) {
-	const aattrs = attrList(a.attributes, a.tagName, opts);
-	const battrs = attrList(b.attributes, b.tagName, opts);
-
-	if (aattrs.length !== battrs.length) {
-		diffs.set(path, "Attribute length mismatch: " + aattrs.length + " !== " + battrs.length);
-	} else {
-		for (let i = 0; i < aattrs.length; i++) {
-			const aattr = aattrs[i];
-			let bval = b.getAttribute(aattr.name);
-			if (bval === null) {
-				diffs.set(path, "Missing attribute in b: " + aattr.name);
-			} else {
-				if (opts.alterAttrValue) {
-					for (let i = 0; i < a.attributes.length; i++) {
-						const aattr = a.attributes[i];
-						aattr.value = opts.alterAttrValue(aattr.name, aattr.value);
-					}
-					for (let i = 0; i < b.attributes.length; i++) {
-						const battr = b.attributes[i];
-						battr.value = opts.alterAttrValue(battr.name, battr.value);
-					}
-
-					bval = b.getAttribute(aattr.name);
-				}
-				if (aattr.name === "class") {
-					compareClasses(diffs, a, b, path, opts);
-				} else {
-					const val = aattr.value;
-					if (val !== bval) {
-						diffs.set(
-							path,
-							"Attribute value mismatch for '" +
-								aattr.name +
-								"':\na: '" +
-								val +
-								"\nb: '" +
-								bval +
-								"'",
-						);
-					}
-				}
-			}
-		}
-
-		for (let i = 0; i < b.attributes.length; i++) {
-			const battr = b.attributes[i];
-			if (!a.hasAttribute(battr.name)) {
-				diffs.set(path, "Missing attribute in a: " + battr.name);
-			}
-		}
-	}
-
-	return diffs;
-}
-
-async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): Promise<string> {
-	const diffs = new Map<string, string>();
+export async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): Promise<string> {
 	opts = { ...defaultOpts, ...opts };
 
-	const traverse = (a: HTMLElement, b: HTMLElement | undefined, path: string) => {
-		if (!b) {
-			diffs.set(path, "Missing node in b, expected " + a.tagName);
-		} else {
-			if (a.nodeType === Node.TEXT_NODE) {
-				if (a.textContent !== b.textContent) {
-					diffs.set(path, b.textContent || "");
+	const aclean = cleanTree(a, opts, opts.ignoreElementFromA);
+	const bclean = cleanTree(b, opts, opts.ignoreElementFromB);
+
+	const result = ["Differences: (left: a, right: b)"];
+
+	const diffResult = await prettyDiff(aclean.innerHTML, bclean.innerHTML);
+	if (!diffResult) {
+		return "";
+	}
+	result.push(diffResult);
+	return result.join("\n");
+}
+
+function cleanTree(el: HTMLElement, opts: DiffOptions, ignoreFunc?: (tag: HTMLElement) => boolean) {
+	const traverse = (node: HTMLElement, root?: HTMLElement) => {
+		if (node.nodeType === Node.TEXT_NODE) {
+			if (opts.ignoreSpaces && node.textContent?.trim() === "") {
+				root!.removeChild(node);
+				return true;
+			}
+		} else if (node.nodeType === Node.COMMENT_NODE) {
+			if (opts.ignoreComments) {
+				root!.removeChild(node);
+				return true;
+			}
+		} else if (node.nodeType === Node.ELEMENT_NODE) {
+			if (ignoreFunc) {
+				if (ignoreFunc(node as HTMLElement)) {
+					root!.removeChild(node);
+					return true;
 				}
-			} else {
-				if (a.tagName !== b.tagName) {
-					diffs.set(path, "Tag mismatch: " + a.tagName + " !== " + b.tagName);
-				} else {
-					compareAttributes(diffs, a, b, path, opts);
+			}
 
-					let bi = 0;
-					for (let i = 0; i < a.childNodes.length; i++) {
-						if (opts.ignoreComments) {
-							if (a.childNodes[i].nodeType === Node.COMMENT_NODE) {
-								a.removeChild(a.childNodes[i]);
-								i--;
-								continue;
-							}
-						}
+			const attrs: { [key: string]: string } = {};
+			for (let i = 0; i < node.attributes.length; i++) {
+				const attr = node.attributes[i];
+				attrs[attr.name] = attr.value;
+			}
+			// Sort attributes by attribute name
+			Object.keys(attrs).forEach((name) => {
+				node.removeAttribute(name);
+			});
 
-						if (opts.ignoreSpaces) {
-							if (a.childNodes[i].nodeType === Node.TEXT_NODE) {
-								if (a.childNodes[i].textContent?.trim() === "") {
-									a.removeChild(a.childNodes[i]);
-									i--;
-									continue;
-								}
-							}
-						}
-
-						if (opts.ignoreElementFromB) {
-							for (; bi < b.childNodes.length; ) {
-								const bn = b.childNodes[bi] as HTMLElement;
-								if (!opts.ignoreElementFromB(bn.tagName)) {
-									break;
-								}
-
-								b.removeChild(b.children[bi]);
-								continue;
-							}
-						}
-
-						traverse(
-							a.childNodes[i] as HTMLElement,
-							b.childNodes[bi] as HTMLElement,
-							`${path}.${a.tagName}[${bi}]`,
-						);
-						bi++;
+			Object.keys(attrs)
+				.sort()
+				.filter((name) => {
+					if (opts.compareAttrs) {
+						return opts.compareAttrs(node, name);
 					}
+					return true;
+				})
+				.forEach((name) => {
+					node.setAttribute(name, attrs[name]);
+				});
 
-					if (bi < b.childNodes.length) {
-						diffs.set(path, "Missing node(s) in a");
-					}
+			if (opts.alterAttrValue) {
+				for (let i = 0; i < node.attributes.length; i++) {
+					const attr = node.attributes[i];
+					attr.value = opts.alterAttrValue(attr.name, attr.value);
 				}
+			}
+
+			const classes = node.classList;
+			// sort classes
+			const sorted = Array.from(classes).sort();
+			classes.remove(...sorted);
+			classes.add(...sorted);
+
+			if (opts.ignoreClasses) {
+				classes.remove(...opts.ignoreClasses);
+			}
+		}
+
+		for (let i = 0; i < node.childNodes.length; i++) {
+			if (traverse(node.childNodes[i] as HTMLElement, node)) {
+				i--;
 			}
 		}
 	};
 
-	traverse(a, b, "");
+	traverse(el);
 
-	if (diffs.size === 0) return "";
-
-	const result = ["Differences: (left: a, right: b)"];
-	for (const [path, diff] of diffs) {
-		result.push(path + ": " + diff);
-	}
-
-	result.push(await prettyDiff(a.innerHTML, b.innerHTML));
-	return result.join("\n");
+	return el;
 }
 
 const green = (input: string) => "\x1b[32m" + input + "\x1b[0m";
@@ -227,15 +136,22 @@ async function prettyDiff(a: string, b: string) {
 	const afmt = await prettier.format(a, { parser: "html", singleAttributePerLine: true });
 	const bfmt = await prettier.format(b, { parser: "html", singleAttributePerLine: true });
 
+	let addedOrRemoved = 0;
 	Diff.diffLines(afmt, bfmt).forEach((part) => {
 		if (part.added) {
+			addedOrRemoved++;
 			lines.push(`${green(part.value)}`);
 		} else if (part.removed) {
+			addedOrRemoved++;
 			lines.push(`${red(part.value)}`);
 		} else {
 			lines.push(part.value);
 		}
 	});
+	if (addedOrRemoved == 0) {
+		return "";
+	}
+
 	return lines.join("");
 }
 

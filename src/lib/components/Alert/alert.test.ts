@@ -11,16 +11,19 @@ const wrapper = (name: string, props: Props) => {
 			children: ["Some alert"],
 			opts: {
 				ignoreElementFromB(tag) {
-					if (tag == "title") {
-						return true;
+					if (tag.tagName) {
+						if (tag.tagName.toLowerCase() == "title") {
+							return true;
+						}
 					}
 					return false;
 				},
-				compareAttrs(tag, name) {
-					if (tag == "svg" && name == "aria-labelledby") {
+				compareAttrs(node, attr) {
+					const tag = node.tagName.toLowerCase();
+					if (tag == "svg" && attr == "aria-labelledby") {
 						return false;
 					}
-					if (tag == "path" && name == "d") {
+					if (tag == "path" && attr == "d") {
 						return false;
 					}
 					return true;

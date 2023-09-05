@@ -4,7 +4,7 @@ import React from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import Chips from "./Chips.test.svelte";
 
-describe.concurrent("Alert", () => {
+describe.concurrent("Chips", () => {
 	it("renders Chips Removable similar to ds-react", () => {
 		const props = {
 			values: ["val1", "val2", "val3"],
@@ -14,8 +14,9 @@ describe.concurrent("Alert", () => {
 				return React.createElement(ReactChips.Removable, null, v);
 			}),
 			opts: {
-				compareAttrs(tag, name) {
-					if (tag == "path" && name == "d") {
+				compareAttrs(node, attr) {
+					const tag = node.tagName.toLowerCase();
+					if (tag == "path" && attr == "d") {
 						return false;
 					}
 					return true;
@@ -39,8 +40,9 @@ describe.concurrent("Alert", () => {
 				);
 			}),
 			opts: {
-				compareAttrs(tag, name) {
-					if (tag == "path" && name == "d") {
+				compareAttrs(node, attr) {
+					const tag = node.tagName.toLowerCase();
+					if (tag == "path" && attr == "d") {
 						return false;
 					}
 					return true;
