@@ -13,9 +13,9 @@
 	export let variant: (typeof removableVariants)[number] = "action";
 	/**
 	 * Replaces label read for screen-readers
-	 * @default "slett filter"
+	 * @default "slett"
 	 */
-	export let removeLabel = "slett filter";
+	export let removeLabel = "slett";
 
 	/**
 	 * The content of the chip
@@ -28,6 +28,7 @@
 </script>
 
 <button
+	type="button"
 	{...omit($$restProps, "class")}
 	class={classes(
 		$$restProps,
@@ -48,6 +49,6 @@
 	<!-- Content of the ToggleChip. Falls back to `value` prop if no content. -->
 	<span class="navds-chips__chip-text"><slot>{value}</slot></span>
 	<span class="navds-chips__removable-icon">
-		<XMark aria-hidden />
+		<XMark aria-hidden focusable="false" role="img" />
 	</span>
 </button>

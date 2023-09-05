@@ -40,13 +40,13 @@
 	class:navds-alert--inline={inline}
 >
 	{#if variant == "error"}
-		<ErrorFilled class="navds-alert__icon" />
+		<ErrorFilled class="navds-alert__icon" focusable="false" role="img" />
 	{:else if variant == "warning"}
-		<WarningFilled class="navds-alert__icon" />
+		<WarningFilled class="navds-alert__icon" focusable="false" role="img" />
 	{:else if variant == "info"}
-		<InformationFilled class="navds-alert__icon" />
+		<InformationFilled class="navds-alert__icon" focusable="false" role="img" />
 	{:else if variant == "success"}
-		<SuccessFilled class="navds-alert__icon" />
+		<SuccessFilled class="navds-alert__icon" focusable="false" role="img" />
 	{/if}
 	<BodyLong as="div" {size} class="navds-alert__wrapper">
 		<!-- Alert content -->

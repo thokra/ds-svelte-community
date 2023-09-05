@@ -1,3 +1,5 @@
+import * as Diff from "diff";
+import * as prettier from "prettier";
 import type { FunctionComponent, ReactNode } from "react";
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
@@ -13,13 +15,21 @@ export type DiffOptions = {
 	 * Alter the value of an attribute on a before comparing.
 	 */
 	alterAttrValue?: (name: string, value: string) => string;
+	/**
+	 * Select which attributes to compare.
+	 */
+	compareAttrs?: (tag: string, name: string) => boolean;
+
+	/**
+	 * Select which elements to ignore.
+	 */
+	ignoreElementFromB?: (tag: string) => boolean;
 };
 
 const defaultOpts: DiffOptions = {
 	ignoreSpaces: true,
 	ignoreComments: true,
 	ignoreClasses: ["unstyled"],
-	alterAttrValue: (name, value) => value,
 };
 
 function compareClasses(
@@ -46,6 +56,24 @@ function compareClasses(
 	});
 }
 
+function attrList(attrs: NamedNodeMap, tag: string, opts: DiffOptions) {
+	if (!opts.compareAttrs) {
+		return attrs;
+	}
+
+	const toRemove: string[] = [];
+	for (let i = 0; i < attrs.length; i++) {
+		const aattr = attrs[i];
+		if (!opts.compareAttrs(tag, aattr.name)) {
+			toRemove.push(aattr.name);
+		}
+	}
+	toRemove.forEach((name) => {
+		attrs.removeNamedItem(name);
+	});
+	return attrs;
+}
+
 function compareAttributes(
 	diffs: Map<string, string>,
 	a: HTMLElement,
@@ -53,14 +81,14 @@ function compareAttributes(
 	path: string,
 	opts: DiffOptions,
 ) {
-	if (a.attributes.length !== b.attributes.length) {
-		diffs.set(
-			path,
-			"Attribute length mismatch: " + a.attributes.length + " !== " + b.attributes.length,
-		);
+	const aattrs = attrList(a.attributes, a.tagName, opts);
+	const battrs = attrList(b.attributes, b.tagName, opts);
+
+	if (aattrs.length !== battrs.length) {
+		diffs.set(path, "Attribute length mismatch: " + aattrs.length + " !== " + battrs.length);
 	} else {
-		for (let i = 0; i < a.attributes.length; i++) {
-			const aattr = a.attributes[i];
+		for (let i = 0; i < aattrs.length; i++) {
+			const aattr = aattrs[i];
 			const bval = b.getAttribute(aattr.name);
 			if (bval === null) {
 				diffs.set(path, "Missing attribute in b: " + aattr.name);
@@ -99,13 +127,11 @@ function compareAttributes(
 	return diffs;
 }
 
-function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): string {
+async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): Promise<string> {
 	const diffs = new Map<string, string>();
 	opts = { ...defaultOpts, ...opts };
 
 	const traverse = (a: HTMLElement, b: HTMLElement | undefined, path: string) => {
-		if (a.nodeType === Node.COMMENT_NODE) return;
-
 		if (!b) {
 			diffs.set(path, "Missing node in b, expected " + a.tagName);
 		} else {
@@ -123,6 +149,8 @@ function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): string {
 					for (let i = 0; i < a.childNodes.length; i++) {
 						if (opts.ignoreComments) {
 							if (a.childNodes[i].nodeType === Node.COMMENT_NODE) {
+								a.removeChild(a.childNodes[i]);
+								i--;
 								continue;
 							}
 						}
@@ -130,8 +158,22 @@ function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): string {
 						if (opts.ignoreSpaces) {
 							if (a.childNodes[i].nodeType === Node.TEXT_NODE) {
 								if (a.childNodes[i].textContent?.trim() === "") {
+									a.removeChild(a.childNodes[i]);
+									i--;
 									continue;
 								}
+							}
+						}
+
+						if (opts.ignoreElementFromB) {
+							for (; bi < b.childNodes.length; ) {
+								const bn = b.childNodes[bi] as HTMLElement;
+								if (!opts.ignoreElementFromB(bn.tagName)) {
+									break;
+								}
+
+								b.removeChild(b.children[bi]);
+								continue;
 							}
 						}
 
@@ -156,13 +198,35 @@ function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): string {
 		result.push(path + ": " + diff);
 	}
 
-	result.push("a: " + a.outerHTML);
-	result.push("b: " + b?.outerHTML);
-
+	result.push(await prettyDiff(a.innerHTML, b.innerHTML));
 	return result.join("\n");
 }
 
-function doExpect(
+const green = (input: string) => "\x1b[32m" + input + "\x1b[0m";
+const red = (input: string) => "\x1b[31m" + input + "\x1b[0m";
+
+async function prettyDiff(a: string, b: string) {
+	const lines = [
+		`Pretty diff: ${red("only in a")}, ${green("only in b")}\n`,
+		"Remember that this diff is a tool, not actualy what's tested.\n",
+	];
+
+	const afmt = await prettier.format(a, { parser: "html" });
+	const bfmt = await prettier.format(b, { parser: "html" });
+
+	Diff.diffLines(afmt, bfmt).forEach((part) => {
+		if (part.added) {
+			lines.push(`${green(part.value)}`);
+		} else if (part.removed) {
+			lines.push(`${red(part.value)}`);
+		} else {
+			lines.push(part.value);
+		}
+	});
+	return lines.join("");
+}
+
+async function doExpect(
 	opts: DiffOptions,
 	received: unknown,
 	comp: ReactComponent,
@@ -189,7 +253,7 @@ function doExpect(
 		React.createElement(comp as FunctionComponent, props, ...children),
 	);
 
-	const diff = htmldiff(received as HTMLElement, container, opts);
+	const diff = await htmldiff(received as HTMLElement, container, opts);
 
 	return {
 		pass: diff === "",
@@ -198,7 +262,7 @@ function doExpect(
 }
 
 expect.extend({
-	toMimicReact(
+	async toMimicReact(
 		received: unknown,
 		comp: ReactComponent,
 		opts?: {
