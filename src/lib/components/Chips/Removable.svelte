@@ -2,7 +2,7 @@
 	import { XMark } from "$lib/icons";
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
-	import type { RemovableProps, removableVariants } from "./type";
+	import type { RemovableProps, variants } from "./type";
 
 	type $$Props = RemovableProps;
 
@@ -10,7 +10,7 @@
 	 * Chip-variants
 	 * @default "action"
 	 */
-	export let variant: (typeof removableVariants)[number] = "action";
+	export let variant: (typeof variants)[number] = "action";
 	/**
 	 * Replaces label read for screen-readers
 	 * @default "slett"
