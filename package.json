@@ -19,6 +19,7 @@
 		"storybook:docs": "storybook dev --docs",
 		"generate-icons": "./hack/generate-icons.sh",
 		"gar-login": "npx google-artifactregistry-auth",
+		"test:unit": "CI=true vitest",
 		"test:unit:watch": "vitest"
 	},
 	"publishConfig": {

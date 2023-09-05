@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import Button from "./Button.test.svelte";
 import type { Props } from "./type";
 
-describe("Button", () => {
+describe.concurrent("Button", () => {
 	it("renders a button with a label", () => {
 		const r = render(Button, {});
 		expect(r.container.innerHTML).toContain("Click me!");

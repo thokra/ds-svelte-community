@@ -4,7 +4,7 @@ import React from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import Accordion, { type TestProps } from "./Accordion.test.svelte";
 
-describe("Alert", () => {
+describe.concurrent("Alert", () => {
 	it("renders Accordion Removable similar to ds-react", () => {
 		const props = {
 			items: [
@@ -18,8 +18,8 @@ describe("Alert", () => {
 				return React.createElement(ReactAccordion.Item, {
 					defaultOpen: v.open,
 					children: [
-						React.createElement(ReactAccordion.Header, null, v.heading),
-						React.createElement(ReactAccordion.Content, null, v.content),
+						React.createElement(ReactAccordion.Header, { key: `h-${i}`, children: v.heading }),
+						React.createElement(ReactAccordion.Content, { key: `c-${i}`, children: v.content }),
 					],
 					key: i,
 				});

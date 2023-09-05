@@ -4,7 +4,7 @@ import React from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import Chips from "./Chips.test.svelte";
 
-describe("Alert", () => {
+describe.concurrent("Alert", () => {
 	it("renders Chips Removable similar to ds-react", () => {
 		const props = {
 			values: ["val1", "val2", "val3"],

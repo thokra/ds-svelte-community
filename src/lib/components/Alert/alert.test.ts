@@ -30,7 +30,7 @@ const wrapper = (name: string, props: Props) => {
 	});
 };
 
-describe("Alert", () => {
+describe.concurrent("Alert", () => {
 	it("renders an Alert with a label", () => {
 		const r = render(Alert, {});
 		expect(r.container.innerHTML).toContain("Some alert");
