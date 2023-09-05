@@ -18,6 +18,11 @@
 	export let headingSize: Props["headingSize"] = "small";
 	export let size: Props["size"] = "medium";
 
+	/**
+	 * Whether to indent content or not
+	 */
+	export let indent = true;
+
 	type $$Props = Props;
 
 	const ctx: AccordionContext = {
@@ -40,6 +45,7 @@
 <div
 	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-accordion", `navds-accordion--${size}`)}
+	class:navds-accordion--indent={indent}
 >
 	<!-- List of AccordionItem -->
 	<slot />

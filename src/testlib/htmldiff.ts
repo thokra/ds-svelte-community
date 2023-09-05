@@ -89,17 +89,26 @@ function compareAttributes(
 	} else {
 		for (let i = 0; i < aattrs.length; i++) {
 			const aattr = aattrs[i];
-			const bval = b.getAttribute(aattr.name);
+			let bval = b.getAttribute(aattr.name);
 			if (bval === null) {
 				diffs.set(path, "Missing attribute in b: " + aattr.name);
 			} else {
+				if (opts.alterAttrValue) {
+					for (let i = 0; i < a.attributes.length; i++) {
+						const aattr = a.attributes[i];
+						aattr.value = opts.alterAttrValue(aattr.name, aattr.value);
+					}
+					for (let i = 0; i < b.attributes.length; i++) {
+						const battr = b.attributes[i];
+						battr.value = opts.alterAttrValue(battr.name, battr.value);
+					}
+
+					bval = b.getAttribute(aattr.name);
+				}
 				if (aattr.name === "class") {
 					compareClasses(diffs, a, b, path, opts);
 				} else {
-					let val = aattr.value;
-					if (opts.alterAttrValue) {
-						val = opts.alterAttrValue(aattr.name, val);
-					}
+					const val = aattr.value;
 					if (val !== bval) {
 						diffs.set(
 							path,
@@ -184,6 +193,10 @@ async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): Prom
 						);
 						bi++;
 					}
+
+					if (bi < b.childNodes.length) {
+						diffs.set(path, "Missing node(s) in a");
+					}
 				}
 			}
 		}
@@ -211,8 +224,8 @@ async function prettyDiff(a: string, b: string) {
 		"Remember that this diff is a tool, not actualy what's tested.\n",
 	];
 
-	const afmt = await prettier.format(a, { parser: "html" });
-	const bfmt = await prettier.format(b, { parser: "html" });
+	const afmt = await prettier.format(a, { parser: "html", singleAttributePerLine: true });
+	const bfmt = await prettier.format(b, { parser: "html", singleAttributePerLine: true });
 
 	Diff.diffLines(afmt, bfmt).forEach((part) => {
 		if (part.added) {

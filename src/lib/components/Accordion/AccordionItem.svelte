@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { ChevronDown } from "$lib/icons";
-	import { slide } from "svelte/transition";
 	import { omit } from "../helpers";
 	import BodyLong from "../typography/BodyLong.svelte";
 	import Heading from "../typography/Heading.svelte";
@@ -41,12 +40,14 @@
 	class:navds-accordion__item--open={open}
 	class:navds-accordion__item--neutral={$ctx?.variant === "neutral"}
 >
-	<button class="navds-accordion__header" type="button" on:click={handleClick} aria-expanded={open}>
+	<button class="navds-accordion__header" aria-expanded={open} type="button" on:click={handleClick}>
 		<div class="navds-accordion__icon-wrapper">
 			<ChevronDown
-				className="navds-accordion__header-chevron"
+				class="navds-accordion__header-chevron"
 				aria-label="Show more"
 				aria-hidden="true"
+				focusable="false"
+				role="img"
 			/>
 		</div>
 		<Heading size={$ctx?.headingSize} as="span" class="navds-accordion__header-content">
@@ -55,12 +56,13 @@
 		</Heading>
 	</button>
 
-	{#if open}
-		<div transition:slide={{ duration: 300 }}>
-			<BodyLong as="div" class="navds-accordion__content">
-				<!-- Content of the accordion -->
-				<slot />
-			</BodyLong>
-		</div>
-	{/if}
+	<!-- <div transition:slide={{ duration: 300 }}> -->
+	<BodyLong
+		as="div"
+		class="navds-accordion__content{open ? '' : ' navds-accordion__content--closed'}"
+	>
+		<!-- Content of the accordion -->
+		<slot />
+	</BodyLong>
+	<!-- </div> -->
 </div>
