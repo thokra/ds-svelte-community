@@ -1,17 +1,12 @@
 <script lang="ts">
 	import XMark from "$lib/icons/XMark.svelte";
 	import { onMount } from "svelte";
-	import type { HTMLDialogAttributes } from "svelte/elements";
 	import { writable } from "svelte/store";
 	import Button from "../Button/Button.svelte";
 	import { classes, omit } from "../helpers";
+	import { sizes, type Props } from "./type";
 
-	interface $$Props extends HTMLDialogAttributes {
-		open: boolean;
-		isModal?: boolean;
-		closeButton?: boolean;
-	}
-
+	type $$Props = Props;
 	/**
 	 * Set open to `true` to open the dialog. Set to `false` to close it.
 	 * Recommended to use with `bind:open`.
@@ -28,9 +23,15 @@
 	 */
 	export let isModal = true;
 
+	/**
+	 * Set width of dialog.
+	 * @default fit-content (up to 700px)
+	 */
+	export let width: Props["width"] = undefined;
+
 	let dialog: HTMLDialogElement;
 
-	$: if (dialog && open) {
+	$: if (dialog && open && dialog.showModal) {
 		isModal ? dialog.showModal() : dialog.show();
 	}
 	$: if (dialog && !open) {
@@ -48,6 +49,19 @@
 			}
 		});
 	});
+
+	const isKnownSize = (w: unknown) => (w ? sizes.includes(w as never) : false);
+	function styles(w: Props["width"]): string | undefined {
+		if (typeof w === "number") {
+			return `width: ${w}px`;
+		}
+
+		if (typeof w === "string") {
+			return !isKnownSize(w) ? `width: ${w}` : w;
+		}
+
+		return undefined;
+	}
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -56,34 +70,31 @@
 	bind:this={dialog}
 	on:close={() => (open = false)}
 	on:click|self={() => dialog.close()}
-	class={classes($$restProps)}
+	class={classes($$restProps, { [`navds-modal--${width}`]: isKnownSize(width) })}
 	class:navds-modal={open}
+	class:navds-modal--autowidth={!width}
+	style={styles(width)}
 >
-	{#if open}
-		<div class="navds-modal__content">
-			<!-- Modal content -->
-			<slot />
-		</div>
-	{/if}
-	{#if closeButton}
-		<Button
-			class={classes({}, "navds-modal__button", "navds-modal__button--shake")}
-			on:click={() => (open = false)}
-			size="small"
-			variant="tertiary"
-			><svelte:fragment slot="icon-left"><XMark aria-label="Close modal" /></svelte:fragment
-			></Button
-		>
+	<div class="navds-modal__header">
+		{#if closeButton}
+			<Button
+				type="button"
+				class="navds-modal__button"
+				size="small"
+				variant="tertiary-neutral"
+				on:click={() => (open = false)}
+				><svelte:fragment slot="icon-left"
+					><XMark aria-label="Close modal" focusable="false" role="img" /></svelte:fragment
+				></Button
+			>
+		{/if}
+		<slot name="header" />
+	</div>
+	<div class="navds-modal__body">
+		<!-- Modal content -->
+		<slot />
+	</div>
+	{#if $$slots.footer}
+		<div class="navds-modal__footer"><slot name="footer" /></div>
 	{/if}
 </dialog>
-
-<style>
-	dialog::backdrop {
-		z-index: var(--a-z-index-modal);
-		background-color: var(--ac-modal-backdrop, var(--a-surface-backdrop, rgba(0, 0, 0, 0.65)));
-	}
-
-	.navds-modal {
-		position: fixed;
-	}
-</style>
