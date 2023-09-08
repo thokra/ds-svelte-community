@@ -12,7 +12,11 @@
 	component={GuidePanel}
 	argTypes={{
 		poster: {
-			description: "Poster positions guide-illustration above content.",
+			description: " Render illustation above content, defaults to true on mobile (<480px).",
+			table: {
+				type: { summary: "boolean" },
+				defaultValue: { summary: "undefined" },
+			},
 		},
 	}}
 />

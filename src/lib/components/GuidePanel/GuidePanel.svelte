@@ -1,30 +1,33 @@
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import Guide from "./Guide.svelte";
+	import Illustration from "./Illustration.svelte";
 	import type { Props } from "./type";
 
 	type $$Props = Props;
 
 	/**
-	 * Poster positions guide-illustration above content.
+	 * Render illustation above content
+	 * @default true on mobile (<480px)
 	 */
-	export let poster = false;
+	export let poster: boolean | undefined = undefined;
 </script>
 
 <div
 	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-guide-panel")}
-	class:navds-guide-panel--poster={poster}
+	class:navds-guide-panel--poster={poster === true}
+	class:navds-guide-panel--not-poster={poster === false}
+	class:navds-guide-panel--responsive-poster={poster === undefined}
 >
-	<!-- Hack until something like https://github.com/sveltejs/svelte/pull/8304 is released -->
-	{#if $$slots.illustration}
-		<Guide size={poster ? "medium" : "small"}>
+	<div class="navds-guide">
+		<!-- Hack until something like https://github.com/sveltejs/svelte/pull/8304 is released -->
+		{#if $$slots.illustration}
 			<!-- Custom illustration -->
-			<slot name="illustration" slot="illustration" />
-		</Guide>
-	{:else}
-		<Guide size={poster ? "medium" : "small"} />
-	{/if}
+			<slot name="illustration" />
+		{:else}
+			<Illustration />
+		{/if}
+	</div>
 	<div class="navds-guide-panel__content">
 		<!-- Content -->
 		<slot />
