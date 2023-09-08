@@ -12,15 +12,18 @@ export const shortcut = (node: HTMLElement, params: Params) => {
 	const removeHandler = () => window.removeEventListener("keydown", handler),
 		setHandler = () => {
 			removeHandler();
-			if (!params) return;
+			if (!params) {
+				return;
+			}
 			handler = (e) => {
 				if (
 					!!params.alt != e.altKey ||
 					!!params.shift != e.shiftKey ||
 					!!params.control != (e.ctrlKey || e.metaKey) ||
 					params.code != e.code
-				)
+				) {
 					return;
+				}
 
 				if (!params.bubble) {
 					e.preventDefault();

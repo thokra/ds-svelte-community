@@ -58,7 +58,9 @@
 		const range = (start: number, end: number) =>
 			Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
-		if (count <= (boundaryCount + siblingCount) * 2 + 3) return range(1, count);
+		if (count <= (boundaryCount + siblingCount) * 2 + 3) {
+			return range(1, count);
+		}
 
 		const startPages = range(1, boundaryCount);
 		const endPages = range(count - boundaryCount + 1, count);

@@ -87,7 +87,7 @@
 		// Called when clear is triggered
 		dispatcher("clear", { event: { trigger: "Click", event } });
 		value = "";
-		if (input) input.focus();
+		input?.focus();
 	}
 
 	function handleInputKeypress(event: KeyboardEvent) {
@@ -95,7 +95,7 @@
 			// Called when clear is triggered
 			dispatcher("clear", { event: { trigger: "Escape", event } });
 			value = "";
-			if (input) input.focus();
+			input?.focus();
 			event.preventDefault();
 		}
 	}

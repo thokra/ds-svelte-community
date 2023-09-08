@@ -44,11 +44,15 @@
 	}>();
 
 	onDestroy(() => {
-		if (timeout) clearTimeout(timeout);
+		if (timeout) {
+			clearTimeout(timeout);
+		}
 	});
 
 	const handleClick = () => {
-		if (timeout) clearTimeout(timeout);
+		if (timeout) {
+			clearTimeout(timeout);
+		}
 		navigator.clipboard.writeText(copyText);
 		active = true;
 

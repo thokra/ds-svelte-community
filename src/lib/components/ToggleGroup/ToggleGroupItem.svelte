@@ -24,7 +24,9 @@
 	// This feels hacky
 	function keydown(e: KeyboardEvent) {
 		const btn = e.target as HTMLElement;
-		if (!btn) return;
+		if (!btn) {
+			return;
+		}
 
 		if (e.key == "ArrowLeft" || e.key == "ArrowUp") {
 			if (!btn.previousElementSibling) {
@@ -35,7 +37,9 @@
 			}
 
 			const pes = btn.previousElementSibling as HTMLElement;
-			if (!pes) return;
+			if (!pes) {
+				return;
+			}
 			pes.focus();
 		}
 
@@ -48,7 +52,9 @@
 			}
 
 			const nes = btn.nextElementSibling as HTMLElement;
-			if (!nes) return;
+			if (!nes) {
+				return;
+			}
 			nes.focus();
 		}
 	}

@@ -30,8 +30,12 @@
 
 	let dialog: HTMLDialogElement;
 
-	$: if (dialog && open) isModal ? dialog.showModal() : dialog.show();
-	$: if (dialog && !open) dialog.close();
+	$: if (dialog && open) {
+		isModal ? dialog.showModal() : dialog.show();
+	}
+	$: if (dialog && !open) {
+		dialog.close();
+	}
 
 	const openStore = writable(open);
 	$: openStore.set(open);
