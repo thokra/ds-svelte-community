@@ -1,14 +1,10 @@
 <script lang="ts">
 	import ChevronRight from "$lib/icons/ChevronRight.svelte";
-	import type { HTMLAnchorAttributes, SvelteHTMLElements } from "svelte/elements";
 	import Panel from "../Panel/Panel.svelte";
 	import { classes, omit } from "../helpers";
+	import type { Props } from "./type";
 
-	interface $$Props extends HTMLAnchorAttributes {
-		as?: keyof SvelteHTMLElements;
-		href: string;
-		border?: boolean;
-	}
+	type $$Props = Props;
 
 	/**
 	 * Adds border to panel if true.
@@ -35,5 +31,5 @@
 		<!-- Panel content -->
 		<slot />
 	</div>
-	<ChevronRight class="navds-link-panel__chevron" aria-hidden />
+	<ChevronRight class="navds-link-panel__chevron" aria-hidden focusable="false" role="img" />
 </Panel>
