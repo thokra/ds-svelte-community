@@ -10,7 +10,7 @@
 </script>
 
 <li>
-	<a {...omit($$restProps, "class")} class={"navds-error-summary__list-item"} {href}>
+	<a {...omit($$restProps, "class")} class={"navds-error-summary__item navds-link"} {href}>
 		<slot />
 	</a>
 </li>
