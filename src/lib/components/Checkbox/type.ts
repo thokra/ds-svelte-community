@@ -1,4 +1,4 @@
-import type { HTMLFieldsetAttributes } from "svelte/elements";
+import type { HTMLAttributes, HTMLFieldsetAttributes } from "svelte/elements";
 import type { Readable } from "svelte/store";
 
 export const sizes = ["medium", "small"] as const;
@@ -22,3 +22,15 @@ export type CheckboxGroupContext = {
 	hasError: Readable<boolean>;
 	size: (typeof sizes)[number];
 };
+
+export interface CheckboxProps extends HTMLAttributes<HTMLInputElement> {
+	value?: string;
+	error?: boolean;
+	hideLabel?: boolean;
+	indeterminate?: boolean;
+	description?: string;
+	size?: (typeof sizes)[number];
+	disabled?: boolean;
+	id?: string;
+	checked?: boolean;
+}

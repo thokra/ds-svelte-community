@@ -31,7 +31,7 @@
 <script lang="ts">
 	import { setContext } from "svelte";
 	import { classes } from "./helpers";
-	import BodyLong from "./typography/BodyLong.svelte";
+	import BodyShort from "./typography/BodyShort.svelte";
 	import Detail from "./typography/Detail.svelte";
 	import ErrorMessage from "./typography/ErrorMessage.svelte";
 	import Label from "./typography/Label.svelte";
@@ -93,6 +93,7 @@
 	aria-invalid={error ? "true" : undefined}
 	class={classes($$restProps, "navds-fieldset", `navds-fieldset--${size}`)}
 	class:navds-fieldset--error={!!error}
+	aria-describedby={$$slots.description ? inputDescriptionId : undefined}
 >
 	<Label {size} as="legend" class={"navds-fieldset__legend" + srOnlyClass}>
 		<slot name="legend" />
@@ -100,14 +101,13 @@
 
 	{#if $$slots.description}
 		{#if size == "medium"}
-			<BodyLong
+			<BodyShort
 				class={"navds-fieldset__description" + srOnlyClass}
 				id={inputDescriptionId}
-				size="small"
 				as="div"
 			>
 				<slot name="description" />
-			</BodyLong>
+			</BodyShort>
 		{:else}
 			<Detail class={"navds-fieldset__description" + srOnlyClass} id={inputDescriptionId} as="div">
 				<slot name="description" />

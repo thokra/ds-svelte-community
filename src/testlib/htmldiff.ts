@@ -11,6 +11,9 @@ export type DiffOptions = {
 	ignoreSpaces?: boolean;
 	ignoreComments?: boolean;
 	ignoreClasses?: string[];
+	before?: number;
+	after?: number;
+
 	/**
 	 * Alter the value of an attribute on a before comparing.
 	 */
@@ -34,6 +37,8 @@ const defaultOpts: DiffOptions = {
 	ignoreSpaces: true,
 	ignoreComments: true,
 	ignoreClasses: ["unstyled"],
+	before: 5,
+	after: 5,
 };
 
 export async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): Promise<string> {
@@ -44,7 +49,12 @@ export async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions
 
 	const result = ["Differences: (left: a, right: b)"];
 
-	const diffResult = await prettyDiff(aclean.innerHTML, bclean.innerHTML);
+	const diffResult = await prettyDiff(
+		aclean.innerHTML,
+		bclean.innerHTML,
+		opts.before || 10,
+		opts.after || 10,
+	);
 	if (!diffResult) {
 		return "";
 	}
@@ -127,17 +137,18 @@ function cleanTree(el: HTMLElement, opts: DiffOptions, ignoreFunc?: (tag: HTMLEl
 const green = (input: string) => "\x1b[32m" + input + "\x1b[0m";
 const red = (input: string) => "\x1b[31m" + input + "\x1b[0m";
 
-async function prettyDiff(a: string, b: string) {
+async function prettyDiff(a: string, b: string, before: number, after: number) {
 	const lines = [
 		`Pretty diff: ${red("only in a")}, ${green("only in b")}\n`,
 		"Remember that this diff is a tool, not actualy what's tested.\n",
+		`${before} lines before and ${after} lines after a change are shown.\n`,
 	];
 
 	const afmt = await prettier.format(a, { parser: "html", singleAttributePerLine: true });
 	const bfmt = await prettier.format(b, { parser: "html", singleAttributePerLine: true });
 
 	let addedOrRemoved = 0;
-	Diff.diffLines(afmt, bfmt).forEach((part) => {
+	Diff.diffWords(afmt, bfmt).forEach((part) => {
 		if (part.added) {
 			addedOrRemoved++;
 			lines.push(`${green(part.value)}`);
@@ -148,6 +159,7 @@ async function prettyDiff(a: string, b: string) {
 			lines.push(part.value);
 		}
 	});
+
 	if (addedOrRemoved == 0) {
 		return "";
 	}

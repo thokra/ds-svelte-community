@@ -4,10 +4,13 @@
 
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import BodyLong from "../typography/BodyLong.svelte";
+	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
 	import Detail from "../typography/Detail.svelte";
 	import { GetCheckboxGroupContext } from "./CheckboxGroup.svelte";
+	import type { CheckboxProps } from "./type";
+
+	type $$Props = CheckboxProps;
 
 	/**
 	 * Adds error indication on checkbox
@@ -23,7 +26,7 @@
 	 * The value of the HTML element.
 	 */
 
-	export let value: string;
+	export let value: string | undefined = undefined;
 
 	/**
 	 * Specify whether the Checkbox is in an indeterminate state
@@ -56,12 +59,6 @@
 	 */
 	export let checked = false;
 
-	/**
-	 * Class to add to checkbox wrapper
-	 */
-	let klass = "";
-	export { klass as class };
-
 	type Events = {
 		change: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
@@ -80,11 +77,12 @@
 </script>
 
 <div
-	class={[klass, "navds-checkbox", `navds-checkbox--${size}`].filter((v) => v != "").join(" ")}
+	class={classes($$props, "navds-checkbox", `navds-checkbox--${size}`)}
 	class:navds-checkbox--error={hasError}
 	class:navds-checkbox--disabled={disabled}
 >
 	<input
+		{...omit($$restProps, "class")}
 		{id}
 		type="checkbox"
 		class="navds-checkbox__input"
@@ -131,11 +129,11 @@
 			</BodyShort>
 			{#if description}
 				{#if size == "medium"}
-					<BodyLong as="span" class="navds-checkbox__description">
+					<BodyShort as="span" class="navds-checkbox__description navds-form-field__subdescription">
 						{description}
-					</BodyLong>
+					</BodyShort>
 				{:else}
-					<Detail as="span" class="navds-checkbox__description">
+					<Detail as="span" class="navds-checkbox__description navds-form-field__subdescription">
 						{description}
 					</Detail>
 				{/if}

@@ -2,6 +2,7 @@
 	export type ItemProps = {
 		value: string;
 		content: string;
+		description?: string;
 	};
 </script>
 

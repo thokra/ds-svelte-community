@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import newUniqueId from "locally-unique-id-generator";
+</script>
+
 <script lang="ts">
 	import { Checkbox } from "../Checkbox";
 	import { classes, omit } from "../helpers";
@@ -36,6 +40,8 @@
 	 * Wether the checkbox is checked, can be used with `bind:checked`.
 	 */
 	export let checked = false;
+
+	$: uid = id || "confirmation-panel-" + newUniqueId();
 </script>
 
 <div
@@ -47,27 +53,17 @@
 >
 	<div class="navds-confirmation-panel__inner">
 		{#if $$slots.default}
-			<BodyLong
-				{size}
-				class="navds-confirmation-panel__content"
-				id={`confirmation-panel-${id}`}
-				as="div"
-			>
+			<BodyLong {size} class="navds-confirmation-panel__content" id={uid} as="div">
 				<!-- Description -->
 				<slot />
 			</BodyLong>
 		{/if}
-		<Checkbox bind:checked {value} error={!!error} {size}>
+		<Checkbox bind:checked {value} error={!!error} {size} aria-describedby={uid}>
 			<!-- Label text -->
 			<slot name="label" />
 		</Checkbox>
 	</div>
-	<div
-		class="navds-form-field__error"
-		id={errorId}
-		aria-relevant="additions removals"
-		aria-live="polite"
-	>
+	<div class="navds-form-field__error" id={errorId} role="alert">
 		{#if !!error}
 			<ErrorMessage {size}>{error}</ErrorMessage>
 		{/if}

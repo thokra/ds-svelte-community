@@ -52,7 +52,7 @@
 
 <svelte:element
 	this={as}
-	{...omit(disabled ? omit($$restProps, "href") : $$restProps, "class")}
+	{...omit(disabled ? omit($$restProps, "href", "class") : $$restProps, "class")}
 	style={overrideWidth ? `width: ${overrideWidth}px` : undefined}
 	class={classes($$restProps, "navds-button", `navds-button--${variant}`, `navds-button--${size}`)}
 	class:navds-button--loading={loading}
