@@ -4,6 +4,7 @@
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort.svelte";
 	import Item from "./Item.svelte";
+	import ItemWithIcon from "./ItemWithIcon.svelte";
 	import type { Props, sizes } from "./type";
 
 	type $$Props = Props;
@@ -97,7 +98,7 @@
 >
 	<ul class="navds-pagination__list">
 		<li>
-			<Item
+			<ItemWithIcon
 				class={classes({}, "navds-pagination__prev-next", {
 					"navds-pagination--invisible": page === 1,
 					"navds-pagination--prev-next--with-text": prevNextTexts,
@@ -108,17 +109,20 @@
 				iconOnly={!prevNextTexts}
 				on:click={() => handlePageChange(page - 1)}
 			>
-				<Back
-					slot="icon"
-					class="navds-pagination__prev-next-icon"
-					{...prevNextTexts ? { "aria-hidden": true } : { "aria-label": prevText }}
-				/>
+				<svelte:fragment slot="icon">
+					<Back
+						class="navds-pagination__prev-next-icon"
+						{...prevNextTexts ? { "aria-hidden": true } : { "aria-label": prevText }}
+						focusable="false"
+						role="img"
+					/>
+				</svelte:fragment>
 				{#if prevNextTexts}
 					<BodyShort size={size === "xsmall" ? "small" : size} class="navds-pagination__prev-text">
 						{prevText}
 					</BodyShort>
 				{/if}
-			</Item>
+			</ItemWithIcon>
 		</li>
 		{#each steps as step}
 			{@const n = Number(step)}
@@ -137,7 +141,7 @@
 			{/if}
 		{/each}
 		<li>
-			<Item
+			<ItemWithIcon
 				class={classes({}, "navds-pagination__prev-next", {
 					"navds-pagination--invisible": page === count,
 					"navds-pagination--prev-next--with-text": prevNextTexts,
@@ -148,17 +152,20 @@
 				on:click={() => handlePageChange(page + 1)}
 				iconOnly={!prevNextTexts}
 			>
-				<Next
-					slot="icon"
-					class="navds-pagination__prev-next-icon"
-					{...prevNextTexts ? { "aria-hidden": true } : { "aria-label": nextText }}
-				/>
+				<svelte:fragment slot="icon">
+					<Next
+						class="navds-pagination__prev-next-icon"
+						{...prevNextTexts ? { "aria-hidden": true } : { "aria-label": nextText }}
+						focusable="false"
+						role="img"
+					/>
+				</svelte:fragment>
 				{#if prevNextTexts}
 					<BodyShort size={size === "xsmall" ? "small" : size} class="navds-pagination__prev-text">
 						{nextText}
 					</BodyShort>
 				{/if}
-			</Item>
+			</ItemWithIcon>
 		</li>
 	</ul>
 </nav>

@@ -30,7 +30,14 @@
 	$: width && updateSteppers();
 
 	onMount(() => {
+		const resizeObserver = new ResizeObserver(updateSteppers);
+
+		resizeObserver.observe(tabList);
 		updateSteppers();
+
+		return () => {
+			resizeObserver.disconnect();
+		};
 	});
 
 	const scroll = async (right: boolean) => {
@@ -58,14 +65,16 @@
 	{/if}
 	<div
 		bind:this={tabList}
-		bind:clientWidth={width}
 		on:scroll={() => {
 			updateSteppers();
 		}}
 		{...omit($$restProps, "class", "role", "aria-orientation")}
 		class={classes($$restProps, "navds-tabs__tablist")}
+		data-orientation="horizontal"
 		role="tablist"
 		aria-orientation="horizontal"
+		style="outline: none"
+		tabindex="0"
 	>
 		<slot />
 	</div>

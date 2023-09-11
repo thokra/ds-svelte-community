@@ -19,6 +19,11 @@
 	 * @note Avoid using if possible for accessibility purposes
 	 */
 	export let disabled = false;
+
+	/**
+	 * Icon only
+	 */
+	export let iconOnly = false;
 </script>
 
 <Button
@@ -27,11 +32,13 @@
 	aria-current={selected}
 	{disabled}
 	{size}
+	{iconOnly}
 	class={classes($$restProps, "navds-pagination__item", {
 		"navds-pagination__item--selected": selected,
 	})}
 	type="button"
 	on:click
 >
+	<slot name="icon" slot="icon-left" />
 	<slot />
 </Button>

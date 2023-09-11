@@ -43,6 +43,8 @@
 	 */
 	export let checked = false;
 
+	export let deactivateLabel = "Deactivate";
+
 	const id = `switch-${newUniqueId()}`;
 </script>
 
@@ -67,7 +69,7 @@
 			{#if loading}
 				<Loader size="xsmall" aria-live="polite" />
 			{:else if checked}
-				<SelectedIcon />
+				<SelectedIcon label={deactivateLabel} />
 			{/if}
 		</span>
 	</span>

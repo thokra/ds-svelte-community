@@ -9,9 +9,9 @@ export type StepperContext = {
 	orientation: (typeof orientations)[number];
 	interactive: Readable<boolean>;
 
-	steps: Readable<HTMLElement[]>;
-	register: (el: HTMLElement) => void;
-	unregister: (el: HTMLElement) => void;
+	steps: Readable<string[]>;
+	register: (el: string) => number;
+	unregister: (el: string) => void;
 	setStep: (step: number, event: MouseEvent) => void;
 };
 
@@ -33,4 +33,5 @@ export interface Props extends HTMLOlAttributes {
 export interface StepProps extends HTMLAnchorAttributes {
 	completed?: boolean;
 	interactive?: boolean;
+	completedLabel?: string;
 }

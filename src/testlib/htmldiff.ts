@@ -1,5 +1,5 @@
+import prettier from "@prettier/sync";
 import * as Diff from "diff";
-import * as prettier from "prettier";
 import type { FunctionComponent, ReactNode } from "react";
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
@@ -41,7 +41,7 @@ const defaultOpts: DiffOptions = {
 	after: 5,
 };
 
-export async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): Promise<string> {
+export function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions): string {
 	opts = { ...defaultOpts, ...opts };
 
 	const aclean = cleanTree(a, opts, opts.ignoreElementFromA);
@@ -49,7 +49,7 @@ export async function htmldiff(a: HTMLElement, b: HTMLElement, opts: DiffOptions
 
 	const result = ["Differences: (left: a, right: b)"];
 
-	const diffResult = await prettyDiff(
+	const diffResult = prettyDiff(
 		aclean.innerHTML,
 		bclean.innerHTML,
 		opts.before || 10,
@@ -101,6 +101,9 @@ function cleanTree(el: HTMLElement, opts: DiffOptions, ignoreFunc?: (tag: HTMLEl
 					return true;
 				})
 				.forEach((name) => {
+					if (name === "class") {
+						attrs[name] = attrs[name].split(" ").sort().join(" ");
+					}
 					node.setAttribute(name, attrs[name]);
 				});
 
@@ -111,13 +114,13 @@ function cleanTree(el: HTMLElement, opts: DiffOptions, ignoreFunc?: (tag: HTMLEl
 				}
 			}
 
-			const classes = node.classList;
-			// sort classes
-			const sorted = Array.from(classes).sort();
-			classes.remove(...sorted);
-			classes.add(...sorted);
+			// // sort classes
+			// const sorted = Array.from(classes).sort();
+			// classes.remove(...sorted);
+			// classes.add(...sorted);
 
 			if (opts.ignoreClasses) {
+				const classes = node.classList;
 				classes.remove(...opts.ignoreClasses);
 			}
 		}
@@ -137,15 +140,19 @@ function cleanTree(el: HTMLElement, opts: DiffOptions, ignoreFunc?: (tag: HTMLEl
 const green = (input: string) => "\x1b[32m" + input + "\x1b[0m";
 const red = (input: string) => "\x1b[31m" + input + "\x1b[0m";
 
-async function prettyDiff(a: string, b: string, before: number, after: number) {
+function prettyDiff(a: string, b: string, before: number, after: number) {
 	const lines = [
 		`Pretty diff: ${red("only in a")}, ${green("only in b")}\n`,
 		"Remember that this diff is a tool, not actualy what's tested.\n",
 		`${before} lines before and ${after} lines after a change are shown.\n`,
 	];
 
-	const afmt = await prettier.format(a, { parser: "html", singleAttributePerLine: true });
-	const bfmt = await prettier.format(b, { parser: "html", singleAttributePerLine: true });
+	const opts = { parser: "html", singleAttributePerLine: true };
+
+	// For some reason, the async version of prettier exits this function before it's done.
+	// So we use the sync version, but it's soooo slow. (But I'd rather have correct output than fast output)
+	const afmt = prettier.format(a, opts);
+	const bfmt = prettier.format(b, opts);
 
 	let addedOrRemoved = 0;
 	Diff.diffWords(afmt, bfmt).forEach((part) => {
@@ -167,13 +174,16 @@ async function prettyDiff(a: string, b: string, before: number, after: number) {
 	return lines.join("");
 }
 
-async function doExpect(
+function doExpect(
 	opts: DiffOptions,
 	received: unknown,
 	comp: ReactComponent,
 	props: object | null,
 	...children: ReactNode[]
-) {
+): {
+	pass: boolean;
+	message: () => string;
+} {
 	if (!(received instanceof HTMLElement)) {
 		if (typeof received === "object") {
 			const r = received as {
@@ -190,11 +200,16 @@ async function doExpect(
 	}
 
 	const container = document.createElement("div");
-	container.innerHTML = ReactDOMServer.renderToString(
-		React.createElement(comp as FunctionComponent, props, ...children),
-	);
-
-	const diff = await htmldiff(received as HTMLElement, container, opts);
+	{
+		// Hack to remove ugly errors from react
+		const error = console.error;
+		console.error = () => {};
+		container.innerHTML = ReactDOMServer.renderToString(
+			React.createElement(comp as FunctionComponent, props, ...children),
+		);
+		console.error = error;
+	}
+	const diff = htmldiff(received as HTMLElement, container, opts);
 
 	return {
 		pass: diff === "",
@@ -203,7 +218,7 @@ async function doExpect(
 }
 
 expect.extend({
-	async toMimicReact(
+	toMimicReact(
 		received: unknown,
 		comp: ReactComponent,
 		opts?: {
@@ -212,15 +227,22 @@ expect.extend({
 			children?: ReactNode[];
 		},
 	) {
-		if (!opts) {
-			return doExpect(defaultOpts, received, comp, null);
+		try {
+			if (!opts) {
+				return doExpect(defaultOpts, received, comp, null);
+			}
+			return doExpect(
+				opts.opts || defaultOpts,
+				received,
+				comp,
+				opts.props || null,
+				...(opts.children || []),
+			);
+		} catch (e) {
+			return {
+				pass: false,
+				message: () => `Unexpected error: ${e}`,
+			};
 		}
-		return doExpect(
-			opts.opts || defaultOpts,
-			received,
-			comp,
-			opts.props || null,
-			...(opts.children || []),
-		);
 	},
 });

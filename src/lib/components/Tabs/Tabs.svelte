@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import newUniqueId from "locally-unique-id-generator";
+</script>
+
 <script lang="ts">
 	import { setContext } from "svelte";
 	import { writable } from "svelte/store";
@@ -34,6 +38,7 @@
 	 */
 	export let iconPosition: (typeof iconPositions)[number] = "left";
 
+	const id = newUniqueId();
 	const activeValue = writable<string>(value);
 	$: activeValue.set(value);
 	$: value = $activeValue;
@@ -70,6 +75,9 @@
 				activeTab.set(tabIndex[$activeValue]);
 			}
 		},
+		idFor(typ, val) {
+			return `tabs-${typ}-${id}-${val}`;
+		},
 	});
 </script>
 
@@ -77,6 +85,7 @@
 	{...omit($$restProps, "class", "dir")}
 	dir="ltr"
 	class={classes($$restProps, "navds-tabs", `navds-tabs--${size}`)}
+	data-orientation="horizontal"
 >
 	<slot />
 </div>

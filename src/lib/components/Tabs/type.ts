@@ -18,6 +18,7 @@ export type TabContext = {
 	register: (el: HTMLElement, value: string) => void;
 	focusOn: (el: HTMLElement) => void;
 	blur: (el: HTMLElement) => void;
+	idFor: (typ: "panel" | "tab", val: string) => string;
 };
 
 export const contextKey = Symbol("tab-context");
@@ -30,7 +31,7 @@ export function getTabsContext(): TabContext {
 	return context;
 }
 
-interface TabPropsButton extends HTMLButtonAttributes {
+export interface TabPropsButton extends HTMLButtonAttributes {
 	as?: "button";
 	value: string;
 }

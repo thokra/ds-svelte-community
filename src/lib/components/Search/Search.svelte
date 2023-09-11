@@ -152,7 +152,7 @@
 					<span class="navds-sr-only">
 						{clearButtonLabel ? clearButtonLabel : "Empty"}
 					</span>
-					<Close aria-hidden />
+					<Close aria-hidden focusable="false" role="img" />
 				</button>
 			{/if}
 		</div>

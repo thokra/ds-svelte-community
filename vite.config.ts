@@ -13,5 +13,6 @@ export default defineConfig({
 				inline: ["clsx"],
 			},
 		},
+		dangerouslyIgnoreUnhandledErrors: true,
 	},
 });

@@ -84,9 +84,10 @@
 		"svelte": "^3.59.0 || ^4.0.0-0"
 	},
 	"devDependencies": {
-		"@navikt/aksel-icons": "^5.3.1",
-		"@navikt/ds-react": "^5.3.1",
-		"@navikt/ds-tailwind": "^5.3.1",
+		"@navikt/aksel-icons": "^5.4.0",
+		"@navikt/ds-react": "^5.4.0",
+		"@navikt/ds-tailwind": "^5.4.0",
+		"@prettier/sync": "^0.3.0",
 		"@storybook/addon-a11y": "7.4.0",
 		"@storybook/addon-essentials": "7.4.0",
 		"@storybook/addon-interactions": "7.4.0",
@@ -108,10 +109,10 @@
 		"autoprefixer": "^10.4.15",
 		"clsx": "^2.0.0",
 		"diff": "^5.1.0",
-		"eslint": "^8.48.0",
+		"eslint": "^8.49.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-storybook": "^0.6.13",
-		"eslint-plugin-svelte": "^2.33.0",
+		"eslint-plugin-svelte": "^2.33.1",
 		"file-system-cache": "2.4.4",
 		"jsdom": "^22.1.0",
 		"normalize.css": "^8.0.1",
@@ -128,14 +129,14 @@
 		"tslib": "^2.6.2",
 		"typescript": "5.2.2",
 		"vite": "^4.4.9",
-		"vitest": "^0.34.3"
+		"vitest": "0.34.3"
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"@navikt/ds-css": "^5.3.1",
-		"@navikt/ds-tokens": "^5.3.1",
+		"@navikt/ds-css": "^5.4.0",
+		"@navikt/ds-tokens": "^5.4.0",
 		"locally-unique-id-generator": "^0.1.5"
 	}
 }

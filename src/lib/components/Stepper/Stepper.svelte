@@ -27,16 +27,17 @@
 	const interactiveStore = writable<boolean>(interactive);
 	$: interactiveStore.set(interactive);
 
-	let steps = writable<HTMLElement[]>([]);
+	let steps = writable<string[]>([]);
 	const context: StepperContext = {
 		activeStep: active,
 		orientation,
 		interactive: interactiveStore,
 		steps,
-		register: (el: HTMLElement) => {
+		register: (el: string) => {
 			steps.update((steps) => [...steps, el]);
+			return $steps.length;
 		},
-		unregister: (el: HTMLElement) => {
+		unregister: (el: string) => {
 			steps.update((steps) => steps.filter((step) => step !== el));
 		},
 		setStep: (step, event) => {

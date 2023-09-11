@@ -8,7 +8,7 @@
 	/**
 	 * Content alignment inside cell.
 	 */
-	export let align: (typeof aligns)[number] = "left";
+	export let align: (typeof aligns)[number] | undefined = undefined;
 
 	/**
 	 * Key to sort by.
@@ -30,12 +30,9 @@
 
 <th
 	{...omit($$restProps, "class")}
-	class={classes(
-		$$restProps,
-		"navds-table__header-cell",
-		"navds-label",
-		`navds-table__header-cell--align-${align}`,
-	)}
+	class={classes($$restProps, "navds-table__header-cell", "navds-label", {
+		[`navds-table__header-cell--align-${align}`]: !!align,
+	})}
 	class:navds-label--small={ctx.size == "small"}
 	aria-sort={sortable ? ($sort?.orderBy === sortKey ? $sort.direction : "none") : undefined}
 >

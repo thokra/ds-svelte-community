@@ -5,7 +5,7 @@
 
 	type $$Props = DataCellProps;
 
-	export let align: (typeof aligns)[number] = "left";
+	export let align: (typeof aligns)[number] | undefined = undefined;
 
 	const ctx = getTableContext();
 </script>
@@ -13,7 +13,9 @@
 <BodyShort
 	{...omit($$restProps)}
 	as="td"
-	class={classes($$restProps, "navds-table__data-cell", `navds-table__data-cell--align-${align}`)}
+	class={classes($$restProps, "navds-table__data-cell", {
+		[`navds-table__data-cell--align-${align}`]: !!align,
+	})}
 	size={ctx.size}
 >
 	<!-- Content -->

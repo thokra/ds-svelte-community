@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import { BodyLong, Detail, ErrorMessage, Label } from "$lib";
+	import { BodyShort, Detail, ErrorMessage, Label } from "$lib";
 	import { classes, omit } from "../helpers";
 	import type { Props, sizes, types } from "./type";
 
@@ -60,7 +60,8 @@
 	$: srOnlyClass = hideLabel ? " navds-sr-only" : "";
 	$: inputProps = {
 		id,
-		"aria-invalid": (error ? "true" : "false") as "true" | "false",
+		"aria-invalid": (error ? "true" : undefined) as "true" | undefined,
+		"aria-describedby": inputDescriptionId,
 		class: "navds-text-field__input navds-body-short navds-body-" + size,
 		size: htmlSize,
 		...omit($$restProps, "id", "class", "aria-invalid", "size"),
@@ -79,14 +80,13 @@
 
 	{#if $$slots.description}
 		{#if size == "medium"}
-			<BodyLong
+			<BodyShort
 				class={"navds-form-field__description" + srOnlyClass}
 				id={inputDescriptionId}
-				size="small"
 				as="div"
 			>
 				<slot name="description" />
-			</BodyLong>
+			</BodyShort>
 		{:else}
 			<Detail
 				class={"navds-form-field__description" + srOnlyClass}

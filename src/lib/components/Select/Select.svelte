@@ -16,7 +16,7 @@
 	/**
 	 * Exposes the HTML size attribute.
 	 */
-	export let htmlSize = 0;
+	export let htmlSize: number | undefined = undefined;
 	/**
 	 * Label for select.
 	 */
@@ -28,7 +28,7 @@
 	/**
 	 * Sets inline-style on select wrapper.
 	 */
-	export let style = "";
+	export let style: string | undefined = undefined;
 
 	/**
 	 * Changes font-size, padding and gaps.
@@ -94,13 +94,13 @@
 			size={htmlSize}
 			{id}
 			{disabled}
-			aria-invalid={hasError}
+			aria-invalid={hasError ? true : undefined}
 			aria-describedby={hasError ? errorID : undefined}
 		>
 			<!-- List of `<option>` -->
 			<slot />
 		</select>
-		<ChevronDown class="navds-select__chevron" aria-hidden />
+		<ChevronDown class="navds-select__chevron" aria-hidden focusable="false" role="img" />
 	</div>
 
 	<div

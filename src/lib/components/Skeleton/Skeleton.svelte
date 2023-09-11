@@ -20,7 +20,7 @@
 		restProps: { [index: string]: unknown },
 		width: Props["width"],
 		height: Props["height"],
-	): string => {
+	): string | undefined => {
 		let ret = "";
 		if (restProps.style) {
 			ret += restProps.style;
@@ -30,6 +30,10 @@
 		}
 		if (height) {
 			ret += `height: ${height};`;
+		}
+
+		if (ret == "") {
+			return undefined;
 		}
 
 		return ret;
@@ -43,7 +47,7 @@
 	class:navds-skeleton--no-height={!height}
 	class:navds-skeleton--no-width={!width}
 	style={style($$restProps, width, height)}
-	aria-hidden
+	aria-hidden="true"
 >
 	<slot />
 </div>

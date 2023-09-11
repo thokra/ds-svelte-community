@@ -30,5 +30,7 @@
 	{variant}
 	{loading}
 	class={classes($$restProps, "navds-search__button-search")}
-	{disabled}><Search slot="icon-left" /></Button
+	{disabled}
+	><svelte:fragment slot="icon-left"><Search focusable="false" role="img" /></svelte:fragment
+	></Button
 >

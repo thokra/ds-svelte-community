@@ -16,6 +16,10 @@
 	tabindex="0"
 	class={classes($$restProps, "navds-tabs__tabpanel")}
 	hidden={$currentValue != value ? true : undefined}
+	id={ctx.idFor("panel", value)}
+	aria-labelledby={ctx.idFor("tab", value)}
 >
-	<slot />
+	{#if $currentValue == value}
+		<slot />
+	{/if}
 </div>

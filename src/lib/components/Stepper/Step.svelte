@@ -1,8 +1,12 @@
+<script lang="ts" context="module">
+	import newUniqueId from "locally-unique-id-generator";
+</script>
+
 <script lang="ts">
-	import { CheckmarkCircleFill as SuccessFilled } from "$lib/icons";
-	import { onMount } from "svelte";
+	import { onDestroy } from "svelte";
 	import { omit } from "../helpers";
 	import Label from "../typography/Label.svelte";
+	import CompletedIcon from "./CompletedIcon.svelte";
 	import { getStepperContext, type StepProps } from "./type";
 
 	type $$Props = StepProps;
@@ -18,12 +22,15 @@
 	 */
 	export let interactive: boolean | undefined = undefined;
 
-	const ctx = getStepperContext();
+	export let completedLabel = "Completed";
 
+	const id = newUniqueId();
+	const ctx = getStepperContext();
 	const { activeStep, interactive: interactiveStore, steps } = ctx;
 
 	let as = "a";
 	let isInteractive: boolean | null = null;
+
 	$: {
 		if (interactive === undefined) {
 			isInteractive = $interactiveStore;
@@ -33,22 +40,24 @@
 		}
 	}
 
-	let self: HTMLElement;
-	onMount(() => {
-		ctx.register(self);
-		return () => {
-			ctx.unregister(self);
-		};
-	});
+	$: index = $steps.indexOf(id) + 1;
 
-	$: index = $steps.indexOf(self) + 1;
+	ctx.register(id);
+	onDestroy(() => {
+		ctx.unregister(id);
+	});
 
 	const handleClick = (e: MouseEvent) => {
 		ctx.setStep(index, e);
 	};
 </script>
 
-<li class="navds-stepper__item" bind:this={self}>
+<li
+	class="navds-stepper__item"
+	class:navds-stepper__item--behind={index < $activeStep}
+	class:navds-stepper__item--non-interactive={!isInteractive}
+	class:navds-stepper__item--completed={completed}
+>
 	<span class="navds-stepper__line navds-stepper__line--1" />
 	<svelte:element
 		this={as}
@@ -61,11 +70,13 @@
 		class:unstyled={as == "a"}
 		aria-current={index == $activeStep}
 		on:click={isInteractive ? handleClick : null}
-		role="button"
+		role={isInteractive ? "button" : undefined}
 		tabindex={isInteractive ? 0 : undefined}
 	>
 		{#if completed}
-			<SuccessFilled aria-hidden class="navds-stepper__circle navds-stepper__circle--success" />
+			<span class="navds-stepper__circle navds-stepper__circle--success">
+				<CompletedIcon {completedLabel} />
+			</span>
 		{:else}
 			<Label class="navds-stepper__circle" as="span" aria-hidden="true">
 				{index}
