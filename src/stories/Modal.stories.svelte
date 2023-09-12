@@ -5,8 +5,8 @@
 
 	import Button from "$lib/components/Button/Button.svelte";
 	import Modal from "$lib/components/Modal/Modal.svelte";
-	import BodyLong from "$lib/components/typography/BodyLong.svelte";
-	import Heading from "$lib/components/typography/Heading.svelte";
+	import BodyLong from "$lib/components/typography/BodyLong/BodyLong.svelte";
+	import Heading from "$lib/components/typography/Heading/Heading.svelte";
 	import source from "./examples/Modal.svelte?raw";
 
 	let open = false;

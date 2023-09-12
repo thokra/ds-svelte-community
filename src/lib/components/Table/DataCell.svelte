@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import { aligns, getTableContext, type DataCellProps } from "./type";
 
 	type $$Props = DataCellProps;

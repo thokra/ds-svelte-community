@@ -1,40 +1,15 @@
 <script lang="ts" context="module">
 	import newUniqueId from "locally-unique-id-generator";
-	import { getContext } from "svelte";
-
-	export type FieldSetContext = {
-		/**
-		 * Error message applied to element,
-		 */
-		error: string;
-		/**
-		 * Overrides internal errorId
-		 */
-		errorId: string;
-		/**
-		 * Changes paddings, margins and font-sizes
-		 */
-		size: "medium" | "small";
-		/**
-		 * Sets fieldset and all form-children to disabled
-		 */
-		disabled: boolean;
-	};
-
-	const contextKey = Symbol("FieldsetContext");
-
-	export function GetFieldsetContext(): FieldSetContext | undefined {
-		return getContext<FieldSetContext>(contextKey);
-	}
+	import { contextKey, type FieldSetContext, type FieldsetProps } from "./type";
 </script>
 
 <script lang="ts">
 	import { setContext } from "svelte";
-	import { classes } from "./helpers";
-	import BodyShort from "./typography/BodyShort.svelte";
-	import Detail from "./typography/Detail.svelte";
-	import ErrorMessage from "./typography/ErrorMessage.svelte";
-	import Label from "./typography/Label.svelte";
+	import { classes, omit } from "../helpers";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
+	import Detail from "../typography/Detail/Detail.svelte";
+	import ErrorMessage from "../typography/ErrorMessage/ErrorMessage.svelte";
+	import Label from "../typography/Label/Label.svelte";
 
 	/**
 	 * If enabled shows the legend and description for screenreaders only
@@ -72,6 +47,8 @@
 	 */
 	export let id = "fs-" + newUniqueId();
 
+	type $$Props = FieldsetProps;
+
 	const ctx: FieldSetContext = {
 		error,
 		errorId,
@@ -89,7 +66,7 @@
 
 <!-- svelte-ignore a11y-role-supports-aria-props -->
 <fieldset
-	{...$$restProps}
+	{...omit($$restProps, "class", "aria-invalid", "aria-describedby")}
 	aria-invalid={error ? "true" : undefined}
 	class={classes($$restProps, "navds-fieldset", `navds-fieldset--${size}`)}
 	class:navds-fieldset--error={!!error}

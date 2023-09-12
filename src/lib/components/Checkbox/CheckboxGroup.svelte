@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
 	import newUniqueId from "locally-unique-id-generator";
 	import { getContext } from "svelte";
-	import Fieldset from "../Fieldset.svelte";
+	import Fieldset from "../Fieldset/Fieldset.svelte";
 	import type { CheckboxGroupContext, Props, sizes } from "./type";
 
 	const contextKey = Symbol("CheckboxGroupContext");

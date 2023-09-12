@@ -66,6 +66,8 @@
 		role="radiogroup"
 		dir="ltr"
 		class="navds-toggle-group navds-toggle-group--{size} navds-toggle-group--{variant}"
+		style="outline:none"
+		tabindex="0"
 	>
 		<!-- One or more `<ToggleGroupItem>`-->
 		<slot />

@@ -2,7 +2,7 @@
 	import { ChevronLeft as Back, ChevronRight as Next } from "$lib/icons";
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Item from "./Item.svelte";
 	import ItemWithIcon from "./ItemWithIcon.svelte";
 	import type { Props, sizes } from "./type";

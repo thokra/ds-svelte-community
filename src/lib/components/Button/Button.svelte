@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Loader from "../Loader/Loader.svelte";
 	import { classes, omit } from "../helpers";
-	import Label from "../typography/Label.svelte";
+	import Label from "../typography/Label/Label.svelte";
 	import type { Props } from "./type";
 
 	/**

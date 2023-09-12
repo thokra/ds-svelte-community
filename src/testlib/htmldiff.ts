@@ -239,6 +239,7 @@ expect.extend({
 				...(opts.children || []),
 			);
 		} catch (e) {
+			console.log(e);
 			return {
 				pass: false,
 				message: () => `Unexpected error: ${e}`,

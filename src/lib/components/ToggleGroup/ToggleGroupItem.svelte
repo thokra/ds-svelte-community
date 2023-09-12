@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Label } from "$lib";
+	import { BodyShort } from "$lib";
 	import { classes, omit } from "../helpers";
 	import { getToggleGroupContext, type ToggleGroupItemProps } from "./type";
 
@@ -67,10 +67,11 @@
 	role="radio"
 	aria-checked={state === "on"}
 	tabindex={state == "on" ? 0 : -1}
+	type="button"
 	on:click={handleClick}
 	on:keydown={keydown}
 >
-	<Label as="span" class="navds-toggle-group__button-inner" size={ctx.size}>
+	<BodyShort as="span" class="navds-toggle-group__button-inner" size={ctx.size}>
 		<slot />
-	</Label>
+	</BodyShort>
 </button>

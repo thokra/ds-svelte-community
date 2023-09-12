@@ -13,8 +13,8 @@
 	import { XMark as Close, MagnifyingGlass as SearchIcon } from "$lib/icons";
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
-	import Label from "../typography/Label.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
+	import Label from "../typography/Label/Label.svelte";
 	import SearchButton from "./SearchButton.svelte";
 	import type { Props } from "./type";
 

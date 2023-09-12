@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SvelteHTMLElements } from "svelte/elements";
-	import { classes } from "../helpers";
+	import { classes } from "../../helpers";
 
 	/**
 	 * Adds margin-bottom

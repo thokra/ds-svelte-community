@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { Focus, classes, focusable, omit } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import { ases, getTabsContext, type TabProps } from "./type";
 
 	type $$Props = TabProps;

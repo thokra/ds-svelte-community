@@ -6,7 +6,7 @@
 		ExclamationmarkTriangleFill as WarningFilled,
 	} from "$lib/icons";
 	import { classes, omit } from "../helpers";
-	import BodyLong from "../typography/BodyLong.svelte";
+	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
 	import type { Props } from "./type";
 
 	type $$Props = Props;

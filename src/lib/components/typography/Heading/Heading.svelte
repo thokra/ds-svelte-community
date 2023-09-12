@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { classes } from "../helpers";
+	import { classes } from "../../helpers";
 
 	/**
 	 * Heading level
@@ -22,7 +22,7 @@
 	/**
 	 * Tag to use for the heading
 	 */
-	export let as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span" | null = null;
+	export let as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span" | undefined = undefined;
 </script>
 
 <svelte:element

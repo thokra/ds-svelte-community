@@ -5,8 +5,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
-	import Detail from "../typography/Detail.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
+	import Detail from "../typography/Detail/Detail.svelte";
 	import { GetCheckboxGroupContext } from "./CheckboxGroup.svelte";
 	import type { CheckboxProps } from "./type";
 

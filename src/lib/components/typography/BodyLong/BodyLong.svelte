@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { classes } from "../helpers";
+	import { classes } from "../../helpers";
 
 	/**
 	 * medium: 18px, small: 16px

@@ -3,7 +3,7 @@
 	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import Label from "$lib/components/typography/Label.svelte";
+	import Label from "$lib/components/typography/Label/Label.svelte";
 </script>
 
 <Meta title="typography/Label" component={Label} />

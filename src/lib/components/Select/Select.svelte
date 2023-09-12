@@ -5,10 +5,10 @@
 <script lang="ts">
 	import { ChevronDown } from "$lib/icons";
 	import { classes, omit } from "../helpers";
-	import BodyLong from "../typography/BodyLong.svelte";
-	import Detail from "../typography/Detail.svelte";
-	import ErrorMessage from "../typography/ErrorMessage.svelte";
-	import Label from "../typography/Label.svelte";
+	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
+	import Detail from "../typography/Detail/Detail.svelte";
+	import ErrorMessage from "../typography/ErrorMessage/ErrorMessage.svelte";
+	import Label from "../typography/Label/Label.svelte";
 	import type { Props, sizes } from "./type";
 
 	type $$Props = Props;

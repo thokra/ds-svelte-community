@@ -5,8 +5,8 @@
 <script lang="ts">
 	import Loader from "../Loader/Loader.svelte";
 	import { classes } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
-	import Detail from "../typography/Detail.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
+	import Detail from "../typography/Detail/Detail.svelte";
 	import SelectedIcon from "./SelectedIcon.svelte";
 
 	/**

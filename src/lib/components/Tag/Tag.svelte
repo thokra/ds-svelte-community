@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SvelteHTMLElements } from "svelte/elements";
-	import BodyShort from "../typography/BodyShort.svelte";
-	import Detail from "../typography/Detail.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
+	import Detail from "../typography/Detail/Detail.svelte";
 	import type { Props, sizes, variants } from "./type";
 
 	type $$Props = Props;

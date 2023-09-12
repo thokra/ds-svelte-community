@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 	import { omit } from "../helpers";
-	import Label from "../typography/Label.svelte";
+	import Label from "../typography/Label/Label.svelte";
 	import CompletedIcon from "./CompletedIcon.svelte";
 	import { getStepperContext, type StepProps } from "./type";
 

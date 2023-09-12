@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { HTMLAttributes } from "svelte/elements";
 	import { classes, omit } from "../helpers";
-	import BodyLong from "../typography/BodyLong.svelte";
+	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
 
 	type $$Props = HTMLAttributes<HTMLDivElement>;
 </script>

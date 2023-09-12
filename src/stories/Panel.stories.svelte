@@ -4,8 +4,8 @@
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
 	import Panel from "$lib/components/Panel/Panel.svelte";
-	import BodyLong from "$lib/components/typography/BodyLong.svelte";
-	import Heading from "$lib/components/typography/Heading.svelte";
+	import BodyLong from "$lib/components/typography/BodyLong/BodyLong.svelte";
+	import Heading from "$lib/components/typography/Heading/Heading.svelte";
 
 	import source from "./examples/Panel.svelte?raw";
 </script>

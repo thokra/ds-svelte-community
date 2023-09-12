@@ -5,8 +5,8 @@
 <script lang="ts">
 	import { Checkbox } from "../Checkbox";
 	import { classes, omit } from "../helpers";
-	import BodyLong from "../typography/BodyLong.svelte";
-	import ErrorMessage from "../typography/ErrorMessage.svelte";
+	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
+	import ErrorMessage from "../typography/ErrorMessage/ErrorMessage.svelte";
 	import type { Props } from "./type";
 
 	type $$Props = Props;

@@ -4,8 +4,8 @@
 
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import BodyShort from "../typography/BodyShort.svelte";
-	import Heading from "../typography/Heading.svelte";
+	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
+	import Heading from "../typography/Heading/Heading.svelte";
 	import type { Props, headingTags, sizes } from "./type";
 
 	type $$Props = Props;

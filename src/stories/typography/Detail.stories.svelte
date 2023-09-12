@@ -3,7 +3,7 @@
 	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import Detail from "$lib/components/typography/Detail.svelte";
+	import Detail from "$lib/components/typography/Detail/Detail.svelte";
 
 	const text = "Deserunt veniam eu fugiat ad est occaecat aliqua nisi aliquip.";
 </script>

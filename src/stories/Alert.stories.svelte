@@ -5,8 +5,8 @@
 
 	import Alert from "$lib/components/Alert/Alert.svelte";
 	import { sizes, variants } from "$lib/components/Alert/type";
-	import BodyLong from "$lib/components/typography/BodyLong.svelte";
-	import Heading from "$lib/components/typography/Heading.svelte";
+	import BodyLong from "$lib/components/typography/BodyLong/BodyLong.svelte";
+	import Heading from "$lib/components/typography/Heading/Heading.svelte";
 
 	import source from "./examples/Alert.svelte?raw";
 </script>

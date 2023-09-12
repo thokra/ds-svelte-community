@@ -13,6 +13,11 @@ updates:
       npm:
         patterns:
           - "*"
+        exclude-patterns:
+          - "@navikt/*"
+      aksel:
+        patterns:
+          - "@navikt/*"
 
   - package-ecosystem: github-actions
     directory: "/"

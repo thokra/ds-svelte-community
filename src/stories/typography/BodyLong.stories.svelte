@@ -3,7 +3,7 @@
 	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import BodyLong from "$lib/components/typography/BodyLong.svelte";
+	import BodyLong from "$lib/components/typography/BodyLong/BodyLong.svelte";
 
 	const text =
 		"Deserunt veniam eu fugiat ad est occaecat aliqua nisi aliquip. Aute amet occaecat ex aliqua irure elit labore pariatur. Proident pariatur proident pariatur magna consequat velit id commodo quis sunt tempor ullamco aliquip pariatur.";

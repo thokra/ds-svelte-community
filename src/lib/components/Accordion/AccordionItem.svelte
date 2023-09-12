@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { ChevronDown } from "$lib/icons";
 	import { omit } from "../helpers";
-	import BodyLong from "../typography/BodyLong.svelte";
-	import Heading from "../typography/Heading.svelte";
+	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
+	import Heading from "../typography/Heading/Heading.svelte";
 	import { GetAccordionContext } from "./Accordion.svelte";
 	import type { ItemProps } from "./type";
 

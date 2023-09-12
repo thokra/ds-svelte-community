@@ -3,7 +3,7 @@
 	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 
-	import Heading from "$lib/components/typography/Heading.svelte";
+	import Heading from "$lib/components/typography/Heading/Heading.svelte";
 </script>
 
 <Meta title="typography/Heading" component={Heading} />
