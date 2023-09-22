@@ -38,6 +38,9 @@ describe("Tabs", () => {
 					if (name == "hidden" && value == "true") {
 						return "";
 					}
+					if (name == "class") {
+						return value.replace(/s-\w+/g, "");
+					}
 					return value;
 				},
 				compareAttrs(node, attr) {
