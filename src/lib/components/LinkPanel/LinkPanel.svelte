@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ChevronRight from "$lib/icons/ChevronRight.svelte";
+	import ChevronRightIcon from "$lib/icons/ChevronRightIcon.svelte";
 	import Panel from "../Panel/Panel.svelte";
 	import { classes, omit } from "../helpers";
 	import type { Props } from "./type";
@@ -31,5 +31,5 @@
 		<!-- Panel content -->
 		<slot />
 	</div>
-	<ChevronRight class="navds-link-panel__chevron" aria-hidden focusable="false" role="img" />
+	<ChevronRightIcon class="navds-link-panel__chevron" aria-hidden />
 </Panel>

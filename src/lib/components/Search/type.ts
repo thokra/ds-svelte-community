@@ -14,4 +14,5 @@ export interface Props extends Omit<HTMLInputAttributes, "size"> {
 	value?: string;
 	disabled?: boolean;
 	loading?: boolean;
+	searchIconText?: string;
 }

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ChevronLeft as Left, ChevronRight as Right } from "$lib/icons";
+	import ChevronLeftIcon from "$lib/icons/ChevronLeftIcon.svelte";
+	import ChevronRightIcon from "$lib/icons/ChevronRightIcon.svelte";
 	import { onMount } from "svelte";
 	import { classes, omit } from "../helpers";
 	import type { TabListProps } from "./type";
@@ -60,7 +61,7 @@
 				scroll(false);
 			}}
 		>
-			<Left />
+			<ChevronLeftIcon />
 		</div>
 	{/if}
 	<div
@@ -87,7 +88,7 @@
 				scroll(true);
 			}}
 		>
-			<Right />
+			<ChevronRightIcon />
 		</div>
 	{/if}
 </div>

@@ -1,0 +1,40 @@
+<script lang="ts" context="module">
+	import newUniqueId from "locally-unique-id-generator";
+	import type { SVGAttributes } from "svelte/elements";
+</script>
+
+<script lang="ts">
+	/**
+	 * Title of the icon, used for accessibility
+	 */
+	export let title = "";
+
+	type $$Props = SVGAttributes<SVGElement> & {
+		title?: string;
+	};
+
+	const id = newUniqueId();
+</script>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="1em"
+	height="1em"
+	fill="none"
+	focusable="false"
+	role="img"
+	viewBox="0 0 24 24"
+	aria-labelledby={title ? id : undefined}
+	{...$$restProps}
+>
+	{#if title}
+		<title {id}>{title}</title>
+	{/if}
+	<slot />
+	<path
+		fill="currentColor"
+		fill-rule="evenodd"
+		d="M8 4.75a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5ZM3.25 8a4.75 4.75 0 1 1 9.5 0 4.75 4.75 0 0 1-9.5 0ZM18 5.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM15.75 6a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0Zm-7 0a.75.75 0 0 0-1.5 0v2c0 .199.079.39.22.53l1 1a.75.75 0 0 0 1.06-1.06l-.78-.78V6Zm11.932 3.272a.75.75 0 0 1 .546.91l-1.122 4.485a2.75 2.75 0 0 1-2.668 2.083h-.688V20a.75.75 0 0 1-1.5 0v-3.25H14a.75.75 0 0 1 0-1.5h3.438a1.25 1.25 0 0 0 1.213-.947l1.121-4.485a.75.75 0 0 1 .91-.546Zm-2.476-.493a.75.75 0 0 1 .515.927l-.822 2.877a1.75 1.75 0 0 1-1.435 1.251l-2.858.409a.75.75 0 0 1-.212-1.486l2.858-.408a.25.25 0 0 0 .205-.179l.822-2.876a.75.75 0 0 1 .927-.515Zm-5.563 6.607a.75.75 0 1 0-1.286-.772l-3 5a.75.75 0 0 0 1.286.772l3-5Z"
+		clip-rule="evenodd"
+	/>
+</svg>

@@ -1,9 +1,11 @@
 <script>
 	import { Tab, TabList, TabPanel, Tabs } from "$lib/components/Tabs";
 	import { iconPositions, sizes } from "$lib/components/Tabs/type";
-	import { EnvelopeOpen as Email, ClockDashed as Historic, Paperplane as Send } from "$lib/icons";
 	// eslint-disable-next-line
 	// @ts-ignore
+	import ClockDashedIcon from "$lib/icons/ClockDashedIcon.svelte";
+	import EnvelopeOpenIcon from "$lib/icons/EnvelopeOpenIcon.svelte";
+	import PaperplaneIcon from "$lib/icons/PaperplaneIcon.svelte";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Tabs.svelte?raw";
 
@@ -74,15 +76,15 @@
 		<Tabs bind:value={active}>
 			<TabList>
 				<Tab value="log">
-					<Historic aria-label="Log" slot="icon" />
+					<ClockDashedIcon aria-label="Log" slot="icon" />
 					Log
 				</Tab>
 				<Tab value="inbox">
-					<Email aria-label="Inbox" slot="icon" />
+					<EnvelopeOpenIcon aria-label="Inbox" slot="icon" />
 					Inbox
 				</Tab>
 				<Tab value="sent">
-					<Send aria-label="Sent" slot="icon" />
+					<PaperplaneIcon aria-label="Sent" slot="icon" />
 					Sent
 				</Tab>
 			</TabList>
@@ -101,13 +103,13 @@
 		<Tabs bind:value={active}>
 			<TabList>
 				<Tab value="log">
-					<Historic aria-label="Log" slot="icon" />
+					<ClockDashedIcon aria-label="Log" slot="icon" />
 				</Tab>
 				<Tab value="inbox">
-					<Email aria-label="Inbox" slot="icon" />
+					<EnvelopeOpenIcon aria-label="Inbox" slot="icon" />
 				</Tab>
 				<Tab value="sent">
-					<Send aria-label="Sent" slot="icon" />
+					<PaperplaneIcon aria-label="Sent" slot="icon" />
 				</Tab>
 			</TabList>
 
@@ -173,15 +175,15 @@
 	<Tabs value={active} iconPosition="top">
 		<TabList>
 			<Tab value="log">
-				<Historic aria-label="Log" slot="icon" />
+				<ClockDashedIcon aria-label="Log" slot="icon" />
 				Log
 			</Tab>
 			<Tab value="inbox">
-				<Email aria-label="Inbox" slot="icon" />
+				<EnvelopeOpenIcon aria-label="Inbox" slot="icon" />
 				Inbox
 			</Tab>
 			<Tab value="sent">
-				<Send aria-label="Sent" slot="icon" />
+				<PaperplaneIcon aria-label="Sent" slot="icon" />
 				Sent
 			</Tab>
 		</TabList>
@@ -202,15 +204,15 @@
 	<Tabs value={active} size="small">
 		<TabList>
 			<Tab value="log">
-				<Historic aria-label="Log" slot="icon" />
+				<ClockDashedIcon aria-label="Log" slot="icon" />
 				Log
 			</Tab>
 			<Tab value="inbox">
-				<Email aria-label="Inbox" slot="icon" />
+				<EnvelopeOpenIcon aria-label="Inbox" slot="icon" />
 				Inbox
 			</Tab>
 			<Tab value="sent">
-				<Send aria-label="Sent" slot="icon" />
+				<PaperplaneIcon aria-label="Sent" slot="icon" />
 				Sent
 			</Tab>
 		</TabList>

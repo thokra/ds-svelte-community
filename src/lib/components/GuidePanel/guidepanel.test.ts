@@ -8,10 +8,24 @@ describe.concurrent("GuidePanel", () => {
 	it("renders with HTML similar to ds-react", () => {
 		const props: Props = {};
 		expect(render(GuidePanel, props)).toMimicReact(ReactGuidePanel, {
-			props: {
-				...props,
-			},
+			props,
 			children: ["Guide Panel Content"],
+			opts: {
+				ignoreElementFromA(tag) {
+					return tag.tagName.toLowerCase() == "title";
+				},
+				compareAttrs(node, attr) {
+					const tagName = node.tagName.toLowerCase();
+					if (tagName == "svg" && ["aria-labelledby", "aria-label"].includes(attr)) {
+						return false;
+					}
+					// Known unique attributes
+					if (["id"].includes(attr)) {
+						return false;
+					}
+					return true;
+				},
+			},
 		});
 	});
 

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Button from "$lib/components/Button/Button.svelte";
 	import { sizes, variants } from "$lib/components/Button/type";
-	import { Star } from "$lib/icons";
 	import { action } from "@storybook/addon-actions";
 	// eslint-disable-next-line
 	// @ts-ignore
+	import StarIcon from "$lib/icons/StarIcon.svelte";
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
 	import source from "./examples/Button.svelte?raw";
 </script>
@@ -79,7 +79,7 @@
 		on:mouseenter={action("Mouse entered button")}
 		on:mouseleave={action("Mouse left button")}
 	>
-		<Star slot="icon-left" aria-label="Stjerne" />
+		<StarIcon slot="icon-left" aria-label="Stjerne" />
 	</Button>
 </Story>
 
@@ -90,7 +90,7 @@
 		on:mouseenter={action("Mouse entered button")}
 		on:mouseleave={action("Mouse left button")}
 	>
-		<Star slot="icon-left" aria-label="Stjerne" />
+		<StarIcon slot="icon-left" aria-label="Stjerne" />
 		Button text
 	</Button>
 </Story>

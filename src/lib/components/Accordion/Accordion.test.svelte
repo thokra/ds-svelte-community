@@ -17,6 +17,6 @@
 
 <Accordion>
 	{#each items as item}
-		<AccordionItem {...omit(item, "content")}>{item.content}</AccordionItem>
+		<AccordionItem {...omit(item, "content")} showMoreText="Vis mer">{item.content}</AccordionItem>
 	{/each}
 </Accordion>

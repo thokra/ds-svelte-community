@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Checkmark from "$lib/icons/Checkmark.svelte";
-	import Files from "$lib/icons/Files.svelte";
+	import CheckmarkIcon from "$lib/icons/CheckmarkIcon.svelte";
+	import FilesIcon from "$lib/icons/FilesIcon.svelte";
 	import { createEventDispatcher, onDestroy } from "svelte";
 	import { classes, omit } from "../helpers";
 	import { Label } from "../typography";
@@ -89,24 +89,14 @@
 			<span class="navds-copybutton__icon">
 				<!-- Icon when button has been clicked. Defaults to `<Checkmark />` icon. -->
 				<slot name="active-icon">
-					<Checkmark
-						aria-hidden={!!text}
-						aria-label={text ? undefined : activeTitle}
-						focusable="false"
-						role="img"
-					/>
+					<CheckmarkIcon aria-hidden={!!text} title={text ? undefined : activeTitle} />
 				</slot>
 			</span>
 		{:else}
 			<span class="navds-copybutton__icon">
 				<!-- Icon for the button. Defaults to `<Files />` icon. -->
 				<slot name="icon">
-					<Files
-						aria-hidden={!!text}
-						aria-label={text ? undefined : title}
-						focusable="false"
-						role="img"
-					/>
+					<FilesIcon aria-hidden={!!text} title={text ? undefined : title} />
 				</slot>
 			</span>
 		{/if}

@@ -15,6 +15,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
 export interface ItemProps extends HTMLAttributes<HTMLDivElement> {
 	open?: boolean;
 	heading?: string;
+	showMoreText?: string;
 }
 
 export type AccordionContext = {

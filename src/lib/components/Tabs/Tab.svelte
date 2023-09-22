@@ -79,3 +79,9 @@
 		<slot />
 	</BodyShort>
 </svelte:element>
+
+<style>
+	.unstyled {
+		text-decoration: none;
+	}
+</style>

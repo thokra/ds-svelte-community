@@ -1,0 +1,40 @@
+<script lang="ts" context="module">
+	import newUniqueId from "locally-unique-id-generator";
+	import type { SVGAttributes } from "svelte/elements";
+</script>
+
+<script lang="ts">
+	/**
+	 * Title of the icon, used for accessibility
+	 */
+	export let title = "";
+
+	type $$Props = SVGAttributes<SVGElement> & {
+		title?: string;
+	};
+
+	const id = newUniqueId();
+</script>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="1em"
+	height="1em"
+	fill="none"
+	focusable="false"
+	role="img"
+	viewBox="0 0 24 24"
+	aria-labelledby={title ? id : undefined}
+	{...$$restProps}
+>
+	{#if title}
+		<title {id}>{title}</title>
+	{/if}
+	<slot />
+	<path
+		fill="currentColor"
+		fill-rule="evenodd"
+		d="M13 3.25a.25.25 0 0 1 .25.25v4c0 .69.56 1.25 1.25 1.25h4a.25.25 0 0 1 .25.25v10.5c0 .69-.56 1.25-1.25 1.25h-11c-.69 0-1.25-.56-1.25-1.25v-15c0-.69.56-1.25 1.25-1.25H13Zm2.177.866a.25.25 0 0 0-.427.177V7c0 .138.112.25.25.25h2.707a.25.25 0 0 0 .177-.427l-2.707-2.707Zm-5.043 10.419a.264.264 0 0 1-.04.311L8.47 16.47a.75.75 0 1 0 1.06 1.06l1.624-1.623a.264.264 0 0 1 .311-.041 3.25 3.25 0 1 0-1.33-1.33ZM11.25 13a1.75 1.75 0 1 1 3.5 0 1.75 1.75 0 0 1-3.5 0Z"
+		clip-rule="evenodd"
+	/>
+</svg>

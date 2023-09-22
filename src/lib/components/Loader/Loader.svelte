@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import newUniqueId from "locally-unique-id-generator";
+</script>
+
 <script lang="ts">
 	import { classes, omit } from "../helpers";
 	import type { Props, sizes, variants } from "./type";
@@ -21,6 +25,8 @@
 	 * Colored variants for Loader
 	 */
 	export let variant: (typeof variants)[number] = "neutral";
+
+	const id = "ldr" + newUniqueId();
 </script>
 
 <svg
@@ -30,8 +36,9 @@
 	focusable="false"
 	viewBox="0 0 50 50"
 	preserveAspectRatio="xMidYMid"
-	aria-label={title}
+	aria-labelledby={id}
 >
+	<title {id}>{title}</title>
 	<circle
 		class="navds-loader__background"
 		xmlns="http://www.w3.org/2000/svg"

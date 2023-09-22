@@ -1,12 +1,18 @@
 #!/bin/bash
 OUTDIR=src/lib/icons
 
-npx svelvg glob=@navikt/aksel-icons/dist/svg outDir=$OUTDIR
-rm src/lib/icons/*.svelte.d.ts
+if [ ! -d "$OUTDIR" ]; then
+  mkdir -p "$OUTDIR"
+fi
+
+# Check if bun is installed
+if ! command -v bun &> /dev/null
+then
+    echo "bun could not be found"
+    exit
+fi
+
+bun ./src/icons/generate.ts
 
 ICONS=(src/lib/icons/*.svelte)
-sed -i -E 's/(width|height)=\"[^\"]+\"/\1=\"1em\"/g' "${ICONS[@]}"
-sed -i -E 's/fill=\"#23262A\"/fill=\"currentColor\"/g' "${ICONS[@]}"
-
 npx prettier --write "${ICONS[@]}"
-npx prettier --write src/lib/icons/index.d.ts

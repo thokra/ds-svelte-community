@@ -9,6 +9,7 @@ describe.concurrent("Modal", () => {
 	it("renders with HTML similar to ds-react", () => {
 		const props: Props = {
 			open: true,
+			closeIconText: "Lukk modalvindu",
 		};
 		expect(render(Modal, props)).toMimicReact(ReactModal, {
 			props: {
@@ -27,22 +28,14 @@ describe.concurrent("Modal", () => {
 			],
 			opts: {
 				ignoreClasses: ["navds-modal--polyfilled"],
-				ignoreElementFromB(tag) {
-					// Ignore title tag
-					if (tag.tagName.toLowerCase() === "title") {
-						return true;
-					}
-					return false;
-				},
-
 				compareAttrs(node, attr) {
 					const tagName = node.tagName.toLowerCase();
-					// Because of changes with icons, we ignore aria-label(ledby) and path.d attributes
-					if (tagName === "path" && attr === "d") {
+					// Title ids are unique
+					if (tagName === "title" && attr === "id") {
 						return false;
 					}
 
-					if (tagName === "svg" && ["aria-labelledby", "aria-label"].includes(attr)) {
+					if (tagName === "svg" && ["aria-labelledby"].includes(attr)) {
 						return false;
 					}
 

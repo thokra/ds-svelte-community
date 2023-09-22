@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import { ChevronDown } from "$lib/icons";
+	import ChevronDownIcon from "$lib/icons/ChevronDownIcon.svelte";
 	import { classes, omit } from "../helpers";
 	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
 	import Detail from "../typography/Detail/Detail.svelte";
@@ -100,7 +100,7 @@
 			<!-- List of `<option>` -->
 			<slot />
 		</select>
-		<ChevronDown class="navds-select__chevron" aria-hidden focusable="false" role="img" />
+		<ChevronDownIcon class="navds-select__chevron" aria-hidden />
 	</div>
 
 	<div

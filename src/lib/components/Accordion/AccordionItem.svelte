@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ChevronDown } from "$lib/icons";
+	import ChevronDownIcon from "$lib/icons/ChevronDownIcon.svelte";
 	import { omit } from "../helpers";
 	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
 	import Heading from "../typography/Heading/Heading.svelte";
@@ -16,6 +16,10 @@
 	 * Heading of the accordion item.
 	 */
 	export let heading = "";
+	/**
+	 * Aria text
+	 */
+	export let showMoreText = "Show more";
 
 	const ctx = GetAccordionContext();
 
@@ -42,12 +46,10 @@
 >
 	<button class="navds-accordion__header" aria-expanded={open} type="button" on:click={handleClick}>
 		<div class="navds-accordion__icon-wrapper">
-			<ChevronDown
+			<ChevronDownIcon
 				class="navds-accordion__header-chevron"
-				aria-label="Show more"
+				title={showMoreText}
 				aria-hidden="true"
-				focusable="false"
-				role="img"
 			/>
 		</div>
 		<Heading size={$ctx?.headingSize} as="span" class="navds-accordion__header-content">

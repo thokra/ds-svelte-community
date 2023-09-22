@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { XMark } from "$lib/icons";
+	import XMarkIcon from "$lib/icons/XMarkIcon.svelte";
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
 	import type { RemovableProps, variants } from "./type";
@@ -49,6 +49,6 @@
 	<!-- Content of the ToggleChip. Falls back to `value` prop if no content. -->
 	<span class="navds-chips__chip-text"><slot>{value}</slot></span>
 	<span class="navds-chips__removable-icon">
-		<XMark aria-hidden focusable="false" role="img" />
+		<XMarkIcon aria-hidden />
 	</span>
 </button>

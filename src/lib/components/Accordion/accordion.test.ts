@@ -25,14 +25,6 @@ describe.concurrent("Accordion", () => {
 				});
 			}),
 			opts: {
-				ignoreElementFromB(tag) {
-					if (tag.tagName) {
-						if (tag.tagName.toLowerCase() == "title") {
-							return true;
-						}
-					}
-					return false;
-				},
 				alterAttrValue(name, value) {
 					if (name == "class") {
 						// Remove class that's not used in ds-svelte
@@ -46,10 +38,7 @@ describe.concurrent("Accordion", () => {
 					if (tag == "svg" && attr == "aria-labelledby") {
 						return false;
 					}
-					if (tag == "svg" && attr == "aria-label") {
-						return false;
-					}
-					if (tag == "path" && attr == "d") {
+					if (tag == "title" && attr == "id") {
 						return false;
 					}
 					return true;

@@ -7,4 +7,5 @@ export interface Props extends HTMLDialogAttributes {
 	isModal?: boolean;
 	closeButton?: boolean;
 	width?: (typeof sizes)[number] | number | `${number}${string}`;
+	closeIconText?: string;
 }

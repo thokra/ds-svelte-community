@@ -6,7 +6,9 @@ import type { Props } from "./type";
 
 describe.concurrent("Loader", () => {
 	it("renders with HTML similar to ds-react", () => {
-		const props: Props = {};
+		const props: Props = {
+			title: "Loading",
+		};
 		expect(render(Loader, props)).toMimicReact(ReactLoader, {
 			props: {
 				...props,
@@ -14,18 +16,15 @@ describe.concurrent("Loader", () => {
 			opts: {
 				compareAttrs(node, attr) {
 					const tagName = node.tagName.toLowerCase();
-					// Since our icons don't support aria-labelledby and title, we remove it from the comparison,
-					// including the aria-label attribute which is used by us
-					if (tagName == "svg" && ["aria-labelledby", "aria-label"].includes(attr)) {
+					// Title ids are unique
+					if (tagName == "svg" && ["aria-labelledby"].includes(attr)) {
+						return false;
+					}
+
+					if (tagName == "title" && attr == "id") {
 						return false;
 					}
 					return true;
-				},
-				ignoreElementFromB(tag) {
-					if (tag.tagName.toLowerCase() == "title") {
-						return true;
-					}
-					return false;
 				},
 			},
 		});

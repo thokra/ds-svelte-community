@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MagnifyingGlass as Search } from "$lib/icons";
+	import MagnifyingGlassIcon from "$lib/icons/MagnifyingGlassIcon.svelte";
 	import Button from "../Button/Button.svelte";
 	import { classes } from "../helpers";
 
@@ -21,6 +21,11 @@
 	 * Loading state
 	 */
 	export let loading = false;
+
+	/**
+	 * Aria label for icon
+	 */
+	export let searchIconText: string = "";
 </script>
 
 <Button
@@ -31,6 +36,6 @@
 	{loading}
 	class={classes($$restProps, "navds-search__button-search")}
 	{disabled}
-	><svelte:fragment slot="icon-left"><Search focusable="false" role="img" /></svelte:fragment
+	><svelte:fragment slot="icon-left"><MagnifyingGlassIcon title={searchIconText} /></svelte:fragment
 	></Button
 >

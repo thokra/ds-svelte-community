@@ -5,11 +5,9 @@
 
 	import { ToggleGroup, ToggleGroupItem } from "$lib/components/ToggleGroup";
 	import { sizes, variants } from "$lib/components/ToggleGroup/type";
-	import {
-		EnvelopeClosed as Email,
-		EnvelopeOpen as EmailOpened,
-		Paperplane as Send,
-	} from "$lib/icons";
+	import EnvelopeClosedIcon from "$lib/icons/EnvelopeClosedIcon.svelte";
+	import EnvelopeOpenIcon from "$lib/icons/EnvelopeOpenIcon.svelte";
+	import PaperplaneIcon from "$lib/icons/PaperplaneIcon.svelte";
 	import source from "./examples/ToggleGroup.svelte?raw";
 
 	let value = "unread";
@@ -54,15 +52,15 @@
 		</ToggleGroup>
 
 		<ToggleGroup {...args} bind:value>
-			<ToggleGroupItem value="unread"><Email aria-hidden /> Unread</ToggleGroupItem>
-			<ToggleGroupItem value="read"><EmailOpened aria-hidden /> Read</ToggleGroupItem>
-			<ToggleGroupItem value="sent"><Send aria-hidden /> Sent</ToggleGroupItem>
+			<ToggleGroupItem value="unread"><EnvelopeClosedIcon aria-hidden /> Unread</ToggleGroupItem>
+			<ToggleGroupItem value="read"><EnvelopeOpenIcon aria-hidden /> Read</ToggleGroupItem>
+			<ToggleGroupItem value="sent"><PaperplaneIcon aria-hidden /> Sent</ToggleGroupItem>
 		</ToggleGroup>
 
 		<ToggleGroup {...args} bind:value>
-			<ToggleGroupItem value="unread"><Email aria-label="Unread" /></ToggleGroupItem>
-			<ToggleGroupItem value="read"><EmailOpened aria-label="Read" /></ToggleGroupItem>
-			<ToggleGroupItem value="sent"><Send aria-label="Sent" /></ToggleGroupItem>
+			<ToggleGroupItem value="unread"><EnvelopeClosedIcon aria-label="Unread" /></ToggleGroupItem>
+			<ToggleGroupItem value="read"><EnvelopeOpenIcon aria-label="Read" /></ToggleGroupItem>
+			<ToggleGroupItem value="sent"><PaperplaneIcon aria-label="Sent" /></ToggleGroupItem>
 		</ToggleGroup>
 	</div>
 </Template>

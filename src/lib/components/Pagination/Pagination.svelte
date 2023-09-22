@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ChevronLeft as Back, ChevronRight as Next } from "$lib/icons";
+	import ChevronLeftIcon from "$lib/icons/ChevronLeftIcon.svelte";
+	import ChevronRightIcon from "$lib/icons/ChevronRightIcon.svelte";
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
@@ -110,11 +111,9 @@
 				on:click={() => handlePageChange(page - 1)}
 			>
 				<svelte:fragment slot="icon">
-					<Back
+					<ChevronLeftIcon
 						class="navds-pagination__prev-next-icon"
-						{...prevNextTexts ? { "aria-hidden": true } : { "aria-label": prevText }}
-						focusable="false"
-						role="img"
+						{...prevNextTexts ? { "aria-hidden": true } : { title: prevText }}
 					/>
 				</svelte:fragment>
 				{#if prevNextTexts}
@@ -153,11 +152,9 @@
 				iconOnly={!prevNextTexts}
 			>
 				<svelte:fragment slot="icon">
-					<Next
+					<ChevronRightIcon
 						class="navds-pagination__prev-next-icon"
-						{...prevNextTexts ? { "aria-hidden": true } : { "aria-label": nextText }}
-						focusable="false"
-						role="img"
+						{...prevNextTexts ? { "aria-hidden": true } : { title: nextText }}
 					/>
 				</svelte:fragment>
 				{#if prevNextTexts}

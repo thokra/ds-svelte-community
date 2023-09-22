@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	export let title = "";
+	export let title = "NAV guide illustration";
 	export let titleId = "ill" + newUniqueId();
 </script>
 
@@ -16,7 +16,6 @@
 	xmlns="http://www.w3.org/2000/svg"
 	focusable="false"
 	role="img"
-	aria-label="NAV veileder illustrasjon"
 	aria-labelledby={title ? titleId : undefined}
 >
 	{#if title}

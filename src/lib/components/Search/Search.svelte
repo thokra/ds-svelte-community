@@ -10,7 +10,8 @@
 
 <script lang="ts">
 	import { Loader } from "$lib";
-	import { XMark as Close, MagnifyingGlass as SearchIcon } from "$lib/icons";
+	import MagnifyingGlassIcon from "$lib/icons/MagnifyingGlassIcon.svelte";
+	import XMarkIcon from "$lib/icons/XMarkIcon.svelte";
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
@@ -71,6 +72,11 @@
 	 */
 	export let loading = false;
 
+	/**
+	 * Aria label on search icon.
+	 */
+	export let searchIconText = "Search";
+
 	let hasError = false;
 
 	const baseID = "search-" + newUniqueId();
@@ -122,7 +128,11 @@
 						<Loader />
 					</span>
 				{:else}
-					<SearchIcon aria-hidden class="navds-search__search-icon" />
+					<MagnifyingGlassIcon
+						title={searchIconText}
+						aria-hidden
+						class="navds-search__search-icon"
+					/>
 				{/if}
 			{/if}
 			<!-- svelte-ignore a11y-no-redundant-roles -->
@@ -152,7 +162,7 @@
 					<span class="navds-sr-only">
 						{clearButtonLabel ? clearButtonLabel : "Empty"}
 					</span>
-					<Close aria-hidden focusable="false" role="img" />
+					<XMarkIcon aria-hidden />
 				</button>
 			{/if}
 		</div>
@@ -161,7 +171,7 @@
 		<slot>
 			{#if variant != "simple"}
 				<!-- Called when search button is clicked -->
-				<SearchButton on:click {disabled} {variant} {size} {loading} />
+				<SearchButton on:click {disabled} {variant} {size} {loading} {searchIconText} />
 			{/if}
 		</slot>
 	</div>

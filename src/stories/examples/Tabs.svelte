@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { ClockDashed, EnvelopeOpen, Paperplane } from "$lib/icons";
-
 	import { Tab, TabList, TabPanel, Tabs } from "$lib";
+	import ClockDashedIcon from "$lib/icons/ClockDashedIcon.svelte";
+	import EnvelopeOpenIcon from "$lib/icons/EnvelopeOpenIcon.svelte";
+	import PaperplaneIcon from "$lib/icons/PaperplaneIcon.svelte";
 
 	export let active = "inbox";
 </script>
@@ -9,15 +10,15 @@
 <Tabs bind:value={active}>
 	<TabList>
 		<Tab value="log">
-			<ClockDashed aria-label="Log" slot="icon" />
+			<ClockDashedIcon aria-label="Log" slot="icon" />
 			Log
 		</Tab>
 		<Tab value="inbox">
-			<EnvelopeOpen aria-label="Inbox" slot="icon" />
+			<EnvelopeOpenIcon aria-label="Inbox" slot="icon" />
 			Inbox
 		</Tab>
 		<Tab value="sent">
-			<Paperplane aria-label="Sent" slot="icon" />
+			<PaperplaneIcon aria-label="Sent" slot="icon" />
 			Sent
 		</Tab>
 	</TabList>

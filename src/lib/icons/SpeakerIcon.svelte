@@ -1,0 +1,40 @@
+<script lang="ts" context="module">
+	import newUniqueId from "locally-unique-id-generator";
+	import type { SVGAttributes } from "svelte/elements";
+</script>
+
+<script lang="ts">
+	/**
+	 * Title of the icon, used for accessibility
+	 */
+	export let title = "";
+
+	type $$Props = SVGAttributes<SVGElement> & {
+		title?: string;
+	};
+
+	const id = newUniqueId();
+</script>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="1em"
+	height="1em"
+	fill="none"
+	focusable="false"
+	role="img"
+	viewBox="0 0 24 24"
+	aria-labelledby={title ? id : undefined}
+	{...$$restProps}
+>
+	{#if title}
+		<title {id}>{title}</title>
+	{/if}
+	<slot />
+	<path
+		fill="currentColor"
+		fill-rule="evenodd"
+		d="M15.825 4.324A.75.75 0 0 1 16.25 5v14a.75.75 0 0 1-1.219.586l-4.794-3.836H6.5a.75.75 0 0 1-.75-.75V9a.75.75 0 0 1 .75-.75h3.737l4.794-3.836a.75.75 0 0 1 .794-.09ZM14.75 6.56l-3.781 3.026a.75.75 0 0 1-.469.164H7.25v4.5h3.25a.75.75 0 0 1 .469.164l3.781 3.025V6.56Z"
+		clip-rule="evenodd"
+	/>
+</svg>

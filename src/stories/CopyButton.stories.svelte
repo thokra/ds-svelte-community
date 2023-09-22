@@ -1,8 +1,8 @@
 <script>
 	import { CopyButton } from "$lib";
 	import { sizes, variants } from "$lib/components/CopyButton/type";
-	import { Moon } from "$lib/icons";
-	import Star from "$lib/icons/Star.svelte";
+	import MoonIcon from "$lib/icons/MoonIcon.svelte";
+	import StarIcon from "$lib/icons/StarIcon.svelte";
 	import { action } from "@storybook/addon-actions";
 	// eslint-disable-next-line
 	// @ts-ignore
@@ -71,8 +71,8 @@ This is to simplify code and support up-to-date browsers only. If you support IE
 
 <Story name="Custom Icons">
 	<CopyButton copyText="Custom icons">
-		<svelte:fragment slot="icon"><Star aria-label="Copy" /></svelte:fragment>
-		<svelte:fragment slot="active-icon"><Moon aria-label="Copied" /></svelte:fragment>
+		<svelte:fragment slot="icon"><StarIcon aria-label="Copy" /></svelte:fragment>
+		<svelte:fragment slot="active-icon"><MoonIcon aria-label="Copied" /></svelte:fragment>
 	</CopyButton>
 </Story>
 

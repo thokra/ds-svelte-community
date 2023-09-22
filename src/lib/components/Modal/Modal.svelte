@@ -1,5 +1,5 @@
 <script lang="ts">
-	import XMark from "$lib/icons/XMark.svelte";
+	import XMarkIcon from "$lib/icons/XMarkIcon.svelte";
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import Button from "../Button/Button.svelte";
@@ -28,6 +28,11 @@
 	 * @default fit-content (up to 700px)
 	 */
 	export let width: Props["width"] = undefined;
+
+	/**
+	 * Text for close-icon.
+	 */
+	export let closeIconText = "Close modal";
 
 	let dialog: HTMLDialogElement;
 
@@ -83,8 +88,7 @@
 				size="small"
 				variant="tertiary-neutral"
 				on:click={() => (open = false)}
-				><svelte:fragment slot="icon-left"
-					><XMark aria-label="Close modal" focusable="false" role="img" /></svelte:fragment
+				><svelte:fragment slot="icon-left"><XMarkIcon title={closeIconText} /></svelte:fragment
 				></Button
 			>
 		{/if}

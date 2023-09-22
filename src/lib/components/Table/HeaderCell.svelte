@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ArrowDown as Down, ArrowUp as Up, ArrowsUpDown as UpDown } from "$lib/icons";
+	import ArrowsUpDownIcon from "$lib/icons/ArrowsUpDownIcon.svelte";
+	import ArrowUpIcon from "$lib/icons/ArrowUpIcon.svelte";
 	import { classes, omit } from "../helpers";
 	import { aligns, getTableContext, type TableCellProps } from "./type";
 
@@ -46,12 +47,12 @@
 			<slot />
 			{#if $sort?.orderBy == sortKey}
 				{#if $sort.direction == "ascending"}
-					<Up aria-hidden="true" />
+					<ArrowUpIcon aria-hidden="true" />
 				{:else}
-					<Down aria-hidden="true" />
+					<ArrowsUpDownIcon aria-hidden="true" />
 				{/if}
 			{:else}
-				<UpDown aria-hidden="true" />
+				<ArrowsUpDownIcon aria-hidden="true" />
 			{/if}
 		</button>
 	{:else}

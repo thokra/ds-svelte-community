@@ -7,27 +7,20 @@ import type { Props } from "./type";
 describe.concurrent("CopyButton", () => {
 	it("renders with HTML similar to ds-react", () => {
 		const props: Props = {
+			text: "Copy",
 			copyText: "Copy text",
 		};
 		expect(render(CopyButton, props)).toMimicReact(ReactCopyButton, {
 			props,
 			opts: {
-				ignoreElementFromB(tag) {
-					// Ignore title element from SVG
-					if (tag.tagName.toLowerCase() == "title") {
-						return true;
-					}
-					return false;
-				},
 				compareAttrs(node, attr) {
-					// SVGs are a bit different
-					if (node.tagName.toLowerCase() == "path" && attr == "d") {
+					// Title ids are unique
+					if (node.tagName.toLowerCase() == "title" && attr == "id") {
 						return false;
 					}
 
 					if (node.tagName.toLowerCase() == "svg") {
-						// Since we're using aria-label and not title & aria-labelledby, we need to ignore both attrs
-						if (["aria-label", "aria-labelledby"].includes(attr)) {
+						if (["aria-labelledby"].includes(attr)) {
 							return false;
 						}
 					}
@@ -46,22 +39,14 @@ describe.concurrent("CopyButton", () => {
 		expect(render(CopyButton, props)).toMimicReact(ReactCopyButton, {
 			props,
 			opts: {
-				ignoreElementFromB(tag) {
-					// Ignore title element from SVG
-					if (tag.tagName.toLowerCase() == "title") {
-						return true;
-					}
-					return false;
-				},
 				compareAttrs(node, attr) {
-					// SVGs are a bit different
-					if (node.tagName.toLowerCase() == "path" && attr == "d") {
+					// Title ids are unique
+					if (node.tagName.toLowerCase() == "title" && attr == "id") {
 						return false;
 					}
 
 					if (node.tagName.toLowerCase() == "svg") {
-						// Since we're using aria-label and not title & aria-labelledby, we need to ignore both attrs
-						if (["aria-label", "aria-labelledby"].includes(attr)) {
+						if (["aria-labelledby"].includes(attr)) {
 							return false;
 						}
 					}

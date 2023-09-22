@@ -8,4 +8,5 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
 	size?: (typeof sizes)[number];
 	fullWidth?: boolean;
 	inline?: boolean;
+	iconTitleText?: string;
 }

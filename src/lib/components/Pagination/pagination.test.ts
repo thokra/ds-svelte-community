@@ -10,24 +10,20 @@ describe.concurrent("Pagination", () => {
 			count: 100,
 			page: 22,
 		};
-		expect(render(Pagination, props)).toMimicReact(ReactPagination, {
+		const svelteProps = {
+			...props,
+			nextText: "Neste",
+			prevText: "Forrige",
+		};
+		expect(render(Pagination, svelteProps)).toMimicReact(ReactPagination, {
 			props,
 			opts: {
-				ignoreElementFromB(tag) {
-					const tagName = tag.tagName.toLowerCase();
-					if (tagName == "title") {
-						return true;
-					}
-
-					return false;
-				},
-
 				compareAttrs(node, attr) {
 					const tagName = node.tagName.toLowerCase();
-					if (tagName == "svg" && ["aria-label", "aria-labelledby"].includes(attr)) {
+					if (tagName == "svg" && ["aria-labelledby"].includes(attr)) {
 						return false;
 					}
-					if (tagName == "path" && attr == "d") {
+					if (tagName == "title" && ["id"].includes(attr)) {
 						return false;
 					}
 					return true;

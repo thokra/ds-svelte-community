@@ -5,7 +5,7 @@
 
 	import { Button, Tooltip } from "$lib";
 	import { placements } from "$lib/components/Tooltip/type";
-	import { PrinterSmall } from "$lib/icons";
+	import PrinterSmallIcon from "$lib/icons/PrinterSmallIcon.svelte";
 </script>
 
 <Meta
@@ -51,7 +51,7 @@
 	<div class="wrapper">
 		<Tooltip {...args}>
 			<Button>
-				<svelte:fragment slot="icon-left"><PrinterSmall aria-label="Print" /></svelte:fragment>
+				<svelte:fragment slot="icon-left"><PrinterSmallIcon aria-label="Print" /></svelte:fragment>
 			</Button>
 		</Tooltip>
 	</div>
