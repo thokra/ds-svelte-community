@@ -1,6 +1,6 @@
 {
 	"name": "@nais/ds-svelte-community",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"homepage": "https://nais.github.io/ds-svelte-community",
 	"repository": "https://github.com/nais/ds-svelte-community.git",
 	"license": "MIT",
@@ -8,7 +8,7 @@
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
 		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
+		"package": "svelte-kit sync && npm run test:unit && npm run check && npm run lint && svelte-package && publint",
 		"prepublishOnly": "npm run package",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
