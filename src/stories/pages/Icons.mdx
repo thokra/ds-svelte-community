@@ -9,7 +9,11 @@ Check out the full list of icons at [Aksel ikoner](https://aksel.nav.no/ikoner).
 	import { Star } from "@nais/ds-svelte-community/icons";
 </script>
 
-<Star aria-label="nav" />
+<Star title="nav" />
 ```
 
-Currently, we do not support the `title` attribute used by `@navikt/ds-icons`, so we recommend using `aria-label` instead.
+## Optimizations and performance
+
+Importing directly from `@nais/ds-svelte-community/icons` will result in a large bundle size. To reduce bundle size, you can import icons directly from `@nais/ds-svelte-community/icons/<icon>`.
+
+We will also be adding a preprocessor to optimize imports at a later date.
