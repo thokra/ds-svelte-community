@@ -28,7 +28,7 @@ jobs:
 
       - name: Install
         run: |-
-          bun install --frozen-lockfile
+          bun install
           cd packages/ds-svelte-community-preprocess-svelte
           bun run build # build ds-svelte-community-preprocess-svelte
 
@@ -36,6 +36,8 @@ jobs:
         run: |-
           cd packages/ds-svelte-community
           echo "#### DEBUG"
+          bun --version
+          ls -alh
           pwd
           bun x tsc --version
           bun x prettier --version
@@ -49,6 +51,8 @@ jobs:
         run: |-
           cd packages/ds-svelte-community-preprocess-svelte
           echo "#### DEBUG"
+          bun --version
+          ls -alh
           pwd
           bun x tsc --version
           bun x prettier --version
