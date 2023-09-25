@@ -35,13 +35,22 @@ jobs:
       - name: Test and lint ds-svelte-community
         run: |-
           cd packages/ds-svelte-community
+          echo "#### DEBUG"
+          pwd
+          bun x tsc --version
+          bun x prettier --version
           bun run build
           bun run test
           bun run lint
           bun run check
+
       - name: Test and lint ds-svelte-community-preprocess-svelte
         run: |-
           cd packages/ds-svelte-community-preprocess-svelte
+          echo "#### DEBUG"
+          pwd
+          bun x tsc --version
+          bun x prettier --version
           bun run test
           bun run lint
           bun run check
