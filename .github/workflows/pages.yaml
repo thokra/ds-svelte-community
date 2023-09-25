@@ -14,7 +14,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".tool-versions"
-          cache: "npm"
 
       - name: Find bun version
         id: bun_version
