@@ -1,0 +1,79 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`optimize-imports replaces components 1`] = `
+{
+  "code": 
+"
+		import Button from "@nais/ds-svelte-community/components/Button/Button.svelte";
+import Tab from "@nais/ds-svelte-community/components/Tabs/Tab.svelte";
+import Alert from "@nais/ds-svelte-community/components/Alert/Alert.svelte";
+import Detail from "@nais/ds-svelte-community/components/typography/Detail/Detail.svelte";
+		"
+,
+}
+`;
+
+exports[`optimize-imports replaces components with options 1`] = `
+{
+  "code": 
+"
+		import Button from "$lib/components/Button/Button.svelte";
+import Tab from "$lib/components/Tabs/Tab.svelte";
+import Alert from "$lib/components/Alert/Alert.svelte";
+import Detail from "$lib/components/typography/Detail/Detail.svelte";
+		"
+,
+}
+`;
+
+exports[`optimize-imports replaces icons 1`] = `
+{
+  "code": 
+"
+		import AirplaneIcon from "@nais/ds-svelte-community/icons/AirplaneIcon.svelte";
+import CarIcon from "@nais/ds-svelte-community/icons/CarIcon.svelte";
+		"
+,
+}
+`;
+
+exports[`optimize-imports replaces icons with options 1`] = `
+{
+  "code": 
+"
+		import AirplaneIcon from "$lib/icons/AirplaneIcon.svelte";
+import CarIcon from "$lib/icons/CarIcon.svelte";
+		"
+,
+}
+`;
+
+exports[`optimize-imports replaces mixed 1`] = `
+{
+  "code": 
+"
+		import Button from "@nais/ds-svelte-community/components/Button/Button.svelte";
+import Tab from "@nais/ds-svelte-community/components/Tabs/Tab.svelte";
+import Alert from "@nais/ds-svelte-community/components/Alert/Alert.svelte";
+import Detail from "@nais/ds-svelte-community/components/typography/Detail/Detail.svelte";
+		import AirplaneIcon from "@nais/ds-svelte-community/icons/AirplaneIcon.svelte";
+import CarIcon from "@nais/ds-svelte-community/icons/CarIcon.svelte";
+		"
+,
+}
+`;
+
+exports[`optimize-imports replaces mixed with options 1`] = `
+{
+  "code": 
+"
+		import Button from "$lib/components/Button/Button.svelte";
+import Tab from "$lib/components/Tabs/Tab.svelte";
+import Alert from "$lib/components/Alert/Alert.svelte";
+import Detail from "$lib/components/typography/Detail/Detail.svelte";
+		import AirplaneIcon from "$lib/icons/AirplaneIcon.svelte";
+import CarIcon from "$lib/icons/CarIcon.svelte";
+		"
+,
+}
+`;

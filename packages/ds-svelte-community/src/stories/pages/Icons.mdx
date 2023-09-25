@@ -1,0 +1,21 @@
+# Icons
+
+Icons are converted from [@navikt/ds-icons](https://github.com/navikt/aksel/tree/main/%40navikt/icons) and can be imported from `@nais/ds-svelte-community/icons`.
+
+Check out the full list of icons at [Aksel ikoner](https://aksel.nav.no/ikoner).
+
+```html
+<script>
+	import { StarIcon } from "@nais/ds-svelte-community/icons";
+</script>
+
+<StarIcon title="nav" />
+```
+
+## Optimizations and performance
+
+Importing directly from `@nais/ds-svelte-community/icons` will result in a large bundle size. To reduce bundle size, you can import icons directly from `@nais/ds-svelte-community/icons/<icon>`.
+
+You might also want to [use our preprocessor](/docs/pages-docs--docs#preprocessor).
+
+We will also be adding a preprocessor to optimize imports at a later date.

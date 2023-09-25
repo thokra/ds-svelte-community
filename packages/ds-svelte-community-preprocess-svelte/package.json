@@ -1,0 +1,70 @@
+{
+	"name": "@nais/ds-svelte-community-preprocess-svelte",
+	"version": "0.5.0-pre.3",
+	"homepage": "https://nais.github.io/ds-svelte-community",
+	"repository": "https://github.com/nais/ds-svelte-community.git",
+	"license": "MIT",
+	"scripts": {
+		"check": "tsc",
+		"build": "tsc -p tsconfig.build.json",
+		"package": "bun run build && publint",
+		"update-components": "bun build/components-list.ts",
+		"prepublishOnly": "bun run package",
+		"test": "bun test",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"publishConfig": {
+		"types": "./dist/index.d.ts",
+		"exports": {
+			".": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"typesVersions": {
+				">4.0": {
+					"index.d.ts": [
+						"./dist/index.d.ts"
+					]
+				}
+			}
+		}
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"typesVersions": {
+		">4.0": {
+			"index.d.ts": [
+				"./dist/index.d.ts"
+			],
+			"icons": [
+				"./dist/icons/index.d.ts"
+			]
+		}
+	},
+	"files": [
+		"dist",
+		"dist/**/*",
+		"dist/__snapshots__/**/*",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"peerDependencies": {
+		"svelte": "^3.59.0 || ^4.0.0-0"
+	},
+	"devDependencies": {
+		"bun-types": "^1.0.3",
+		"typescript": "^5.2.2"
+	},
+	"type": "module",
+	"dependencies": {
+		"svelte": "^4.2.1"
+	}
+}

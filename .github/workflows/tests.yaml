@@ -1,6 +1,7 @@
 name: Test, lint and check commit
 on:
   push:
+    branches: "*"
 
 jobs:
   unit_test:
@@ -10,19 +11,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup nodejs
-        uses: actions/setup-node@v3
+      - name: Find bun version
+        id: bun_version
+        run: |
+          echo "BUN_VERSION=$(grep bun .tool-versions | awk '{print $2}')" >> $GITHUB_OUTPUT
+
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version-file: ".tool-versions"
-          cache: "npm"
+          bun-version: ${{ steps.bun_version.outputs.BUN_VERSION }}
 
       - name: Install
         run: |-
-          npm ci
+          bun install --frozen-lockfile
 
       - name: Test
         run: |-
-          npm run test:unit
+          bun run test
 
   lint_and_check:
     name: Lint and check
@@ -31,17 +35,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup nodejs
-        uses: actions/setup-node@v3
+      - name: Find bun version
+        id: bun_version
+        run: |
+          echo "BUN_VERSION=$(grep bun .tool-versions | awk '{print $2}')" >> $GITHUB_OUTPUT
+
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version-file: ".tool-versions"
-          cache: "npm"
+          bun-version: ${{ steps.bun_version.outputs.BUN_VERSION }}
 
       - name: Install
         run: |-
-          npm ci
+          bun install --frozen-lockfile
 
       - name: Lint and check
         run: |-
-          npm run lint
-          npm run check
+          bun run lint
+          bun run check

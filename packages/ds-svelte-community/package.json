@@ -1,0 +1,156 @@
+{
+	"name": "@nais/ds-svelte-community",
+	"version": "0.5.0-pre.4",
+	"homepage": "https://nais.github.io/ds-svelte-community",
+	"repository": "https://github.com/nais/ds-svelte-community.git",
+	"license": "MIT",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && bun run package",
+		"preview": "vite preview",
+		"package": "svelte-kit sync && bun run test:unit && bun run check && bun run lint && svelte-package && publint",
+		"prepublishOnly": "bun run package",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"storybook": "storybook dev -p 6006 --no-open",
+		"build:storybook": "storybook build",
+		"storybook:docs": "storybook dev --docs",
+		"generate-icons": "./hack/generate-icons.sh",
+		"test": "svelte-kit sync && bun run test:unit",
+		"test:unit": "bun test",
+		"test:unit:watch": "bun test --watch"
+	},
+	"publishConfig": {
+		"types": "./dist/index.d.ts",
+		"exports": {
+			".": {
+				"types": "./dist/index.d.ts",
+				"svelte": "./dist/index.js",
+				"default": "./dist/index.js"
+			},
+			"./icons": {
+				"types": "./dist/icons/index.d.ts",
+				"import": "./dist/icons/index.js",
+				"svelte": "./dist/icons/index.js"
+			},
+			"./css": {
+				"default": "./dist/css/index.css"
+			},
+			"./*": {
+				"types": "./dist/*",
+				"import": "./dist/*",
+				"svelte": "./dist/*"
+			},
+			"typesVersions": {
+				">4.0": {
+					"index.d.ts": [
+						"./dist/index.d.ts"
+					],
+					"icons": [
+						"./dist/icons/index.d.ts"
+					]
+				}
+			}
+		}
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"svelte": "./dist/index.js"
+		},
+		"./icons": {
+			"types": "./dist/icons/index.d.ts",
+			"import": "./dist/icons/index.js",
+			"svelte": "./dist/icons/index.js"
+		},
+		"./css": {
+			"default": "./dist/css/index.css"
+		},
+		"./*": {
+			"types": "./dist/*",
+			"import": "./dist/*",
+			"svelte": "./dist/*"
+		}
+	},
+	"typesVersions": {
+		">4.0": {
+			"index.d.ts": [
+				"./dist/index.d.ts"
+			],
+			"icons": [
+				"./dist/icons/index.d.ts"
+			]
+		}
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"peerDependencies": {
+		"svelte": "^3.59.0 || ^4.0.0-0"
+	},
+	"devDependencies": {
+		"@happy-dom/global-registrator": "^12.1.6",
+		"@nais/ds-svelte-community-preprocess-svelte": "workspace:*",
+		"@navikt/aksel-icons": "^5.5.0",
+		"@navikt/ds-react": "^5.5.0",
+		"@navikt/ds-tailwind": "^5.5.0",
+		"@prettier/sync": "^0.3.0",
+		"@storybook/addon-a11y": "7.4.5",
+		"@storybook/addon-essentials": "7.4.5",
+		"@storybook/addon-interactions": "7.4.5",
+		"@storybook/addon-links": "7.4.5",
+		"@storybook/addon-storysource": "7.4.5",
+		"@storybook/addon-svelte-csf": "4.0.9",
+		"@storybook/blocks": "7.4.5",
+		"@storybook/svelte": "7.4.5",
+		"@storybook/sveltekit": "7.4.5",
+		"@storybook/testing-library": "^0.2.1",
+		"@sveltejs/adapter-auto": "^2.1.0",
+		"@sveltejs/kit": "^1.25.1",
+		"@sveltejs/package": "^2.2.2",
+		"@sveltejs/vite-plugin-svelte": "^2.4.6",
+		"@testing-library/svelte": "^4.0.3",
+		"@types/diff": "^5.0.5",
+		"@types/react-dom": "^18.2.7",
+		"@typescript-eslint/eslint-plugin": "^6.7.2",
+		"@typescript-eslint/parser": "^6.7.2",
+		"autoprefixer": "^10.4.16",
+		"bun-types": "^1.0.3",
+		"clsx": "^2.0.0",
+		"diff": "^5.1.0",
+		"eslint": "^8.50.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-storybook": "^0.6.14",
+		"eslint-plugin-svelte": "^2.33.2",
+		"file-system-cache": "2.4.4",
+		"jsdom": "^22.1.0",
+		"normalize.css": "^8.0.1",
+		"postcss": "^8.4.30",
+		"prettier": "^3.0.3",
+		"prettier-plugin-svelte": "^3.0.3",
+		"publint": "^0.2.2",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"storybook": "7.4.5",
+		"svelte": "^4.2.1",
+		"svelte-check": "^3.5.2",
+		"svgo": "^3.0.2",
+		"tailwindcss": "^3.3.3",
+		"tslib": "^2.6.2",
+		"typescript": "5.2.2",
+		"vite": "4.4.9"
+	},
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"dependencies": {
+		"@navikt/ds-css": "^5.5.0",
+		"@navikt/ds-tokens": "^5.5.0",
+		"locally-unique-id-generator": "^0.1.5"
+	}
+}
