@@ -7,11 +7,7 @@ jobs:
   unit_test:
     name: Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package:
-          - "ds-svelte-community"
-          - "ds-svelte-community-preprocess-svelte"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,13 +26,22 @@ jobs:
         with:
           bun-version: ${{ steps.bun_version.outputs.BUN_VERSION }}
 
-      - name: Install, test and lint
+      - name: Install
         run: |-
           bun install --frozen-lockfile
-          bun run build:dscps # build ds-svelte-community-preprocess-svelte
+          cd packages/ds-svelte-community-preprocess-svelte
+          bun run build # build ds-svelte-community-preprocess-svelte
 
-          cd packages/${{ matrix.package }}
+      - name: Test and lint ds-svelte-community
+        run: |-
+          cd packages/ds-svelte-community
           bun run build
+          bun run test
+          bun run lint
+          bun run check
+      - name: Test and lint ds-svelte-community-preprocess-svelte
+        run: |-
+          cd packages/ds-svelte-community-preprocess-svelte
           bun run test
           bun run lint
           bun run check

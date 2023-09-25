@@ -2,19 +2,7 @@
 	"name": "ds-svelte-community",
 	"private": true,
 	"scripts": {
-		"gar-login": "bun x google-artifactregistry-auth",
-		"test": "bun run test:dsc && bun run test:dscps",
-		"test:dsc": "bun run --cwd ./packages/ds-svelte-community test",
-		"test:dscps": "bun run --cwd ./packages/ds-svelte-community-preprocess-svelte test",
-		"build": "bun run build:dscps && bun run build:dsc",
-		"build:dsc": "bun run --cwd ./packages/ds-svelte-community build",
-		"build:dscps": "bun run --cwd ./packages/ds-svelte-community-preprocess-svelte build",
-		"check": "bun run check:dsc && bun run check:dscps",
-		"check:dsc": "bun run --cwd ./packages/ds-svelte-community check",
-		"check:dscps": "bun run --cwd ./packages/ds-svelte-community-preprocess-svelte check",
-		"lint": "bun run lint:dsc && bun run lint:dscps",
-		"lint:dsc": "bun run --cwd ./packages/ds-svelte-community lint",
-		"lint:dscps": "bun run --cwd ./packages/ds-svelte-community-preprocess-svelte lint"
+		"gar-login": "bun x google-artifactregistry-auth"
 	},
 	"workspaces": [
 		"packages/*"
