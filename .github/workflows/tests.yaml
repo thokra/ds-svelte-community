@@ -39,6 +39,7 @@ jobs:
           pwd
           bun x tsc --version
           bun x prettier --version
+          bun x eslint --version
           bun run build
           bun run test
           bun run lint
@@ -51,6 +52,7 @@ jobs:
           pwd
           bun x tsc --version
           bun x prettier --version
+          bun x eslint --version
           bun run test
           bun run lint
           bun run check
