@@ -10,19 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".tool-versions"
-
-      - name: Find bun version
-        id: bun_version
-        run: |
-          echo "BUN_VERSION=$(grep bun .tool-versions | awk '{print $2}')" >> $GITHUB_OUTPUT
-
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: ${{ steps.bun_version.outputs.BUN_VERSION }}
+      - name: Install asdf & tools
+        uses: asdf-vm/actions/install@v2
 
       - name: Install dependencies
         run: |
