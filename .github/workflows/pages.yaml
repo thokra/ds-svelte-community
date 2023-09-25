@@ -31,7 +31,10 @@ jobs:
           bun run build # build ds-svelte-community-preprocess-svelte
 
       - name: Svelte check and lint
-        run: bun run check && bun run check && bun run test:unit
+        run: |
+          cd packages/ds-svelte-community
+          bun run check
+          bun run test
 
       - name: Build Storybook
         run: |
