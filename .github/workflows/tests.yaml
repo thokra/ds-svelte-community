@@ -7,6 +7,11 @@ jobs:
   unit_test:
     name: Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - "ds-svelte-community"
+          - "ds-svelte-community-preprocess-svelte"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,41 +21,23 @@ jobs:
         run: |
           echo "BUN_VERSION=$(grep bun .tool-versions | awk '{print $2}')" >> $GITHUB_OUTPUT
 
+      - name: Setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".tool-versions"
+          cache: "npm"
+
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: ${{ steps.bun_version.outputs.BUN_VERSION }}
 
-      - name: Install
+      - name: Install, test and lint
         run: |-
           bun install --frozen-lockfile
+          bun run build:dscps # build ds-svelte-community-preprocess-svelte
 
-      - name: Test
-        run: |-
+          cd packages/${{ matrix.package }}
           bun run build
           bun run test
-
-  lint_and_check:
-    name: Lint and check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Find bun version
-        id: bun_version
-        run: |
-          echo "BUN_VERSION=$(grep bun .tool-versions | awk '{print $2}')" >> $GITHUB_OUTPUT
-
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: ${{ steps.bun_version.outputs.BUN_VERSION }}
-
-      - name: Install
-        run: |-
-          bun install --frozen-lockfile
-
-      - name: Lint and check
-        run: |-
-          bun run build
           bun run lint
           bun run check
