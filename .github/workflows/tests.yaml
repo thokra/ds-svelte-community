@@ -26,6 +26,7 @@ jobs:
 
       - name: Test
         run: |-
+          bun run build
           bun run test
 
   lint_and_check:
@@ -50,5 +51,6 @@ jobs:
 
       - name: Lint and check
         run: |-
+          bun run build
           bun run lint
           bun run check
