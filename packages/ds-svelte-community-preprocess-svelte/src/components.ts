@@ -146,6 +146,9 @@ export const Components: KnownComponents = {
 		Thead: {
 			path: "components/Table/Thead.svelte",
 		},
+		ToggleChip: {
+			path: "components/Chips/ToggleChip.svelte",
+		},
 		ToggleGroup: {
 			path: "components/ToggleGroup/ToggleGroup.svelte",
 		},
