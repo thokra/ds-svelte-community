@@ -43,9 +43,6 @@
 		">4.0": {
 			"index.d.ts": [
 				"./dist/index.d.ts"
-			],
-			"icons": [
-				"./dist/icons/index.d.ts"
 			]
 		}
 	},

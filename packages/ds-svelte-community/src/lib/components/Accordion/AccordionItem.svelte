@@ -61,6 +61,7 @@
 	<!-- <div transition:slide={{ duration: 300 }}> -->
 	<BodyLong
 		as="div"
+		aria-hidden={open ? undefined : true}
 		class="navds-accordion__content{open ? '' : ' navds-accordion__content--closed'}"
 	>
 		<!-- Content of the accordion -->
