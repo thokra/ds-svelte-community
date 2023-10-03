@@ -1,6 +1,6 @@
 import type { HTMLButtonAttributes } from "svelte/elements";
 
-export const sizes = ["small", "medium"] as const;
+export const sizes = ["xsmall", "small", "medium"] as const;
 export const variants = ["action", "neutral"] as const;
 
 export interface Props extends HTMLButtonAttributes {
