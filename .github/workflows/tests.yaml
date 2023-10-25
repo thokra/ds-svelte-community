@@ -45,6 +45,7 @@ jobs:
         run: |-
           cd packages/ds-svelte-community-preprocess-svelte
           bun install
+          bunx svelte-kit sync
           bun run test
           bun run lint
           bun run check
