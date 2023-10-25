@@ -89,7 +89,7 @@
 				$$restProps,
 				"navds-select__input",
 				"navds-body-short",
-				`navds-body--${size ?? "medium"}`,
+				`navds-body-short--${size ?? "medium"}`,
 			)}
 			size={htmlSize}
 			{id}

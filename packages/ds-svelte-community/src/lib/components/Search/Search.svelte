@@ -143,7 +143,7 @@
 				bind:value
 				type="search"
 				role="searchbox"
-				class="navds-search__input navds-search__input--{variant} navds-text-field__input navds-body-short navds-body-{size}"
+				class="navds-search__input navds-search__input--{variant} navds-text-field__input navds-body-short navds-body-short--{size}"
 				on:keypress={handleInputKeypress}
 				on:change
 				on:input

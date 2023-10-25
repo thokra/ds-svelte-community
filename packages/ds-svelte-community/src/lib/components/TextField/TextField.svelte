@@ -62,7 +62,7 @@
 		id,
 		"aria-invalid": (error ? "true" : undefined) as "true" | undefined,
 		"aria-describedby": inputDescriptionId,
-		class: "navds-text-field__input navds-body-short navds-body-" + size,
+		class: "navds-text-field__input navds-body-short navds-body-short--" + size,
 		size: htmlSize,
 		...omit($$restProps, "id", "class", "aria-invalid", "size"),
 	};
