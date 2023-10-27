@@ -26,14 +26,13 @@ jobs:
 
       - name: Install dependencies
         run: |
+          bun install --frozen-lockfile
           cd packages/ds-svelte-community-preprocess-svelte
-          bun install
           bun run build # build ds-svelte-community-preprocess-svelte
 
       - name: Svelte check and lint
         run: |
           cd packages/ds-svelte-community
-          bun install
           bun run check
           bun run test
 
