@@ -45,13 +45,13 @@
 	class:navds-accordion__item--neutral={$ctx?.variant === "neutral"}
 >
 	<button class="navds-accordion__header" aria-expanded={open} type="button" on:click={handleClick}>
-		<div class="navds-accordion__icon-wrapper">
+		<span class="navds-accordion__icon-wrapper">
 			<ChevronDownIcon
 				class="navds-accordion__header-chevron"
 				title={showMoreText}
 				aria-hidden="true"
 			/>
-		</div>
+		</span>
 		<Heading size={$ctx?.headingSize} as="span" class="navds-accordion__header-content">
 			<!-- Heading. Falls back to `heading` prop if not defined. -->
 			<slot name="heading">{heading}</slot>
