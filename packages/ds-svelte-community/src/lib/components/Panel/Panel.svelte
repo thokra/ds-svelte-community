@@ -3,6 +3,8 @@
 	import { classes, omit } from "../helpers";
 	import type { Props } from "./type";
 
+	console.warn("Panel is deprecated and will be removed in a future release.");
+
 	type $$Props = Props;
 
 	/**

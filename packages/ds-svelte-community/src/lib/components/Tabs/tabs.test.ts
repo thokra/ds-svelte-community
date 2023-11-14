@@ -47,7 +47,7 @@ describe("Tabs", () => {
 						// TODO: Figure out why after switching to happy-dom `outline: none` is replaced with full syntax.
 						if (
 							name == "style" &&
-							value == "outline-color: none; outline-style: none; outline-width: initial;"
+							value == "outline-style: none; outline-width: initial; outline-color: none"
 						) {
 							value = "outline: none";
 						}

@@ -125,6 +125,17 @@ function cleanTree(el: HTMLElement, opts: DiffOptions, ignoreFunc?: (tag: HTMLEl
 				}
 			}
 
+			// Sort styles
+			if (node.style.length > 0) {
+				const sorted = node.style.cssText
+					.split(";")
+					.filter((v) => !!v)
+					.map((v) => v.trim())
+					.sort()
+					.join(";");
+				node.setAttribute("style", sorted);
+			}
+
 			// // sort classes
 			// const sorted = Array.from(classes).sort();
 			// classes.remove(...sorted);
