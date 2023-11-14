@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ArrowDownIcon } from "$lib/icons";
 	import ArrowsUpDownIcon from "$lib/icons/ArrowsUpDownIcon.svelte";
 	import ArrowUpIcon from "$lib/icons/ArrowUpIcon.svelte";
 	import { classes, omit } from "../helpers";
@@ -49,7 +50,7 @@
 				{#if $sort.direction == "ascending"}
 					<ArrowUpIcon aria-hidden="true" />
 				{:else}
-					<ArrowsUpDownIcon aria-hidden="true" />
+					<ArrowDownIcon aria-hidden="true" />
 				{/if}
 			{:else}
 				<ArrowsUpDownIcon aria-hidden="true" />
