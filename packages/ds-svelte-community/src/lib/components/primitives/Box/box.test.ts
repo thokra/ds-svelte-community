@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "bun:test";
 import Box from "./Box.test.svelte";
 import type { BoxProps } from "./type";
 
-describe.only("Box", () => {
+describe("Box", () => {
 	it("renders with HTML similar to ds-react", async () => {
 		const props: BoxProps = {
 			background: "surface-default",

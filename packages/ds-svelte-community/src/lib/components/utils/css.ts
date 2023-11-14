@@ -1,5 +1,28 @@
 import type { ResponsiveProp } from "./types";
 
+export function getResponsiveValue<T = string>(
+	componentName: string,
+	componentProp: string,
+	responsiveProp?: ResponsiveProp<T>,
+) {
+	if (!responsiveProp) {
+		return {};
+	}
+
+	if (typeof responsiveProp === "string") {
+		return {
+			[`--__ac-${componentName}-${componentProp}-xs`]: responsiveProp,
+		};
+	}
+
+	return Object.fromEntries(
+		Object.entries(responsiveProp).map(([breakpointAlias, responsiveValue]) => [
+			`--__ac-${componentName}-${componentProp}-${breakpointAlias}`,
+			responsiveValue,
+		]),
+	);
+}
+
 const translateExceptionToCSS = (exception: string) => {
 	switch (exception) {
 		case "px":
@@ -76,12 +99,23 @@ export function getResponsiveProps<T extends string>(
 	return styleProps;
 }
 
-export function combineStyles(...args: Record<string, string>[]): string {
-	return args
-		.map((x) =>
-			Object.entries(x)
-				.map(([key, value]) => `${key}: ${value};`)
-				.join(""),
-		)
-		.join("");
+export function combineStyles(
+	props: SvelteRestProps,
+	...args: Record<string, string | number>[]
+): string {
+	let styles = "";
+	if (props.style) {
+		styles += props.style;
+	}
+
+	return (
+		styles +
+		args
+			.map((x) =>
+				Object.entries(x)
+					.map(([key, value]) => `${key}: ${value};`)
+					.join(""),
+			)
+			.join("")
+	);
 }

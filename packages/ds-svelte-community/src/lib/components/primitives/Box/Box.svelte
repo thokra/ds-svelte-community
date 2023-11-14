@@ -67,6 +67,7 @@
 	{...omit($$restProps, "class")}
 	class={classes($$restProps, "navds-box")}
 	style={combineStyles(
+		$$restProps,
 		getResponsiveProps("box", "border-radius", "border-radius", borderRadius, false, ["0"]),
 		getResponsiveProps("box", "padding", "spacing", padding),
 		getResponsiveProps("box", "padding-inline", "spacing", paddingInline),
