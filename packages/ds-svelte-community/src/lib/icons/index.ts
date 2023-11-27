@@ -649,6 +649,8 @@ export { default as PrinterSmallFillIcon } from "./PrinterSmallFillIcon.svelte";
 export { default as PrinterSmallIcon } from "./PrinterSmallIcon.svelte";
 export { default as PrinterSmallTriangleFillIcon } from "./PrinterSmallTriangleFillIcon.svelte";
 export { default as PrinterSmallTriangleIcon } from "./PrinterSmallTriangleIcon.svelte";
+export { default as PushPinFillIcon } from "./PushPinFillIcon.svelte";
+export { default as PushPinIcon } from "./PushPinIcon.svelte";
 export { default as PuzzlePieceFillIcon } from "./PuzzlePieceFillIcon.svelte";
 export { default as PuzzlePieceIcon } from "./PuzzlePieceIcon.svelte";
 export { default as QrCodeFillIcon } from "./QrCodeFillIcon.svelte";
