@@ -15,4 +15,4 @@ fi
 bun ./src/icons/generate.ts
 
 ICONS=(src/lib/icons/*.svelte)
-npx prettier --write "${ICONS[@]}"
+bun x prettier --write "${ICONS[@]}"
