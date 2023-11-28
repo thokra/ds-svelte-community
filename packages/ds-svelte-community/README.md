@@ -5,7 +5,7 @@
 Once you've created a project and installed dependencies with `bun install`, start a development server:
 
 > [!TIP]
-> You might need to build [`ds-svlete-community-preprocess`](../ds-svelte-community-preprocess-svelte/) first.
+> You might need to build [`ds-svelte-community-preprocess-svelte`](../ds-svelte-community-preprocess-svelte/) first.
 > `cd ../ds-svelte-community-preprocess-svelte && bun run build && cd ../ds-svelte-community`
 
 ```bash

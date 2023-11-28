@@ -26,10 +26,10 @@ Run `asdf install` to install the correct version of `bun`. (You might need to r
 
 The library is split into multiple packages in the `packages` directory. Each package has its own `README.md` with more information.
 
-| Package                          | Description                                                         |
-| -------------------------------- | ------------------------------------------------------------------- |
-| `ds-svelte-community`            | The actual component library, including icons.                      |
-| `ds-svelte-community-preprocess` | A preprocessing step that optimizes usage of the component library. |
+| Package                                 | Description                                                         |
+| --------------------------------------- | ------------------------------------------------------------------- |
+| `ds-svelte-community`                   | The actual component library, including icons.                      |
+| `ds-svelte-community-preprocess-svelte` | A preprocessing step that optimizes usage of the component library. |
 
 ## GitHub copilot in use
 
