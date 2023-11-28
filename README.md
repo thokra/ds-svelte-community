@@ -16,50 +16,20 @@ Check out the [Storybook](https://nais.io/ds-svelte-community) for examples of h
 
 ---
 
-## Developing this package
+## Development
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+We use [Bun](https://bun.sh) and [asdf](https://asdf-vm.com) to manage dependencies and run scripts.
 
-```bash
-npm run storbyook # or
-npm run dev
+Run `asdf install` to install the correct version of `bun`. (You might need to run `asdf plugin add bun` first.)
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Packages
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+The library is split into multiple packages in the `packages` directory. Each package has its own `README.md` with more information.
 
-## Building
-
-To build your library:
-
-```bash
-npm run package
-```
-
-To create a production version of your showcase app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Publishing
-
-The package is hosted on Google Artifact Registry. To publish a new version:
-
-Update the version in `package.json` and commit the change.
-
-Then run:
-
-```bash
-npm run gar-login
-npm run publish
-```
+| Package                          | Description                                                         |
+| -------------------------------- | ------------------------------------------------------------------- |
+| `ds-svelte-community`            | The actual component library, including icons.                      |
+| `ds-svelte-community-preprocess` | A preprocessing step that optimizes usage of the component library. |
 
 ## GitHub copilot in use
 
