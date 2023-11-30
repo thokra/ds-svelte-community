@@ -2,7 +2,9 @@ import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { vitePreprocess } from "@sveltejs/kit/vite";
 import { plugin } from "bun";
 
+const oldConsole = console;
 GlobalRegistrator.register();
+window.console = oldConsole;
 
 await plugin({
 	name: "svelte loader",
