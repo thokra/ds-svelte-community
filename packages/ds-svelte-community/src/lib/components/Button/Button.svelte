@@ -37,14 +37,17 @@
 	 */
 	export let iconOnly = false;
 
-	let el: HTMLButtonElement | HTMLAnchorElement | undefined = undefined;
+	/**
+	 * Reference to the root element
+	 */
+	export let ref: Props["ref"] = null;
 
 	type $$Props = Props;
 
 	let overrideWidth = 0;
 
-	$: if (el && loading) {
-		overrideWidth = el.getBoundingClientRect().width;
+	$: if (ref && loading) {
+		overrideWidth = ref.getBoundingClientRect().width;
 	} else {
 		overrideWidth = 0;
 	}
@@ -60,7 +63,7 @@
 	class:navds-button--icon-only={iconOnly ||
 		(($$slots["icon-left"] || $$slots["icon-right"]) && !$$slots.default)}
 	class:unstyled={as === "a"}
-	bind:this={el}
+	bind:this={ref}
 	on:click
 	on:mouseenter
 	on:mouseleave

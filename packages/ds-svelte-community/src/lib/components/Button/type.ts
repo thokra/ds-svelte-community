@@ -33,6 +33,11 @@ interface BaseProps {
 	 * @default "primary"
 	 */
 	variant?: (typeof variants)[number];
+
+	/**
+	 * Reference
+	 */
+	ref?: null | HTMLButtonElement | HTMLAnchorElement;
 }
 
 interface ButtonProps extends BaseProps, HTMLButtonAttributes {
