@@ -1,13 +1,10 @@
 {
-  "name": "ds-svelte-community",
-  "private": true,
-  "scripts": {
-    "gar-login": "bun x google-artifactregistry-auth"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {
-    "vite": "4.5.0"
-  }
+	"name": "ds-svelte-community",
+	"private": true,
+	"scripts": {
+		"gar-login": "bun x google-artifactregistry-auth"
+	},
+	"workspaces": [
+		"packages/*"
+	]
 }

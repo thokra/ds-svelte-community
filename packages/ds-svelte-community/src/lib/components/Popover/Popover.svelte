@@ -5,7 +5,6 @@
 <script lang="ts">
 	import { arrow as arrowMW, createFloatingActions } from "svelte-floating-ui";
 
-	import { browser } from "$app/environment";
 	import { writable } from "svelte/store";
 	import { classes } from "../helpers";
 	import type { PopoverProps } from "./type";
@@ -98,12 +97,10 @@
 	$: {
 		if (anchorEl && popover) {
 			floatingRef(anchorEl);
-			if (browser) {
-				anchorEl.addEventListener("focusout", () => {
-					console.log("asdf");
-					open = false;
-				});
-			}
+			anchorEl.addEventListener("focusout", () => {
+				console.log("asdf");
+				open = false;
+			});
 		}
 	}
 </script>

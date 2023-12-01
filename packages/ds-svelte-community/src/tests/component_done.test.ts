@@ -40,7 +40,6 @@ describe("which components are implemented", () => {
 		"MonthPickerStandalone",
 		"Page",
 		"PageBlock",
-		"Popover",
 		"PopoverContent",
 		"Provider",
 		"Radio",

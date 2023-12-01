@@ -20,5 +20,10 @@ const config: StorybookConfig = {
 		check: true,
 		skipBabel: true,
 	},
+	async viteFinal(config) {
+		config.define = { "process.env.FORCE_SIMILAR_INSTEAD_OF_MAP": "false" };
+		// as a bonus you can also add storybook specific aliases here:
+		return config;
+	},
 };
 export default config;

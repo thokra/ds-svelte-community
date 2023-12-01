@@ -15,6 +15,7 @@ export { default as Loader } from "./components/Loader/Loader.svelte";
 export * from "./components/Modal";
 export * from "./components/Pagination";
 export { default as Panel } from "./components/Panel/Panel.svelte";
+export { default as Popover } from "./components/Popover/Popover.svelte";
 export * from "./components/Search";
 export * from "./components/Select";
 export * from "./components/Skeleton";
