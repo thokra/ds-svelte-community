@@ -62,6 +62,9 @@ export const Components: KnownComponents = {
 		Heading: {
 			path: "components/typography/Heading/Heading.svelte",
 		},
+		HelpText: {
+			path: "components/HelpText/HelpText.svelte",
+		},
 		Label: {
 			path: "components/typography/Label/Label.svelte",
 		},
@@ -88,6 +91,9 @@ export const Components: KnownComponents = {
 		},
 		Panel: {
 			path: "components/Panel/Panel.svelte",
+		},
+		Popover: {
+			path: "components/Popover/Popover.svelte",
 		},
 		RemovableChip: {
 			path: "components/Chips/RemovableChip.svelte",
@@ -367,11 +373,23 @@ export const Components: KnownComponents = {
 		BoneIcon: {
 			path: "icons/BoneIcon.svelte",
 		},
+		BookFillIcon: {
+			path: "icons/BookFillIcon.svelte",
+		},
+		BookIcon: {
+			path: "icons/BookIcon.svelte",
+		},
 		BookmarkFillIcon: {
 			path: "icons/BookmarkFillIcon.svelte",
 		},
 		BookmarkIcon: {
 			path: "icons/BookmarkIcon.svelte",
+		},
+		BooksFillIcon: {
+			path: "icons/BooksFillIcon.svelte",
+		},
+		BooksIcon: {
+			path: "icons/BooksIcon.svelte",
 		},
 		BowlFillIcon: {
 			path: "icons/BowlFillIcon.svelte",
@@ -658,6 +676,12 @@ export const Components: KnownComponents = {
 		ChevronLeftDoubleIcon: {
 			path: "icons/ChevronLeftDoubleIcon.svelte",
 		},
+		ChevronLeftFirstCircleFillIcon: {
+			path: "icons/ChevronLeftFirstCircleFillIcon.svelte",
+		},
+		ChevronLeftFirstCircleIcon: {
+			path: "icons/ChevronLeftFirstCircleIcon.svelte",
+		},
 		ChevronLeftFirstIcon: {
 			path: "icons/ChevronLeftFirstIcon.svelte",
 		},
@@ -681,6 +705,12 @@ export const Components: KnownComponents = {
 		},
 		ChevronRightIcon: {
 			path: "icons/ChevronRightIcon.svelte",
+		},
+		ChevronRightLastCircleFillIcon: {
+			path: "icons/ChevronRightLastCircleFillIcon.svelte",
+		},
+		ChevronRightLastCircleIcon: {
+			path: "icons/ChevronRightLastCircleIcon.svelte",
 		},
 		ChevronRightLastIcon: {
 			path: "icons/ChevronRightLastIcon.svelte",
@@ -727,11 +757,23 @@ export const Components: KnownComponents = {
 		CircleSlashIcon: {
 			path: "icons/CircleSlashIcon.svelte",
 		},
+		ClipboardCheckmarkFillIcon: {
+			path: "icons/ClipboardCheckmarkFillIcon.svelte",
+		},
+		ClipboardCheckmarkIcon: {
+			path: "icons/ClipboardCheckmarkIcon.svelte",
+		},
 		ClipboardFillIcon: {
 			path: "icons/ClipboardFillIcon.svelte",
 		},
 		ClipboardIcon: {
 			path: "icons/ClipboardIcon.svelte",
+		},
+		ClipboardLinkFillIcon: {
+			path: "icons/ClipboardLinkFillIcon.svelte",
+		},
+		ClipboardLinkIcon: {
+			path: "icons/ClipboardLinkIcon.svelte",
 		},
 		ClockDashedIcon: {
 			path: "icons/ClockDashedIcon.svelte",
@@ -2079,6 +2121,12 @@ export const Components: KnownComponents = {
 		},
 		PrinterSmallTriangleIcon: {
 			path: "icons/PrinterSmallTriangleIcon.svelte",
+		},
+		PushPinFillIcon: {
+			path: "icons/PushPinFillIcon.svelte",
+		},
+		PushPinIcon: {
+			path: "icons/PushPinIcon.svelte",
 		},
 		PuzzlePieceFillIcon: {
 			path: "icons/PuzzlePieceFillIcon.svelte",

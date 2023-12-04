@@ -6,7 +6,7 @@
 	import { arrow as arrowMW, createFloatingActions } from "svelte-floating-ui";
 
 	import { writable } from "svelte/store";
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
 	import type { PopoverProps } from "./type";
 
 	type $$Props = PopoverProps;
@@ -98,7 +98,6 @@
 		if (anchorEl && popover) {
 			floatingRef(anchorEl);
 			anchorEl.addEventListener("focusout", () => {
-				console.log("asdf");
 				open = false;
 			});
 		}
@@ -111,7 +110,7 @@
 	class={classes($$restProps, "navds-popover")}
 	class:navds-popover--hidden={!open || !anchorEl}
 	data-placement={placement}
-	{...$$restProps}
+	{...omit($$restProps, "class")}
 >
 	<div class="navds-popover__content">
 		<slot />

@@ -8,7 +8,7 @@
 		"check": "tsc",
 		"build": "tsc -p tsconfig.build.json",
 		"package": "bun run build && publint",
-		"update-components": "bun build/components-list.ts",
+		"update-components": "bun src/build/generate.ts",
 		"prepublishOnly": "bun run package",
 		"test": "bun test",
 		"lint": "prettier --check . && eslint .",
@@ -51,8 +51,10 @@
 		"dist/__snapshots__/**/*",
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*",
+		"!dist/build/**/*",
 		"src/*.ts",
-		"!src/**/*.test.*"
+		"!src/**/*.test.*",
+		"!src/build/**/*"
 	],
 	"peerDependencies": {
 		"svelte": "^3.59.0 || ^4.0.0-0"

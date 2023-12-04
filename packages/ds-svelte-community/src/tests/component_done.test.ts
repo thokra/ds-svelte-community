@@ -25,7 +25,6 @@ describe("which components are implemented", () => {
 		"ExpansionCardTitle",
 		"HGrid",
 		"HStack",
-		"HelpText",
 		"Hide",
 		"Ingress",
 		"InternalHeader",
