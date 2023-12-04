@@ -48,6 +48,11 @@
 	 */
 	export let anchorEl: PopoverProps["anchorEl"];
 
+	/**
+	 * Class to add to the popover content
+	 */
+	export let contentClass: PopoverProps["contentClass"] = undefined;
+
 	const arrowRef = writable<HTMLElement | null>(null);
 
 	const [floatingRef, floatingContent, update] = createFloatingActions({
@@ -112,7 +117,7 @@
 	data-placement={placement}
 	{...omit($$restProps, "class")}
 >
-	<div class="navds-popover__content">
+	<div class="navds-popover__content {contentClass}">
 		<slot />
 	</div>
 	{#if arrow}

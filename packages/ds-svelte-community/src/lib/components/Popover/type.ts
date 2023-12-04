@@ -51,4 +51,9 @@ export interface PopoverProps extends HTMLAttributes<HTMLDivElement> {
 	 * @default true
 	 */
 	flip?: boolean;
+
+	/**
+	 * Class to add to the popover content
+	 */
+	contentClass?: string;
 }

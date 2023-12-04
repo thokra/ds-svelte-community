@@ -35,6 +35,7 @@
 	<!-- onClose={() => setOpen(false)} -->
 	<Popover
 		class="navds-help-text__popover"
+		contentClass="navds-body-short"
 		bind:open
 		anchorEl={btnEl}
 		{placement}
