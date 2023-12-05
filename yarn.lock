@@ -1525,6 +1525,8 @@
 "@nais/ds-svelte-community@packages/ds-svelte-community":
   version "workspace:packages/ds-svelte-community"
   resolved "workspace:packages/ds-svelte-community"
+  optionalDependencies:
+    svelte-floating-ui "^1.5.8"
   devDependencies:
     "@happy-dom/global-registrator" "^12.10.3"
     "@nais/ds-svelte-community-preprocess-svelte" "packages/ds-svelte-community-preprocess-svelte"
