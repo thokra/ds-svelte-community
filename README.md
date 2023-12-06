@@ -18,9 +18,15 @@ Check out the [Storybook](https://nais.io/ds-svelte-community) for examples of h
 
 ## Development
 
+> [!WARNING]
+> Dependabot PR-s are enabled for visibility, but merging them will cause errors with tests etc. This is because we're using Bun, and
+> Dependabot doesn't know how to handle it. To update dependencies, you need to do it manually.
+
 We use [Bun](https://bun.sh) and [asdf](https://asdf-vm.com) to manage dependencies and run scripts.
 
 Run `asdf install` to install the correct version of `bun`. (You might need to run `asdf plugin add bun` first.)
+
+We have configured `bun` to also create a `yarn.lock` file, which is only used by Dependabot, as it doesn't support `bun` yet.
 
 ### Packages
 
