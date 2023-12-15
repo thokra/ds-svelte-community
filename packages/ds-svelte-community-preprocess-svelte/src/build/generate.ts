@@ -17,7 +17,12 @@ import { buildComponents } from "./components-list";
 	`;
 
 	// Read .prettierrc
-	const prettierConfig = await prettier.resolveConfig("./.prettierrc");
+	const configFile = await prettier.resolveConfigFile("../../.prettierrc.yaml");
+	if (!configFile) {
+		throw new Error("Could not find .prettierrc");
+	}
+	console.log("Loading configFile", configFile);
+	const prettierConfig = await prettier.resolveConfig(configFile);
 	if (!prettierConfig) {
 		throw new Error("Could not load .prettierrc");
 	}

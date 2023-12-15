@@ -244,6 +244,9 @@ export const Components: KnownComponents = {
 		ArrowDownIcon: {
 			path: "icons/ArrowDownIcon.svelte",
 		},
+		ArrowDownRightIcon: {
+			path: "icons/ArrowDownRightIcon.svelte",
+		},
 		ArrowForwardFillIcon: {
 			path: "icons/ArrowForwardFillIcon.svelte",
 		},
@@ -660,6 +663,9 @@ export const Components: KnownComponents = {
 		},
 		ChevronDownIcon: {
 			path: "icons/ChevronDownIcon.svelte",
+		},
+		ChevronDownUpIcon: {
+			path: "icons/ChevronDownUpIcon.svelte",
 		},
 		ChevronLeftCircleFillIcon: {
 			path: "icons/ChevronLeftCircleFillIcon.svelte",

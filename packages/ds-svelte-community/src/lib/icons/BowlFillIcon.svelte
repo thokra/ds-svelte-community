@@ -33,8 +33,6 @@
 	<slot />
 	<path
 		fill="currentColor"
-		fill-rule="evenodd"
 		d="M4 7.25a.75.75 0 0 0-.75.75v3a6.753 6.753 0 0 0 4.5 6.366V18c0 .414.336.75.75.75h7a.75.75 0 0 0 .75-.75v-.634A6.753 6.753 0 0 0 20.75 11V8a.75.75 0 0 0-.75-.75H4Z"
-		clip-rule="evenodd"
 	/>
 </svg>

@@ -23,6 +23,7 @@ export { default as AreaChartFillIcon } from "./AreaChartFillIcon.svelte";
 export { default as AreaChartIcon } from "./AreaChartIcon.svelte";
 export { default as ArrowCirclepathIcon } from "./ArrowCirclepathIcon.svelte";
 export { default as ArrowDownIcon } from "./ArrowDownIcon.svelte";
+export { default as ArrowDownRightIcon } from "./ArrowDownRightIcon.svelte";
 export { default as ArrowForwardFillIcon } from "./ArrowForwardFillIcon.svelte";
 export { default as ArrowForwardIcon } from "./ArrowForwardIcon.svelte";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon.svelte";
@@ -162,6 +163,7 @@ export { default as ChevronDownDoubleCircleFillIcon } from "./ChevronDownDoubleC
 export { default as ChevronDownDoubleCircleIcon } from "./ChevronDownDoubleCircleIcon.svelte";
 export { default as ChevronDownDoubleIcon } from "./ChevronDownDoubleIcon.svelte";
 export { default as ChevronDownIcon } from "./ChevronDownIcon.svelte";
+export { default as ChevronDownUpIcon } from "./ChevronDownUpIcon.svelte";
 export { default as ChevronLeftCircleFillIcon } from "./ChevronLeftCircleFillIcon.svelte";
 export { default as ChevronLeftCircleIcon } from "./ChevronLeftCircleIcon.svelte";
 export { default as ChevronLeftDoubleCircleFillIcon } from "./ChevronLeftDoubleCircleFillIcon.svelte";
