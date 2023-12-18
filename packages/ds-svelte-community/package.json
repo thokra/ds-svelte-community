@@ -155,8 +155,7 @@
 	"type": "module",
 	"dependencies": {
 		"@navikt/ds-css": "^5.12.0",
-		"@navikt/ds-tokens": "^5.12.0",
-		"locally-unique-id-generator": "^0.1.5"
+		"@navikt/ds-tokens": "^5.12.0"
 	},
 	"overrides": {
 		"@storybook/cli": {

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
 	/* TODO: Add error handling */
 
-	import newUniqueId from "locally-unique-id-generator";
+	import newUniqueId from "$lib/components/local-unique-id";
 
 	export type SearchClearEvent =
 		| { trigger: "Click"; event: MouseEvent }

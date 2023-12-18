@@ -13,9 +13,7 @@ describe("Accordion", () => {
 				{ heading: "Heading 3", content: "Content 3" },
 			],
 		} as TestProps;
-		const got = render(Accordion, props);
-		console.log("HELLO WORLD", expect(got).toMimicReact);
-		expect(got).toMimicReact(ReactAccordion, {
+		expect(render(Accordion, props)).toMimicReact(ReactAccordion, {
 			children: props.items.map((v, i) => {
 				return React.createElement(ReactAccordion.Item, {
 					defaultOpen: v.open,

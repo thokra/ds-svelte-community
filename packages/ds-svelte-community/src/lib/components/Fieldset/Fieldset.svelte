@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import newUniqueId from "locally-unique-id-generator";
+	import newUniqueId from "$lib/components/local-unique-id";
 	import { contextKey, type FieldSetContext, type FieldsetProps } from "./type";
 </script>
 
