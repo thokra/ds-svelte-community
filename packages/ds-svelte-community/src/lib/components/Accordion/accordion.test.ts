@@ -1,4 +1,3 @@
-import { bunmatch } from "$testlib/bunmatch";
 import { Accordion as ReactAccordion } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
@@ -14,41 +13,41 @@ describe("Accordion", () => {
 				{ heading: "Heading 3", content: "Content 3" },
 			],
 		} as TestProps;
-		expect(
-			await bunmatch(render(Accordion, props), ReactAccordion, {
-				children: props.items.map((v, i) => {
-					return React.createElement(ReactAccordion.Item, {
-						defaultOpen: v.open,
-						children: [
-							React.createElement(ReactAccordion.Header, { key: `h-${i}`, children: v.heading }),
-							React.createElement(ReactAccordion.Content, { key: `c-${i}`, children: v.content }),
-						],
-						key: i,
-					});
-				}),
-				opts: {
-					alterAttrValue(name, value) {
-						if (name == "class") {
-							// Remove class that's not used in ds-svelte
-							return value.replace(" navds-accordion__item--no-animation", "");
-						}
-
-						return value;
-					},
-					compareAttrs(node, attr) {
-						const tag = node.tagName.toLowerCase();
-						if (tag == "svg" && attr == "aria-labelledby") {
-							return false;
-						}
-						if (tag == "title" && attr == "id") {
-							return false;
-						}
-						return true;
-					},
-				},
+		const got = render(Accordion, props);
+		console.log("HELLO WORLD", expect(got).toMimicReact);
+		expect(got).toMimicReact(ReactAccordion, {
+			children: props.items.map((v, i) => {
+				return React.createElement(ReactAccordion.Item, {
+					defaultOpen: v.open,
+					children: [
+						React.createElement(ReactAccordion.Header, { key: `h-${i}`, children: v.heading }),
+						React.createElement(ReactAccordion.Content, { key: `c-${i}`, children: v.content }),
+					],
+					key: i,
+				});
 			}),
-		).toBeTrue();
-	});
+			opts: {
+				alterAttrValue(name, value) {
+					if (name == "class") {
+						// Remove class that's not used in ds-svelte
+						return value.replace(" navds-accordion__item--no-animation", "");
+					}
 
-	afterEach(cleanup);
+					return value;
+				},
+				compareAttrs(node, attr) {
+					const tag = node.tagName.toLowerCase();
+					if (tag == "svg" && attr == "aria-labelledby") {
+						return false;
+					}
+					if (tag == "title" && attr == "id") {
+						return false;
+					}
+					return true;
+				},
+			},
+		});
+
+		afterEach(cleanup);
+	});
 });
