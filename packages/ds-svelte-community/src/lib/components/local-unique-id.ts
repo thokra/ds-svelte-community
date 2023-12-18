@@ -1,3 +1,5 @@
+// Copied from https://github.com/rozek/locally-unique-id-generator (MIT License)
+
 let IdCounter = 0; // hidden in the closure of "nextId"
 
 function nextId(): number {
