@@ -106,8 +106,8 @@
 		<span class="navds-checkbox__icon">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
-				width="13"
-				height="10"
+				width="0.8125rem"
+				height="0.625rem"
 				viewBox="0 0 13 10"
 				fill="none"
 				focusable="false"
