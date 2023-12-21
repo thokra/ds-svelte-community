@@ -85,6 +85,7 @@
 		<select
 			{...omit($$restProps, "class")}
 			bind:value
+			on:change
 			class={classes(
 				$$restProps,
 				"navds-select__input",
