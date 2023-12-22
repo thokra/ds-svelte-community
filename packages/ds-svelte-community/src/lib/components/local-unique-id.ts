@@ -8,8 +8,8 @@ function nextId(): number {
 }
 
 /**** make global.nextId a real singleton ****/
-
-const global = /*#__PURE__*/ Function("return this")();
+// eslint-disable-next-line no-var
+var global = /*#__PURE__*/ Function("return this")();
 // see https://stackoverflow.com/questions/3277182/how-to-get-the-global-object-in-javascript
 
 if (typeof global.__nextId !== "function") {
