@@ -55,7 +55,12 @@ describe("CheckboxGroup", () => {
 							return false;
 						}
 						// We have different IDs, so we ignore id and for attributes
-						if (attr == "id" || attr == "for" || attr == "aria-describedby") {
+						if (
+							attr == "id" ||
+							attr == "for" ||
+							attr == "aria-describedby" ||
+							attr == "aria-labelledby"
+						) {
 							return false;
 						}
 						return true;
@@ -103,7 +108,12 @@ describe("CheckboxGroup", () => {
 							return false;
 						}
 						// We have different IDs, so we ignore id and for attributes
-						if (attr == "id" || attr == "for" || attr == "aria-describedby") {
+						if (
+							attr == "id" ||
+							attr == "for" ||
+							attr == "aria-describedby" ||
+							attr == "aria-labelledby"
+						) {
 							return false;
 						}
 						return true;

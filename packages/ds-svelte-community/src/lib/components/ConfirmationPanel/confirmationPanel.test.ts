@@ -20,7 +20,7 @@ describe("ConfirmationPanel", () => {
 				opts: {
 					compareAttrs(node, attr) {
 						// Remove attrs known to be unique
-						if (["id", "aria-describedby", "for"].includes(attr)) {
+						if (["id", "aria-describedby", "for", "aria-labelledby"].includes(attr)) {
 							return false;
 						}
 						return true;

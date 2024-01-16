@@ -64,10 +64,9 @@
 	$: showErrorMsg = !disabled && !!error;
 </script>
 
-<!-- svelte-ignore a11y-role-supports-aria-props -->
+<!-- aria-invalid={error ? "true" : undefined} -->
 <fieldset
 	{...omit($$restProps, "class", "aria-invalid", "aria-describedby")}
-	aria-invalid={error ? "true" : undefined}
 	class={classes($$restProps, "navds-fieldset", `navds-fieldset--${size}`)}
 	class:navds-fieldset--error={!!error}
 	aria-describedby={$$slots.description ? inputDescriptionId : undefined}

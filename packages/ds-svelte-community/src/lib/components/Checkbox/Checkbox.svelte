@@ -6,7 +6,6 @@
 	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
-	import Detail from "../typography/Detail/Detail.svelte";
 	import { GetCheckboxGroupContext } from "./CheckboxGroup.svelte";
 	import type { CheckboxProps } from "./type";
 
@@ -68,6 +67,7 @@
 	const ctx = GetCheckboxGroupContext();
 	const values = ctx && ctx.groupControlled ? ctx.values : null;
 
+	const lblID = "cblbl-" + newUniqueId();
 	$: checked = values && $values ? $values.includes(value) || false : checked;
 
 	const hasErrorStore = ctx ? ctx.hasError : null;
@@ -88,6 +88,7 @@
 		class="navds-checkbox__input"
 		aria-checked={indeterminate ? "mixed" : undefined}
 		aria-invalid={hasError ? "true" : undefined}
+		aria-labelledby={lblID}
 		bind:indeterminate
 		bind:checked
 		{value}
@@ -102,7 +103,7 @@
 		}}
 		on:click
 	/>
-	<label for={id} class="navds-checkbox__label">
+	<label for={id} class="navds-checkbox__label" id={lblID}>
 		<span class="navds-checkbox__icon">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -121,22 +122,21 @@
 			</svg>
 		</span>
 		<span class="navds-checkbox__content" class:navds-sr-only={hideLabel}>
-			<BodyShort as="span" {size} class="navds-checkbox__label-text">
+			<BodyShort as="span" {size} class="navds-checkbox__label-text" aria-hidden>
 				<!--
 					Label content
 				-->
 				<slot />
 			</BodyShort>
 			{#if description}
-				{#if size == "medium"}
-					<BodyShort as="span" class="navds-checkbox__description navds-form-field__subdescription">
-						{description}
-					</BodyShort>
-				{:else}
-					<Detail as="span" class="navds-checkbox__description navds-form-field__subdescription">
-						{description}
-					</Detail>
-				{/if}
+				<BodyShort
+					as="span"
+					class="navds-form-field__subdescription navds-checkbox__description"
+					{size}
+					aria-hidden
+				>
+					{description}
+				</BodyShort>
 			{/if}
 		</span>
 	</label>
