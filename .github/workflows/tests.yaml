@@ -2,6 +2,9 @@ name: Test, lint and check commit
 on:
   push:
     branches: "*"
+  pull_request:
+    branches:
+      - main
 
 jobs:
   unit_test:
