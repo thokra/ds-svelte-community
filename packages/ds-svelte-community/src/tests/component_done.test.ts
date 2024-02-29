@@ -9,7 +9,6 @@ describe("which components are implemented", () => {
 	const missingComponents: string[] = [
 		"Bleed",
 		"Box",
-		"VStack",
 		"Chat",
 		"ChatBubble",
 		"DatePicker",
@@ -24,8 +23,8 @@ describe("which components are implemented", () => {
 		"ExpansionCardHeader",
 		"ExpansionCardTitle",
 		"HGrid",
-		"HStack",
 		"Hide",
+		"HStack",
 		"Ingress",
 		"InternalHeader",
 		"InternalHeaderButton",
@@ -40,6 +39,7 @@ describe("which components are implemented", () => {
 		"Page",
 		"PageBlock",
 		"PopoverContent",
+		"Portal",
 		"Provider",
 		"Radio",
 		"RadioGroup",
@@ -55,6 +55,7 @@ describe("which components are implemented", () => {
 		"TimelinePin",
 		"TimelineRow",
 		"TimelineZoom",
+		"VStack",
 	];
 
 	// Names that differ between Svelte and React in the format { svelte: react }

@@ -1663,6 +1663,12 @@ export const Components: KnownComponents = {
 		LinkIcon: {
 			path: "icons/LinkIcon.svelte",
 		},
+		LocationPinFillIcon: {
+			path: "icons/LocationPinFillIcon.svelte",
+		},
+		LocationPinIcon: {
+			path: "icons/LocationPinIcon.svelte",
+		},
 		MagnifyingGlassFillIcon: {
 			path: "icons/MagnifyingGlassFillIcon.svelte",
 		},
