@@ -460,6 +460,18 @@ export const Components: KnownComponents = {
 		BugIcon: {
 			path: "icons/BugIcon.svelte",
 		},
+		Buildings2FillIcon: {
+			path: "icons/Buildings2FillIcon.svelte",
+		},
+		Buildings2Icon: {
+			path: "icons/Buildings2Icon.svelte",
+		},
+		Buildings3FillIcon: {
+			path: "icons/Buildings3FillIcon.svelte",
+		},
+		Buildings3Icon: {
+			path: "icons/Buildings3Icon.svelte",
+		},
 		Buldings2FillIcon: {
 			path: "icons/Buldings2FillIcon.svelte",
 		},
@@ -1083,6 +1095,12 @@ export const Components: KnownComponents = {
 		},
 		FeedingBottleIcon: {
 			path: "icons/FeedingBottleIcon.svelte",
+		},
+		FigureChildFillIcon: {
+			path: "icons/FigureChildFillIcon.svelte",
+		},
+		FigureChildIcon: {
+			path: "icons/FigureChildIcon.svelte",
 		},
 		FigureCombinationFillIcon: {
 			path: "icons/FigureCombinationFillIcon.svelte",
