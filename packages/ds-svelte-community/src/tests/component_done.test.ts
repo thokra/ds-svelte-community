@@ -49,13 +49,13 @@ describe("which components are implemented", () => {
 		"TimelineZoom",
 
 		// Primitives
-		"Bleed",
+		"Bleed", // ✓
 		"Box", // ✓
 		"HGrid", // ✓
-		"Hide",
+		"Hide", // ✓
 		"HStack", // ✓
 		"Page",
-		"Show",
+		"Show", // ✓
 		"Stack",
 		"VStack", // ✓
 	];
