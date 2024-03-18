@@ -31,7 +31,6 @@ describe("which components are implemented", () => {
 		"MonthPicker",
 		"MonthPickerInput",
 		"MonthPickerStandalone",
-		"PageBlock",
 		"PopoverContent",
 		"Portal",
 		"Provider",
@@ -47,17 +46,6 @@ describe("which components are implemented", () => {
 		"TimelinePin",
 		"TimelineRow",
 		"TimelineZoom",
-
-		// Primitives
-		"Bleed", // ✓
-		"Box", // ✓
-		"HGrid", // ✓
-		"Hide", // ✓
-		"HStack", // ✓
-		"Page",
-		"Show", // ✓
-		"Stack",
-		"VStack", // ✓
 	];
 
 	// Names that differ between Svelte and React in the format { svelte: react }
@@ -95,6 +83,7 @@ describe("which components are implemented", () => {
 	const reactComponents = Object.keys(allReact).filter(
 		(key) => isFirstLetterUppercase(key) && !key.includes("UNSAFE") && !key.includes("Context"),
 	);
+
 	const reactNestedComponents = reactComponents.flatMap((comp) => {
 		const nested = Object.keys((allReact as never)[comp]);
 		return nested

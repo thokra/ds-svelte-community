@@ -17,11 +17,17 @@ export const Components: KnownComponents = {
 		Alert: {
 			path: "components/Alert/Alert.svelte",
 		},
+		Bleed: {
+			path: "components/primitives/Bleed/Bleed.svelte",
+		},
 		BodyLong: {
 			path: "components/typography/BodyLong/BodyLong.svelte",
 		},
 		BodyShort: {
 			path: "components/typography/BodyShort/BodyShort.svelte",
+		},
+		Box: {
+			path: "components/primitives/Box/Box.svelte",
 		},
 		Button: {
 			path: "components/Button/Button.svelte",
@@ -59,11 +65,20 @@ export const Components: KnownComponents = {
 		GuidePanel: {
 			path: "components/GuidePanel/GuidePanel.svelte",
 		},
+		HGrid: {
+			path: "components/primitives/HGrid/HGrid.svelte",
+		},
+		HStack: {
+			path: "components/primitives/Stack/HStack.svelte",
+		},
 		Heading: {
 			path: "components/typography/Heading/Heading.svelte",
 		},
 		HelpText: {
 			path: "components/HelpText/HelpText.svelte",
+		},
+		Hide: {
+			path: "components/primitives/Responsive/Hide.svelte",
 		},
 		Label: {
 			path: "components/typography/Label/Label.svelte",
@@ -86,6 +101,12 @@ export const Components: KnownComponents = {
 		Modal: {
 			path: "components/Modal/Modal.svelte",
 		},
+		Page: {
+			path: "components/primitives/Page/Page.svelte",
+		},
+		PageBlock: {
+			path: "components/primitives/Page/PageBlock.svelte",
+		},
 		Pagination: {
 			path: "components/Pagination/Pagination.svelte",
 		},
@@ -107,8 +128,14 @@ export const Components: KnownComponents = {
 		Select: {
 			path: "components/Select/Select.svelte",
 		},
+		Show: {
+			path: "components/primitives/Responsive/Show.svelte",
+		},
 		Skeleton: {
 			path: "components/Skeleton/Skeleton.svelte",
+		},
+		Stack: {
+			path: "components/primitives/Stack/Stack.svelte",
 		},
 		Step: {
 			path: "components/Stepper/Step.svelte",
@@ -166,6 +193,9 @@ export const Components: KnownComponents = {
 		},
 		Tr: {
 			path: "components/Table/Tr.svelte",
+		},
+		VStack: {
+			path: "components/primitives/Stack/VStack.svelte",
 		},
 	},
 	icons: {
