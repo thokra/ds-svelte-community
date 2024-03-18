@@ -7,8 +7,6 @@ describe("which components are implemented", () => {
 	// These are listed to allow the test to pass, but we want to keep track of them.
 	// The test will fail if we have the component, but it's still listed here.
 	const missingComponents: string[] = [
-		"Bleed",
-		"Box",
 		"Chat",
 		"ChatBubble",
 		"DatePicker",
@@ -22,9 +20,6 @@ describe("which components are implemented", () => {
 		"ExpansionCardDescription",
 		"ExpansionCardHeader",
 		"ExpansionCardTitle",
-		"HGrid",
-		"Hide",
-		"HStack",
 		"Ingress",
 		"InternalHeader",
 		"InternalHeaderButton",
@@ -36,7 +31,6 @@ describe("which components are implemented", () => {
 		"MonthPicker",
 		"MonthPickerInput",
 		"MonthPickerStandalone",
-		"Page",
 		"PageBlock",
 		"PopoverContent",
 		"Portal",
@@ -44,9 +38,7 @@ describe("which components are implemented", () => {
 		"Radio",
 		"RadioGroup",
 		"ReadMore",
-		"Show",
 		"Spacer",
-		"Stack",
 		"TableColumnHeader",
 		"TableExpandableRow",
 		"Textarea",
@@ -55,7 +47,17 @@ describe("which components are implemented", () => {
 		"TimelinePin",
 		"TimelineRow",
 		"TimelineZoom",
-		"VStack",
+
+		// Primitives
+		"Bleed",
+		"Box", // ✓
+		"HGrid", // ✓
+		"Hide",
+		"HStack", // ✓
+		"Page",
+		"Show",
+		"Stack",
+		"VStack", // ✓
 	];
 
 	// Names that differ between Svelte and React in the format { svelte: react }
