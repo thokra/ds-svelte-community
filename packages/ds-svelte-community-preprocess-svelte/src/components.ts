@@ -262,6 +262,12 @@ export const Components: KnownComponents = {
 		AngleRulerTriangleIcon: {
 			path: "icons/AngleRulerTriangleIcon.svelte",
 		},
+		ArchiveFillIcon: {
+			path: "icons/ArchiveFillIcon.svelte",
+		},
+		ArchiveIcon: {
+			path: "icons/ArchiveIcon.svelte",
+		},
 		AreaChartFillIcon: {
 			path: "icons/AreaChartFillIcon.svelte",
 		},
@@ -1881,6 +1887,12 @@ export const Components: KnownComponents = {
 		},
 		NumberListIcon: {
 			path: "icons/NumberListIcon.svelte",
+		},
+		OpenSourceFillIcon: {
+			path: "icons/OpenSourceFillIcon.svelte",
+		},
+		OpenSourceIcon: {
+			path: "icons/OpenSourceIcon.svelte",
 		},
 		Over18FillIcon: {
 			path: "icons/Over18FillIcon.svelte",
