@@ -19,12 +19,12 @@ describe("which icons are implemented", () => {
 		return key;
 	});
 
-	it("should include expected components", () => {
+	it("should include expected icons", () => {
 		const missing = reactIcons.filter((key) => !targetSvelte.includes(key)).sort();
 		expect(missing).toEqual([]);
 	});
 
-	it("should not include unexpected components", () => {
+	it("should not include unexpected icons", () => {
 		const dontWant = targetSvelte.filter((key) => !reactIcons.includes(key)).sort();
 		expect(dontWant).toEqual([]);
 	});

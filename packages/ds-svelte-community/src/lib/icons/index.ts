@@ -19,6 +19,8 @@ export { default as AngleRulerCircleFillIcon } from "./AngleRulerCircleFillIcon.
 export { default as AngleRulerCircleIcon } from "./AngleRulerCircleIcon.svelte";
 export { default as AngleRulerTriangleFillIcon } from "./AngleRulerTriangleFillIcon.svelte";
 export { default as AngleRulerTriangleIcon } from "./AngleRulerTriangleIcon.svelte";
+export { default as ArchiveFillIcon } from "./ArchiveFillIcon.svelte";
+export { default as ArchiveIcon } from "./ArchiveIcon.svelte";
 export { default as AreaChartFillIcon } from "./AreaChartFillIcon.svelte";
 export { default as AreaChartIcon } from "./AreaChartIcon.svelte";
 export { default as ArrowCirclepathIcon } from "./ArrowCirclepathIcon.svelte";
@@ -559,6 +561,8 @@ export { default as NoSmokingFillIcon } from "./NoSmokingFillIcon.svelte";
 export { default as NoSmokingIcon } from "./NoSmokingIcon.svelte";
 export { default as NokIcon } from "./NokIcon.svelte";
 export { default as NumberListIcon } from "./NumberListIcon.svelte";
+export { default as OpenSourceFillIcon } from "./OpenSourceFillIcon.svelte";
+export { default as OpenSourceIcon } from "./OpenSourceIcon.svelte";
 export { default as Over18FillIcon } from "./Over18FillIcon.svelte";
 export { default as Over18Icon } from "./Over18Icon.svelte";
 export { default as PackageFillIcon } from "./PackageFillIcon.svelte";
