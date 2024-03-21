@@ -1,6 +1,13 @@
 import type { ResponsiveProp, SpacingScale } from "$lib/components/utils/types";
 import type { HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
 
+export interface FullStackProps extends StackProps {
+	/**
+	 * flex-direction
+	 */
+	direction?: ResponsiveProp<"row" | "column">;
+}
+
 export interface StackProps extends HTMLAttributes<HTMLDivElement> {
 	/**
 	 * Justify-content
@@ -22,11 +29,6 @@ export interface StackProps extends HTMLAttributes<HTMLDivElement> {
 	 * gap={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}
 	 */
 	gap?: ResponsiveProp<SpacingScale>;
-	/**
-	 * flex-direction
-	 */
-	direction?: ResponsiveProp<"row" | "column">;
-
 	/**
 	 * HTML element to render as.
 	 */

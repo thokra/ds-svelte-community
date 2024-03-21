@@ -62,6 +62,14 @@
 	export let as: BoxProps["as"] = "div";
 </script>
 
+<!--
+  @component
+
+	Box is a layout component that is often used as a building block for other components. It sets padding, border, etc. with design tokens.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/primitives/box).
+-->
+
 <svelte:element
 	this={as}
 	{...omit($$restProps, "class")}

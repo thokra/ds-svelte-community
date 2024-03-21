@@ -1,37 +1,37 @@
 <script lang="ts">
 	import { classes, omit } from "$lib/components/helpers";
 	import { combineStyles, getResponsiveProps, getResponsiveValue } from "$lib/components/utils/css";
-	import type { StackProps } from "./type";
+	import type { FullStackProps } from "./type";
 
-	type $$Props = StackProps;
+	type $$Props = FullStackProps;
 
 	/**
 	 * Justify-content
 	 */
-	export let justify: StackProps["justify"] = undefined;
+	export let justify: FullStackProps["justify"] = undefined;
 	/**
 	 * Align-items
 	 */
-	export let align: StackProps["align"] = undefined;
+	export let align: FullStackProps["align"] = undefined;
 	/**
 	 * flex-wrap
 	 */
-	export let wrap: StackProps["wrap"] = true;
+	export let wrap: FullStackProps["wrap"] = true;
 	/**
 	 * @example
 	 * gap='4'
 	 * gap={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}
 	 */
-	export let gap: StackProps["gap"] = undefined;
+	export let gap: FullStackProps["gap"] = undefined;
 	/**
 	 * flex-direction
 	 */
-	export let direction: StackProps["direction"] = "row";
+	export let direction: FullStackProps["direction"] = "row";
 
 	/**
 	 * HTML element to render as.
 	 */
-	export let as: StackProps["as"] = "div";
+	export let as: FullStackProps["as"] = "div";
 </script>
 
 <svelte:element

@@ -19,7 +19,7 @@ export interface PageProps extends HTMLAttributes<HTMLDivElement> {
 	footerPosition?: "belowFold";
 	/**
 	 * Adds a standardised padding of 4rem between content and footer
-	 * @default block-end
+	 * @default end
 	 */
 	contentBlockPadding?: "end" | "none";
 }

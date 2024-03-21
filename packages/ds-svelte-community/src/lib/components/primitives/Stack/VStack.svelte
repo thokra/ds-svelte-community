@@ -2,7 +2,7 @@
 	import Stack from "./Stack.svelte";
 	import type { StackProps } from "./type";
 
-	type $$Props = Omit<StackProps, "direction" | "wrap">;
+	type $$Props = StackProps;
 </script>
 
 <Stack {...$$props} direction="column" wrap={false}>
