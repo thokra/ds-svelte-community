@@ -25,8 +25,6 @@
 	export let contentBlockPadding: PageProps["contentBlockPadding"] = "end";
 
 	$: belowFold = footerPosition === "belowFold";
-
-	$: console.log("ASDF", background);
 </script>
 
 <svelte:element

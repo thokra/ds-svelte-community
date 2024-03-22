@@ -73,11 +73,6 @@ describe("which components are implemented", () => {
 		"ModalHeader", // Slot
 		"ModalBody", // Slot
 		"ModalFooter", // Slot
-
-		"Cell", // Deprecated
-		"Grid", // Deprecated,
-
-		"ContentContainer", // ??
 	];
 
 	const reactComponents = Object.keys(allReact).filter(
@@ -96,7 +91,8 @@ describe("which components are implemented", () => {
 			.map((nestedComp) => `${comp}${nestedComp}`);
 	});
 
-	const targetReact = [...reactComponents, ...reactNestedComponents]
+	const allReactComponents = [...reactComponents, ...reactNestedComponents];
+	const targetReact = allReactComponents
 		.filter((key) => !ignoredComponents.includes(key))
 		.filter((key) => !missingComponents.includes(key));
 
@@ -115,6 +111,25 @@ describe("which components are implemented", () => {
 	it("should not include unexpected components", () => {
 		const dontWant = targetSvelte.filter((key) => !targetReact.includes(key)).sort();
 		expect(dontWant).toEqual([]);
+	});
+
+	describe("const lists should only contain names in use", () => {
+		it("ignoredComponents excess", () => {
+			const missing = ignoredComponents.filter((key) => !allReactComponents.includes(key)).sort();
+			expect(missing).toEqual([]);
+		});
+
+		it("alteredNames excess", () => {
+			const missing = Object.values(alteredNames).filter(
+				(key) => !allReactComponents.includes(key),
+			);
+			expect(missing).toEqual([]);
+		});
+
+		it("missingComponents excess", () => {
+			const missing = missingComponents.filter((key) => !allReactComponents.includes(key)).sort();
+			expect(missing).toEqual([]);
+		});
 	});
 });
 
