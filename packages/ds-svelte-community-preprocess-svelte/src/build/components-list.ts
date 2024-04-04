@@ -1,6 +1,7 @@
+import { walk } from "estree-walker";
 import fs from "fs";
 import path from "path";
-import { parse, walk } from "svelte/compiler";
+import { parse } from "svelte/compiler";
 import { totalist } from "totalist";
 
 type ExportName = string;

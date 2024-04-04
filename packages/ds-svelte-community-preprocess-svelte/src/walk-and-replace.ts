@@ -1,4 +1,5 @@
-import { parse, walk } from "svelte/compiler";
+import { walk } from "estree-walker";
+import { parse } from "svelte/compiler";
 
 interface WalkAndReplaceOptions {
 	content: string;

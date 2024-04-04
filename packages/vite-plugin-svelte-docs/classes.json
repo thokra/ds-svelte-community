@@ -1,0 +1,20 @@
+[
+    {
+        "name": "default",
+        "documentation": "",
+        "type": "typeof Button",
+        "constructors": [
+            {
+                "parameters": [
+                    {
+                        "name": "options",
+                        "documentation": "",
+                        "type": "ComponentConstructorOptions<Props>"
+                    }
+                ],
+                "returnType": "Button",
+                "documentation": ""
+            }
+        ]
+    }
+]

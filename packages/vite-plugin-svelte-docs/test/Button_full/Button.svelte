@@ -1,7 +1,5 @@
 <script lang="ts">
-	import Loader from "../Loader/Loader.svelte";
 	import { classes, omit } from "../helpers";
-	import Label from "../typography/Label/Label.svelte";
 	import type { Props } from "./type";
 
 	/**
@@ -54,11 +52,17 @@
 </script>
 
 <!--
-	@component
-	Button lets the user perform an action.
+@component
+Here's some documentation for this component.
+It will show up on hover.
 
-	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/button).
- -->
+- You can use markdown here.
+- You can also use code blocks here.
+- Usage:
+  ```tsx
+  <Button name="Arethra">
+		```
+-->
 
 <svelte:element
 	this={as}
@@ -78,17 +82,19 @@
 	disabled={disabled || overrideWidth > 0 ? true : undefined}
 >
 	{#if overrideWidth}
-		<Loader {size} />
+		Loading
 	{:else}
 		{#if $$slots["icon-left"]}
-			<!-- Place icon to the left of the content -->
-			<span class="navds-button__icon"><slot name="icon-left" /></span>
+			<span class="navds-button__icon">
+				<!-- Place icon to the left of the content -->
+				<slot name="icon-left" />
+			</span>
 		{/if}
 		{#if $$slots.default && !iconOnly}
-			<Label as="span" size={size === "medium" ? "medium" : "small"}>
+			<span>
 				<!-- button content -->
 				<slot />
-			</Label>
+			</span>
 		{/if}
 		{#if $$slots["icon-right"]}
 			<!-- Place icon to the right of the content -->

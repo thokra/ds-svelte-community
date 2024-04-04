@@ -1,13 +1,8 @@
-<script lang="ts">
-	import { Tab, TabList, TabPanel, Tabs } from "$lib";
-
-	export let value: string;
-</script>
-
-<Tabs {value}>
-	<TabList>
-		<Tab value="a">a</Tab>
-	</TabList>
-
-	<TabPanel value="a">t.content</TabPanel>
-</Tabs>
+<h1>ds-svelte-community</h1>
+<p>
+	Welcome to the ds-svelte-community! This is a community-driven project to create a design system
+	for Svelte developers.
+</p>
+<p>
+	To get started, check out the <a href="/docs">documentation</a>.
+</p>
