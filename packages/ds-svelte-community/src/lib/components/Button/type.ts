@@ -1,3 +1,4 @@
+import type { Snippet } from "svelte";
 import type { HTMLAnchorAttributes, HTMLButtonAttributes } from "svelte/elements";
 
 export const variants = [
@@ -14,25 +15,66 @@ export const sizes = ["medium", "small", "xsmall"] as const;
 
 interface BaseProps {
 	/**
-	 * @default false
+	 * Replaces button content with a Loader component, keeps width.
 	 */
 	loading?: boolean;
+
 	/**
-	 * @default false
+	 * **Avoid using if possible for accessibility purposes.**
+	 *
+	 * Prevent the user from interacting with the button: it cannot be pressed or focused.
 	 */
 	disabled?: boolean | undefined | null;
+
 	/**
-	 * @default false
-	 */
-	iconOnly?: boolean;
-	/**
-	 * @default "medium"
+	 * Changes padding, height, and font-size.
 	 */
 	size?: (typeof sizes)[number];
+
 	/**
-	 * @default "primary"
+	 * Changes design and interaction-visuals.
 	 */
 	variant?: (typeof variants)[number];
+
+	/**
+	 * Content of the button
+	 */
+	children?: Snippet;
+
+	/**
+	 * Place icon to the left of the content
+	 */
+	iconLeft?: Snippet;
+
+	/**
+	 * Place icon to the right of the content
+	 */
+	iconRight?: Snippet;
+
+	/**
+	 * Click handler
+	 */
+	onClick?: (event: MouseEvent) => void;
+
+	/**
+	 * Focus handler
+	 */
+	onFocus?: (event: FocusEvent) => void;
+
+	/**
+	 * Blur handler
+	 */
+	onBlur?: (event: FocusEvent) => void;
+
+	/**
+	 * Mouse enter handler
+	 */
+	onMouseEnter?: (event: MouseEvent) => void;
+
+	/**
+	 * Mouse leave handler
+	 */
+	onMouseLeave?: (event: MouseEvent) => void;
 
 	/**
 	 * Reference

@@ -28,6 +28,7 @@ const config = {
 		alias: {
 			$lib: "./src/lib",
 			$testlib: "./src/testlib",
+			$doclib: "./src/doclib",
 		},
 	},
 };

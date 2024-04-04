@@ -18,7 +18,7 @@
 					</li>
 				</ul>
 			</div>
-			<Box>
+			<Box style="flex-grow: 1;">
 				<slot />
 			</Box>
 		</HStack>
