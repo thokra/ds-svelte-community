@@ -61,14 +61,14 @@ class Context {
 			return;
 		}
 
-		console.time(this.toStringWithoutParent() + ": " + label);
+		console.time(label);
 	}
 
 	public timeEnd(label: string) {
 		if (!this.debug) {
 			return;
 		}
-		console.timeEnd(this.toStringWithoutParent() + ": " + label);
+		console.timeEnd(label);
 	}
 }
 
@@ -80,6 +80,7 @@ export class Generator {
 			compilerOptions: {
 				lib: ["esnext"],
 				noEmit: true,
+				allowJs: true,
 			},
 		});
 
@@ -145,6 +146,9 @@ export class Generator {
 			} else if (name.endsWith("Props") || name.endsWith("Props_")) {
 				nctx.time("props");
 				ret.props = this.parseProps(nctx, node);
+
+				ret.props = this.parsePropsDefaults(nctx, sourceFile, ret.props);
+
 				nctx.timeEnd("props");
 			} else if (name.endsWith("Events")) {
 				nctx.time("events");
@@ -208,7 +212,58 @@ export class Generator {
 			});
 		}
 
+		ret.props = ret.props.sort((a, b) => a.name.localeCompare(b.name));
+		ret.slots = ret.slots.sort((a, b) => a.name.localeCompare(b.name));
+		ret.events = ret.events.sort((a, b) => a.name.localeCompare(b.name));
+
 		return ret;
+	}
+
+	parsePropsDefaults(ctx: Context, sourceFile: tsm.SourceFile, props: Prop[]): Prop[] {
+		sourceFile.getChildrenOfKind(ts.SyntaxKind.FunctionDeclaration).forEach((node) => {
+			node
+				.getBody()
+				?.getDescendantsOfKind(ts.SyntaxKind.VariableDeclarationList)
+				.forEach((vd) => {
+					const be = vd.getDescendantsOfKind(ts.SyntaxKind.BindingElement);
+					be.forEach((v) => {
+						const name = v.getNameNode().getText();
+						const prop = props.find((p) => p.name === name);
+						if (!prop) {
+							ctx.log("Unable to find prop", name);
+							return;
+						}
+
+						const initializer = v.getInitializer();
+						if (!initializer) {
+							ctx.log("No initializer for prop", name);
+							return;
+						}
+
+						prop.default = initializer.getText();
+					});
+
+					if (be.length == 0) {
+						vd.getDescendantsOfKind(ts.SyntaxKind.VariableDeclaration).forEach((v) => {
+							const name = v.getName();
+							const prop = props.find((p) => p.name === name);
+							if (!prop) {
+								ctx.log("Unable to find prop", name);
+								return;
+							}
+
+							const initializer = v.getInitializer();
+							if (!initializer) {
+								ctx.log("No initializer for prop", name);
+								return;
+							}
+
+							prop.default = initializer.getText();
+						});
+					}
+				});
+		});
+		return props;
 	}
 
 	parseEvents(ctx: Context, node: tsm.TypeAliasDeclaration): SvelteEvent[] {

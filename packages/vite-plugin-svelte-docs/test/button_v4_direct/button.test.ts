@@ -16,9 +16,16 @@ describe("v4", () => {
 			description: "",
 			props: [
 				{
+					name: "color",
+					description: "Color",
+					optional: false,
+					type: { type: "string" },
+				},
+				{
 					name: "kind",
 					description: "Select some type",
 					optional: true,
+					default: '"button"',
 					type: {
 						type: "union",
 						values: [
@@ -36,12 +43,6 @@ describe("v4", () => {
 							},
 						],
 					},
-				},
-				{
-					name: "color",
-					description: "Color",
-					optional: false,
-					type: { type: "string" },
 				},
 			],
 			slots: [

@@ -17,15 +17,10 @@ describe("v4", () => {
 				'Here\'s some documentation for this component.\nIt will show up on hover.\n\n- You can use markdown here.\n- You can also use code blocks here.\n- Usage:\n```tsx\n<Button name="Arethra">\n```',
 			props: [
 				{
-					name: "loading",
-					type: {
-						type: "boolean",
-					},
 					description: "",
-					optional: true,
-				},
-				{
 					name: "disabled",
+					default: "false",
+					optional: true,
 					type: {
 						type: "union",
 						values: [
@@ -41,19 +36,53 @@ describe("v4", () => {
 							},
 						],
 					},
-					description: "",
-					optional: true,
 				},
 				{
+					description: "",
+					default: "false",
 					name: "iconOnly",
+					optional: true,
 					type: {
 						type: "boolean",
 					},
-					description: "",
-					optional: true,
 				},
 				{
+					description: "",
+					default: "false",
+					name: "loading",
+					optional: true,
+					type: {
+						type: "boolean",
+					},
+				},
+				{
+					description: "Reference",
+					default: "null",
+					name: "ref",
+					optional: true,
+					type: {
+						type: "union",
+						values: [
+							{
+								type: "literal",
+								value: "null",
+							},
+							{
+								name: "HTMLButtonElement",
+								type: "interface",
+							},
+							{
+								name: "HTMLAnchorElement",
+								type: "interface",
+							},
+						],
+					},
+				},
+				{
+					description: "",
+					default: '"medium"',
 					name: "size",
+					optional: true,
 					type: {
 						type: "union",
 						values: [
@@ -71,11 +100,12 @@ describe("v4", () => {
 							},
 						],
 					},
-					description: "",
-					optional: true,
 				},
 				{
+					description: "",
+					default: '"primary"',
 					name: "variant",
+					optional: true,
 					type: {
 						type: "union",
 						values: [
@@ -109,42 +139,18 @@ describe("v4", () => {
 							},
 						],
 					},
-					description: "",
-					optional: true,
-				},
-				{
-					name: "ref",
-					type: {
-						type: "union",
-						values: [
-							{
-								type: "literal",
-								value: "null",
-							},
-							{
-								type: "interface",
-								name: "HTMLButtonElement",
-							},
-							{
-								type: "interface",
-								name: "HTMLAnchorElement",
-							},
-						],
-					},
-					description: "Reference",
-					optional: true,
 				},
 			],
 			slots: [
 				{
 					description: "",
 					lets: [],
-					name: "icon-left",
+					name: "default",
 				},
 				{
 					description: "",
 					lets: [],
-					name: "default",
+					name: "icon-left",
 				},
 				{
 					description: "",

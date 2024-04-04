@@ -64,6 +64,7 @@ export type Prop = {
 	description?: string;
 	type: Type;
 	optional: boolean;
+	default?: string;
 };
 
 export type SvelteEvent = {
@@ -74,7 +75,7 @@ export type SvelteEvent = {
 };
 
 export type Doc = {
-	description: String;
+	description: string;
 	events: SvelteEvent[];
 	slots: Slots[];
 	props: Prop[];

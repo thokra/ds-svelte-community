@@ -16,8 +16,15 @@ describe("v4 alias", () => {
 			description: "",
 			props: [
 				{
+					name: "color",
+					description: "",
+					optional: false,
+					type: { type: "string" },
+				},
+				{
 					name: "kind",
 					description: "Select some type",
+					default: '"button"',
 					optional: true,
 					type: {
 						type: "union",
@@ -36,12 +43,6 @@ describe("v4 alias", () => {
 							},
 						],
 					},
-				},
-				{
-					name: "color",
-					description: "",
-					optional: false,
-					type: { type: "string" },
 				},
 			],
 			slots: [

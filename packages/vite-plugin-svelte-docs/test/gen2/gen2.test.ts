@@ -55,8 +55,7 @@ describe("v5", () => {
 		const gen = new Generator(require.resolve("svelte2tsx"));
 		gen.addSvelteFile(filename, code);
 
-		const doc = gen.docFor(filename);
-
+		const doc = gen.docFor(filename, false);
 		expect(doc).toEqual({
 			description: "Some simple *description* of the component",
 			events: [
@@ -72,9 +71,18 @@ describe("v5", () => {
 			],
 			props: [
 				{
+					description: "Color",
+					name: "color",
+					optional: false,
+					type: {
+						type: "string",
+					},
+				},
+				{
 					description: "Select some type",
 					name: "type",
 					optional: true,
+					default: '"button"',
 					type: {
 						type: "union",
 						values: [
@@ -91,14 +99,6 @@ describe("v5", () => {
 								value: '"reset"',
 							},
 						],
-					},
-				},
-				{
-					description: "Color",
-					name: "color",
-					optional: false,
-					type: {
-						type: "string",
 					},
 				},
 			],
