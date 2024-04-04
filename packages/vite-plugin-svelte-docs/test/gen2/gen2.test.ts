@@ -104,10 +104,13 @@ describe("v5", () => {
 			],
 			slots: [
 				{
+					description: "Default slot",
 					lets: [],
 					name: "children",
+					snippet: true,
 				},
 				{
+					description: "",
 					lets: [
 						{
 							name: "let_0",
@@ -117,6 +120,7 @@ describe("v5", () => {
 						},
 					],
 					name: "named",
+					snippet: true,
 				},
 			],
 		});

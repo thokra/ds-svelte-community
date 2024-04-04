@@ -24,22 +24,22 @@ describe("v4 alias", () => {
 						values: [
 							{
 								type: "literal",
-								value: "button",
+								value: '"button"',
 							},
 							{
 								type: "literal",
-								value: "submit",
+								value: '"submit"',
 							},
 							{
 								type: "literal",
-								value: "reset",
+								value: '"reset"',
 							},
 						],
 					},
 				},
 				{
 					name: "color",
-					description: undefined,
+					description: "",
 					optional: false,
 					type: { type: "string" },
 				},
@@ -48,20 +48,25 @@ describe("v4 alias", () => {
 				{
 					name: "default",
 					lets: [],
-					description: undefined,
+					description: "",
 				},
 				{
 					name: "named",
 					lets: [
 						{
 							name: "color",
-							type: { type: "string" },
+							type: { type: "unknown" },
 						},
 					],
-					description: undefined,
+					description: "",
 				},
 			],
-			events: [],
+			events: [
+				{
+					description: "",
+					name: "click",
+				},
+			],
 		} as Doc;
 
 		expect(doc.props).toStrictEqual(expected.props);

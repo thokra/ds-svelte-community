@@ -55,13 +55,18 @@ describe("v4", () => {
 					lets: [
 						{
 							name: "color",
-							type: { type: "string" },
+							type: { type: "unknown" },
 						},
 					],
 					description: "",
 				},
 			],
-			events: [],
+			events: [
+				{
+					name: "click",
+					description: "",
+				},
+			],
 		} as Doc;
 
 		expect(doc.props).toStrictEqual(expected.props);

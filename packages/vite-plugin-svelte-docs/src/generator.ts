@@ -22,19 +22,21 @@ class Context {
 	parent?: Context;
 	node: ContextNode;
 	debug: boolean;
+	numParents = 0;
 
 	constructor(node: ContextNode, parent?: Context, debug: boolean = false) {
 		this.node = node;
 		this.parent = parent;
 		this.debug = !!(debug || (parent && parent.debug));
+		this.numParents = parent ? parent.numParents + 1 : 0;
 	}
 
 	public toString(): string {
 		let pre = "";
 		if (this.parent) {
-			pre = this.parent.toString() + " -> ";
+			pre = this.parent.toString() + "\n";
 		}
-
+		pre += "  ".repeat(this.numParents);
 		return pre + this.toStringWithoutParent();
 	}
 
@@ -44,7 +46,7 @@ class Context {
 				return "SourceFile";
 		}
 
-		return this.node.getText();
+		return this.node.getText() + " [[" + ts.SyntaxKind[this.node.getKind()] + "]]";
 	}
 
 	public log(...args: unknown[]) {
@@ -197,6 +199,13 @@ export class Generator {
 				}
 				return true;
 			});
+		} else {
+			ret.props = ret.props.filter((p) => {
+				if (p.name === "children" && !Array.isArray(p.type) && p.type.type === "unknown") {
+					return false;
+				}
+				return true;
+			});
 		}
 
 		return ret;
@@ -244,6 +253,8 @@ export class Generator {
 					return null;
 				}
 
+				const nctx = new Context(node, ctx);
+
 				const lets = node
 					.getType()
 					.getProperties()
@@ -264,7 +275,7 @@ export class Generator {
 						}
 						return {
 							name,
-							type: this.typeOf(node),
+							type: this.typeOf(nctx, node),
 						};
 					})
 					.filter((p): p is SlotLet => !!p);
@@ -306,7 +317,7 @@ export class Generator {
 				ctx.timeEnd("prop_" + name);
 				return {
 					name,
-					type: this.typeOf(node),
+					type: this.typeOf(ctx, node),
 					description,
 					optional: prop.isOptional(),
 				};
@@ -314,14 +325,15 @@ export class Generator {
 			.filter((p): p is Prop => !!p);
 	}
 
-	typeOf(node: tsm.Node): Type {
+	typeOf(parentContext: Context, node: tsm.Node): Type {
+		const ctx = new Context(node, parentContext);
 		switch (node.getKind()) {
 			case ts.SyntaxKind.PropertySignature:
-				return this.typeOf((node as tsm.PropertySignature).getTypeNodeOrThrow());
+				return this.typeOf(ctx, (node as tsm.PropertySignature).getTypeNodeOrThrow());
 			case ts.SyntaxKind.UnionType:
 				return {
 					type: "union",
-					values: (node as tsm.UnionTypeNode).getTypeNodes().map((t) => this.typeOf(t)),
+					values: (node as tsm.UnionTypeNode).getTypeNodes().map((t) => this.typeOf(ctx, t)),
 				};
 			case ts.SyntaxKind.LiteralType:
 				return { type: "literal", value: (node as tsm.LiteralTypeNode).getText() };
@@ -337,35 +349,81 @@ export class Generator {
 				return { type: "null" };
 			case ts.SyntaxKind.FunctionType:
 				return { type: "function", signature: node.getText() };
+			case ts.SyntaxKind.ImportType:
+				return { type: "unknown" };
 			case ts.SyntaxKind.TypeReference:
-				return this.typeReference(node as tsm.TypeReferenceNode);
+				return this.typeReference(ctx, node as tsm.TypeReferenceNode);
 			case ts.SyntaxKind.ImportSpecifier:
-				return this.importSpecifier(node as tsm.ImportSpecifier);
+				return this.importSpecifier(ctx, node as tsm.ImportSpecifier);
 			case ts.SyntaxKind.TypeAliasDeclaration:
-				return this.typeOf((node as tsm.TypeAliasDeclaration).getTypeNodeOrThrow());
+				return this.typeOf(ctx, (node as tsm.TypeAliasDeclaration).getTypeNodeOrThrow());
 			case ts.SyntaxKind.InterfaceDeclaration:
 				return { type: "interface", name: (node as tsm.InterfaceDeclaration).getName() };
+			case ts.SyntaxKind.PropertyAssignment:
+				break;
 			case ts.SyntaxKind.IndexedAccessType:
-				return this.typeOf((node as tsm.IndexedAccessTypeNode).getObjectTypeNode());
+				return ((): Type => {
+					const iatn = node as tsm.IndexedAccessTypeNode;
+					const otn = iatn.getObjectTypeNode() as tsm.TypeReferenceNode;
+
+					const lit = iatn.getIndexTypeNode();
+					if (!lit.isKind(ts.SyntaxKind.LiteralType)) {
+						if (lit.isKind(ts.SyntaxKind.NumberKeyword)) {
+							return this.typeOf(ctx, otn);
+						}
+
+						ctx.log("Expected literal type");
+						throw new Error("Expected literal type, got " + lit.getKindName());
+					}
+
+					const slit = lit.getLiteral();
+					if (!slit.isKind(ts.SyntaxKind.StringLiteral)) {
+						ctx.log("Expected string literal");
+						throw new Error("Expected string literal, got " + slit.getKindName());
+					}
+
+					let nodeToUse: tsm.Node | undefined;
+					otn
+						.getType()
+						.getProperties()
+						.forEach((p) => {
+							if (p.getName() === slit.getLiteralValue()) {
+								nodeToUse = p.getValueDeclarationOrThrow();
+							}
+						});
+
+					if (!nodeToUse) {
+						ctx.log("Unable to find index");
+						throw new Error("Unable to find index");
+					}
+
+					return this.typeOf(ctx, nodeToUse);
+				})();
 			case ts.SyntaxKind.ParenthesizedType:
-				return this.parenthesizedType(node as tsm.ParenthesizedTypeNode);
+				return this.parenthesizedType(ctx, node as tsm.ParenthesizedTypeNode);
 			case ts.SyntaxKind.TypeQuery:
-				return this.typeOf((node as tsm.TypeQueryNode).getExprName());
+				return this.typeOf(ctx, (node as tsm.TypeQueryNode).getExprName());
 			case ts.SyntaxKind.Identifier:
-				return this.identifier(node as tsm.Identifier);
+				return this.identifier(ctx, node as tsm.Identifier);
 			case ts.SyntaxKind.VariableDeclaration:
 				return this.typeOf(
+					ctx,
 					(node as tsm.VariableDeclaration).getInitializerOrThrow("Initializer not found"),
 				);
 			case ts.SyntaxKind.AsExpression:
-				return this.typeOf((node as tsm.AsExpression).getExpression());
+				return this.typeOf(ctx, (node as tsm.AsExpression).getExpression());
 			case ts.SyntaxKind.ArrayLiteralExpression:
 				return {
 					type: "union",
-					values: (node as tsm.ArrayLiteralExpression).getElements().map((e) => this.typeOf(e)),
+					values: (node as tsm.ArrayLiteralExpression)
+						.getElements()
+						.map((e) => this.typeOf(ctx, e)),
 				};
 			case ts.SyntaxKind.StringLiteral:
 				return { type: "literal", value: (node as tsm.StringLiteral).getLiteralValue() };
+			case ts.SyntaxKind.TypeLiteral:
+				ctx.log("TypeLiteral", (node as tsm.TypeLiteralNode).getMembers()[0].getText());
+				return this.typeOf(ctx, (node as tsm.TypeLiteralNode).getMembers()[0]);
 			// return this.typeOf((node as tsm.VariableStatement).);
 		}
 
@@ -373,39 +431,39 @@ export class Generator {
 		return { type: "unknown" };
 	}
 
-	parenthesizedType(node: tsm.ParenthesizedTypeNode): Type {
+	parenthesizedType(ctx: Context, node: tsm.ParenthesizedTypeNode): Type {
 		const children: tsm.Node[] = [];
 		node.forEachChild((c) => {
 			children.push(c);
 		});
 		if (children.length === 1) {
-			return this.typeOf(children[0]);
+			return this.typeOf(ctx, children[0]);
 		}
 
 		throw new Error("Multiple children in parenthesized type for " + node.getText());
 	}
 
-	importSpecifier(node: tsm.ImportSpecifier): Type {
+	importSpecifier(ctx: Context, node: tsm.ImportSpecifier): Type {
 		let sym = node.getNameNode().getSymbolOrThrow();
 		if (sym.isAlias()) {
 			sym = sym.getAliasedSymbolOrThrow();
 		}
-		return this.typeOf(sym.getDeclarations()[0]);
+		return this.typeOf(ctx, sym.getDeclarations()[0]);
 	}
 
-	identifier(node: tsm.Identifier): Type {
+	identifier(ctx: Context, node: tsm.Identifier): Type {
 		const sym = node.getSymbolOrThrow();
 		if (sym.isAlias()) {
-			return this.typeOf(sym.getAliasedSymbolOrThrow().getDeclarations()[0]);
+			return this.typeOf(ctx, sym.getAliasedSymbolOrThrow().getDeclarations()[0]);
 		}
 		const decl = sym.getDeclarations()[0];
 		if (!decl) {
 			return { type: "unknown" };
 		}
-		return this.typeOf(decl);
+		return this.typeOf(ctx, decl);
 	}
 
-	typeReference(node: tsm.TypeReferenceNode): Type {
+	typeReference(ctx: Context, node: tsm.TypeReferenceNode): Type {
 		// node.
 		// const type = node.getType();
 		// const symbol = type.getSymbol();
@@ -431,8 +489,9 @@ export class Generator {
 				const type = tas[0];
 				if (type.isKind(ts.SyntaxKind.TupleType)) {
 					const tuple = type as tsm.TupleTypeNode;
+					const tctx = new Context(tuple, ctx);
 					const types = tuple.getElements().map((e, i): SlotLet => {
-						return { name: `let_${i}`, type: this.typeOf(e) };
+						return { name: `let_${i}`, type: this.typeOf(tctx, e) };
 					});
 					return { type: "snippet", lets: types };
 				} else {
@@ -449,7 +508,7 @@ export class Generator {
 		}
 
 		const decl = symbol.getDeclarations()[0];
-		return this.typeOf(decl);
+		return this.typeOf(ctx, decl);
 	}
 }
 
