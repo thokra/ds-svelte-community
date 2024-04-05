@@ -108,6 +108,7 @@ describe("v5", () => {
 					lets: [],
 					name: "children",
 					snippet: true,
+					optional: false,
 				},
 				{
 					description: "",
@@ -121,6 +122,7 @@ describe("v5", () => {
 					],
 					name: "named",
 					snippet: true,
+					optional: true,
 				},
 			],
 		});

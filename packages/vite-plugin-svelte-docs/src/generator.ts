@@ -172,6 +172,7 @@ export class Generator {
 						lets: s.lets,
 						description: p.description,
 						snippet: true,
+						optional: !!p.optional,
 					};
 				});
 
@@ -212,9 +213,19 @@ export class Generator {
 			});
 		}
 
-		ret.props = ret.props.sort((a, b) => a.name.localeCompare(b.name));
-		ret.slots = ret.slots.sort((a, b) => a.name.localeCompare(b.name));
-		ret.events = ret.events.sort((a, b) => a.name.localeCompare(b.name));
+		const sortFn = (a: Prop | Slots | SvelteEvent, b: Prop | Slots | SvelteEvent) => {
+			if (a.optional && !b.optional) {
+				return 1;
+			}
+			if (!a.optional && b.optional) {
+				return -1;
+			}
+			return a.name.localeCompare(b.name);
+		};
+
+		ret.props = ret.props.sort(sortFn);
+		ret.slots = ret.slots.sort(sortFn);
+		ret.events = ret.events.sort(sortFn);
 
 		return ret;
 	}
@@ -283,6 +294,7 @@ export class Generator {
 				return {
 					name,
 					description,
+					optional: true,
 				};
 			})
 			.filter((p): p is SvelteEvent => !!p);
@@ -339,6 +351,7 @@ export class Generator {
 					name,
 					description,
 					lets,
+					optional: true,
 				};
 			})
 			.filter((p): p is Slots => !!p);
@@ -475,7 +488,7 @@ export class Generator {
 						.map((e) => this.typeOf(ctx, e)),
 				};
 			case ts.SyntaxKind.StringLiteral:
-				return { type: "literal", value: (node as tsm.StringLiteral).getLiteralValue() };
+				return { type: "literal", value: node.getText() };
 			case ts.SyntaxKind.TypeLiteral:
 				ctx.log("TypeLiteral", (node as tsm.TypeLiteralNode).getMembers()[0].getText());
 				return this.typeOf(ctx, (node as tsm.TypeLiteralNode).getMembers()[0]);

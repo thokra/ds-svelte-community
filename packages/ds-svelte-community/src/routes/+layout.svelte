@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { Box, HStack, Page, PageBlock } from "$lib";
+	import "../doclib/styles.css";
 	import "../lib/css/index.css";
+
+	const components = ["Button", "Alert"];
 </script>
 
 <Page background="bg-subtle">
@@ -10,12 +13,14 @@
 		</Box>
 	</PageBlock>
 	<PageBlock as="main" width="2xl" style="flex-grow: 1;">
-		<HStack gap="4">
+		<HStack gap="4" wrap={false}>
 			<div class="sidebar">
 				<ul>
-					<li>
-						<a href="/components/Button">Button</a>
-					</li>
+					{#each components as component}
+						<li>
+							<a href="/components/{component}">{component}</a>
+						</li>
+					{/each}
 				</ul>
 			</div>
 			<Box style="flex-grow: 1;">

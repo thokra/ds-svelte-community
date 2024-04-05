@@ -2,12 +2,15 @@
 	import { ArrowUndoIcon, ChevronDownIcon, ChevronRightIcon } from "$lib/icons";
 	import type { Doc } from "@nais/vite-plugin-svelte-docs";
 	import Markdown from "svelte-markdown";
+	import TypeRenderer from "./TypeRenderer.svelte";
+	import ValueSelector from "./ValueSelector.svelte";
 
 	let { doc, values = $bindable({}) }: { doc: Doc; values: Record<string, unknown> } = $props();
 
 	let showProps = $state(true);
 	let showEvents = $state(true);
 	let showSlots = $state(true);
+	let lastReset = $state(new Date());
 
 	let isV5 = $derived(doc.slots.filter((s) => s.snippet).length > 0);
 </script>
@@ -24,7 +27,16 @@
 						<div class="control">
 							Control
 
-							<button title="Reset all values" disabled={Object.keys(values).length == 0}>
+							<button
+								title="Reset all values"
+								disabled={Object.keys(values).length == 0}
+								on:click={() => {
+									Object.keys(values).forEach((key) => {
+										delete values[key];
+									});
+									lastReset = new Date();
+								}}
+							>
 								<ArrowUndoIcon />
 							</button>
 						</div>
@@ -33,6 +45,9 @@
 			</thead>
 
 			<tbody>
+				<!--
+					Properties
+				-->
 				{#if doc.props.length > 0}
 					<tr on:click={() => (showProps = !showProps)}>
 						<td colspan="99" class="title">
@@ -48,8 +63,18 @@
 					{#if showProps}
 						{#each doc.props as prop}
 							<tr>
-								<td><strong>{prop.name}</strong></td>
-								<td class="description"><Markdown source={prop.description} /></td>
+								<td
+									><strong>
+										{prop.name}
+										{#if !prop.optional}
+											<span class="required">*</span>
+										{/if}
+									</strong></td
+								>
+								<td class="description">
+									<Markdown source={prop.description} />
+									<TypeRenderer type={prop.type} />
+								</td>
 								<td>
 									{#if prop.default}
 										<code>{prop.default}</code>
@@ -57,12 +82,23 @@
 										-
 									{/if}
 								</td>
-								<td>value selector</td>
+								<td>
+									<ValueSelector
+										type={prop.type}
+										{lastReset}
+										onChange={(v) => {
+											values[prop.name] = v;
+										}}
+									/>
+								</td>
 							</tr>
 						{/each}
 					{/if}
 				{/if}
 
+				<!--
+					Slots / Snippets
+				-->
 				{#if doc.slots.length > 0}
 					<tr on:click={() => (showSlots = !showSlots)}>
 						<td colspan="99" class="title">
@@ -91,6 +127,9 @@
 					{/if}
 				{/if}
 
+				<!--
+					Events
+				-->
 				{#if doc.events.length > 0}
 					<tr on:click={() => (showEvents = !showEvents)}>
 						<td colspan="99" class="title">
@@ -143,7 +182,7 @@
 			background: none;
 			border: none;
 			color: var(--a-text-subtle);
-			font-size: var(--a-font-size-small);
+			font-size: 0.9rem;
 			padding: 0.5rem;
 			margin: 0;
 			cursor: pointer;
@@ -161,7 +200,7 @@
 
 	table {
 		width: 100%;
-		font-size: var(--a-font-size-small);
+		font-size: 0.9rem;
 		border-spacing: 0;
 
 		th,
@@ -237,10 +276,7 @@
 		}
 	}
 
-	code {
-		background: var(--a-surface-alt-1-subtle);
-		border-radius: var(--a-border-radius-small);
-		padding: 0.1rem 0.3rem;
-		font-size: 0.7rem;
+	span.required {
+		color: var(--a-text-danger);
 	}
 </style>

@@ -11,6 +11,7 @@
     "ts-morph": "^22.0.0"
   },
   "devDependencies": {
+    "svelte-highlight": "^7.6.0",
     "svelte-markdown": "^0.4.1"
   }
 }

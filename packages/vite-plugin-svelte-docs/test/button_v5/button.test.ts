@@ -52,6 +52,7 @@ describe("v5", () => {
 					description: "Default slot",
 					lets: [],
 					snippet: true,
+					optional: false,
 				},
 				{
 					name: "named",
@@ -63,6 +64,7 @@ describe("v5", () => {
 						},
 					],
 					snippet: true,
+					optional: true,
 				},
 			],
 			events: [

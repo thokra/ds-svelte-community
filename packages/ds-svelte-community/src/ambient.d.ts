@@ -58,6 +58,7 @@ declare module "*.svelte?doc" {
 		description?: string;
 		lets: SlotLet[];
 		snippet?: boolean;
+		optional: boolean;
 	};
 
 	type Prop = {
@@ -65,13 +66,14 @@ declare module "*.svelte?doc" {
 		description?: string;
 		type: Type;
 		optional: boolean;
+		default?: string;
 	};
 
 	type SvelteEvent = {
 		name: string;
 		description?: string;
 		type?: Type;
-		optional?: boolean;
+		optional: boolean;
 	};
 
 	type Doc = {

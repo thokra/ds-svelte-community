@@ -50,6 +50,7 @@ describe("v4 alias", () => {
 					name: "default",
 					lets: [],
 					description: "",
+					optional: true,
 				},
 				{
 					name: "named",
@@ -60,12 +61,14 @@ describe("v4 alias", () => {
 						},
 					],
 					description: "",
+					optional: true,
 				},
 			],
 			events: [
 				{
 					description: "",
 					name: "click",
+					optional: true,
 				},
 			],
 		} as Doc;

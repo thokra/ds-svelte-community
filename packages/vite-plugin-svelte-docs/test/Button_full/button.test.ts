@@ -88,15 +88,15 @@ describe("v4", () => {
 						values: [
 							{
 								type: "literal",
-								value: "medium",
+								value: '"medium"',
 							},
 							{
 								type: "literal",
-								value: "small",
+								value: '"small"',
 							},
 							{
 								type: "literal",
-								value: "xsmall",
+								value: '"xsmall"',
 							},
 						],
 					},
@@ -111,31 +111,31 @@ describe("v4", () => {
 						values: [
 							{
 								type: "literal",
-								value: "primary",
+								value: '"primary"',
 							},
 							{
 								type: "literal",
-								value: "primary-neutral",
+								value: '"primary-neutral"',
 							},
 							{
 								type: "literal",
-								value: "secondary",
+								value: '"secondary"',
 							},
 							{
 								type: "literal",
-								value: "secondary-neutral",
+								value: '"secondary-neutral"',
 							},
 							{
 								type: "literal",
-								value: "tertiary",
+								value: '"tertiary"',
 							},
 							{
 								type: "literal",
-								value: "tertiary-neutral",
+								value: '"tertiary-neutral"',
 							},
 							{
 								type: "literal",
-								value: "danger",
+								value: '"danger"',
 							},
 						],
 					},
@@ -146,30 +146,36 @@ describe("v4", () => {
 					description: "",
 					lets: [],
 					name: "default",
+					optional: true,
 				},
 				{
 					description: "",
 					lets: [],
 					name: "icon-left",
+					optional: true,
 				},
 				{
 					description: "",
 					lets: [],
 					name: "icon-right",
+					optional: true,
 				},
 			],
 			events: [
 				{
 					description: "",
 					name: "click",
+					optional: true,
 				},
 				{
 					description: "",
 					name: "mouseenter",
+					optional: true,
 				},
 				{
 					description: "",
 					name: "mouseleave",
+					optional: true,
 				},
 			],
 		});

@@ -57,6 +57,7 @@ export type Slots = {
 	description?: string;
 	lets: SlotLet[];
 	snippet?: boolean;
+	optional: boolean;
 };
 
 export type Prop = {
@@ -71,7 +72,7 @@ export type SvelteEvent = {
 	name: string;
 	description?: string;
 	type?: Type;
-	optional?: boolean;
+	optional: boolean;
 };
 
 export type Doc = {

@@ -50,6 +50,7 @@ describe("v4", () => {
 					name: "default",
 					lets: [],
 					description: "",
+					optional: true,
 				},
 				{
 					name: "named",
@@ -60,12 +61,14 @@ describe("v4", () => {
 						},
 					],
 					description: "",
+					optional: true,
 				},
 			],
 			events: [
 				{
 					name: "click",
 					description: "",
+					optional: true,
 				},
 			],
 		} as Doc;
