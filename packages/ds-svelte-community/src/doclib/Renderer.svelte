@@ -6,16 +6,20 @@
 <script lang="ts">
 	import { CopyButton } from "$lib";
 	import type { ComponentType } from "svelte";
+	import { getDocContext } from "./context.svelte";
 
 	type componentOptions = {
 		center?: boolean;
-		package: string;
+		package?: string;
+		body?: string;
 	};
 
 	const defaultOptions: componentOptions = {
 		center: true,
 		package: "@nais/ds-svelte-community",
 	};
+
+	const ctx = getDocContext();
 
 	let {
 		component,
@@ -30,7 +34,6 @@
 		let props = Object.entries(restProps)
 			.map(([key, value]) => {
 				if (typeof value === "function") {
-					console.log(key, value);
 					return;
 				}
 
@@ -42,21 +45,34 @@
 			})
 			.join("\n\t");
 
-		return (
-			`<script lang="ts">
-	import ${component.name} from "${options.package}";
+		console.log(options);
+
+		let ret = `<script lang="ts">
+	import { ${ctx.name} } from "${options.package}";
 <ENDOFSCRIPTTAG>
 
-<${component.name} ${props} />`
-				// The svelte compiler doesn't like the closing script tag, so we replace it with a placeholder
-				.replace("ENDOFSCRIPTTAG", "/script")
-		);
+<${ctx.name}${props.length > 0 ? " " + props : ""}`
+			// The svelte compiler doesn't like the closing script tag, so we replace it with a placeholder
+			.replace("ENDOFSCRIPTTAG", "/script");
+
+		if (options.body) {
+			ret += `>
+	${options.body}
+</${ctx.name}>`;
+		} else {
+			ret += ` />`;
+		}
+
+		return ret;
 	});
 </script>
 
-<!-- eslint-disable-next-line svelte/valid-compile -->
+{#snippet defaultBody()}
+	{options.body}
+{/snippet}
+
 <div class="preview" class:center={options.center}>
-	<svelte:component this={component} {...restProps} />
+	<svelte:component this={component} children={defaultBody} {...restProps} />
 </div>
 
 <div class="code-preview">

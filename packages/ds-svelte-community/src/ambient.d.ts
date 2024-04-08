@@ -77,6 +77,7 @@ declare module "*.svelte?doc" {
 	};
 
 	type Doc = {
+		name: string;
 		description: string;
 		events: SvelteEvent[];
 		slots: Slots[];

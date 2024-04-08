@@ -114,6 +114,7 @@ export class Generator {
 
 		const ctx = new Context(sourceFile, undefined, debug);
 		const ret: Doc = {
+			name: sourceFile.getBaseNameWithoutExtension(),
 			description: "",
 			props: [],
 			slots: [],

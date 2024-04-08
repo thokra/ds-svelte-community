@@ -12,6 +12,7 @@
 	let showSlots = $state(true);
 	let lastReset = $state(new Date());
 
+	console.log("ASDF", doc);
 	let isV5 = $derived(doc.slots.filter((s) => s.snippet).length > 0);
 </script>
 
@@ -69,8 +70,8 @@
 										{#if !prop.optional}
 											<span class="required">*</span>
 										{/if}
-									</strong></td
-								>
+									</strong>
+								</td>
 								<td class="description">
 									<Markdown source={prop.description} />
 									<TypeRenderer type={prop.type} />

@@ -76,6 +76,7 @@ export type SvelteEvent = {
 };
 
 export type Doc = {
+	name: string;
 	description: string;
 	events: SvelteEvent[];
 	slots: Slots[];

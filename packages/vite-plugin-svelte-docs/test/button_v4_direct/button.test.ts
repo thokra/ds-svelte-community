@@ -12,7 +12,8 @@ describe("v4", () => {
 		const gen = new Generator(require.resolve("svelte2tsx"));
 		gen.addSvelteFile(filename, code);
 		const doc = gen.docFor(filename, false);
-		const expected = {
+		const expected: Doc = {
+			name: "Button",
 			description: "",
 			props: [
 				{
@@ -71,7 +72,7 @@ describe("v4", () => {
 					optional: true,
 				},
 			],
-		} as Doc;
+		};
 
 		expect(doc.props).toStrictEqual(expected.props);
 		expect(doc.slots).toStrictEqual(expected.slots);

@@ -36,6 +36,12 @@
 			return ret;
 		} else if (t.type === "literal") {
 			return [JSON.parse(t.value)];
+		} else if (t.type === "undefined") {
+			return [undefined];
+		}
+
+		if (t.type === "interface") {
+			return false;
 		}
 
 		console.log("Unsupported type", t);

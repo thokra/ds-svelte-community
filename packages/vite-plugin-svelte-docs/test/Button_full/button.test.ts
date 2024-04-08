@@ -13,6 +13,7 @@ describe("v4", () => {
 		const doc = gen.docFor(filename, false);
 
 		expect(doc).toEqual({
+			name: "Button",
 			description:
 				'Here\'s some documentation for this component.\nIt will show up on hover.\n\n- You can use markdown here.\n- You can also use code blocks here.\n- Usage:\n```tsx\n<Button name="Arethra">\n```',
 			props: [

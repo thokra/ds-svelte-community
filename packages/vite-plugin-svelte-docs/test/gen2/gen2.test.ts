@@ -57,6 +57,7 @@ describe("v5", () => {
 
 		const doc = gen.docFor(filename, false);
 		expect(doc).toEqual({
+			name: "asdf",
 			description: "Some simple *description* of the component",
 			events: [
 				{

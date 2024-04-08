@@ -4,5 +4,5 @@
 	for Svelte developers.
 </p>
 <p>
-	To get started, check out the <a href="/docs">documentation</a>.
+	To get started, check out the <a href="/">documentation</a>.
 </p>

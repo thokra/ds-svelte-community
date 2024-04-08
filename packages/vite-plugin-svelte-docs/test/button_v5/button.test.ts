@@ -13,7 +13,8 @@ describe("v5", () => {
 		gen.addSvelteFile(filename, code);
 		const doc = gen.docFor(filename, false);
 
-		const expected = {
+		const expected: Doc = {
+			name: "Button",
 			description: "",
 			props: [
 				{
@@ -78,7 +79,7 @@ describe("v5", () => {
 					},
 				},
 			],
-		} as Doc;
+		};
 
 		expect(doc.props).toStrictEqual(expected.props);
 		expect(doc.slots).toStrictEqual(expected.slots);
