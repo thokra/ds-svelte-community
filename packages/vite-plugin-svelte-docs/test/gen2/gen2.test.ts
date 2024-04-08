@@ -24,7 +24,7 @@ describe("v5", () => {
       named?: Snippet<[string]>;
     };
 
-    let { type = "button", color, onClick, children, named }: Props = $props();
+    let { type = $bindable("button"), color = $bindable(), onClick, children, named }: Props = $props();
   </script>
 
 
@@ -74,6 +74,7 @@ describe("v5", () => {
 				{
 					description: "Color",
 					name: "color",
+					bindable: true,
 					optional: false,
 					type: {
 						type: "string",
@@ -83,6 +84,7 @@ describe("v5", () => {
 					description: "Select some type",
 					name: "type",
 					optional: true,
+					bindable: true,
 					default: '"button"',
 					type: {
 						type: "union",

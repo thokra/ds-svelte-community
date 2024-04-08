@@ -3,17 +3,17 @@
 	"module": "dist/index.js",
 	"type": "module",
 	"devDependencies": {
-		"@types/bun": "^1.0.10",
-		"@typescript-eslint/eslint-plugin": "^7.3.1",
-		"@typescript-eslint/parser": "^7.3.1",
-		"eslint": "^8.57.0",
+		"@types/bun": "^1.0.12",
+		"@typescript-eslint/eslint-plugin": "^7.6.0",
+		"@typescript-eslint/parser": "^7.6.0",
+		"eslint": "^9.0.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.36.0-next",
+		"eslint-plugin-svelte": "^2.36.0",
 		"prettier": "^3.2.5",
 		"prettier-plugin-svelte": "^3.2.2",
-		"svelte": "^5.0.0-next.82",
-		"typedoc": "^0.25.12",
-		"typescript": "~5.4.3"
+		"svelte": "^5.0.0-next.95",
+		"typedoc": "^0.25.13",
+		"typescript": "~5.4.4"
 	},
 	"scripts": {
 		"build": "tsc -p tsconfig.build.json"
@@ -23,7 +23,7 @@
 	},
 	"dependencies": {
 		"svelte2tsx": "^0.7.6",
-		"vite": "^5.2.6"
+		"vite": "^5.2.8"
 	},
 	"publishConfig": {
 		"types": "./dist/index.d.ts",

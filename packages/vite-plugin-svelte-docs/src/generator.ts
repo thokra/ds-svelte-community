@@ -101,6 +101,10 @@ export class Generator {
 
 		const dts = convert(filename, code);
 
+		// console.log("-----------------");
+		// console.log(dts);
+		// console.log("-----------------");
+
 		this.project.createSourceFile(filename, dts, { overwrite: true });
 	}
 
@@ -250,6 +254,22 @@ export class Generator {
 						if (!initializer) {
 							ctx.log("No initializer for prop", name);
 							return;
+						}
+
+						if (initializer.isKind(ts.SyntaxKind.CallExpression)) {
+							const expr = initializer.getExpression();
+							if (expr && expr.isKind(ts.SyntaxKind.Identifier) && expr.getText() == "$bindable") {
+								prop.bindable = true;
+								const args = initializer.getArguments();
+								if (args.length === 0) {
+									return;
+								} else if (initializer.getArguments().length == 1) {
+									prop.default = initializer.getArguments()[0].getText();
+									return;
+								} else {
+									throw new Error("Expected 1 argument for $bindable");
+								}
+							}
 						}
 
 						prop.default = initializer.getText();

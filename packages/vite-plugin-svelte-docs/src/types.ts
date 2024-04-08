@@ -66,6 +66,7 @@ export type Prop = {
 	type: Type;
 	optional: boolean;
 	default?: string;
+	bindable?: boolean;
 };
 
 export type SvelteEvent = {
