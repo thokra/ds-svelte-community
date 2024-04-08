@@ -67,6 +67,7 @@ declare module "*.svelte?doc" {
 		type: Type;
 		optional: boolean;
 		default?: string;
+		bindable?: boolean;
 	};
 
 	type SvelteEvent = {

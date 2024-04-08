@@ -64,13 +64,18 @@
 					{#if showProps}
 						{#each doc.props as prop}
 							<tr>
-								<td
-									><strong>
+								<td>
+									<strong>
 										{prop.name}
-										{#if !prop.optional}
-											<span class="required">*</span>
-										{/if}
 									</strong>
+									<div class="tags">
+										{#if !prop.optional}
+											<span class="required">required</span>
+										{/if}
+										{#if prop.bindable}
+											<span class="bindable">bindable</span>
+										{/if}
+									</div>
 								</td>
 								<td class="description">
 									<Markdown source={prop.description} />
@@ -279,5 +284,30 @@
 
 	span.required {
 		color: var(--a-text-danger);
+	}
+
+	.tags {
+		margin-top: 0.5rem;
+
+		span {
+			border: 1px solid var(--a-border-default);
+			border-radius: var(--a-border-radius-medium);
+			padding: 0.1rem 0.2rem;
+			font-size: 0.8rem;
+
+			&:not(:first-child) {
+				margin-left: 0.5rem;
+			}
+
+			&.required {
+				color: var(--a-text-danger);
+				border-color: var(--a-text-danger);
+			}
+
+			&.bindable {
+				color: var(--a-blue-700);
+				border-color: var(--a-blue-700);
+			}
+		}
 	}
 </style>

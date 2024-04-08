@@ -64,7 +64,7 @@
 			return;
 		}
 
-		onChange(JSON.parse(value));
+		onChange(fromText(value));
 	});
 
 	$effect(() => {
@@ -76,10 +76,29 @@
 
 	$effect(() => {
 		if (editable && isSwitch && value === "" && options) {
-			value = JSON.stringify(options[0]);
-			console.log("SET VALUE TO FIRST OPTION", value);
+			value = toText(options[0]);
 		}
 	});
+
+	const fromText = (t: string): unknown => {
+		if (t === "undefined") {
+			return undefined;
+		} else if (t === "null") {
+			return null;
+		}
+
+		return JSON.parse(t);
+	};
+
+	const toText = (v: unknown): string => {
+		if (v === undefined) {
+			return "undefined";
+		} else if (v === null) {
+			return "null";
+		}
+
+		return JSON.stringify(v);
+	};
 </script>
 
 {#if !editable}
@@ -93,7 +112,7 @@
 		<div>
 			<Select bind:value size="small">
 				{#each options as option}
-					<option value={JSON.stringify(option)}>{option}</option>
+					<option value={toText(option)}>{toText(option)}</option>
 				{/each}
 			</Select>
 		</div>
