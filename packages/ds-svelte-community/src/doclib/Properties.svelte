@@ -5,14 +5,14 @@
 	import TypeRenderer from "./TypeRenderer.svelte";
 	import ValueSelector from "./ValueSelector.svelte";
 
-	let { doc, values = $bindable({}) }: { doc: Doc; values: Record<string, unknown> } = $props();
+	let { doc, values = $bindable(undefined) }: { doc: Doc; values?: Record<string, unknown> } =
+		$props();
 
 	let showProps = $state(true);
 	let showEvents = $state(true);
 	let showSlots = $state(true);
 	let lastReset = $state(new Date());
 
-	console.log("ASDF", doc);
 	let isV5 = $derived(doc.slots.filter((s) => s.snippet).length > 0);
 </script>
 
@@ -27,19 +27,20 @@
 					<th>
 						<div class="control">
 							Control
-
-							<button
-								title="Reset all values"
-								disabled={Object.keys(values).length == 0}
-								on:click={() => {
-									Object.keys(values).forEach((key) => {
-										delete values[key];
+							{#if values}
+								<button
+									title="Reset all values"
+									disabled={Object.keys(values).length == 0}
+									on:click={() => {
+									Object.keys(values!).forEach((key) => {
+										delete values![key];
 									});
 									lastReset = new Date();
 								}}
-							>
-								<ArrowUndoIcon />
-							</button>
+								>
+									<ArrowUndoIcon />
+								</button>
+							{/if}
 						</div>
 					</th>
 				</tr>
@@ -89,13 +90,15 @@
 									{/if}
 								</td>
 								<td>
-									<ValueSelector
-										type={prop.type}
-										{lastReset}
-										onChange={(v) => {
-											values[prop.name] = v;
+									{#if values}
+										<ValueSelector
+											type={prop.type}
+											{lastReset}
+											onChange={(v) => {
+											values![prop.name] = v;
 										}}
-									/>
+										/>
+									{/if}
 								</td>
 							</tr>
 						{/each}

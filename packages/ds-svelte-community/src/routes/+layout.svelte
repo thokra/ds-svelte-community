@@ -2,8 +2,9 @@
 	import { Box, HStack, Page, PageBlock } from "$lib";
 	import "../doclib/styles.css";
 	import "../lib/css/index.css";
+	import type { LayoutData } from "./$types";
 
-	const components = ["Button", "Alert"];
+	export let data: LayoutData;
 </script>
 
 <Page background="bg-subtle">
@@ -15,13 +16,16 @@
 	<PageBlock as="main" width="2xl" style="flex-grow: 1;">
 		<HStack gap="4" wrap={false}>
 			<div class="sidebar">
-				<ul>
-					{#each components as component}
-						<li>
-							<a href="/components/{component}">{component}</a>
-						</li>
-					{/each}
-				</ul>
+				{#each data.paths as [key, paths]}
+					<strong>{key}</strong>
+					<ul>
+						{#each paths as component}
+							<li>
+								<a href="/{key}/{component}">{component}</a>
+							</li>
+						{/each}
+					</ul>
+				{/each}
 			</div>
 			<Box style="flex-grow: 1;">
 				<slot />

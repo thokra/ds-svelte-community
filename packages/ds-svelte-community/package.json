@@ -118,7 +118,7 @@
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.5.5",
 		"@sveltejs/package": "^2.3.1",
-		"@sveltejs/vite-plugin-svelte": "^3.0.2",
+		"@sveltejs/vite-plugin-svelte": "^3.1.0",
 		"@testing-library/svelte": "^4.2.2",
 		"@types/diff": "^5.0.9",
 		"@types/react-dom": "^18.2.24",
@@ -144,12 +144,12 @@
 		"storybook": "^8.0.6",
 		"svelte-check": "^3.6.9",
 		"svelte-floating-ui": "^1.5.8",
-		"svelte": "^5.0.0-next.95",
+		"svelte": "^5.0.0-next.97",
 		"svgo": "3.0.3",
 		"tailwindcss": "^3.4.3",
 		"totalist": "^3.0.1",
 		"tslib": "^2.6.2",
-		"typescript": "5.4.4",
+		"typescript": "5.4.5",
 		"vite": "5.2.8"
 	},
 	"dependencies": {

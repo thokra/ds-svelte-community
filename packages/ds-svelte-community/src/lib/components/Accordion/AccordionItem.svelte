@@ -6,20 +6,13 @@
 	import { GetAccordionContext } from "./Accordion.svelte";
 	import type { ItemProps } from "./type";
 
-	type $$Props = ItemProps;
-
-	/**
-	 * Whether the accordion item is open or not.
-	 */
-	export let open = false;
-	/**
-	 * Heading of the accordion item.
-	 */
-	export let heading = "";
-	/**
-	 * Aria text
-	 */
-	export let showMoreText = "Show more";
+	let {
+		open = false,
+		heading,
+		showMoreText = "Show more",
+		children,
+		...restProps
+	}: ItemProps = $props();
 
 	const ctx = GetAccordionContext();
 
@@ -27,10 +20,8 @@
 		open = !open;
 	};
 
-	if (!$$slots.heading && !heading) {
-		console.error(
-			"<AccordionItem> was used without content in the 'heading' slot or `heading` prop",
-		);
+	if (!heading) {
+		console.error("<AccordionItem> was used without a 'heading' snippet or `heading` prop");
 	}
 
 	if (!ctx) {
@@ -39,10 +30,10 @@
 </script>
 
 <div
-	{...omit($$restProps, "class")}
+	{...omit(restProps, "class")}
 	class="navds-accordion__item"
 	class:navds-accordion__item--open={open}
-	class:navds-accordion__item--neutral={$ctx?.variant === "neutral"}
+	class:navds-accordion__item--neutral={ctx?.variant === "neutral"}
 >
 	<button class="navds-accordion__header" aria-expanded={open} type="button" on:click={handleClick}>
 		<span class="navds-accordion__icon-wrapper">
@@ -52,9 +43,12 @@
 				aria-hidden="true"
 			/>
 		</span>
-		<Heading size={$ctx?.headingSize} as="span" class="navds-accordion__header-content">
-			<!-- Heading. Falls back to `heading` prop if not defined. -->
-			<slot name="heading">{heading}</slot>
+		<Heading size={ctx?.headingSize} as="span" class="navds-accordion__header-content">
+			{#if typeof heading === "string"}
+				{heading}
+			{:else if heading}
+				{@render heading()}
+			{/if}
 		</Heading>
 	</button>
 
@@ -64,8 +58,7 @@
 		aria-hidden={open ? undefined : true}
 		class="navds-accordion__content{open ? '' : ' navds-accordion__content--closed'}"
 	>
-		<!-- Content of the accordion -->
-		<slot />
+		{@render children()}
 	</BodyLong>
 	<!-- </div> -->
 </div>

@@ -1,22 +1,23 @@
 <script lang="ts" context="module">
 	import { HighlightSvelte } from "svelte-highlight";
 	import "svelte-highlight/styles/a11y-dark.css";
+	export type ComponentOptions = {
+		center?: boolean;
+		package?: string;
+		body?: string;
+		extraComponents?: string[];
+	};
 </script>
 
 <script lang="ts">
 	import { CopyButton } from "$lib";
-	import type { ComponentType } from "svelte";
+	import type { ComponentType, Snippet } from "svelte";
 	import { getDocContext } from "./context.svelte";
 
-	type componentOptions = {
-		center?: boolean;
-		package?: string;
-		body?: string;
-	};
-
-	const defaultOptions: componentOptions = {
+	const defaultOptions = {
 		center: true,
 		package: "@nais/ds-svelte-community",
+		extraComponents: [],
 	};
 
 	const ctx = getDocContext();
@@ -24,9 +25,16 @@
 	let {
 		component,
 		componentOptions,
+		children,
+		preview,
 		...restProps
-	}: { [key: string]: unknown; component: ComponentType; componentOptions?: componentOptions } =
-		$props();
+	}: {
+		[key: string]: unknown;
+		component: ComponentType;
+		componentOptions?: ComponentOptions;
+		children?: Snippet;
+		preview?: { width?: string };
+	} = $props();
 
 	const options = { ...defaultOptions, ...componentOptions };
 
@@ -48,7 +56,7 @@
 		console.log(options);
 
 		let ret = `<script lang="ts">
-	import { ${ctx.name} } from "${options.package}";
+	import { ${[ctx.name, ...options.extraComponents].sort().join(", ")} } from "${options.package}";
 <ENDOFSCRIPTTAG>
 
 <${ctx.name}${props.length > 0 ? " " + props : ""}`
@@ -59,6 +67,9 @@
 			ret += `>
 	${options.body}
 </${ctx.name}>`;
+		} else if (children) {
+			ret += `>
+</${ctx.name}>`;
 		} else {
 			ret += ` />`;
 		}
@@ -68,11 +79,17 @@
 </script>
 
 {#snippet defaultBody()}
-	{options.body}
+	{#if options.body}
+		{options.body}
+	{:else if children}
+		{@render children()}
+	{/if}
 {/snippet}
 
 <div class="preview" class:center={options.center}>
-	<svelte:component this={component} children={defaultBody} {...restProps} />
+	<div class="preview-wrapper" style="width: {preview?.width}">
+		<svelte:component this={component} children={defaultBody} {...restProps} />
+	</div>
 </div>
 
 <div class="code-preview">
