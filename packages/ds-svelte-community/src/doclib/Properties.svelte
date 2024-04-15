@@ -48,7 +48,7 @@
 
 			<tbody>
 				<!--
-					Properties
+					MARK: Properties
 				-->
 				{#if doc.props.length > 0}
 					<tr on:click={() => (showProps = !showProps)}>
@@ -106,7 +106,7 @@
 				{/if}
 
 				<!--
-					Slots / Snippets
+					MARK: Slots / Snippets
 				-->
 				{#if doc.slots.length > 0}
 					<tr on:click={() => (showSlots = !showSlots)}>
@@ -137,7 +137,7 @@
 				{/if}
 
 				<!--
-					Events
+					MARK: Events
 				-->
 				{#if doc.events.length > 0}
 					<tr on:click={() => (showEvents = !showEvents)}>
@@ -232,13 +232,11 @@
 		}
 	}
 
-	.description {
-		:global(p) {
-			margin: 0;
-		}
-		:global(p:not(:first-child)) {
-			margin-top: 0.5rem;
-		}
+	.description :global(p) {
+		margin: 0;
+	}
+	.description :global(p:not(:first-child)) {
+		margin-top: 0.5rem;
 	}
 
 	tbody {
