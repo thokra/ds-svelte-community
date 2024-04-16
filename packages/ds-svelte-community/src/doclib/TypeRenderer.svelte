@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from "$app/environment";
 	import type { Type } from "@nais/vite-plugin-svelte-docs";
 
 	let { type: typ }: { type: Type } = $props();
@@ -19,7 +20,7 @@
 {:else if typ.type == "interface"}
 	<code>{typ.name}</code>
 {:else}
-	<code class="err">{typ.type}</code>
+	<code class:err={dev}>{typ.type}</code>
 {/if}
 
 <style>

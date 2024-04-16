@@ -21,7 +21,7 @@ await plugin({
 					),
 					{
 						filename: path,
-						generate: "dom",
+						generate: "client",
 					},
 				).js.code,
 				loader: "js",

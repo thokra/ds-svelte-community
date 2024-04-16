@@ -29,7 +29,7 @@ We ensure this by adding a test for each component, that renders the component a
 ```typescript
 import { bunmatch } from "$testlib/bunmatch";
 import { Loader as ReactLoader } from "@navikt/ds-react";
-import { cleanup, render } from "@testing-library/svelte";
+import { cleanup, render } from "@testing-library/svelte/svelte5";
 import { afterEach, describe, expect, it } from "bun:test";
 import Loader from "./Loader.svelte";
 import type { Props } from "./type";

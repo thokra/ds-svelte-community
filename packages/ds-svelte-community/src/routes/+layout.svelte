@@ -16,7 +16,7 @@
 	<PageBlock as="main" width="2xl" style="flex-grow: 1;">
 		<HStack gap="4" wrap={false}>
 			<div class="sidebar">
-				{#each data.paths as [key, paths]}
+				{#each Object.entries(data.paths) as [key, paths]}
 					<strong>{key}</strong>
 					<ul>
 						{#each paths as component}

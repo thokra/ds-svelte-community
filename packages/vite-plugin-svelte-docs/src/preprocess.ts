@@ -16,6 +16,7 @@ export default function myPlugin(svelte2tsxPath: string): VitePlugin {
 				gen.addSvelteFile(filename, source.toString("utf-8"));
 
 				const js = gen.docFor(filename);
+
 				return {
 					code: `export default ${JSON.stringify(js, undefined, 2)}`,
 					meta: {
