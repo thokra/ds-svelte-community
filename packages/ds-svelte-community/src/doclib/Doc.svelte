@@ -9,7 +9,6 @@
 	let {
 		doc,
 		component,
-		previewChild,
 		extraChildrenDoc = [],
 		preview,
 		componentOptions,
@@ -18,7 +17,7 @@
 		doc: Doc;
 		component: ComponentType;
 		extraChildrenDoc?: Doc[];
-		previewChild?: Snippet;
+		children: Snippet;
 		componentOptions?: ComponentOptions;
 		preview?: { width?: string };
 	} = $props();
@@ -42,14 +41,7 @@
 
 <SvelteMarkdown source={doc.description} />
 
-<Renderer
-	{component}
-	{...ctx.values}
-	children={previewChild}
-	{preview}
-	componentOptions={opts}
-	{...restProps}
-/>
+<Renderer {component} {...ctx.values} {preview} componentOptions={opts} {...restProps} />
 
 <h2>Props</h2>
 
