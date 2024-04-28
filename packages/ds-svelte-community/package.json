@@ -15,9 +15,6 @@
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"storybook": "storybook dev -p 6006 --no-open",
-		"build:storybook": "storybook build",
-		"storybook:docs": "storybook dev --docs",
 		"generate-icons": "./hack/generate-icons.sh",
 		"test": "bun run test:unit",
 		"test:unit": "bun test",
@@ -104,16 +101,6 @@
 		"@navikt/aksel-icons": "^6.5.0",
 		"@navikt/ds-react": "^6.5.0",
 		"@navikt/ds-tailwind": "^6.5.0",
-		"@storybook/addon-a11y": "^8.0.6",
-		"@storybook/addon-essentials": "^8.0.6",
-		"@storybook/addon-interactions": "^8.0.6",
-		"@storybook/addon-links": "^8.0.6",
-		"@storybook/addon-storysource": "^8.0.6",
-		"@storybook/addon-svelte-csf": "^4.1.2",
-		"@storybook/blocks": "^8.0.6",
-		"@storybook/svelte": "^8.0.6",
-		"@storybook/sveltekit": "^8.0.6",
-		"@storybook/theming": "^8.0.6",
 		"@sveltejs/adapter-auto": "^3.2.0",
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.5.6",
@@ -129,7 +116,6 @@
 		"clsx": "^2.1.0",
 		"diff": "^5.2.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-storybook": "^0.8.0",
 		"eslint-plugin-svelte": "^2.37.0",
 		"eslint": "^8.57.0",
 		"file-system-cache": "2.4.4",
@@ -141,7 +127,6 @@
 		"publint": "^0.2.7",
 		"react-dom": "^18.2.0",
 		"react": "^18.2.0",
-		"storybook": "^8.0.6",
 		"svelte-check": "^3.6.9",
 		"svelte-floating-ui": "^1.5.8",
 		"svelte": "^5.0.0-next.105",
@@ -161,9 +146,6 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"overrides": {
-		"@storybook/cli": {
-			"prettier": "$prettier"
-		},
 		"svelte": "$svelte"
 	}
 }
