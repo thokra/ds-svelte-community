@@ -11,7 +11,6 @@
 	let showProps = $state(true);
 	let showEvents = $state(true);
 	let showSlots = $state(true);
-	let lastReset = $state(new Date());
 
 	let isV5 = $derived(doc.slots.filter((s) => s.snippet).length > 0);
 </script>
@@ -31,12 +30,11 @@
 								<button
 									title="Reset all values"
 									disabled={Object.keys(values).length == 0}
-									on:click={() => {
-									Object.keys(values!).forEach((key) => {
-										delete values![key];
-									});
-									lastReset = new Date();
-								}}
+									onclick={() => {
+										Object.keys(values).forEach((key) => {
+											delete values[key];
+										});
+									}}
 								>
 									<ArrowUndoIcon />
 								</button>
@@ -51,7 +49,7 @@
 					MARK: Properties
 				-->
 				{#if doc.props.length > 0}
-					<tr on:click={() => (showProps = !showProps)}>
+					<tr onclick={() => (showProps = !showProps)}>
 						<td colspan="99" class="title">
 							{#if showProps}
 								<ChevronDownIcon />
@@ -92,12 +90,15 @@
 								<td>
 									{#if values}
 										<ValueSelector
+											init={prop.default}
 											type={prop.type}
-											{lastReset}
+											value={values[prop.name]}
+											forceEditable={values[prop.name] !== undefined}
 											onChange={(v) => {
-											values![prop.name] = v;
-										}}
+												values[prop.name] = v;
+											}}
 										/>
+										{JSON.stringify(values[prop.name])}
 									{/if}
 								</td>
 							</tr>
@@ -109,7 +110,7 @@
 					MARK: Slots / Snippets
 				-->
 				{#if doc.slots.length > 0}
-					<tr on:click={() => (showSlots = !showSlots)}>
+					<tr onclick={() => (showSlots = !showSlots)}>
 						<td colspan="99" class="title">
 							{#if showSlots}
 								<ChevronDownIcon />
@@ -140,7 +141,7 @@
 					MARK: Events
 				-->
 				{#if doc.events.length > 0}
-					<tr on:click={() => (showEvents = !showEvents)}>
+					<tr onclick={() => (showEvents = !showEvents)}>
 						<td colspan="99" class="title">
 							{#if showEvents}
 								<ChevronDownIcon />

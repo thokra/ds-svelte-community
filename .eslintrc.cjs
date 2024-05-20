@@ -1,3 +1,4 @@
+/** @type { import("eslint").Linter.Config } */
 module.exports = {
 	root: true,
 	extends: [
@@ -17,10 +18,6 @@ module.exports = {
 		browser: true,
 		es2017: true,
 		node: true,
-	},
-	rules: {
-		"@typescript-eslint/no-unused-vars": ["error", { varsIgnorePattern: "^\\$\\$Props$" }],
-		curly: ["error"],
 	},
 	overrides: [
 		{

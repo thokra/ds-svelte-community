@@ -11,8 +11,7 @@
 
 <script lang="ts">
 	import { CopyButton } from "$lib";
-	import type { ComponentType, Snippet } from "svelte";
-	import { getDocContext } from "./context.svelte";
+	import type { StorySnippet } from "./Story.svelte";
 
 	const defaultOptions = {
 		center: true,
@@ -20,84 +19,44 @@
 		extraComponents: [],
 	};
 
-	const ctx = getDocContext();
-
 	let {
-		component,
 		componentOptions,
 		children,
 		preview,
-		...restProps
+		source,
+		values,
 	}: {
-		[key: string]: unknown;
-		component: ComponentType;
+		values: { [key: string]: unknown };
 		componentOptions?: ComponentOptions;
-		children?: Snippet;
+		children: StorySnippet;
+		source?: string;
 		preview?: { width?: string };
 	} = $props();
 
 	const options = { ...defaultOptions, ...componentOptions };
 
-	let code = $derived.by(() => {
-		let props = Object.entries(restProps)
-			.map(([key, value]) => {
-				if (typeof value === "function") {
-					return;
-				}
-
-				if (typeof value === "string") {
-					return `${key}="${value}"`;
-				} else {
-					return `${key}={${JSON.stringify(value)}}`;
-				}
-			})
-			.join("\n\t");
-
-		console.log(options);
-
-		let ret = `<script lang="ts">
-	import { ${[ctx.name, ...options.extraComponents].sort().join(", ")} } from "${options.package}";
-<ENDOFSCRIPTTAG>
-
-<${ctx.name}${props.length > 0 ? " " + props : ""}`
-			// The svelte compiler doesn't like the closing script tag, so we replace it with a placeholder
-			.replace("ENDOFSCRIPTTAG", "/script");
-
-		if (options.body) {
-			ret += `>
-	${options.body}
-</${ctx.name}>`;
-		} else if (children) {
-			ret += `>
-</${ctx.name}>`;
-		} else {
-			ret += ` />`;
-		}
-
-		return ret;
+	const code = $derived.by(() => {
+		if (!source) return "";
+		return source.replace(" {...docProps}", "");
 	});
 </script>
 
-{#snippet defaultBody()}
-	{#if options.body}
-		{options.body}
-	{:else if children}
-		{@render children()}
-	{/if}
-{/snippet}
-
 <div class="preview" class:center={options.center}>
 	<div class="preview-wrapper" style="width: {preview?.width}">
-		<svelte:component this={component} children={defaultBody} {...restProps} />
+		{@render children({ docProps: values })}
+		<!-- <svelte:component this={component} children={defaultBody} {...restProps} /> -->
+		<pre>{JSON.stringify(values, null, "  ")}</pre>
 	</div>
 </div>
 
-<div class="code-preview">
-	<div class="copy-code">
-		<CopyButton size="small" copyText={code} text="Copy code" activeText="Code copied" />
+{#if code}
+	<div class="code-preview">
+		<div class="copy-code">
+			<CopyButton size="small" copyText={code} text="Copy code" activeText="Code copied" />
+		</div>
+		<HighlightSvelte {code} />
 	</div>
-	<HighlightSvelte {code} />
-</div>
+{/if}
 
 <style>
 	.preview {

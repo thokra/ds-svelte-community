@@ -1,7 +1,23 @@
-<script lang="ts" generics="V extends ComponentType">
-	import type { ComponentType } from "svelte";
+<script lang="ts" context="module">
+	import type { Snippet } from "svelte";
 
-	let { ...restProps }: ComponentType["arguments"] = $props();
+	export type StorySnippet = Snippet<[{ docProps: { [key: string]: unknown } }]>;
 </script>
 
-<pre>{JSON.stringify(restProps, undefined, 2)}</pre>
+<script lang="ts">
+	let {
+		name = "Default",
+		source,
+		locked = false,
+		children,
+	}: {
+		name?: string;
+		source?: string;
+		locked?: boolean;
+		children: StorySnippet;
+	} = $props();
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const used = (..._: unknown[]) => {};
+	used(name, source, locked, children);
+</script>

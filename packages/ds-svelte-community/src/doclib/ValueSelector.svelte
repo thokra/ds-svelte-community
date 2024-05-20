@@ -7,12 +7,19 @@
 	let {
 		type: typ,
 		onChange,
-		lastReset,
-	}: { type: Type; onChange: (val: unknown) => void; lastReset: Date } = $props();
+		init = undefined,
+		value,
+		forceEditable = false,
+	}: {
+		type: Type;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		value: any;
+		onChange: (val: unknown) => void;
+		init: string | undefined;
+		forceEditable?: boolean;
+	} = $props();
 
-	let editable = $state(false);
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	let value: any = $state(undefined);
+	let isEditable = $state(false);
 
 	const selectOptions = (t: Type): unknown[] | false => {
 		if (Array.isArray(t)) {
@@ -58,32 +65,31 @@
 		return !!options && !isSwitch;
 	});
 
-	$effect(() => {
-		console.log("VALUE CHANGED", value);
-		if (value === undefined || (isSelect && value === "")) {
-			return;
-		}
+	// $effect(() => {
+	// 	console.log("VALUE CHANGED", editable, value);
+	// 	if (value === undefined || (isSelect && value === "")) {
+	// 		return;
+	// 	}
 
-		onChange(fromText(value));
-	});
+	// 	// onChange(toText(value as string));
+	// });
+
+	// $effect(() => {
+	// 	if (editable && isSwitch && value === "" && options) {
+	// 		onChange(toText(value as string));
+	// 	}
+	// });
 
 	$effect(() => {
-		if (lastReset) {
-			editable = false;
-			value = undefined;
-		}
-	});
-
-	$effect(() => {
-		if (editable && isSwitch && value === "" && options) {
-			value = toText(options[0]);
-		}
+		isEditable = forceEditable;
+		console.log("SET IS EDIABLE", forceEditable, isEditable);
 	});
 
 	const fromText = (t: string): unknown => {
-		if (t === "undefined") {
+		console.log("FROM TEXT", t);
+		if (t === "undefined" || t === undefined) {
 			return undefined;
-		} else if (t === "null") {
+		} else if (t === "null" || t === null) {
 			return null;
 		}
 
@@ -99,18 +105,49 @@
 
 		return JSON.stringify(v);
 	};
+
+	$inspect(value);
 </script>
 
-{#if !editable}
-	<Button size="xsmall" variant="secondary-neutral" onClick={() => (editable = true)}>
+{#if !isEditable && !forceEditable}
+	<Button
+		size="xsmall"
+		variant="secondary-neutral"
+		onclick={() => {
+			console.log("INIT", init);
+			isEditable = true;
+			if (isSwitch) {
+				value = init ? fromText(init) : true;
+			} else {
+				if (init) {
+					value = init;
+					console.log("SET INIT TO", value, options);
+				} else if (options && options.length > 0) {
+					value = options[0];
+				}
+			}
+			onChange(value);
+		}}
+	>
 		Set value
 	</Button>
 {:else if options}
 	{#if isSwitch}
-		<Switch bind:checked={value} />
+		<Switch
+			checked={!!fromText(value)}
+			on:change={() => {
+				onChange(!value);
+			}}
+		/>
 	{:else if isSelect}
 		<div>
-			<Select bind:value size="small">
+			<Select
+				bind:value
+				size="small"
+				on:change={() => {
+					onChange(value);
+				}}
+			>
 				{#each options as option}
 					<option value={toText(option)}>{toText(option)}</option>
 				{/each}

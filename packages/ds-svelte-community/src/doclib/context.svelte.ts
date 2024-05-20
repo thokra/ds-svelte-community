@@ -4,8 +4,8 @@ import { getContext, setContext, type Snippet } from "svelte";
 const ctxKey = Symbol("doc-context");
 
 export type Story = {
-	name?: string;
-	values: Record<string, unknown>;
+	name: string;
+	source: string;
 };
 
 export type Arguments = { [key: string]: unknown };
@@ -14,13 +14,13 @@ export type Template = Snippet<[Arguments]>;
 
 export class Context {
 	values = $state({});
+	story: Story | undefined = $state(undefined);
+	stories: Story[] = $state([]);
 
-	private _stories: Map<string, Story>;
 	private _templates: Map<string, Template>;
 	private _name: string;
 
 	constructor(doc: Doc) {
-		this._stories = new Map();
 		this._templates = new Map();
 		this._name = doc.name;
 	}
@@ -29,8 +29,11 @@ export class Context {
 		return this._name;
 	}
 
-	setStory(name: string, values: Record<string, unknown>) {
-		this._stories.set(name, { name, values });
+	setStory(name: string, source: string) {
+		if (this.story) {
+			this.story = { name, source };
+		}
+		this.stories.push({ name, source });
 	}
 
 	setSnippet(name: string, snippet: Template) {

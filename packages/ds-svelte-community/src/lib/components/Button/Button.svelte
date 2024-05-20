@@ -1,3 +1,10 @@
+<!--
+	@component
+	Button lets the user perform an action.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/button).
+ -->
+
 <script lang="ts">
 	import Loader from "../Loader/Loader.svelte";
 	import { classes, omit } from "../helpers";
@@ -14,23 +21,11 @@
 		children,
 		iconLeft,
 		iconRight,
-		onClick,
-		onMouseEnter,
-		onMouseLeave,
-		onFocus,
-		onBlur,
 		...restProps
 	}: Props = $props();
 
 	let overrideWidth = $derived(ref && loading ? ref.getBoundingClientRect().width : 0);
 </script>
-
-<!--
-	@component
-	Button lets the user perform an action.
-
-	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/button).
- -->
 
 <svelte:element
 	this={as}
@@ -42,11 +37,6 @@
 	class:navds-button--icon-only={(iconLeft || iconRight) && !children}
 	class:unstyled={as === "a"}
 	bind:this={ref}
-	on:click={onClick}
-	on:mouseenter={onMouseEnter}
-	on:mouseleave={onMouseLeave}
-	on:focus={onFocus}
-	on:blur={onBlur}
 	role={as != "button" ? "button" : undefined}
 	disabled={disabled || overrideWidth > 0 ? true : undefined}
 >
