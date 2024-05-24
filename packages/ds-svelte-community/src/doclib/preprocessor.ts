@@ -1,5 +1,4 @@
 import MagicString from "magic-string";
-import prettier from "prettier";
 import {
 	parse,
 	type LegacyElementLike,
@@ -10,6 +9,7 @@ import {
 import { Project, SourceFile } from "ts-morph";
 import type { Plugin as VitePlugin } from "vite";
 import { walk } from "zimmerframe";
+import { format } from "./printer";
 
 const libReplacemenet = "@nais/ds-svelte-community";
 
@@ -42,13 +42,6 @@ export default function storyProcess(): VitePlugin {
 				walk(ast.html, null, {
 					InlineComponent(node, { next }) {
 						if (node.name == "Story" && node.children.length > 0) {
-							// //@ts-expect-error we know it's there
-							// const start = node.children[0].start;
-							// //@ts-expect-error we know it's there
-							// const end = node.children[node.children.length - 1].end;
-
-							// console.log("Found Story component", start, end);
-							// console.log(code.slice(start, end));
 							stories.push(node);
 						}
 						if (node.name == "Doc") {
@@ -144,7 +137,7 @@ export default function storyProcess(): VitePlugin {
 
 async function formatStory(
 	code: string,
-	asdf: SourceFile,
+	sourceFile: SourceFile,
 	story: LegacyInlineComponent,
 ): Promise<{
 	source: string;
@@ -160,10 +153,7 @@ async function formatStory(
 		},
 	});
 
-	// if (story.attributes.find((a) => a.type === "Attribute" && a.name === "debug") === undefined) {
-	// 	return "";
-	// }
-	const sf2 = proj.createSourceFile("story.ts", asdf.getText());
+	const sf2 = proj.createSourceFile("story.ts", sourceFile.getText());
 
 	const split = "export default 1457387;";
 	sf2.insertText(sf2.getEnd(), "\n\n" + split + "\n\n");
@@ -192,16 +182,6 @@ async function formatStory(
 
 	const ts = sf2.getText().split(split)[0].replaceAll("$lib", libReplacemenet);
 
-	const configFile = await prettier.resolveConfigFile("../../.prettierrc.yaml");
-	if (!configFile) {
-		throw new Error("Could not find .prettierrc");
-	}
-	const prettierConfig = await prettier.resolveConfig(configFile);
-	if (!prettierConfig) {
-		throw new Error("Could not load .prettierrc");
-	}
-	prettierConfig.parser = "svelte";
-
 	let docSnippet = false;
 
 	//@ts-expect-error we know it's there
@@ -225,8 +205,9 @@ async function formatStory(
 	});
 
 	const content = `<script lang="ts">${ts}</script>\n\n${contentSnippet}`;
+
 	return {
-		source: await prettier.format(content, prettierConfig),
+		source: await format(content),
 		snippet: snippet,
 		docSnippet,
 	};

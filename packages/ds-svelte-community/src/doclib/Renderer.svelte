@@ -37,15 +37,62 @@
 
 	const code = $derived.by(() => {
 		if (!source) return "";
-		return source.replace(" {...docProps}", "");
+		return source.replace(/(\s*\{\.\.\.docProps\}\s*)/g, (p1) => {
+			if (Object.keys(values).length === 0) {
+				return p1.indexOf("\n") >= 0 ? "\n" : "";
+			}
+
+			return (
+				"\n" +
+				Object.keys(values)
+					.sort()
+					.map((key) => {
+						const value = values[key];
+						if (typeof value === "string") {
+							if (value.indexOf(`"`) === 0) {
+								return `	${key}=${value}`;
+							}
+							return `	${key}={${value}}`;
+						}
+						return `	${key}={${JSON.stringify(value)}}`;
+					})
+					.join("\n")
+			);
+		});
 	});
+
+	const fromText = (t: string): unknown => {
+		console.log("FROM TEXT", t);
+		if (t === "undefined" || t === undefined) {
+			return undefined;
+		} else if (t === "null" || t === null) {
+			return null;
+		}
+
+		return JSON.parse(t);
+	};
+
+	const dejsonify = (obj: Record<string, unknown>) => {
+		const ret: Record<string, unknown> = {};
+		Object.entries(obj).forEach(([key, value]) => {
+			if (typeof value === "string") {
+				try {
+					ret[key] = fromText(value);
+				} catch {
+					ret[key] = value;
+				}
+			} else {
+				ret[key] = value;
+			}
+		});
+		return ret;
+	};
 </script>
 
 <div class="preview" class:center={options.center}>
 	<div class="preview-wrapper" style="width: {preview?.width}">
-		{@render children({ docProps: values })}
+		{@render children({ docProps: dejsonify(values) })}
 		<!-- <svelte:component this={component} children={defaultBody} {...restProps} /> -->
-		<pre>{JSON.stringify(values, null, "  ")}</pre>
 	</div>
 </div>
 

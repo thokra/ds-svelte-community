@@ -31,6 +31,9 @@
 
 	let tab = $state("Default");
 	let values: Record<string, unknown> = $state({});
+	let locked = $derived.by(() => {
+		return stories?.find((s) => s.name === tab)?.locked;
+	});
 
 	$effect(() => {
 		console.log("Run effect");
@@ -84,7 +87,11 @@
 
 <h2>Props</h2>
 {#key tab}
-	<Properties {doc} bind:values />
+	{#if locked}
+		<Properties {doc} />
+	{:else}
+		<Properties {doc} bind:values />
+	{/if}
 {/key}
 
 {#if extraChildrenDoc.length > 0}

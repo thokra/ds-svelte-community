@@ -11,15 +11,17 @@
 
 <Doc {doc}>
 	<Story>
-		<Button>Button</Button>
+		<Button loading variant="secondary">Button</Button>
 	</Story>
 
-	<Story name="Click event" locked>
-		<Button onclick={() => (clicks += 1)} variant="tertiary">Clicked {clicks} times</Button>
+	<Story name="Click event">
+		<Button onclick={() => clicks++}>
+			Clicked {clicks} times
+		</Button>
 	</Story>
 
 	<Story name="Icon only">
-		<Button variant="secondary" disabled={false} loading>
+		<Button variant="secondary">
 			{#snippet iconLeft()}
 				<GlobeFillIcon />
 			{/snippet}

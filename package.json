@@ -1,20 +1,20 @@
 {
-  "name": "ds-svelte-community",
-  "private": true,
-  "scripts": {
-    "gar-login": "bun x google-artifactregistry-auth"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {
-    "@types/eslint": "^8.56.10",
-    "ts-morph": "^22.0.0"
-  },
-  "devDependencies": {
-    "glob": "^10.3.12",
-    "source-map-js": "^1.2.0",
-    "svelte-highlight": "^7.6.0",
-    "svelte-markdown": "^0.4.1"
-  }
+	"name": "ds-svelte-community",
+	"private": true,
+	"scripts": {
+		"gar-login": "bun x google-artifactregistry-auth"
+	},
+	"workspaces": [
+		"packages/*"
+	],
+	"dependencies": {
+		"@types/eslint": "^8.56.10",
+		"ts-morph": "^22.0.0"
+	},
+	"devDependencies": {
+		"glob": "^10.3.12",
+		"source-map-js": "^1.2.0",
+		"svelte-highlight": "^7.6.0",
+		"svelte-markdown": "^0.4.1"
+	}
 }
