@@ -9,7 +9,7 @@ export async function format(code: string) {
 		trailingComma: "all",
 		useTabs: true,
 		overrides: [{ files: "*.svelte", options: { parser: "svelte" } }],
-		printWidth: 1000,
+		printWidth: 100,
 		plugins: ["prettier-plugin-svelte"],
 	};
 
@@ -23,7 +23,12 @@ export async function removeAttrs(code: string, attrsToRemove: string[]) {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const children = (ast.html as any).children as LegacySvelteNode[];
+	const children = ((ast.html as any).children as LegacySvelteNode[]).filter((node) => {
+		if (node.type !== "Text" || node.data.trim() !== "") {
+			return true;
+		}
+		return false;
+	});
 	if (children.length !== 1) {
 		throw new Error("Expected single child");
 	}
@@ -55,6 +60,6 @@ export async function removeAttrs(code: string, attrsToRemove: string[]) {
 	}
 
 	// Add {docProps} as the last argument
-	ret = ret.slice(0, lastAttrPos - offset) + "{docProps}" + ret.slice(lastAttrPos - offset);
+	ret = ret.slice(0, lastAttrPos - offset) + " {docProps}" + ret.slice(lastAttrPos - offset);
 	return await format(ret);
 }

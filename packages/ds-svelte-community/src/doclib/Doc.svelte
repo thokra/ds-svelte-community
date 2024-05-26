@@ -59,6 +59,11 @@
 	// 		});
 	// 	return ret;
 	// });
+
+	const decode = (str: string) => {
+		console.log("DECODE", str);
+		return atob(str);
+	};
 </script>
 
 <svelte:head>
@@ -80,7 +85,7 @@
 
 	{#each stories || [] as { name, snippet, source }}
 		<TabPanel value={name}>
-			<Renderer children={snippet} source={atob(source)} {values} />
+			<Renderer children={snippet} source={decode(source)} {values} />
 		</TabPanel>
 	{/each}
 </Tabs>

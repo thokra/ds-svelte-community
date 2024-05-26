@@ -6,27 +6,28 @@ import {
 	type LegacyThenBlock,
 	type SnippetBlock,
 } from "svelte/compiler";
-import { Project, SourceFile } from "ts-morph";
+import { Project } from "ts-morph";
 import { walk } from "zimmerframe";
-import { format } from "./printer";
+import { format, removeAttrs } from "./printer";
 
 type CompiledStory = { name?: string; source: string; snippet: string; locked: boolean };
+
+export enum LogLevel {
+	none,
+	error,
+	warn,
+	all,
+}
 
 export class StoryParser {
 	private libReplacement: string;
 	private code: string = "";
 	private magicString: MagicString = new MagicString("");
+	private logLevel: LogLevel = LogLevel.error;
 
-	private proj = new Project({
-		compilerOptions: {
-			lib: ["esnext"],
-			noEmit: true,
-			allowJs: true,
-		},
-	});
-
-	constructor(libReplacement: string) {
+	constructor(libReplacement: string, logLevel: LogLevel = LogLevel.error) {
 		this.libReplacement = libReplacement;
+		this.logLevel = logLevel;
 	}
 
 	async parse(code: string, id: string) {
@@ -62,81 +63,139 @@ export class StoryParser {
 
 		const ts = code.slice(ast.instance!.content.start, ast.instance!.content.end);
 		const compiled: CompiledStory[] = [];
+		const attrStories: string[] = [];
+		let index = 0;
 		for (const story of stories) {
-			compiled.push(await this.parseStory(story, ts));
-		}
+			const ret = await this.parseStory(story, ts);
+			if (!ret) {
+				continue;
+			}
+			compiled.push(ret);
 
-		const attr: string[] = [];
-		compiled.forEach((story, i) => {
-			const snippetName = `docSnippet${i}`;
-
-			let snippetContent = story.snippet;
-			let props: { key: string; value: string }[] = [];
-			let lockedProps: string[] = [];
-			if (!story.locked) {
-				const res = parseDocSnippet(snippetContent);
-				if (res) {
-					snippetContent =
-						snippetContent.slice(0, res.propsIndex) +
-						" {...docProps}" +
-						snippetContent.slice(res.propsIndex);
-					props = res.props;
-					lockedProps = res.lockedProps;
-				}
+			let storyName = "Default";
+			const nn = story.attributes.find((a) => a.type === "Attribute" && a.name === "name");
+			if (nn) {
+				// @ts-expect-error we know it's there
+				storyName = nn.value[0].data as unknown as string;
 			}
 
-			const snippet = `{#snippet ${snippetName}({docProps})}\n${snippetContent}\n{/snippet}\n`;
-			attr.push(
-				`{name: "${story.name || "Default"}", source: "${btoa(story.source)}", snippet: ${snippetName}, locked: ${story.locked}, props: ${JSON.stringify(props)}, lockedProps: ${JSON.stringify(lockedProps)}}`,
+			const snippetName = `docSnippet${index++}`;
+			attrStories.push(
+				`{name: "${storyName}", source: "${btoa(ret.source)}", snippet: ${snippetName}, locked: ${ret.locked}, props: ${JSON.stringify(ret.props)}, lockedProps: ${JSON.stringify(ret.lockedProps)}}`,
 			);
-			s.prependLeft(doc.start, snippet);
-		});
 
-		const attrStr = " stories={[" + attr.join(", ") + "]}";
-		s.appendRight(doc!.start + ("<" + doc!.name).length, attrStr);
+			const snippet = `{#snippet ${snippetName}({docProps})}\n${ret.snippet}\n{/snippet}\n`;
+			this.magicString.prependLeft(doc!.start, snippet);
+		}
 
-		console.log("---");
-		console.log(s.toString());
+		// compiled.forEach((story, i) => {
+		// 	const snippetName = `docSnippet${i}`;
 
-		return s.toString();
+		// 	let snippetContent = story.snippet;
+		// 	let props: { key: string; value: string }[] = [];
+		// 	let lockedProps: string[] = [];
+		// 	if (!story.locked) {
+		// 		const res = parseDocSnippet(snippetContent);
+		// 		if (res) {
+		// 			snippetContent =
+		// 				snippetContent.slice(0, res.propsIndex) +
+		// 				" {...docProps}" +
+		// 				snippetContent.slice(res.propsIndex);
+		// 			props = res.props;
+		// 			lockedProps = res.lockedProps;
+		// 		}
+		// 	}
+
+		// 	const snippet = `{#snippet ${snippetName}({docProps})}\n${snippetContent}\n{/snippet}\n`;
+		// 	attr.push(
+		// 		`{name: "${story.name || "Default"}", source: "${btoa(story.source)}", snippet: ${snippetName}, locked: ${story.locked}, props: ${JSON.stringify(props)}, lockedProps: ${JSON.stringify(lockedProps)}}`,
+		// 	);
+		// 	s.prependLeft(doc.start, snippet);
+		// });
+
+		const attrStr = " stories={[" + attrStories.join(", ") + "]}";
+		this.magicString.appendRight(doc!.start + ("<" + doc!.name).length, attrStr);
+
+		// console.log("---");
+		// console.log(s.toString());
+
+		return this.magicString.toString();
+	}
+
+	private log(...args: unknown[]) {
+		if (this.logLevel >= LogLevel.all) {
+			console.log(...args);
+		}
+	}
+
+	private warn(...args: unknown[]) {
+		if (this.logLevel >= LogLevel.warn) {
+			console.warn(...args);
+		}
+	}
+
+	private error(...args: unknown[]) {
+		if (this.logLevel >= LogLevel.error) {
+			console.error(...args);
+		}
 	}
 
 	private async parseStory(story: LegacyInlineComponent, script: string) {
-		const sf = this.proj.createSourceFile("story.ts", script);
-		// console.log("STORY IMPORTS", imports);
-		const { source, snippet } = await this.formatStory(this.code, sf, story);
+		const { source, snippet } = await this.formatStory(script, story);
 
-		if (source !== "") {
-			const nn = story.attributes.find((a) => a.type === "Attribute" && a.name === "name");
-			let name: string | undefined;
-			if (nn) {
-				// @ts-expect-error we know it's there
-				name = nn.value[0].data as unknown as string;
-			}
+		if (source === "") {
+			this.error("Failed to format story", story);
+			return null;
+		}
 
-			const locked =
-				story.attributes.find((a) => a.type === "Attribute" && a.name === "locked") !== undefined;
+		const nn = story.attributes.find((a) => a.type === "Attribute" && a.name === "name");
+		let name: string | undefined;
+		if (nn) {
+			// @ts-expect-error we know it's there
+			name = nn.value[0].data as unknown as string;
+		}
 
+		const locked =
+			story.attributes.find((a) => a.type === "Attribute" && a.name === "locked") !== undefined;
+
+		if (locked) {
+			this.log("Locked story", name);
 			return {
 				name,
 				source,
 				snippet,
 				locked,
-
-				removeStart: story.start,
-				removeEnd: story.end,
+				props: [],
+				lockedProps: [],
 			};
 		}
+		const res = this.parseDocSnippet(snippet);
+		if (!res) {
+			this.warn("Failed to parse doc snippet", story);
+			return null;
+		}
+
+		let snippetContent = snippet;
+		snippetContent =
+			snippetContent.slice(0, res.propsIndex) +
+			" {...docProps}" +
+			snippetContent.slice(res.propsIndex);
 
 		this.magicString.remove(story.start, story.end);
-		this.proj.removeSourceFile(sf);
+		return {
+			name,
+			source: await removeAttrs(
+				source,
+				res.props.map((p) => p.key),
+			),
+			snippet: snippetContent,
+			locked,
+			props: res.props,
+			lockedProps: res.lockedProps,
+		};
 	}
 
-	private async formatStory(
-		code: string,
-		sourceFile: SourceFile,
-		story: LegacyInlineComponent,
-	): Promise<CompiledStory> {
+	private async formatStory(script: string, story: LegacyInlineComponent) {
 		const proj = new Project({
 			compilerOptions: {
 				lib: ["esnext"],
@@ -145,23 +204,22 @@ export class StoryParser {
 				sourceMap: true,
 			},
 		});
-
-		const sf2 = proj.createSourceFile("story.ts", sourceFile.getText());
+		const sourceFile = proj.createSourceFile("story_format.ts", script);
 
 		const split = "export default 1457387;";
-		sf2.insertText(sf2.getEnd(), "\n\n" + split + "\n\n");
+		sourceFile.insertText(sourceFile.getEnd(), "\n\n" + split + "\n\n");
 
 		walk<LegacyElementLike, null>(story, null, {
-			MustacheTag(node, { next }) {
-				sf2.insertText(sf2.getEnd(), code.slice(node.start, node.end) + "\n");
+			MustacheTag: (node, { next }) => {
+				sourceFile.insertText(sourceFile.getEnd(), this.code.slice(node.start, node.end) + "\n");
 				next();
 			},
-			InlineComponent(node, { next }) {
+			InlineComponent: (node, { next }) => {
 				if (node.name === "Story") {
 					next();
 					return;
 				}
-				sf2.insertText(sf2.getEnd(), "new " + code.slice(node.start, node.end) + "()\n");
+				sourceFile.insertText(sourceFile.getEnd(), "new " + node.name + "()\n");
 				next();
 			},
 		});
@@ -169,27 +227,25 @@ export class StoryParser {
 		// Remove unused code and imports
 		let lastWidth: number;
 		do {
-			lastWidth = sf2.getFullWidth();
-			sf2.fixUnusedIdentifiers();
-		} while (lastWidth !== sf2.getFullWidth());
+			lastWidth = sourceFile.getFullWidth();
+			sourceFile.fixUnusedIdentifiers();
+		} while (lastWidth !== sourceFile.getFullWidth());
 
-		const ts = sf2.getText().split(split)[0].replaceAll("$lib", this.libReplacement);
-
-		let docSnippet = false;
+		const ts = sourceFile.getText().split(split)[0].replaceAll("$lib", this.libReplacement);
 
 		//@ts-expect-error we know it's there
 		const contentStart = story.children[0].start;
 		//@ts-expect-error we know it's there
 		const contentEnd = story.children[story.children.length - 1].end;
-		const snippet = code.slice(contentStart, contentEnd);
+		const snippet = this.code.slice(contentStart, contentEnd);
 		let contentSnippet = snippet;
 		story.children.forEach((child) => {
 			if ((child.type as string) !== "SnippetBlock") {
 				return;
 			}
 			const snippetBlock = child as unknown as SnippetBlock;
-			docSnippet = code.slice(snippetBlock.start, snippetBlock.end).indexOf("docProps") !== -1;
-			contentSnippet = code.slice(
+			// docSnippet = code.slice(snippetBlock.start, snippetBlock.end).indexOf("docProps") !== -1;
+			contentSnippet = this.code.slice(
 				//@ts-expect-error we know it's there
 				snippetBlock.children[0].start,
 				//@ts-expect-error we know it's there
@@ -202,7 +258,6 @@ export class StoryParser {
 		return {
 			source: await format(content),
 			snippet: snippet,
-			docSnippet,
 		};
 	}
 

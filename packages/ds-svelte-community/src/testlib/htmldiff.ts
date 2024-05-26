@@ -173,8 +173,6 @@ async function prettyDiff(a: string, b: string, before: number, after: number) {
 
 	const opts = { parser: "html", singleAttributePerLine: true };
 
-	// For some reason, the async version of prettier exits this function before it's done.
-	// So we use the sync version, but it's soooo slow. (But I'd rather have correct output than fast output)
 	const afmt = await prettier.format(a, opts);
 	const bfmt = await prettier.format(b, opts);
 

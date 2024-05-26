@@ -36,8 +36,9 @@
 	const options = { ...defaultOptions, ...componentOptions };
 
 	const code = $derived.by(() => {
+		console.log("CHECK CODE");
 		if (!source) return "";
-		return source.replace(/(\s*\{\.\.\.docProps\}\s*)/g, (p1) => {
+		return source.replace(/(\s*\{docProps\}\s*)/g, (p1) => {
 			if (Object.keys(values).length === 0) {
 				return p1.indexOf("\n") >= 0 ? "\n" : "";
 			}
@@ -52,8 +53,12 @@
 							if (value.indexOf(`"`) === 0) {
 								return `	${key}=${value}`;
 							}
+							if (value === "true") {
+								return `	${key}`;
+							}
 							return `	${key}={${value}}`;
 						}
+
 						return `	${key}={${JSON.stringify(value)}}`;
 					})
 					.join("\n")

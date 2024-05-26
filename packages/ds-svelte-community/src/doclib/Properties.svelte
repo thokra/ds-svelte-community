@@ -219,10 +219,7 @@
 			padding: 0.5rem 0 0.5rem 0.5rem;
 
 			&:first-of-type {
-				width: 25%;
-			}
-			&:nth-child(2) {
-				width: 35%;
+				width: 20%;
 			}
 			&:nth-child(3) {
 				width: 15%;
