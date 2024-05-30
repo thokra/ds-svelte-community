@@ -13,6 +13,8 @@
 	let showSlots = $state(true);
 
 	let isV5 = $derived(doc.slots.filter((s) => s.snippet).length > 0);
+
+	let valueSelectorProps = $derived($state.snapshot(values));
 </script>
 
 {#if doc.props.length + doc.slots.length + doc.events.length > 0}
@@ -88,17 +90,17 @@
 									{/if}
 								</td>
 								<td>
-									{#if values}
+									{#if values && valueSelectorProps}
 										<ValueSelector
 											init={prop.default}
 											type={prop.type}
-											value={values[prop.name]}
+											value={valueSelectorProps[prop.name]}
 											forceEditable={values[prop.name] !== undefined}
 											onChange={(v) => {
 												values[prop.name] = v;
 											}}
 										/>
-										{JSON.stringify(values[prop.name])}
+										<!-- {JSON.stringify(values[prop.name])} -->
 									{/if}
 								</td>
 							</tr>
@@ -216,7 +218,7 @@
 		th,
 		td {
 			vertical-align: top;
-			padding: 0.5rem 0 0.5rem 0.5rem;
+			padding: 0.5rem;
 
 			&:first-of-type {
 				width: 20%;

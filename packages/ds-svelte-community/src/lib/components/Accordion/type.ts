@@ -1,5 +1,4 @@
 import type { Snippet } from "svelte";
-import type { HTMLAttributes } from "svelte/elements";
 
 export const variants = ["default", "neutral"] as const;
 
@@ -7,7 +6,7 @@ export const sizes = ["large", "medium", "small"] as const;
 
 export const headingSizes = ["large", "medium", "small", "xsmall"] as const;
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface Props {
 	/**
 	 * The variant of the accordion.
 	 */
@@ -34,7 +33,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
 	children: Snippet;
 }
 
-export interface ItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface ItemProps {
 	/**
 	 * Whether the accordion item is open or not.
 	 */

@@ -171,7 +171,7 @@ export class StoryParser {
 		}
 		const res = this.parseDocSnippet(snippet);
 		if (!res) {
-			this.warn("Failed to parse doc snippet", story);
+			this.warn("Failed to parse doc snippet");
 			return null;
 		}
 
@@ -275,6 +275,7 @@ export class StoryParser {
 
 		//@ts-expect-error we know it's there
 		if (ast.html.type !== "Fragment") {
+			this.log("Not a fragment", ast.html.type);
 			return false;
 		}
 
@@ -282,23 +283,28 @@ export class StoryParser {
 		let comp: LegacyInlineComponent | undefined = undefined;
 		for (const node of frag.children) {
 			switch (node.type) {
-				case "Text":
+				case "Text": {
 					if (node.data.trim() === "") {
 						break;
 					}
+					this.warn("Unexpected text node", node.data);
 					return false;
-				case "InlineComponent":
+				}
+				case "InlineComponent": {
 					if (comp !== undefined) {
 						return false;
 					}
 					comp = node;
 					break;
-				default:
-					return false;
+				}
+				// default:
+				// 	this.log("Unexpected node", node.type);
+				// 	return false;
 			}
 		}
 
 		if (comp === undefined) {
+			this.warn("No component found");
 			return false;
 		}
 
@@ -312,6 +318,11 @@ export class StoryParser {
 
 		for (const attr of comp.attributes) {
 			if (attr.type !== "Attribute") {
+				if (attr.type === "Binding") {
+					lockedProps.push(attr.name);
+					continue;
+				}
+				this.warn("Unexpected attribute", attr.type);
 				return false;
 			}
 

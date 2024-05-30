@@ -36,7 +36,6 @@
 	const options = { ...defaultOptions, ...componentOptions };
 
 	const code = $derived.by(() => {
-		console.log("CHECK CODE");
 		if (!source) return "";
 		return source.replace(/(\s*\{docProps\}\s*)/g, (p1) => {
 			if (Object.keys(values).length === 0) {
@@ -67,7 +66,6 @@
 	});
 
 	const fromText = (t: string): unknown => {
-		console.log("FROM TEXT", t);
 		if (t === "undefined" || t === undefined) {
 			return undefined;
 		} else if (t === "null" || t === null) {

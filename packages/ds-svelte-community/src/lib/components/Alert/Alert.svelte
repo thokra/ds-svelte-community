@@ -1,3 +1,10 @@
+<!--
+	@component
+	Alert is a notification component that creates focus around a response message without necessarily interrupting the user's task flow.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/alert).
+-->
+
 <script lang="ts">
 	import { default as SuccessFilledIcon } from "$lib/icons/CheckmarkCircleFillIcon.svelte";
 	import { default as WarningFilledIcon } from "$lib/icons/ExclamationmarkTriangleFillIcon.svelte";
@@ -7,38 +14,20 @@
 	import BodyLong from "../typography/BodyLong/BodyLong.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
-
-	/**
-	 * Changes colors and icon usage when changed
-	 */
-	export let variant: Props["variant"] = "info";
-
-	/**
-	 * Changes padding and font-sizes
-	 * @default medium
-	 */
-	export let size: Props["size"] = "medium";
-	/**
-	 * Removes border-radius
-	 * @default false
-	 */
-	export let fullWidth = false;
-	/**
-	 * Removes background from Alert
-	 * @default false
-	 */
-	export let inline = false;
-
-	/**
-	 * Title attribute on the icon
-	 */
-	export let iconTitleText = "";
+	let {
+		variant = "info",
+		size = "medium",
+		fullWidth = false,
+		inline = false,
+		iconTitleText = "",
+		children,
+		...restProps
+	}: Props = $props();
 </script>
 
 <div
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-alert", `navds-alert--${variant}`, `navds-alert--${size}`)}
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-alert", `navds-alert--${variant}`, `navds-alert--${size}`)}
 	class:navds-alert--full-width={fullWidth}
 	class:navds-alert--inline={inline}
 >
@@ -61,7 +50,6 @@
 		/>
 	{/if}
 	<BodyLong as="div" {size} class="navds-alert__wrapper">
-		<!-- Alert content -->
-		<slot />
+		{@render children()}
 	</BodyLong>
 </div>

@@ -1,3 +1,11 @@
+<!--
+	@component
+	Accordion is related sections with interactive headers that allow users to open or close the view of
+	the content below.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/accordion).
+ -->
+
 <script lang="ts" context="module">
 	import { getContext } from "svelte";
 	import type { AccordionContext, Props } from "./type";

@@ -2,6 +2,7 @@
 	import { Switch } from "$lib";
 	import Button from "$lib/components/Button/Button.svelte";
 	import Select from "$lib/components/Select/Select.svelte";
+	import TextField from "$lib/components/TextField/TextField.svelte";
 	import type { Type } from "@nais/vite-plugin-svelte-docs";
 
 	let {
@@ -25,8 +26,9 @@
 		if (Array.isArray(t)) {
 			return false;
 		}
-
-		if (t.type === "boolean") {
+		if (t.type === "string") {
+			return false;
+		} else if (t.type === "boolean") {
 			return [true, false];
 		} else if (t.type === "union") {
 			let err = false;
@@ -51,7 +53,7 @@
 			return false;
 		}
 
-		console.log("Unsupported type", t);
+		console.error("Unsupported type", t);
 		return false;
 	};
 
@@ -82,11 +84,9 @@
 
 	$effect(() => {
 		isEditable = forceEditable;
-		console.log("SET IS EDIABLE", forceEditable, isEditable);
 	});
 
 	const fromText = (t: string): unknown => {
-		console.log("FROM TEXT", t);
 		if (t === "undefined" || t === undefined) {
 			return undefined;
 		} else if (t === "null" || t === null) {
@@ -105,8 +105,6 @@
 
 		return JSON.stringify(v);
 	};
-
-	$inspect(value);
 </script>
 
 {#if !isEditable && !forceEditable}
@@ -114,14 +112,12 @@
 		size="xsmall"
 		variant="secondary-neutral"
 		onclick={() => {
-			console.log("INIT", init);
 			isEditable = true;
 			if (isSwitch) {
 				value = init ? fromText(init) : true;
 			} else {
 				if (init) {
 					value = init;
-					console.log("SET INIT TO", value, options);
 				} else if (options && options.length > 0) {
 					value = options[0];
 				}
@@ -131,6 +127,14 @@
 	>
 		Set value
 	</Button>
+{:else if !Array.isArray(typ) && typ.type === "string"}
+	<TextField
+		value={JSON.parse(value || '""')}
+		size="small"
+		on:change={(e) => {
+			onChange(toText((e.target as HTMLInputElement).value));
+		}}
+	/>
 {:else if options}
 	{#if isSwitch}
 		<Switch

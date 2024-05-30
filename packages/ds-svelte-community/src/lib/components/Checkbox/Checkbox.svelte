@@ -1,88 +1,59 @@
+<!--
+	@component
+	Checkbox displays a list of options where multiple can be selected at once. When a choice is made, the user can click again to deselect it.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/checkbox).
+-->
+
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import { GetCheckboxGroupContext } from "./CheckboxGroup.svelte";
-	import type { CheckboxProps } from "./type";
+	import type { CheckboxProps } from "./type.svelte";
 
-	type $$Props = CheckboxProps;
+	let {
+		error = false,
+		hideLabel = false,
+		value,
+		indeterminate = false,
+		description = "",
+		size,
+		disabled = false,
+		id = "cb-" + newUniqueId(),
+		checked = $bindable(false),
+		children,
+		onchange,
+		...restProps
+	}: CheckboxProps = $props();
 
-	/**
-	 * Adds error indication on checkbox
-	 */
-	export let error = false;
-
-	/**
-	 * Hides label and makes it viewable for screen-readers only.
-	 */
-	export let hideLabel = false;
-
-	/**
-	 * The value of the HTML element.
-	 */
-
-	export let value: string | undefined = undefined;
-
-	/**
-	 * Specify whether the Checkbox is in an indeterminate state
-	 */
-	export let indeterminate = false;
-
-	/**
-	 * Adds a description to extend labeling of Checkbox
-	 */
-	export let description = "";
-
-	/**
-	 * Changes font-size, padding and gaps
-	 * @default "medium"
-	 */
-	export let size: "medium" | "small" | undefined = undefined;
-
-	/**
-	 * Disables element @note Avoid using if possible for accessibility purposes
-	 */
-	export let disabled = false;
-
-	/**
-	 * Override internal id
-	 */
-	export let id = "cb-" + newUniqueId();
-
-	/**
-	 * Controlled state for checkboxes.
-	 */
-	export let checked = false;
-
-	type Events = {
-		change: Event & {
-			currentTarget: EventTarget & HTMLInputElement;
-		};
-	};
-	const dispatch = createEventDispatcher<Events>();
 	const ctx = GetCheckboxGroupContext();
 	const values = ctx && ctx.groupControlled ? ctx.values : null;
 
 	const lblID = "cblbl-" + newUniqueId();
-	$: checked = values && $values ? $values.includes(value) || false : checked;
+	// checked = $derived(values && $values ? $values.includes(value) || false : checked);
+	$effect(() => {
+		if (values) {
+			checked = values.includes(value);
+		}
+	});
 
 	const hasErrorStore = ctx ? ctx.hasError : null;
-	$: hasError = hasErrorStore ? $hasErrorStore : error;
+	let hasError = $derived(hasErrorStore ? hasErrorStore : error);
 
 	size = size ? size : ctx ? ctx.size : "medium";
 </script>
 
 <div
-	class={classes($$props, "navds-checkbox", `navds-checkbox--${size}`)}
+	class={classes(restProps, "navds-checkbox", `navds-checkbox--${size}`)}
 	class:navds-checkbox--error={hasError}
 	class:navds-checkbox--disabled={disabled}
 >
 	<input
-		{...omit($$restProps, "class")}
+		{...omit(restProps, "class")}
 		{id}
 		type="checkbox"
 		class="navds-checkbox__input"
@@ -92,16 +63,19 @@
 		bind:indeterminate
 		bind:checked
 		{value}
-		on:change={(e) => {
+		onchange={(e) => {
 			if (ctx && ctx.groupControlled) {
-				ctx.change(value);
+				if (ctx.values.includes(value)) {
+					ctx.values.splice(ctx.values.indexOf(value), 1);
+				} else {
+					ctx.values.push(value);
+				}
 			}
 			/**
 			 * Trigger when the checkbox changes. Will pass the event object as argument.
 			 */
-			dispatch("change", e);
+			onchange && onchange(e);
 		}}
-		on:click
 	/>
 	<label for={id} class="navds-checkbox__label" id={lblID}>
 		<span class="navds-checkbox__icon">
@@ -121,23 +95,22 @@
 				/>
 			</svg>
 		</span>
-		<span class="navds-checkbox__content" class:navds-sr-only={hideLabel}>
-			<BodyShort as="span" {size} class="navds-checkbox__label-text" aria-hidden>
-				<!--
-					Label content
-				-->
-				<slot />
-			</BodyShort>
-			{#if description}
-				<BodyShort
-					as="span"
-					class="navds-form-field__subdescription navds-checkbox__description"
-					{size}
-					aria-hidden
-				>
-					{description}
+		{#if children}
+			<span class="navds-checkbox__content" class:navds-sr-only={hideLabel}>
+				<BodyShort as="span" {size} class="navds-checkbox__label-text" aria-hidden>
+					{@render children()}
 				</BodyShort>
-			{/if}
-		</span>
+				{#if description}
+					<BodyShort
+						as="span"
+						class="navds-form-field__subdescription navds-checkbox__description"
+						{size}
+						aria-hidden
+					>
+						{description}
+					</BodyShort>
+				{/if}
+			</span>
+		{/if}
 	</label>
 </div>

@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { page } from "$app/stores";
 	import { Tab, TabList, TabPanel, Tabs } from "$lib";
+	import Alert from "$lib/components/Alert/Alert.svelte";
 	import type { Doc } from "@nais/vite-plugin-svelte-docs";
-	import { untrack, type Snippet } from "svelte";
+	import { type Snippet } from "svelte";
 	import SvelteMarkdown from "svelte-markdown";
 	import Properties from "./Properties.svelte";
 	import Renderer, { type ComponentOptions } from "./Renderer.svelte";
@@ -20,6 +22,7 @@
 		doc,
 		extraChildrenDoc = [],
 		stories,
+		preview,
 	}: {
 		doc: Doc;
 		extraChildrenDoc?: Doc[];
@@ -29,27 +32,39 @@
 		stories?: Story[];
 	} = $props();
 
-	let tab = $state("Default");
-	let values: Record<string, unknown> = $state({});
-	let locked = $derived.by(() => {
-		return stories?.find((s) => s.name === tab)?.locked;
-	});
+	// eslint-disable-next-line svelte/valid-compile
+	let tab = $derived($page.url.searchParams.get("tab") || "Default");
+
+	const story = $derived(stories?.find((s) => s.name === tab));
+	const storyProps = () => {
+		const ret: Record<string, unknown> = {};
+		story?.props.forEach((p) => {
+			ret[p.key] = p.value;
+		});
+		return ret;
+	};
+
+	let values: Record<string, unknown> = $state(storyProps());
 
 	$effect(() => {
-		console.log("Run effect");
-		const story = stories?.find((s) => s.name === tab);
-		if (story) {
-			console.log("Found story");
-			untrack(() => {
-				values = {};
-				story.props.forEach((p) => {
-					values[p.key] = p.value;
-				});
-			});
-		} else {
-			console.log("No story");
-		}
+		values = storyProps();
 	});
+
+	// $effect(() => {
+	// 	console.log("Run effect");
+	// 	const story = stories?.find((s) => s.name === tab);
+	// 	if (story) {
+	// 		console.log("Found story");
+	// 		untrack(() => {
+	// 			values = {};
+	// 			story.props.forEach((p) => {
+	// 				values[p.key] = p.value;
+	// 			});
+	// 		});
+	// 	} else {
+	// 		console.log("No story");
+	// 	}
+	// });
 	// let values = $derived.by(() => {
 	// 	const ret: Record<string, unknown> = {};
 	// 	stories
@@ -59,11 +74,6 @@
 	// 		});
 	// 	return ret;
 	// });
-
-	const decode = (str: string) => {
-		console.log("DECODE", str);
-		return atob(str);
-	};
 </script>
 
 <svelte:head>
@@ -74,34 +84,42 @@
 
 <SvelteMarkdown source={doc.description} />
 
-<Tabs bind:value={tab}>
-	<TabList>
-		{#each stories || [] as { name }}
-			<Tab value={name}>
-				{name}
-			</Tab>
-		{/each}
-	</TabList>
+{#if !story}
+	<Alert variant="warning">No story found for tab "{tab}"</Alert>
+{:else}
+	<Tabs value={tab}>
+		<TabList>
+			{#each stories || [] as { name }}
+				<Tab
+					as="a"
+					data-sveltekit-replacestate
+					value={name}
+					href={name == "Default" ? "./" : `?tab=${name}`}
+				>
+					{name}
+				</Tab>
+			{/each}
+		</TabList>
 
-	{#each stories || [] as { name, snippet, source }}
-		<TabPanel value={name}>
-			<Renderer children={snippet} source={decode(source)} {values} />
+		<TabPanel value={story.name}>
+			<Renderer children={story.snippet} source={atob(story.source)} {values} {preview} />
 		</TabPanel>
-	{/each}
-</Tabs>
+	</Tabs>
+{/if}
 
-<h2>Props</h2>
+<h2>Properties</h2>
+
+{#if extraChildrenDoc.length > 0}
+	<h3>{doc.name}</h3>
+{/if}
+
 {#key tab}
-	{#if locked}
+	{#if !story || story.locked}
 		<Properties {doc} />
 	{:else}
 		<Properties {doc} bind:values />
 	{/if}
 {/key}
-
-{#if extraChildrenDoc.length > 0}
-	<h3>{doc.name}</h3>
-{/if}
 
 {#each extraChildrenDoc as doc}
 	<h3>{doc.name}</h3>

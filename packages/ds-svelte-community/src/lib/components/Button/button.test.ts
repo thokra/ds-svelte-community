@@ -19,6 +19,7 @@ describe("Button", () => {
 		cleanup();
 		const props: Props = {
 			as: "a",
+			href: "/",
 			variant: "secondary",
 			size: "small",
 		};
@@ -47,6 +48,7 @@ describe("Button", () => {
 	it("renders with HTML similar to ds-react with disabled with as", async () => {
 		const props: Props = {
 			as: "a",
+			href: "/",
 			disabled: true,
 		};
 		expect(

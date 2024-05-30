@@ -1,5 +1,4 @@
 import type { Snippet } from "svelte";
-import type { HTMLAnchorAttributes, HTMLButtonAttributes } from "svelte/elements";
 
 export const variants = [
 	"primary",
@@ -24,7 +23,7 @@ interface BaseProps {
 	 *
 	 * Prevent the user from interacting with the button: it cannot be pressed or focused.
 	 */
-	disabled?: boolean | undefined | null;
+	disabled?: boolean;
 
 	/**
 	 * Changes padding, height, and font-size.
@@ -51,42 +50,15 @@ interface BaseProps {
 	 */
 	iconRight?: Snippet;
 
-	/**
-	 * Click handler
-	 */
-	onClick?: (event: MouseEvent) => void;
-
-	/**
-	 * Focus handler
-	 */
-	onFocus?: (event: FocusEvent) => void;
-
-	/**
-	 * Blur handler
-	 */
-	onBlur?: (event: FocusEvent) => void;
-
-	/**
-	 * Mouse enter handler
-	 */
-	onMouseEnter?: (event: MouseEvent) => void;
-
-	/**
-	 * Mouse leave handler
-	 */
-	onMouseLeave?: (event: MouseEvent) => void;
-
-	/**
-	 * Reference
-	 */
-	ref?: null | HTMLButtonElement | HTMLAnchorElement;
+	[key: string]: unknown;
 }
 
-interface ButtonProps extends BaseProps, HTMLButtonAttributes {
+interface ButtonProps extends BaseProps {
 	as?: "button";
 }
-interface AnchorProps extends BaseProps, HTMLAnchorAttributes {
+interface AnchorProps extends BaseProps {
 	as: "a";
+	href: string;
 }
 
 export type Props = ButtonProps | AnchorProps;

@@ -3,6 +3,8 @@
 	Button lets the user perform an action.
 
 	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/button).
+
+	All extra props are passed to the root element.
  -->
 
 <script lang="ts">
@@ -17,14 +19,17 @@
 		disabled = false,
 		loading = false,
 		as = "button",
-		ref = null,
 		children,
 		iconLeft,
 		iconRight,
 		...restProps
 	}: Props = $props();
 
-	let overrideWidth = $derived(ref && loading ? ref.getBoundingClientRect().width : 0);
+	let ref: undefined | HTMLElement = $state(undefined);
+
+	let overrideWidth = $derived.by(() => {
+		return ref && loading ? ref.getBoundingClientRect().width : 0;
+	});
 </script>
 
 <svelte:element

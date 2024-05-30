@@ -1,6 +1,6 @@
 import * as prettier from "prettier";
 import type { PrettierConfig } from "prettier-plugin-svelte";
-import { parse, type LegacySvelteNode } from "svelte/compiler";
+import { parse, type LegacyInlineComponent, type LegacySvelteNode } from "svelte/compiler";
 
 export async function format(code: string) {
 	const formatConfig: PrettierConfig = {
@@ -29,19 +29,18 @@ export async function removeAttrs(code: string, attrsToRemove: string[]) {
 		}
 		return false;
 	});
-	if (children.length !== 1) {
-		throw new Error("Expected single child");
+
+	const icomp = children.filter((node) => node.type === "InlineComponent");
+	if (icomp.length !== 1) {
+		throw new Error("Expected single inline component child");
 	}
 
-	const child = children[0];
-	if (child.type !== "InlineComponent") {
-		throw new Error(`Expected InlineComponent, got ${child.type}`);
-	}
+	const child = icomp[0] as LegacyInlineComponent;
 
 	const remove = new Set<{ start: number; end: number }>();
 	let lastAttrPos = child.start + ("<" + child.name).length;
 	for (const attr of child.attributes) {
-		if (attr.type !== "Attribute") {
+		if (attr.type !== "Attribute" && attr.type !== "Binding") {
 			throw new Error(`Expected Attribute, got ${attr.type}`);
 		}
 
