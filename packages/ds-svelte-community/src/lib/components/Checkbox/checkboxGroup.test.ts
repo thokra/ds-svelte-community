@@ -4,7 +4,7 @@ import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
 import Checkbox, { type ItemProps } from "./CheckboxGroup.test.svelte";
-import type { Props } from "./type";
+import type { Props } from "./type.svelte";
 
 describe("CheckboxGroup", () => {
 	it("renders CheckboxGroup similar to ds-react", async () => {

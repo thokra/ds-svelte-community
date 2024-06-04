@@ -51,6 +51,8 @@
 
 		if (t.type === "interface") {
 			return false;
+		} else if (t.type === "unknown") {
+			return false;
 		}
 
 		console.error("Unsupported type", t);

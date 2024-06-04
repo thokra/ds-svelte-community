@@ -1,96 +1,74 @@
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
-	import { contextKey, type FieldSetContext, type FieldsetProps } from "./type";
+	import { type FieldsetProps } from "./type";
 </script>
 
 <script lang="ts">
-	import { setContext } from "svelte";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Detail from "../typography/Detail/Detail.svelte";
 	import ErrorMessage from "../typography/ErrorMessage/ErrorMessage.svelte";
 	import Label from "../typography/Label/Label.svelte";
 
-	/**
-	 * If enabled shows the legend and description for screenreaders only
-	 */
-	export let hideLegend = false;
-
-	/**
-	 * Toggles error propagation to child-elements
-	 * @default true
-	 */
-	// export let errorPropagation = true;
-
-	/**
-	 * Error message for element
-	 */
-	export let error = "";
-
-	/**
-	 * Override internal errorId
-	 */
-	export let errorId: string = "fserr-" + newUniqueId();
-
-	/**
-	 * Changes font-size, padding and gaps
-	 */
-	export let size: "medium" | "small" = "medium";
-	/**
-	 * Disables element
-	 * @note Avoid using if possible for accessibility purposes
-	 */
-	export let disabled = false;
-
-	/**
-	 * Override internal id
-	 */
-	export let id = "fs-" + newUniqueId();
-
-	type $$Props = FieldsetProps;
-
-	const ctx: FieldSetContext = {
-		error,
-		errorId,
-		size,
-		disabled,
-	};
-
-	setContext<FieldSetContext>(contextKey, ctx);
+	let {
+		hideLegend = false,
+		error = "",
+		errorId = "fserr-" + newUniqueId(),
+		size = "medium",
+		disabled = false,
+		id = "fs-" + newUniqueId(),
+		legend,
+		children,
+		description,
+		...restProps
+	}: FieldsetProps = $props();
 
 	const srOnlyClass = hideLegend ? " navds-sr-only" : "";
 	const inputDescriptionId = `fs-desc-${id}`;
 
-	$: showErrorMsg = !disabled && !!error;
+	const showErrorMsg = $derived(!disabled && !!error);
 </script>
 
 <!-- aria-invalid={error ? "true" : undefined} -->
 <fieldset
-	{...omit($$restProps, "class", "aria-invalid", "aria-describedby")}
-	class={classes($$restProps, "navds-fieldset", `navds-fieldset--${size}`)}
+	{...omit(restProps, "class", "aria-invalid", "aria-describedby")}
+	class={classes(restProps, "navds-fieldset", `navds-fieldset--${size}`)}
 	class:navds-fieldset--error={!!error}
-	aria-describedby={$$slots.description ? inputDescriptionId : undefined}
+	aria-describedby={description ? inputDescriptionId : undefined}
 >
 	<Label {size} as="legend" class={"navds-fieldset__legend" + srOnlyClass}>
-		<slot name="legend" />
+		{#if typeof legend === "string"}
+			{legend}
+		{:else}
+			{@render legend()}
+		{/if}
 	</Label>
 
-	{#if $$slots.description}
+	{#if description}
 		{#if size == "medium"}
 			<BodyShort
 				class={"navds-fieldset__description" + srOnlyClass}
 				id={inputDescriptionId}
 				as="div"
 			>
-				<slot name="description" />
+				{#if typeof description === "string"}
+					{description}
+				{:else}
+					{@render description()}
+				{/if}
 			</BodyShort>
 		{:else}
 			<Detail class={"navds-fieldset__description" + srOnlyClass} id={inputDescriptionId} as="div">
-				<slot name="description" />
+				{#if typeof description === "string"}
+					{description}
+				{:else}
+					{@render description()}
+				{/if}
 			</Detail>
 		{/if}
 	{/if}
-	<slot />
+
+	{@render children()}
 
 	<div
 		id={errorId}

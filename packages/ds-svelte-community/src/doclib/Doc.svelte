@@ -23,8 +23,10 @@
 		extraChildrenDoc = [],
 		stories,
 		preview,
+		customTitle,
 	}: {
 		doc: Doc;
+		customTitle?: string;
 		extraChildrenDoc?: Doc[];
 		children?: Snippet;
 		componentOptions?: ComponentOptions;
@@ -77,10 +79,10 @@
 </script>
 
 <svelte:head>
-	<title>{doc.name} - ds-svelte-community</title>
+	<title>{customTitle ?? doc.name} - ds-svelte-community</title>
 </svelte:head>
 
-<h1>{doc.name}</h1>
+<h1>{customTitle ?? doc.name}</h1>
 
 <SvelteMarkdown source={doc.description} />
 

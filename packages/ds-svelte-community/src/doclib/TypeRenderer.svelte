@@ -19,6 +19,10 @@
 	<code>{typ.value}</code>
 {:else if typ.type == "interface"}
 	<code>{typ.name}</code>
+{:else if typ.type == "unknown"}
+	<code>unknown</code>
+{:else if typ.type == "snippet"}
+	<code>Snippet</code>
 {:else}
 	<code class:err={dev}>{typ.type}</code>
 {/if}

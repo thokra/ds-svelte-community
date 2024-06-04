@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { Checkbox, CheckboxGroup } from "$lib";
 	import { omit } from "../helpers";
-	import type { Props } from "./type";
+	import type { Props } from "./type.svelte";
 
 	export let wrapper: Props;
 	export let items: ItemProps[];

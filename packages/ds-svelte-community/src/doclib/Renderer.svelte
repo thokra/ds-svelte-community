@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	import { HighlightSvelte } from "svelte-highlight";
-	import "svelte-highlight/styles/a11y-dark.css";
+	import "svelte-highlight/styles/github-dark.css";
 	export type ComponentOptions = {
 		center?: boolean;
 		package?: string;

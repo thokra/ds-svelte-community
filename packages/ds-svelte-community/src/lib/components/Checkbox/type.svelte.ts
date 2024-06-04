@@ -42,7 +42,7 @@ export interface Props {
 	/**
 	 * Legend of the fieldset.
 	 */
-	legend?: string | Snippet;
+	legend: string | Snippet;
 
 	/**
 	 * Description of the fieldset.
@@ -52,7 +52,7 @@ export interface Props {
 	/**
 	 * List of checkboxes
 	 */
-	children?: Snippet;
+	children: Snippet;
 
 	[key: string]: unknown;
 }

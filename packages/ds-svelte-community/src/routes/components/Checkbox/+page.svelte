@@ -8,12 +8,12 @@
 
 	let selected = $state(false);
 
-	let multiValues: string[] = $state([]);
+	let multiValues: string[] = $state(["2"]);
 </script>
 
-<Doc {doc} extraChildrenDoc={[checkboxDoc]}>
+<Doc customTitle="Checkbox" {doc} extraChildrenDoc={[checkboxDoc]}>
 	<Story>
-		<CheckboxGroup bind:value={multiValues}>
+		<CheckboxGroup legend="Choose options" bind:value={multiValues}>
 			<Checkbox value="1">Option 1</Checkbox>
 			<Checkbox value="2">Option 2</Checkbox>
 			<Checkbox value="3">Option 3</Checkbox>

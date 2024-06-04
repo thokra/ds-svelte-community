@@ -1,34 +1,8 @@
-import { getContext } from "svelte";
-import type { HTMLFieldsetAttributes } from "svelte/elements";
+import { type Snippet } from "svelte";
 
 export const sizes = ["small", "medium"] as const;
 
-export type FieldSetContext = {
-	/**
-	 * Error message applied to element,
-	 */
-	error: string;
-	/**
-	 * Overrides internal errorId
-	 */
-	errorId: string;
-	/**
-	 * Changes paddings, margins and font-sizes
-	 */
-	size: (typeof sizes)[number];
-	/**
-	 * Sets fieldset and all form-children to disabled
-	 */
-	disabled: boolean;
-};
-
-export const contextKey = Symbol("FieldsetContext");
-
-export function GetFieldsetContext(): FieldSetContext | undefined {
-	return getContext<FieldSetContext>(contextKey);
-}
-
-export interface FieldsetProps extends HTMLFieldsetAttributes {
+export interface FieldsetProps {
 	/**
 	 * If enabled shows the legend and description for screenreaders only
 	 */
@@ -64,4 +38,12 @@ export interface FieldsetProps extends HTMLFieldsetAttributes {
 	 * Override internal id
 	 */
 	id?: string;
+
+	legend: string | Snippet;
+
+	children: Snippet;
+
+	description?: string | Snippet;
+
+	[key: string]: unknown;
 }

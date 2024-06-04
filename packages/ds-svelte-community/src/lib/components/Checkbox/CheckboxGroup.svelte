@@ -73,6 +73,8 @@
 	{id}
 	{disabled}
 	{size}
+	{legend}
+	{description}
 	class={classes(restProps, "navds-checkbox-group", `navds-checkbox-group--${size}`)}
 >
 	<div class="navds-checkboxes">
