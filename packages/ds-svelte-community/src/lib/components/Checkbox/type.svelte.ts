@@ -87,6 +87,8 @@ export interface CheckboxProps {
 
 	/**
 	 * Specify whether the Checkbox is in an indeterminate state
+	 *
+	 * **Note**: This is a client side only feature
 	 */
 	indeterminate?: boolean;
 

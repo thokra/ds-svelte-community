@@ -1,43 +1,39 @@
+<!--
+	@component
+	Removable chip shows selected values that the user can remove.
+ -->
+
 <script lang="ts">
 	import { classes, omit } from "../helpers";
 	import type { ToggleProps } from "./type";
 
-	type $$Props = ToggleProps;
-
-	/**
-	 * Toggles aria-pressed and visual-changes
-	 */
-	export let selected = false;
-
-	/**
-	 * The content of the chip
-	 */
-	export let value: string;
-
-	/**
-	 * Chip-variants
-	 */
-	export let variant: ToggleProps["variant"] = "action";
-
-	/**
-	 * Toggles display of checkmark on selected
-	 * @default true
-	 */
-	export let checkmark = true;
+	let {
+		selected = $bindable(false),
+		value,
+		variant = "action",
+		checkmark = true,
+		children,
+		...restProps
+	}: ToggleProps = $props();
 </script>
 
 <!-- Called when the user clicks the toggle -->
 <button
-	{...omit($$restProps, "class")}
+	{...omit(restProps, "class")}
 	class={classes(
-		$$restProps,
+		restProps,
 		"navds-chips__chip",
 		"navds-chips__toggle",
 		`navds-chips__toggle--${variant}`,
 	)}
 	class:navds-chips__toggle--with-checkmark={checkmark}
 	aria-pressed={selected}
-	on:click
+	onclick={(e) => {
+		selected = !selected;
+		if (restProps && "onclick" in restProps && typeof restProps.onclick === "function") {
+			restProps.onclick(e);
+		}
+	}}
 >
 	{#if checkmark}
 		<svg
@@ -70,5 +66,11 @@
 	{/if}
 
 	<!-- Content of the ToggleChip. Falls back to `value` prop if no content. -->
-	<span class="navds-chips__chip-text"><slot>{value}</slot></span>
+	<span class="navds-chips__chip-text">
+		{#if children}
+			{@render children()}
+		{:else}
+			{value}
+		{/if}
+	</span>
 </button>

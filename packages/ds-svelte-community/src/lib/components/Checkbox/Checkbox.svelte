@@ -24,22 +24,25 @@
 		size,
 		disabled = false,
 		id = "cb-" + newUniqueId(),
-		checked = $bindable(false),
+		checked = $bindable(undefined),
 		children,
 		onchange,
 		...restProps
 	}: CheckboxProps = $props();
 
 	const ctx = GetCheckboxGroupContext();
-	const values = ctx && ctx.groupControlled ? ctx.values : null;
 
 	const lblID = "cblbl-" + newUniqueId();
-	// checked = $derived(values && $values ? $values.includes(value) || false : checked);
-	$effect(() => {
-		if (values) {
-			checked = values.includes(value);
+
+	if (ctx && ctx.groupControlled) {
+		if (checked !== undefined) {
+			console.error(
+				"Checkbox is part of a controlled CheckboxGroup, and should not have a checked prop.",
+			);
+		} else {
+			checked = ctx.values.includes(value);
 		}
-	});
+	}
 
 	const hasErrorStore = ctx ? ctx.hasError : null;
 	let hasError = $derived(hasErrorStore ? hasErrorStore : error);
