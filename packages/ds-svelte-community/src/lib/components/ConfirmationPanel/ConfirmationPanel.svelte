@@ -1,3 +1,11 @@
+<!--
+	@component
+
+	Used to give active consent either at the beginning or end of a flow.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/confirmationpanel).
+ -->
+
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>
@@ -9,58 +17,41 @@
 	import ErrorMessage from "../typography/ErrorMessage/ErrorMessage.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let {
+		error = "",
+		errorId = "",
+		size = "medium",
+		value = "",
+		id = "",
+		checked = false,
+		children,
+		label,
+		...restProps
+	}: Props = $props();
 
-	/**
-	 * Error message for element.
-	 */
-	export let error = "";
-
-	/**
-	 * Override internal errorId.
-	 */
-	export let errorId = "";
-
-	/**
-	 * Changes font-size, padding and gaps.
-	 */
-	export let size: "medium" | "small" = "medium";
-
-	/**
-	 * The value of the HTML element.
-	 */
-	export let value = "";
-
-	/**
-	 * Override internal id.
-	 */
-	export let id = "";
-
-	/**
-	 * Wether the checkbox is checked, can be used with `bind:checked`.
-	 */
-	export let checked = false;
-
-	$: uid = id || "confirmation-panel-" + newUniqueId();
+	let uid = $derived(id || "confirmation-panel-" + newUniqueId());
 </script>
 
 <div
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-confirmation-panel", "navds-form-field")}
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-confirmation-panel", "navds-form-field")}
 	class:navds-confirmation-panel--small={size === "small"}
 	class:navds-confirmation-panel--error={error != ""}
 	class:navds-confirmation-panel--checked={!!checked}
 >
 	<div class="navds-confirmation-panel__inner">
-		{#if $$slots.default}
+		{#if children}
 			<BodyLong {size} class="navds-confirmation-panel__content" id={uid} as="div">
 				<!-- Description -->
-				<slot />
+				{@render children()}
 			</BodyLong>
 		{/if}
 		<Checkbox bind:checked {value} error={!!error} {size} aria-describedby={uid}>
-			<!-- Label text -->
-			<slot name="label" />
+			{#if typeof label === "string"}
+				{label}
+			{:else}
+				{@render label()}
+			{/if}
 		</Checkbox>
 	</div>
 	<div class="navds-form-field__error" id={errorId} role="alert">

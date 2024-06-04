@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from "$app/environment";
 	import { page } from "$app/stores";
 	import { Tab, TabList, TabPanel, Tabs } from "$lib";
 	import Alert from "$lib/components/Alert/Alert.svelte";
@@ -34,8 +35,15 @@
 		stories?: Story[];
 	} = $props();
 
-	// eslint-disable-next-line svelte/valid-compile
-	let tab = $derived($page.url.searchParams.get("tab") || "Default");
+	let tab = $state("Default");
+	if (dev) {
+		// eslint-disable-next-line svelte/valid-compile
+		tab = $page.url.searchParams.get("tab") || "Default";
+	}
+
+	$effect(() => {
+		tab = $page.url.searchParams.get("tab") || "Default";
+	});
 
 	const story = $derived(stories?.find((s) => s.name === tab));
 	const storyProps = () => {

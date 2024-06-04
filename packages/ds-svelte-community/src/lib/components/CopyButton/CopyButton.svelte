@@ -1,47 +1,37 @@
+<!--
+	@component
+
+	Allow users to copy text to clipboard.
+
+	**Note:**
+	This differs from the `@navikt/ds-react` implementation in that it uses the `navigator.clipboard` API instead of the `document.execCommand("copy")` API.
+	This is to simplify code and support up-to-date browsers only. If you support IE or older browsers, reach out.
+ -->
+
 <script lang="ts">
 	import CheckmarkIcon from "$lib/icons/CheckmarkIcon.svelte";
 	import FilesIcon from "$lib/icons/FilesIcon.svelte";
-	import { createEventDispatcher, onDestroy } from "svelte";
+	import { onDestroy } from "svelte";
 	import { classes, omit } from "../helpers";
 	import { Label } from "../typography";
-	import type { Props, sizes, variants } from "./type";
+	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let {
+		size = "medium",
+		variant = "neutral",
+		copyText,
+		text = "",
+		activeText = "",
+		activeDuration = 2000,
+		title = "Copy",
+		activeTitle = "Copied",
+		activeChanged,
+		icon,
+		...restProps
+	}: Props = $props();
 
-	export let size: (typeof sizes)[number] = "medium";
-	export let variant: (typeof variants)[number] = "neutral";
-	/**
-	 * Text to copy to clipboard.
-	 */
-	export let copyText: string;
-	/**
-	 *  Optional text in button.
-	 */
-	export let text = "";
-	/**
-	 * Text shown when button is clicked.
-	 * Only set if used with 'text'-prop.
-	 */
-	export let activeText = "";
-	/**
-	 * Timeout duration in milliseconds.
-	 */
-	export let activeDuration = 2000;
-	/**
-	 * Accessible label for icon (ignored if text is set).
-	 */
-	export let title = "Copy";
-	/**
-	 * Accessible label for icon in active-state (ignored if text is set).
-	 */
-	export let activeTitle = "Copied";
-
-	let active = false;
+	let active = $state(false);
 	let timeout: ReturnType<typeof setTimeout> | null = null;
-
-	const dispatch = createEventDispatcher<{
-		activeChange: boolean;
-	}>();
 
 	onDestroy(() => {
 		if (timeout) {
@@ -56,14 +46,11 @@
 		navigator.clipboard.writeText(copyText);
 		active = true;
 
-		/**
-		 *  Called whenever the active-state changes
-		 */
-		dispatch("activeChange", active);
+		activeChanged && activeChanged(active);
 
 		timeout = setTimeout(() => {
 			active = false;
-			dispatch("activeChange", active);
+			activeChanged && activeChanged(active);
 
 			timeout = null;
 		}, activeDuration);
@@ -71,35 +58,29 @@
 </script>
 
 <button
-	{...omit($$restProps, "class")}
+	{...omit(restProps, "class")}
 	type="button"
 	aria-live="polite"
 	class={classes(
-		$$restProps,
+		restProps,
 		"navds-copybutton",
 		`navds-copybutton--${size}`,
 		`navds-copybutton--${variant}`,
 	)}
 	class:navds-copybutton--icon-only={!text}
 	class:navds-copybutton--active={active}
-	on:click={handleClick}
+	onclick={handleClick}
 >
 	<span class="navds-copybutton__content">
-		{#if active}
-			<span class="navds-copybutton__icon">
-				<!-- Icon when button has been clicked. Defaults to `<Checkmark />` icon. -->
-				<slot name="active-icon">
-					<CheckmarkIcon aria-hidden={!!text} title={text ? undefined : activeTitle} />
-				</slot>
-			</span>
-		{:else}
-			<span class="navds-copybutton__icon">
-				<!-- Icon for the button. Defaults to `<Files />` icon. -->
-				<slot name="icon">
-					<FilesIcon aria-hidden={!!text} title={text ? undefined : title} />
-				</slot>
-			</span>
-		{/if}
+		<span class="navds-copybutton__icon">
+			{#if icon}
+				{@render icon(active)}
+			{:else if active}
+				<CheckmarkIcon aria-hidden={!!text} title={text ? undefined : activeTitle} />
+			{:else}
+				<FilesIcon aria-hidden={!!text} title={text ? undefined : title} />
+			{/if}
+		</span>
 
 		{#if text}
 			{#if active}
