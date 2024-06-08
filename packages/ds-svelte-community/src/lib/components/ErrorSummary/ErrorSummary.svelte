@@ -1,3 +1,10 @@
+<!--
+	@component
+	ErrorSummary gives the user a summary list of validation errors they need to fix before continuing.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/errorsummary).
+-->
+
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>
@@ -6,31 +13,16 @@
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Heading from "../typography/Heading/Heading.svelte";
-	import type { Props, headingTags, sizes } from "./type";
+	import type { Props } from "./type";
 
-	type $$Props = Props;
-
-	/**
-	 * Changes padding and font-sizes.
-	 */
-	export let size: (typeof sizes)[number] = "medium";
-
-	/**
-	 * Heading text.
-	 */
-	export let heading: string;
-
-	/**
-	 * Allows setting a different HTML h-tag.
-	 */
-	export let headingTag: (typeof headingTags)[number] = "h2";
+	let { size = "medium", heading, headingTag = "h2", children, ...restProps }: Props = $props();
 
 	const headingID = "es-" + newUniqueId();
 </script>
 
 <section
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-error-summary", `navds-error-summary--${size}`)}
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-error-summary", `navds-error-summary--${size}`)}
 	tabIndex={-1}
 	aria-live="polite"
 	aria-relevant="all"
@@ -40,6 +32,6 @@
 		{heading}
 	</Heading>
 	<BodyShort as="ul" {size} class="navds-error-summary__list">
-		<slot />
+		{@render children()}
 	</BodyShort>
 </section>

@@ -1,3 +1,10 @@
+<!--
+	@component
+	Search lets users explore a website or application by typing keywords or phrases that find the most relevant content for them.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/search).
+-->
+
 <script lang="ts" context="module">
 	/* TODO: Add error handling */
 
@@ -12,94 +19,48 @@
 	import { Loader } from "$lib";
 	import MagnifyingGlassIcon from "$lib/icons/MagnifyingGlassIcon.svelte";
 	import XMarkIcon from "$lib/icons/XMarkIcon.svelte";
-	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Label from "../typography/Label/Label.svelte";
 	import SearchButton from "./SearchButton.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
-
-	/**
-	 * Search label.
-	 * @note Will be hidden by default, is required for accessibility reasons.
-	 */
-	export let label: string;
-	/**
-	 * Shows label and description for screen readers only.
-	 */
-	export let hideLabel = true;
-
-	/**
-	 * aria-label on clear button.
-	 */
-	export let clearButtonLabel = "Clear";
-
-	/**
-	 * If false, removes clear-button option from input.
-	 */
-	export let clearButton = true;
-	/**
-	 * Changes button-variant, "simple" removes button
-	 */
-	export let variant: "primary" | "secondary" | "simple" = "primary";
-
-	/**
-	 * Adds a description to extend labling of a field.
-	 */
-	export let description = "";
-
-	/**
-	 * Size of input.
-	 */
-	export let size: "medium" | "small" = "medium";
-
-	/**
-	 * Value of input.
-	 */
-	export let value = "";
-
-	/**
-	 * Disables element
-	 * @note Avoid using if possible for accessibility purposes
-	 */
-	export let disabled = false;
-
-	/**
-	 * Loading state.
-	 * @note Non-standard. Only available in ds-svelte-community.
-	 */
-	export let loading = false;
-
-	/**
-	 * Aria label on search icon.
-	 */
-	export let searchIconText = "Search";
+	let {
+		label,
+		hideLabel = true,
+		clearButtonLabel = "Clear",
+		clearButton = true,
+		variant = "primary",
+		description = "",
+		size = "medium",
+		value = $bindable(""),
+		disabled = false,
+		loading = false,
+		searchIconText = "Search",
+		button,
+		onClear,
+		...restProps
+	}: Props = $props();
 
 	let hasError = false;
 
 	const baseID = "search-" + newUniqueId();
 
-	$: srOnlyClass = hideLabel ? "navds-sr-only" : "";
+	let srOnlyClass = $derived(hideLabel ? "navds-sr-only" : "");
 
 	let input: HTMLInputElement | undefined;
 
-	const dispatcher = createEventDispatcher<{
-		clear: { event: SearchClearEvent };
-	}>();
-
 	function handleClearClick(event: MouseEvent) {
 		// Called when clear is triggered
-		dispatcher("clear", { event: { trigger: "Click", event } });
+		onClear && onClear({ event, trigger: "Click" });
 		value = "";
 		input?.focus();
 	}
 
 	function handleInputKeypress(event: KeyboardEvent) {
-		if (event.key === "Escape" && value == "") {
+		if (event.key === "Escape" && value != "") {
 			// Called when clear is triggered
-			dispatcher("clear", { event: { trigger: "Escape", event } });
+			onClear && onClear({ event, trigger: "Escape" });
 			value = "";
 			input?.focus();
 			event.preventDefault();
@@ -108,7 +69,7 @@
 </script>
 
 <div
-	class={classes($$restProps, "navds-form-field", `navds-form-field--${size}`, "navds-search")}
+	class={classes(restProps, "navds-form-field", `navds-form-field--${size}`, "navds-search")}
 	class:navds-search--error={hasError}
 	class:navds-search--disabled={disabled}
 >
@@ -135,30 +96,18 @@
 					/>
 				{/if}
 			{/if}
-			<!-- svelte-ignore a11y-no-redundant-roles -->
-			<!-- Called when input is changed -->
+			<!-- svelte-ignore a11y_no_redundant_roles -->
 			<input
-				{...omit($$restProps, "class", "value", "type", "role")}
+				{...omit(restProps, "class", "value", "type", "role")}
 				bind:this={input}
 				bind:value
 				type="search"
 				role="searchbox"
 				class="navds-search__input navds-search__input--{variant} navds-text-field__input navds-body-short navds-body-short--{size}"
-				on:keypress={handleInputKeypress}
-				on:change
-				on:input
-				on:blur
-				on:mousedown
-				on:mouseup
-				on:keydown
-				on:keyup
-				on:keypress
-				on:focus
-				on:focusin
-				on:focusout
+				onkeypress={handleInputKeypress}
 			/>
 			{#if value && clearButton}
-				<button type="button" class="navds-search__button-clear" on:click={handleClearClick}>
+				<button type="button" class="navds-search__button-clear" onclick={handleClearClick}>
 					<span class="navds-sr-only">
 						{clearButtonLabel ? clearButtonLabel : "Empty"}
 					</span>
@@ -167,13 +116,11 @@
 			{/if}
 		</div>
 
-		<!-- Place for custom button -->
-		<slot>
-			{#if variant != "simple"}
-				<!-- Called when search button is clicked -->
-				<SearchButton on:click {disabled} {variant} {size} {loading} {searchIconText} />
-			{/if}
-		</slot>
+		{#if button}
+			{@render button()}
+		{:else if variant != "simple"}
+			<SearchButton onclick {disabled} {variant} {size} {loading} {searchIconText} />
+		{/if}
 	</div>
 	<div class="navds-form-field__error" aria-relevant="additions removals" aria-live="polite">
 		<!-- {showErrorMsg && (

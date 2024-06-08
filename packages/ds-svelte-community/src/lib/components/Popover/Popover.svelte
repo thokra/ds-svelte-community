@@ -1,3 +1,10 @@
+<!--
+	@component
+	Popover is a hidden panel connected to an element. The popover will be placed on top of all other elements in the interface. You control when and how it should be displayed and hidden.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/popover).
+-->
+
 <script lang="ts" context="module">
 	import { flip as flipMW, offset as offsetMW, shift as shiftMW } from "svelte-floating-ui/dom";
 </script>
@@ -9,49 +16,18 @@
 	import { classes, omit } from "../helpers";
 	import type { PopoverProps } from "./type";
 
-	type $$Props = PopoverProps;
-
-	/**
-	 * Open state
-	 */
-	export let open: PopoverProps["open"];
-	/**
-	 * Orientation for popover
-	 * @note Try to keep general usage to "top", "bottom", "left", "right"
-	 * @default "top"
-	 */
-	export let placement: PopoverProps["placement"] = "top";
-	/**
-	 * Adds a arrow from dialog to anchor when true
-	 * @default true
-	 */
-	export let arrow: PopoverProps["arrow"] = true;
-	/**
-	 * Distance from anchor to popover
-	 * @default 16 w/arrow, 4 w/no-arrow
-	 */
-	export let offset: PopoverProps["offset"] = undefined;
-	/**
-	 * Changes what CSS position property to use
-	 * You want to use "fixed" if reference element is inside a fixed container, but popover is not
-	 * @default "absolute"
-	 */
-	export let strategy: PopoverProps["strategy"] = "absolute";
-	/**
-	 * Changes placement of the floating element in order to keep it in view.
-	 * @default true
-	 */
-	export let flip: PopoverProps["flip"] = true;
-
-	/**
-	 * Reference element
-	 */
-	export let anchorEl: PopoverProps["anchorEl"];
-
-	/**
-	 * Class to add to the popover content
-	 */
-	export let contentClass: PopoverProps["contentClass"] = undefined;
+	let {
+		open = $bindable(false),
+		placement = "top",
+		arrow = true,
+		offset,
+		strategy = "absolute",
+		flip = true,
+		anchorEl,
+		contentClass,
+		children,
+		...restProps
+	}: PopoverProps = $props();
 
 	const arrowRef = writable<HTMLElement | null>(null);
 
@@ -86,7 +62,7 @@
 	});
 	let popover: HTMLDivElement;
 
-	$: {
+	$effect(() => {
 		update({
 			placement,
 			strategy,
@@ -97,30 +73,30 @@
 				arrow ? arrowMW({ element: arrowRef, padding: 0 }) : null,
 			],
 		});
-	}
+	});
 
-	$: {
+	$effect(() => {
 		if (anchorEl && popover) {
 			floatingRef(anchorEl);
 			anchorEl.addEventListener("focusout", () => {
 				open = false;
 			});
 		}
-	}
+	});
 </script>
 
 <div
 	use:floatingContent
 	bind:this={popover}
-	class={classes($$restProps, "navds-popover")}
+	class={classes(restProps, "navds-popover")}
 	class:navds-popover--hidden={!open || !anchorEl}
 	data-placement={placement}
-	{...omit($$restProps, "class")}
+	{...omit(restProps, "class")}
 >
 	<div class="navds-popover__content {contentClass}">
-		<slot />
+		{@render children()}
 	</div>
 	{#if arrow}
-		<div class="navds-popover__arrow" bind:this={$arrowRef} />
+		<div class="navds-popover__arrow" bind:this={$arrowRef}></div>
 	{/if}
 </div>

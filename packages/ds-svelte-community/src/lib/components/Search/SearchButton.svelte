@@ -3,39 +3,47 @@
 	import Button from "../Button/Button.svelte";
 	import { classes } from "../helpers";
 
-	/**
-	 * Size of button.
-	 */
-	export let size: "medium" | "small" = "medium";
-
-	/**
-	 * Button variant
-	 */
-	export let variant: "primary" | "secondary" = "primary";
-
-	/**
-	 * Disables element
-	 */
-	export let disabled = false;
-	/**
-	 * Loading state
-	 */
-	export let loading = false;
-
-	/**
-	 * Aria label for icon
-	 */
-	export let searchIconText: string = "";
+	let {
+		size = "medium",
+		variant = "primary",
+		loading = false,
+		disabled = false,
+		searchIconText = "",
+		...restProps
+	}: {
+		/**
+		 * Size of button.
+		 */
+		size?: "medium" | "small";
+		/**
+		 * Button variant
+		 */
+		variant?: "primary" | "secondary";
+		/**
+		 * Loading state
+		 */
+		loading?: boolean;
+		/**
+		 * Disables element
+		 */
+		disabled?: boolean;
+		/**
+		 * Aria label for icon
+		 */
+		searchIconText?: string;
+		[key: string]: unknown;
+	} = $props();
 </script>
 
 <Button
 	type="submit"
-	on:click
 	{size}
 	{variant}
 	{loading}
-	class={classes($$restProps, "navds-search__button-search")}
+	class={classes(restProps, "navds-search__button-search")}
 	{disabled}
-	><svelte:fragment slot="icon-left"><MagnifyingGlassIcon title={searchIconText} /></svelte:fragment
-	></Button
 >
+	{#snippet iconLeft()}
+		<MagnifyingGlassIcon title={searchIconText} />
+	{/snippet}
+</Button>

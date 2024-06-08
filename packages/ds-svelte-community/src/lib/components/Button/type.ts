@@ -50,6 +50,11 @@ interface BaseProps {
 	 */
 	iconRight?: Snippet;
 
+	/**
+	 * Ref is the button element. Bind to this to obtain the button element.
+	 */
+	ref?: Element;
+
 	[key: string]: unknown;
 }
 

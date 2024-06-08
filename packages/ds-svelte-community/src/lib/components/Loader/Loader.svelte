@@ -1,37 +1,33 @@
+<!--
+	@component
+	Loader gives users a visual indication that something is loading or taking time.
+	Even though users have little information about what is happening, they are assured that something is happening.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/loader).
+-->
+
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>
 
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import type { Props, sizes, variants } from "./type";
+	import type { Props } from "./type";
 
-	type $$Props = Props;
-
-	/**
-	 * Changes Loader width/height
-	 * 64px | 40px | 32px | 24px | 20px | 16px
-	 */
-	export let size: (typeof sizes)[number] = "medium";
-	/**
-	 * Title prop on svg
-	 */
-	export let title = "waiting...";
-	/**
-	 * Sets svg-background to transparent
-	 */
-	export let transparent = false;
-	/**
-	 * Colored variants for Loader
-	 */
-	export let variant: (typeof variants)[number] = "neutral";
+	let {
+		size = "medium",
+		title = "waiting...",
+		transparent = false,
+		variant = "neutral",
+		...restProps
+	}: Props = $props();
 
 	const id = "ldr" + newUniqueId();
 </script>
 
 <svg
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, `navds-loader navds-loader--${size}`, `navds-loader--${variant}`)}
+	{...omit(restProps, "class")}
+	class={classes(restProps, `navds-loader navds-loader--${size}`, `navds-loader--${variant}`)}
 	class:navds-loader--transparent={transparent}
 	focusable="false"
 	viewBox="0 0 50 50"

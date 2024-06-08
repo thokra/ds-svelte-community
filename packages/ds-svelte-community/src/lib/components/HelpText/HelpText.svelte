@@ -1,19 +1,35 @@
+<!--
+	@component
+	HelpText gives users an explanation of unknown terms or concepts, which is displayed when they need it.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/helptext).
+
+-->
+
 <script lang="ts">
 	import Popover from "../Popover/Popover.svelte";
 	import { classes, omit } from "../helpers";
 	import HelpTextIcon from "./HelpTextIcon.svelte";
 	import type { HelpTextProps } from "./type";
 
-	type $$Props = HelpTextProps;
+	// type $$Props = HelpTextProps;
 
-	export let title: string;
-	export let wrapperClass: string = "";
-	export let placement: HelpTextProps["placement"] = "top";
-	export let strategy: HelpTextProps["strategy"] = "absolute";
+	// export let title: string;
+	// export let wrapperClass: string = "";
+	// export let placement: HelpTextProps["placement"] = "top";
+	// export let strategy: HelpTextProps["strategy"] = "absolute";
 
-	let btnEl: HTMLButtonElement;
+	let {
+		title,
+		wrapperClass = "",
+		placement = "top",
+		strategy = "absolute",
+		children,
+		...restProps
+	}: HelpTextProps = $props();
 
-	let open = false;
+	let btnEl: HTMLButtonElement | undefined = $state(undefined);
+	let open = $state(false);
 </script>
 
 <div class="navds-help-text {wrapperClass}">
@@ -23,9 +39,9 @@
 		}} -->
 	<button
 		bind:this={btnEl}
-		{...omit($$restProps, "class")}
-		on:click={() => (open = !open)}
-		class={classes($$restProps, "navds-help-text__button")}
+		{...omit(restProps, "class")}
+		onclick={() => (open = !open)}
+		class={classes(restProps, "navds-help-text__button")}
 		type="button"
 		aria-expanded={open}
 	>
@@ -42,6 +58,6 @@
 		{strategy}
 		offset={12}
 	>
-		<slot />
+		{@render children()}
 	</Popover>
 </div>

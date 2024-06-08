@@ -1,50 +1,51 @@
+<!--
+	@component
+	Modals are useful tools when you have critical information a user needs to take a stance on.
+
+	**Note**: This component differs from the `@navikt/ds-react` component in that it uses the `dialog` element instead of custom markup.
+	This reduces the amount of properties available. If this doesn't work for you, reach out.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/modal).
+-->
+
 <script lang="ts">
 	import XMarkIcon from "$lib/icons/XMarkIcon.svelte";
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import Button from "../Button/Button.svelte";
 	import { classes, omit } from "../helpers";
+	import Heading from "../typography/Heading/Heading.svelte";
 	import { sizes, type Props } from "./type";
 
-	type $$Props = Props;
-	/**
-	 * Set open to `true` to open the dialog. Set to `false` to close it.
-	 * Recommended to use with `bind:open`.
-	 */
-	export let open: boolean;
-
-	/**
-	 * Removes close-button(X) when false.
-	 */
-	export let closeButton = true;
-
-	/**
-	 * Set to `true` to make the dialog modal.
-	 */
-	export let isModal = true;
-
-	/**
-	 * Set width of dialog.
-	 * @default fit-content (up to 700px)
-	 */
-	export let width: Props["width"] = undefined;
-
-	/**
-	 * Text for close-icon.
-	 */
-	export let closeIconText = "Close modal";
+	let {
+		open = $bindable(false),
+		closeButton = true,
+		isModal = true,
+		width = undefined,
+		closeIconText = "Close modal",
+		header,
+		children,
+		footer,
+		...restProps
+	}: Props = $props();
 
 	let dialog: HTMLDialogElement;
 
-	$: if (dialog && open && dialog.showModal) {
-		isModal ? dialog.showModal() : dialog.show();
-	}
-	$: if (dialog && !open) {
-		dialog.close();
-	}
+	$effect(() => {
+		if (dialog && open && dialog.showModal) {
+			isModal ? dialog.showModal() : dialog.show();
+		}
+	});
+	$effect(() => {
+		if (dialog && !open) {
+			dialog.close();
+		}
+	});
 
 	const openStore = writable(open);
-	$: openStore.set(open);
+	$effect(() => {
+		openStore.set(open);
+	});
 	onMount(() => {
 		return openStore.subscribe((value) => {
 			if (dialog && value) {
@@ -69,13 +70,17 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <dialog
-	{...omit($$restProps, "class")}
+	{...omit(restProps, "class")}
 	bind:this={dialog}
-	on:close={() => (open = false)}
-	on:click|self={() => dialog.close()}
-	class={classes($$restProps, { [`navds-modal--${width}`]: isKnownSize(width) })}
+	onclose={() => (open = false)}
+	onclick={(e) => {
+		if (e.target === dialog) {
+			dialog.close();
+		}
+	}}
+	class={classes(restProps, { [`navds-modal--${width}`]: isKnownSize(width) })}
 	class:navds-modal={open}
 	class:navds-modal--autowidth={!width}
 	style={styles(width)}
@@ -87,18 +92,28 @@
 				class="navds-modal__button"
 				size="small"
 				variant="tertiary-neutral"
-				on:click={() => (open = false)}
-				><svelte:fragment slot="icon-left"><XMarkIcon title={closeIconText} /></svelte:fragment
-				></Button
+				onclick={() => (open = false)}
 			>
+				{#snippet iconLeft()}
+					<XMarkIcon title={closeIconText} />
+				{/snippet}
+			</Button>
 		{/if}
-		<slot name="header" />
+
+		{#if header}
+			{#if typeof header === "string"}
+				<Heading level="1" size="large">{header}</Heading>
+			{:else}
+				{@render header()}
+			{/if}
+		{/if}
 	</div>
 	<div class="navds-modal__body">
-		<!-- Modal content -->
-		<slot />
+		{@render children()}
 	</div>
-	{#if $$slots.footer}
-		<div class="navds-modal__footer"><slot name="footer" /></div>
+	{#if footer}
+		<div class="navds-modal__footer">
+			{@render footer()}
+		</div>
 	{/if}
 </dialog>

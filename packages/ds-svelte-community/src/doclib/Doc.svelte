@@ -25,6 +25,7 @@
 		stories,
 		preview,
 		customTitle,
+		extraDescription,
 	}: {
 		doc: Doc;
 		customTitle?: string;
@@ -33,6 +34,7 @@
 		componentOptions?: ComponentOptions;
 		preview?: { width?: string };
 		stories?: Story[];
+		extraDescription?: Snippet;
 	} = $props();
 
 	let tab = $state("Default");
@@ -93,6 +95,10 @@
 <h1>{customTitle ?? doc.name}</h1>
 
 <SvelteMarkdown source={doc.description} />
+
+{#if extraDescription}
+	{@render extraDescription()}
+{/if}
 
 {#if !story}
 	<Alert variant="warning">No story found for tab "{tab}"</Alert>

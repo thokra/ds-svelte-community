@@ -1,60 +1,33 @@
+<!--
+	@component
+	Pagination is used to divide content or data into sections so that the user is not overwhelmed by too much content or data at once.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/pagination).
+-->
+
 <script lang="ts">
 	import ChevronLeftIcon from "$lib/icons/ChevronLeftIcon.svelte";
 	import ChevronRightIcon from "$lib/icons/ChevronRightIcon.svelte";
-	import { createEventDispatcher } from "svelte";
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Item from "./Item.svelte";
 	import ItemWithIcon from "./ItemWithIcon.svelte";
-	import type { Props, sizes } from "./type";
+	import type { Props } from "./type";
 
-	type $$Props = Props;
+	// TODO: Fix bug when navigating back and forth. Some pages will not show, but ellipsis will.
 
-	/**
-	 * Current page. If set will require implementation of `on:change` event.
-	 * @note Pagination indexing starts at 1.
-	 */
-	export let page = 1;
-	/**
-	 * Number of always visible pages before and after the current page.
-	 * @default 1
-	 */
-	export let siblingCount = 1;
-	/**
-	 * Number of always visible pages at the beginning and end.
-	 * @default 1
-	 */
-	export let boundaryCount = 1;
-
-	/**
-	 * Total number of pages.
-	 */
-	export let count: number;
-
-	/**
-	 * Changes padding, height and font-size.
-	 */
-	export let size: (typeof sizes)[number] = "medium";
-
-	/**
-	 * Next label.
-	 */
-	export let nextText = "Next";
-
-	/**
-	 * Previous label.
-	 */
-	export let prevText = "Previous";
-
-	/**
-	 * Show next and previous buttons with text.
-	 */
-	export let prevNextTexts = false;
-
-	type Events = {
-		change: { page: number };
-	};
-	const dispatch = createEventDispatcher<Events>();
+	let {
+		page = 1,
+		siblingCount = 1,
+		boundaryCount = 1,
+		count,
+		size = "medium",
+		nextText = "Next",
+		prevText = "Previous",
+		prevNextTexts = false,
+		onChange,
+		...restProps
+	}: Props = $props();
 
 	const getSteps = (page: number) => {
 		const range = (start: number, end: number) =>
@@ -86,16 +59,16 @@
 		];
 	};
 
-	$: steps = getSteps(page);
+	let steps = $derived(getSteps(page));
 
 	const handlePageChange = (page: number) => {
-		dispatch("change", { page });
+		onChange && onChange({ page });
 	};
 </script>
 
 <nav
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-pagination", `navds-pagination--${size}`)}
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-pagination", `navds-pagination--${size}`)}
 >
 	<ul class="navds-pagination__list">
 		<li>
@@ -108,14 +81,14 @@
 				page={page - 1}
 				{size}
 				iconOnly={!prevNextTexts}
-				on:click={() => handlePageChange(page - 1)}
+				onclick={() => handlePageChange(page - 1)}
 			>
-				<svelte:fragment slot="icon">
+				{#snippet icon()}
 					<ChevronLeftIcon
 						class="navds-pagination__prev-next-icon"
 						{...prevNextTexts ? { "aria-hidden": true } : { title: prevText }}
 					/>
-				</svelte:fragment>
+				{/snippet}
 				{#if prevNextTexts}
 					<BodyShort size={size === "xsmall" ? "small" : size} class="navds-pagination__prev-text">
 						{prevText}
@@ -131,7 +104,7 @@
 				</li>
 			{:else}
 				<li>
-					<Item selected={page === n} page={n} {size} on:click={() => handlePageChange(n)}>
+					<Item selected={page === n} page={n} {size} onclick={() => handlePageChange(n)}>
 						<BodyShort size={size === "xsmall" ? "small" : size}>
 							{n}
 						</BodyShort>
@@ -148,15 +121,15 @@
 				disabled={page === count}
 				page={page + 1}
 				{size}
-				on:click={() => handlePageChange(page + 1)}
+				onclick={() => handlePageChange(page + 1)}
 				iconOnly={!prevNextTexts}
 			>
-				<svelte:fragment slot="icon">
+				{#snippet icon()}
 					<ChevronRightIcon
 						class="navds-pagination__prev-next-icon"
 						{...prevNextTexts ? { "aria-hidden": true } : { title: nextText }}
 					/>
-				</svelte:fragment>
+				{/snippet}
 				{#if prevNextTexts}
 					<BodyShort size={size === "xsmall" ? "small" : size} class="navds-pagination__prev-text">
 						{nextText}

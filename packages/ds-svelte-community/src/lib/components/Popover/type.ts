@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from "svelte/elements";
+import type { Snippet } from "svelte";
 
 export const PopoverPlacement = [
 	"top",
@@ -15,11 +15,11 @@ export const PopoverPlacement = [
 	"left-end",
 ] as const;
 
-export interface PopoverProps extends HTMLAttributes<HTMLDivElement> {
+export interface PopoverProps {
 	/**
 	 * Element popover anchors to
 	 */
-	anchorEl: Element | null;
+	anchorEl: Element | undefined;
 	/**
 	 * Open state
 	 */
@@ -56,4 +56,11 @@ export interface PopoverProps extends HTMLAttributes<HTMLDivElement> {
 	 * Class to add to the popover content
 	 */
 	contentClass?: string;
+
+	/**
+	 * Content
+	 */
+	children: Snippet;
+
+	[key: string]: unknown;
 }

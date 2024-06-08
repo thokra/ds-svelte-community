@@ -1,35 +1,33 @@
+<!--
+	@component
+	GuidePanel is used to give a friendly welcome and introduction to the user.
+
+	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/guidepanel).
+-->
+
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import Illustration from "./Illustration.svelte";
+	import Illustration from "./GuidePanelIllustration.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
-
-	/**
-	 * Render illustation above content
-	 * @default true on mobile (<480px)
-	 */
-	export let poster: boolean | undefined = undefined;
+	let { poster, illustration, children, ...restProps }: Props = $props();
 </script>
 
 <div
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-guide-panel")}
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-guide-panel")}
 	class:navds-guide-panel--poster={poster === true}
 	class:navds-guide-panel--not-poster={poster === false}
 	class:navds-guide-panel--responsive-poster={poster === undefined}
 >
 	<div class="navds-guide">
-		<!-- Hack until something like https://github.com/sveltejs/svelte/pull/8304 is released -->
-		{#if $$slots.illustration}
-			<!-- Custom illustration -->
-			<slot name="illustration" />
+		{#if illustration}
+			{@render illustration()}
 		{:else}
 			<Illustration />
 		{/if}
 	</div>
 	<div class="navds-guide-panel__content">
-		<!-- Content -->
-		<slot />
+		{@render children()}
 	</div>
 </div>

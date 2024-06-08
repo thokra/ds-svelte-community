@@ -22,10 +22,11 @@
 		children,
 		iconLeft,
 		iconRight,
+		ref = $bindable(),
 		...restProps
 	}: Props = $props();
 
-	let ref: undefined | HTMLElement = $state(undefined);
+	// let ref: undefined | HTMLElement = $state(undefined);
 
 	let overrideWidth = $derived.by(() => {
 		return ref && loading ? ref.getBoundingClientRect().width : 0;

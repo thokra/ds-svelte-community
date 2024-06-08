@@ -3,12 +3,19 @@
 </script>
 
 <script lang="ts">
-	export let title = "NAV guide illustration";
-	export let titleId = "ill" + newUniqueId();
+	let {
+		title = "NAV guide illustration",
+		titleID = "ill" + newUniqueId(),
+		...restProps
+	}: {
+		title?: string;
+		titleID?: string;
+		[key: string]: unknown;
+	} = $props();
 </script>
 
 <svg
-	{...$$restProps}
+	{...restProps}
 	width="56"
 	height="85"
 	viewBox="0 0 56 85"
@@ -16,10 +23,10 @@
 	xmlns="http://www.w3.org/2000/svg"
 	focusable="false"
 	role="img"
-	aria-labelledby={title ? titleId : undefined}
+	aria-labelledby={title ? titleID : undefined}
 >
 	{#if title}
-		<title id={titleId}>{title}</title>
+		<title id={titleID}>{title}</title>
 	{/if}
 	<path
 		fill-rule="evenodd"
