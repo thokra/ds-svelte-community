@@ -140,7 +140,8 @@
 	"dependencies": {
 		"@nais/vite-plugin-svelte-docs": "workspace:*",
 		"@navikt/ds-css": "^6.6.1",
-		"@navikt/ds-tokens": "^6.6.1"
+		"@navikt/ds-tokens": "^6.6.1",
+		"shiki": "^1.6.3"
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",

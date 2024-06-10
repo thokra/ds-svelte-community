@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-	import { HighlightSvelte } from "svelte-highlight";
 	import "svelte-highlight/styles/github-dark.css";
 	export type ComponentOptions = {
 		center?: boolean;
@@ -11,6 +10,7 @@
 
 <script lang="ts">
 	import { CopyButton } from "$lib";
+	import Highlight from "./Highlight.svelte";
 	import type { StorySnippet } from "./Story.svelte";
 
 	const defaultOptions = {
@@ -32,6 +32,8 @@
 		source?: string;
 		preview?: { width?: string };
 	} = $props();
+
+	let showCode = $state(false);
 
 	const options = { ...defaultOptions, ...componentOptions };
 
@@ -97,15 +99,22 @@
 		{@render children({ docProps: dejsonify(values) })}
 		<!-- <svelte:component this={component} children={defaultBody} {...restProps} /> -->
 	</div>
+	{#if code}
+		<button class="toggleCode" onclick={() => (showCode = !showCode)}
+			>{showCode ? "Hide" : "Show"} code</button
+		>
+	{/if}
 </div>
 
-{#if code}
-	<div class="code-preview">
-		<div class="copy-code">
-			<CopyButton size="small" copyText={code} text="Copy code" activeText="Code copied" />
+{#if code && showCode}
+	{#if showCode}
+		<div class="code-preview">
+			<div class="copy-code">
+				<CopyButton size="small" copyText={code} text="Copy code" activeText="Code copied" />
+			</div>
+			<Highlight {code} />
 		</div>
-		<HighlightSvelte {code} />
-	</div>
+	{/if}
 {/if}
 
 <style>
@@ -113,8 +122,12 @@
 		background-color: var(--a-surface-default);
 		border: 1px solid var(--a-border-default);
 		border-radius: var(--a-border-radius-medium);
-		padding: 1rem;
 		min-height: 250px;
+		position: relative;
+	}
+
+	.preview-wrapper {
+		margin: 1rem;
 	}
 
 	.preview.center {
@@ -141,6 +154,26 @@
 
 		&:hover .copy-code {
 			display: block;
+		}
+
+		:global(pre) {
+			margin-top: 0;
+		}
+	}
+
+	.toggleCode {
+		position: absolute;
+		bottom: -1px;
+		right: -1px;
+		font-size: var(--a-font-size-small);
+		border: 1px solid var(--a-border-default);
+		border-radius: 0;
+		border-top-left-radius: var(--a-border-radius-medium);
+		padding: 0.2rem 0.5rem;
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--a-surface-alt-1-subtle);
 		}
 	}
 </style>
