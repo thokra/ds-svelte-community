@@ -40,6 +40,11 @@ export interface ToggleProps {
 	 */
 	children?: Snippet;
 
+	/**
+	 * What element to use for the chip
+	 */
+	as?: "button" | "a";
+
 	[key: string]: unknown;
 }
 

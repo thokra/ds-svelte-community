@@ -6,6 +6,10 @@
 	import type { LayoutData } from "./$types";
 
 	export let data: LayoutData;
+
+	function toTitle(str: string) {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
 </script>
 
 <Page background="bg-subtle">
@@ -19,7 +23,7 @@
 			<div class="sidebar">
 				<div class="section">
 					{#each Object.entries(data.paths) as [key, paths]}
-						<strong>{key}</strong>
+						<strong>{toTitle(key)}</strong>
 						<ul>
 							{#each paths as component}
 								{@const href = `/${key}/${component}/`}
@@ -76,6 +80,8 @@
 				text-underline-offset: 2px;
 				width: 100%;
 				display: block;
+				border-top-left-radius: var(--a-border-radius-medium);
+				border-bottom-left-radius: var(--a-border-radius-medium);
 
 				&:hover {
 					background-color: var(--a-grayalpha-100);

@@ -95,26 +95,24 @@
 </script>
 
 <div class="preview" class:center={options.center}>
-	<div class="preview-wrapper" style="width: {preview?.width}">
+	<div class="preview-wrapper" style="width: {preview?.width}" class:show-code={code && showCode}>
 		{@render children({ docProps: dejsonify(values) })}
 		<!-- <svelte:component this={component} children={defaultBody} {...restProps} /> -->
 	</div>
 	{#if code}
-		<button class="toggleCode" onclick={() => (showCode = !showCode)}
-			>{showCode ? "Hide" : "Show"} code</button
-		>
+		<button class="toggleCode" onclick={() => (showCode = !showCode)}>
+			{showCode ? "Hide" : "Show"} code
+		</button>
 	{/if}
 </div>
 
 {#if code && showCode}
-	{#if showCode}
-		<div class="code-preview">
-			<div class="copy-code">
-				<CopyButton size="small" copyText={code} text="Copy code" activeText="Code copied" />
-			</div>
-			<Highlight {code} />
+	<div class="code-preview">
+		<div class="copy-code">
+			<CopyButton size="small" copyText={code} text="Copy code" activeText="Code copied" />
 		</div>
-	{/if}
+		<Highlight {code} />
+	</div>
 {/if}
 
 <style>
@@ -128,6 +126,10 @@
 
 	.preview-wrapper {
 		margin: 1rem;
+
+		&.show-code {
+			border-bottom-left-radius: 0;
+		}
 	}
 
 	.preview.center {

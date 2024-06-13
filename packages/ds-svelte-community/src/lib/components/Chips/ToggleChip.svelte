@@ -12,13 +12,16 @@
 		value,
 		variant = "action",
 		checkmark = true,
+		as = "button",
 		children,
 		...restProps
 	}: ToggleProps = $props();
 </script>
 
 <!-- Called when the user clicks the toggle -->
-<button
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<svelte:element
+	this={as}
 	{...omit(restProps, "class")}
 	class={classes(
 		restProps,
@@ -26,14 +29,17 @@
 		"navds-chips__toggle",
 		`navds-chips__toggle--${variant}`,
 	)}
+	class:unstyled={as == "a"}
 	class:navds-chips__toggle--with-checkmark={checkmark}
 	aria-pressed={selected}
-	onclick={(e) => {
-		selected = !selected;
-		if (restProps && "onclick" in restProps && typeof restProps.onclick === "function") {
-			restProps.onclick(e);
-		}
-	}}
+	onclick={as == "a"
+		? undefined
+		: (e: MouseEvent) => {
+				selected = !selected;
+				if (restProps && "onclick" in restProps && typeof restProps.onclick === "function") {
+					restProps.onclick(e);
+				}
+			}}
 >
 	{#if checkmark}
 		<svg
@@ -73,4 +79,4 @@
 			{value}
 		{/if}
 	</span>
-</button>
+</svelte:element>

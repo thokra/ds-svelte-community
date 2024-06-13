@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { dev } from "$app/environment";
 	import { page } from "$app/stores";
-	import { Tab, TabList, TabPanel, Tabs } from "$lib";
+	import { Chips, ToggleChip } from "$lib";
 	import Alert from "$lib/components/Alert/Alert.svelte";
 	import type { Doc } from "@nais/vite-plugin-svelte-docs";
 	import { type Snippet } from "svelte";
@@ -100,27 +100,28 @@
 	{@render extraDescription()}
 {/if}
 
+<div class="menu">
+	<Chips>
+		{#each stories || [] as { name }}
+			<ToggleChip
+				as="a"
+				variant="action"
+				checkmark={false}
+				data-sveltekit-replacestate
+				value={name}
+				selected={name === tab}
+				href={name == "Default" ? "./" : `?tab=${name}`}
+			>
+				{name}
+			</ToggleChip>
+		{/each}
+	</Chips>
+</div>
+
 {#if !story}
 	<Alert variant="warning">No story found for tab "{tab}"</Alert>
 {:else}
-	<Tabs value={tab}>
-		<TabList>
-			{#each stories || [] as { name }}
-				<Tab
-					as="a"
-					data-sveltekit-replacestate
-					value={name}
-					href={name == "Default" ? "./" : `?tab=${name}`}
-				>
-					{name}
-				</Tab>
-			{/each}
-		</TabList>
-
-		<TabPanel value={story.name}>
-			<Renderer children={story.snippet} source={atob(story.source)} {values} {preview} />
-		</TabPanel>
-	</Tabs>
+	<Renderer children={story.snippet} source={atob(story.source)} {values} {preview} />
 {/if}
 
 <h2>Properties</h2>
@@ -141,3 +142,9 @@
 	<h3>{doc.name}</h3>
 	<Properties {doc} />
 {/each}
+
+<style>
+	.menu {
+		margin-bottom: 0.5rem;
+	}
+</style>
