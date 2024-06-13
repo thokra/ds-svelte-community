@@ -30,6 +30,8 @@
 			return false;
 		} else if (t.type === "boolean") {
 			return [true, false];
+		} else if (t.type === "number") {
+			return false;
 		} else if (t.type === "union") {
 			let err = false;
 			const ret = t.values.flatMap((v) => {
@@ -129,10 +131,11 @@
 	>
 		Set value
 	</Button>
-{:else if !Array.isArray(typ) && typ.type === "string"}
+{:else if !Array.isArray(typ) && (typ.type === "string" || typ.type === "number")}
 	<TextField
-		value={JSON.parse(value || '""')}
+		value={fromText(value || '""') as string}
 		size="small"
+		type={typ.type === "number" ? "number" : "text"}
 		on:change={(e) => {
 			onChange(toText((e.target as HTMLInputElement).value));
 		}}
@@ -150,7 +153,7 @@
 			<Select
 				bind:value
 				size="small"
-				on:change={() => {
+				onchange={() => {
 					onChange(value);
 				}}
 			>

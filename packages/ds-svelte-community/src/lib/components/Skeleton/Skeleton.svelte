@@ -1,20 +1,15 @@
+<!--
+@component
+Skeleton is used to give the user a temporary visual feedback while the content is loading or being processed. It is a simple and minimalistic version of the actual content to be displayed.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/skeleton).
+-->
+
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import type { Props, variants } from "./type";
+	import type { Props } from "./type";
 
-	type $$Props = Props;
-
-	export let variant: (typeof variants)[number];
-
-	/**
-	 * When not inferring height from children, you must specify height.
-	 */
-	export let height: Props["height"] = undefined;
-
-	/**
-	 * When not inferring width from children, you must specify width.
-	 */
-	export let width: Props["width"] = undefined;
+	let { variant, height, width, children, ...restProps }: Props = $props();
 
 	const style = (
 		restProps: { [index: string]: unknown },
@@ -41,13 +36,15 @@
 </script>
 
 <div
-	{...omit($$restProps, "class", "style")}
-	class={classes($$restProps, "navds-skeleton", `navds-skeleton--${variant}`)}
-	class:navds-skeleton--has-children={$$slots.default}
+	{...omit(restProps, "class", "style")}
+	class={classes(restProps, "navds-skeleton", `navds-skeleton--${variant}`)}
+	class:navds-skeleton--has-children={!!children}
 	class:navds-skeleton--no-height={!height}
 	class:navds-skeleton--no-width={!width}
-	style={style($$restProps, width, height)}
+	style={style(restProps, width, height)}
 	aria-hidden="true"
 >
-	<slot />
+	{#if children}
+		{@render children()}
+	{/if}
 </div>

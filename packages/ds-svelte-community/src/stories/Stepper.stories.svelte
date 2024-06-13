@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Heading } from "$lib";
 	import { Step, Stepper } from "$lib/components/Stepper";
-	import { orientations } from "$lib/components/Stepper/type";
+	import { orientations } from "$lib/components/Stepper/type.svelte";
 	// eslint-disable-next-line
 	// @ts-ignore
 	import { Meta, Story, Template } from "@storybook/addon-svelte-csf";

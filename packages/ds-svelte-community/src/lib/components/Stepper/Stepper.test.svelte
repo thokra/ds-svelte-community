@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Step, Stepper } from ".";
-	import type { Props } from "./type";
+	import type { Props } from "./type.svelte";
 
 	type $$Props = Props;
 </script>

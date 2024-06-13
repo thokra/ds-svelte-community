@@ -7,42 +7,31 @@
 	import { omit } from "../helpers";
 	import Label from "../typography/Label/Label.svelte";
 	import CompletedIcon from "./CompletedIcon.svelte";
-	import { getStepperContext, type StepProps } from "./type";
+	import { getStepperContext, type StepProps } from "./type.svelte";
 
-	type $$Props = StepProps;
-
-	/**
-	 * Makes step-indicator a checkmark
-	 * @default false
-	 */
-	export let completed = false;
-	/**
-	 * Makes step non-interactive if false. Step will be set to a <div>, overriding `as`-prop
-	 * @default true
-	 */
-	export let interactive: boolean | undefined = undefined;
-
-	export let completedLabel = "Completed";
+	let {
+		completed = false,
+		interactive,
+		completedLabel = "Completed",
+		children,
+		...restProps
+	}: StepProps = $props();
 
 	const id = newUniqueId();
 	const ctx = getStepperContext();
-	const { activeStep, interactive: interactiveStore, steps } = ctx;
 
-	let as = "a";
-	let isInteractive: boolean | null = null;
-
-	$: {
+	let isInteractive = $derived.by(() => {
 		if (interactive === undefined) {
-			isInteractive = $interactiveStore;
+			return ctx.interactive;
 		}
-		if (!isInteractive) {
-			as = "div";
-		}
-	}
+		return interactive;
+	});
 
-	$: index = $steps.indexOf(id) + 1;
+	let as = $derived(isInteractive ? "a" : "div");
 
 	ctx.register(id);
+	let index = $derived(ctx.steps.indexOf(id) + 1);
+
 	onDestroy(() => {
 		ctx.unregister(id);
 	});
@@ -54,22 +43,22 @@
 
 <li
 	class="navds-stepper__item"
-	class:navds-stepper__item--behind={index < $activeStep}
+	class:navds-stepper__item--behind={index < ctx.activeStep}
 	class:navds-stepper__item--non-interactive={!isInteractive}
 	class:navds-stepper__item--completed={completed}
 >
-	<span class="navds-stepper__line navds-stepper__line--1" />
+	<span class="navds-stepper__line navds-stepper__line--1"></span>
 	<svelte:element
 		this={as}
-		{...omit($$restProps, "class")}
+		{...omit(restProps, "class")}
 		class="navds-stepper__step"
-		class:navds-stepper__step--active={index == $activeStep}
-		class:navds-stepper__step--behind={index < $activeStep}
+		class:navds-stepper__step--active={index == ctx.activeStep}
+		class:navds-stepper__step--behind={index < ctx.activeStep}
 		class:navds-stepper__step--non-interactive={!isInteractive}
 		class:navds-stepper__step--completed={completed}
 		class:unstyled={as == "a"}
-		aria-current={index == $activeStep}
-		on:click={isInteractive ? handleClick : null}
+		aria-current={index == ctx.activeStep}
+		onclick={isInteractive ? handleClick : null}
 		role={isInteractive ? "button" : undefined}
 		tabindex={isInteractive ? 0 : undefined}
 	>
@@ -83,8 +72,8 @@
 			</Label>
 		{/if}
 		<Label as="span" class="navds-stepper__content">
-			<slot />
+			{@render children()}
 		</Label>
 	</svelte:element>
-	<span class="navds-stepper__line navds-stepper__line--2" />
+	<span class="navds-stepper__line navds-stepper__line--2"></span>
 </li>

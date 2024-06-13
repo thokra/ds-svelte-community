@@ -4,7 +4,7 @@ import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
 import Stepper from "./Stepper.test.svelte";
-import type { Props } from "./type";
+import type { Props } from "./type.svelte";
 
 describe("Stepper", () => {
 	it("renders with HTML similar to ds-react", async () => {
