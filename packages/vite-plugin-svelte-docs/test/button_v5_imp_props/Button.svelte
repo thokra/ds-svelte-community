@@ -1,22 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
-
-	type Props = {
-		/**
-		 * Select some type
-		 */
-		type?: "button" | "submit" | "reset";
-		/**
-		 * Color
-		 */
-		color: string;
-		onClick?: (e: MouseEvent) => void;
-		/**
-		 * Default slot
-		 */
-		children: Snippet;
-		named?: Snippet<[string]>;
-	};
+	import type { Props } from "./types";
 
 	let { type = "button", color, onClick, children, named }: Props = $props();
 </script>

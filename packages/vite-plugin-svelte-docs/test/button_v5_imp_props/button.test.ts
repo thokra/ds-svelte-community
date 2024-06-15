@@ -4,7 +4,7 @@ import * as path from "path";
 import { Doc } from "../../src";
 import { Generator } from "../../src/generator";
 
-describe("v4 alias", () => {
+describe("v5", () => {
 	test("button", async () => {
 		const filename = path.resolve(import.meta.dir, "Button.svelte").replace(".svelte", ".ts");
 		const code = (await fs.readFile(filename.replace(".ts", ".svelte"))).toString();
@@ -12,21 +12,22 @@ describe("v4 alias", () => {
 		const gen = new Generator(require.resolve("svelte2tsx"));
 		gen.addSvelteFile(filename, code);
 		const doc = gen.docFor(filename, false);
+
 		const expected: Doc = {
 			name: "Button",
 			description: "",
 			props: [
 				{
 					name: "color",
-					description: "",
+					description: "Color",
 					optional: false,
 					type: { type: "string" },
 				},
 				{
-					name: "kind",
+					name: "type",
 					description: "Select some type",
-					default: '"button"',
 					optional: true,
+					default: '"button"',
 					type: {
 						type: "union",
 						values: [
@@ -48,28 +49,34 @@ describe("v4 alias", () => {
 			],
 			slots: [
 				{
-					name: "default",
+					name: "children",
+					description: "Default slot",
 					lets: [],
-					description: "",
-					optional: true,
+					snippet: true,
+					optional: false,
 				},
 				{
 					name: "named",
+					description: "",
 					lets: [
 						{
-							name: "color",
-							type: { type: "unknown" },
+							name: "let_0",
+							type: { type: "string" },
 						},
 					],
-					description: "",
+					snippet: true,
 					optional: true,
 				},
 			],
 			events: [
 				{
 					description: "",
-					name: "click",
+					name: "onClick",
 					optional: true,
+					type: {
+						signature: "(e: MouseEvent) => void",
+						type: "function",
+					},
 				},
 			],
 		};

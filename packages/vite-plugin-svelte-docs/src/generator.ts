@@ -1,3 +1,5 @@
+/*eslint no-unused-private-class-members: "error"*/
+
 import path from "path";
 import type * as tsm from "ts-morph";
 import { Project, ts } from "ts-morph";
@@ -31,7 +33,7 @@ class Context {
 		this.numParents = parent ? parent.numParents + 1 : 0;
 	}
 
-	public toString(): string {
+	toString(): string {
 		let pre = "";
 		if (this.parent) {
 			pre = this.parent.toString() + "\n";
@@ -40,7 +42,7 @@ class Context {
 		return pre + this.toStringWithoutParent();
 	}
 
-	public toStringWithoutParent(): string {
+	toStringWithoutParent(): string {
 		switch (this.node.getKind()) {
 			case ts.SyntaxKind.SourceFile:
 				return "SourceFile";
@@ -49,14 +51,14 @@ class Context {
 		return this.node.getText() + " [[" + ts.SyntaxKind[this.node.getKind()] + "]]";
 	}
 
-	public log(...args: unknown[]) {
+	log(...args: unknown[]) {
 		if (!this.debug) {
 			return;
 		}
 		console.log(this.toString(), ...args);
 	}
 
-	public time(label: string) {
+	time(label: string) {
 		if (!this.debug) {
 			return;
 		}
@@ -64,7 +66,7 @@ class Context {
 		console.time(label);
 	}
 
-	public timeEnd(label: string) {
+	timeEnd(label: string) {
 		if (!this.debug) {
 			return;
 		}
@@ -73,10 +75,10 @@ class Context {
 }
 
 export class Generator {
-	private project: Project;
+	#project: Project;
 
 	constructor(svelte2tsxPath: string) {
-		this.project = new Project({
+		this.#project = new Project({
 			compilerOptions: {
 				lib: ["esnext"],
 				noEmit: true,
@@ -88,16 +90,16 @@ export class Generator {
 			ts.sys.resolvePath(path.resolve(path.dirname(svelte2tsxPath), f)),
 		);
 
-		this.project.addSourceFilesAtPaths(svelteTsxFiles);
+		this.#project.addSourceFilesAtPaths(svelteTsxFiles);
 	}
 
-	renameFile(filename: string) {
+	#renameFile(filename: string) {
 		// replace .svelte with .ts to allow the file to be used in the project
 		return filename.replace(/\.svelte$/, ".ts");
 	}
 
-	public addSvelteFile(filename: string, code: string) {
-		filename = this.renameFile(filename);
+	addSvelteFile(filename: string, code: string) {
+		filename = this.#renameFile(filename);
 
 		const dts = convert(filename, code);
 
@@ -105,13 +107,13 @@ export class Generator {
 		// console.log(dts);
 		// console.log("-----------------");
 
-		this.project.createSourceFile(filename, dts, { overwrite: true });
+		this.#project.createSourceFile(filename, dts, { overwrite: true });
 	}
 
-	public docFor(filename: string, debug = false): Doc {
-		filename = this.renameFile(filename);
+	docFor(filename: string, debug = false): Doc {
+		filename = this.#renameFile(filename);
 
-		const sourceFile = this.project.getSourceFileOrThrow(filename);
+		const sourceFile = this.#project.getSourceFileOrThrow(filename);
 		if (!sourceFile) {
 			throw new Error(`Source file ${filename} not found`);
 		}
@@ -125,45 +127,114 @@ export class Generator {
 			events: [],
 		};
 
-		const des = sourceFile.getDescendantsOfKind(ts.SyntaxKind.TypeAliasDeclaration);
-
+		let description = "";
 		sourceFile.getExportSymbols().forEach((sym) => {
 			// Only if default export
 			if (sym.getName() !== "default") {
 				return;
 			}
 
-			const description = ts.displayPartsToString(
-				sym.compilerSymbol.getDocumentationComment(undefined),
-			);
-
-			ret.description = description;
+			sourceFile.getExportedDeclarations().forEach((decl) => {
+				decl.forEach((a) => {
+					const nd = a.getSymbolOrThrow().compilerSymbol.getDocumentationComment(undefined);
+					if (nd) {
+						description = ts.displayPartsToString(nd);
+					}
+				});
+			});
 		});
+		ret.description = description;
 
-		ctx.time("forEach");
-		des.forEach((node) => {
-			const nctx = new Context(node, ctx);
-			const name = node.getName();
-			if (name.endsWith("Slots")) {
-				nctx.time("slots");
-				ret.slots = this.parseSlots(nctx, node);
-				nctx.timeEnd("slots");
-			} else if (name.endsWith("Props") || name.endsWith("Props_")) {
-				nctx.time("props");
-				ret.props = this.parseProps(nctx, node);
+		const func = sourceFile.getFunction("render");
+		if (!func) {
+			throw new Error("No render function found");
+		}
 
-				ret.props = this.parsePropsDefaults(nctx, sourceFile, ret.props);
+		ctx.time("func");
+		const body = func.getBody()?.getChildren();
+		if (!body) {
+			throw new Error("No body found");
+		}
+		const bodySyntaxList = body[body.length - 2];
+		if (!bodySyntaxList) {
+			throw new Error("No bodyLet found");
+		}
+		if (!bodySyntaxList.isKind(ts.SyntaxKind.SyntaxList)) {
+			throw new Error(
+				"Expected variable statement, got " +
+					bodySyntaxList.getKindName() +
+					"\n" +
+					bodySyntaxList.getText(),
+			);
+		}
+		const variableStatements = bodySyntaxList.getChildrenOfKind(ts.SyntaxKind.VariableStatement);
+		if (variableStatements.length !== 1) {
+			throw new Error("Expected 1 variable statement, got " + variableStatements.length);
+		}
+		const vs = variableStatements[0];
+		const defaults: Record<string, tsm.Node> = {};
+		vs.getDeclarations()[0].forEachChild((c) => {
+			const cctx = new Context(c, ctx);
+			switch (c.getKind()) {
+				case ts.SyntaxKind.ObjectBindingPattern: {
+					const props = c.getChildrenOfKind(ts.SyntaxKind.BindingElement);
+					props.forEach((p) => {
+						if (!p.hasInitializer()) {
+							ctx.log("No initializer", p.getText());
+							return;
+						}
 
-				nctx.timeEnd("props");
-			} else if (name.endsWith("Events")) {
-				nctx.time("events");
-				ret.events = this.parseEvents(nctx, node);
-				nctx.timeEnd("events");
-			} else {
-				nctx.log("Unknown type alias", name);
+						const name = p.getNameNode().getText();
+						const initializer = p.getInitializer();
+						defaults[name] = initializer!;
+					});
+					break;
+				}
+				case ts.SyntaxKind.TypeReference: {
+					const tr = c as tsm.TypeReferenceNode;
+					const props = this.#typeOf(ctx, tr);
+
+					if (Array.isArray(props) || props.type !== "object") {
+						cctx.log("Expected props to be object type", props);
+						throw new Error("Expected props to be object");
+					}
+
+					props.properties.forEach((p) => {
+						ret.props.push(p);
+						if (!Object.keys(defaults).includes(p.name)) {
+							cctx.log("No default for prop", p.name);
+							return;
+						}
+						const def = defaults[p.name];
+						// Check if $bindable function call
+						if (def.isKind(ts.SyntaxKind.CallExpression)) {
+							const expr = def.getExpression();
+							if (expr && expr.isKind(ts.SyntaxKind.Identifier) && expr.getText() == "$bindable") {
+								p.bindable = true;
+								const args = def.getArguments();
+								if (args.length === 0) {
+									return;
+								} else if (args.length == 1) {
+									p.default = args[0].getText();
+									return;
+								} else {
+									throw new Error("Expected 1 argument for $bindable");
+								}
+							}
+						} else {
+							p.default = def.getText();
+						}
+					});
+
+					break;
+				}
+				default:
+					ctx.log("Unknown kind", c.getKindName());
+					break;
 			}
 		});
-		ctx.timeEnd("forEach");
+
+		ctx.timeEnd("func");
 
 		if (ret.slots.length === 0) {
 			ret.slots = ret.props
@@ -235,194 +306,15 @@ export class Generator {
 		return ret;
 	}
 
-	parsePropsDefaults(ctx: Context, sourceFile: tsm.SourceFile, props: Prop[]): Prop[] {
-		sourceFile.getChildrenOfKind(ts.SyntaxKind.FunctionDeclaration).forEach((node) => {
-			node
-				.getBody()
-				?.getDescendantsOfKind(ts.SyntaxKind.VariableDeclarationList)
-				.forEach((vd) => {
-					const be = vd.getDescendantsOfKind(ts.SyntaxKind.BindingElement);
-					be.forEach((v) => {
-						const name = v.getNameNode().getText();
-						const prop = props.find((p) => p.name === name);
-						if (!prop) {
-							ctx.log("Unable to find prop", name);
-							return;
-						}
-
-						const initializer = v.getInitializer();
-						if (!initializer) {
-							ctx.log("No initializer for prop", name);
-							return;
-						}
-
-						if (initializer.isKind(ts.SyntaxKind.CallExpression)) {
-							const expr = initializer.getExpression();
-							if (expr && expr.isKind(ts.SyntaxKind.Identifier) && expr.getText() == "$bindable") {
-								prop.bindable = true;
-								const args = initializer.getArguments();
-								if (args.length === 0) {
-									return;
-								} else if (initializer.getArguments().length == 1) {
-									prop.default = initializer.getArguments()[0].getText();
-									return;
-								} else {
-									throw new Error("Expected 1 argument for $bindable");
-								}
-							}
-						}
-
-						prop.default = initializer.getText();
-					});
-
-					if (be.length == 0) {
-						vd.getDescendantsOfKind(ts.SyntaxKind.VariableDeclaration).forEach((v) => {
-							const name = v.getName();
-							const prop = props.find((p) => p.name === name);
-							if (!prop) {
-								ctx.log("Unable to find prop", name);
-								return;
-							}
-
-							const initializer = v.getInitializer();
-							if (!initializer) {
-								ctx.log("No initializer for prop", name);
-								return;
-							}
-
-							prop.default = initializer.getText();
-						});
-					}
-				});
-		});
-		return props;
-	}
-
-	parseEvents(ctx: Context, node: tsm.TypeAliasDeclaration): SvelteEvent[] {
-		const properties = node.getType().getProperties();
-
-		return properties
-			.map((prop): SvelteEvent | null => {
-				const name = prop.getName();
-				const description = ts.displayPartsToString(
-					prop.compilerSymbol.getDocumentationComment(undefined),
-				);
-
-				if (prop.getFullyQualifiedName().includes("node_modules")) {
-					return null;
-				}
-
-				return {
-					name,
-					description,
-					optional: true,
-				};
-			})
-			.filter((p): p is SvelteEvent => !!p);
-	}
-
-	parseSlots(ctx: Context, node: tsm.TypeAliasDeclaration) {
-		const properties = node.getType().getProperties();
-
-		return properties
-			.map((prop): Slots | null => {
-				const name = prop.getName();
-				const description = ts.displayPartsToString(
-					prop.compilerSymbol.getDocumentationComment(undefined),
-				);
-
-				if (prop.getFullyQualifiedName().includes("node_modules")) {
-					return null;
-				}
-
-				// Node:
-				const node = prop.getValueDeclaration();
-				if (!node) {
-					return null;
-				}
-
-				const nctx = new Context(node, ctx);
-
-				const lets = node
-					.getType()
-					.getProperties()
-					.map((prop): SlotLet | null => {
-						const name = prop.getName();
-						// const description = ts.displayPartsToString(
-						// 	prop.compilerSymbol.getDocumentationComment(undefined),
-						// );
-
-						if (prop.getFullyQualifiedName().includes("node_modules")) {
-							return null;
-						}
-
-						// Node:
-						const node = prop.getValueDeclaration();
-						if (!node) {
-							return null;
-						}
-						return {
-							name,
-							type: this.typeOf(nctx, node),
-						};
-					})
-					.filter((p): p is SlotLet => !!p);
-
-				return {
-					name,
-					description,
-					lets,
-					optional: true,
-				};
-			})
-			.filter((p): p is Slots => !!p);
-	}
-
-	parseProps(ctx: Context, node: tsm.TypeAliasDeclaration): Prop[] {
-		ctx.time("getType");
-		const type = node.getType();
-		ctx.timeEnd("getType");
-		ctx.time("getProps");
-		const properties = type.getProperties();
-		ctx.timeEnd("getProps");
-
-		return properties
-			.map((prop): Prop | null => {
-				const name = prop.getName();
-				ctx.time("prop_" + name);
-				const description = ts.displayPartsToString(
-					prop.compilerSymbol.getDocumentationComment(undefined),
-				);
-
-				if (prop.getFullyQualifiedName().includes("node_modules")) {
-					return null;
-				}
-
-				// Node:
-				const node = prop.getValueDeclaration();
-				if (!node) {
-					return null;
-				}
-				ctx.timeEnd("prop_" + name);
-				return {
-					name,
-					type: this.typeOf(ctx, node),
-					description,
-					optional: prop.isOptional(),
-				};
-			})
-			.filter((p): p is Prop => !!p);
-	}
-
-	typeOf(parentContext: Context, node: tsm.Node): Type {
+	#typeOf(parentContext: Context, node: tsm.Node): Type {
 		const ctx = new Context(node, parentContext);
 		switch (node.getKind()) {
 			case ts.SyntaxKind.PropertySignature:
-				return this.typeOf(ctx, (node as tsm.PropertySignature).getTypeNodeOrThrow());
+				return this.#typeOf(ctx, (node as tsm.PropertySignature).getTypeNodeOrThrow());
 			case ts.SyntaxKind.UnionType:
 				return {
 					type: "union",
-					values: (node as tsm.UnionTypeNode).getTypeNodes().map((t) => this.typeOf(ctx, t)),
+					values: (node as tsm.UnionTypeNode).getTypeNodes().map((t) => this.#typeOf(ctx, t)),
 				};
 			case ts.SyntaxKind.LiteralType:
 				return { type: "literal", value: (node as tsm.LiteralTypeNode).getText() };
@@ -441,11 +333,11 @@ export class Generator {
 			case ts.SyntaxKind.ImportType:
 				return { type: "unknown" };
 			case ts.SyntaxKind.TypeReference:
-				return this.typeReference(ctx, node as tsm.TypeReferenceNode);
+				return this.#typeReference(ctx, node as tsm.TypeReferenceNode);
 			case ts.SyntaxKind.ImportSpecifier:
-				return this.importSpecifier(ctx, node as tsm.ImportSpecifier);
+				return this.#importSpecifier(ctx, node as tsm.ImportSpecifier);
 			case ts.SyntaxKind.TypeAliasDeclaration:
-				return this.typeOf(ctx, (node as tsm.TypeAliasDeclaration).getTypeNodeOrThrow());
+				return this.#typeOf(ctx, (node as tsm.TypeAliasDeclaration).getTypeNodeOrThrow());
 			case ts.SyntaxKind.InterfaceDeclaration:
 				return { type: "interface", name: (node as tsm.InterfaceDeclaration).getName() };
 			case ts.SyntaxKind.PropertyAssignment:
@@ -458,7 +350,7 @@ export class Generator {
 					const lit = iatn.getIndexTypeNode();
 					if (!lit.isKind(ts.SyntaxKind.LiteralType)) {
 						if (lit.isKind(ts.SyntaxKind.NumberKeyword)) {
-							return this.typeOf(ctx, otn);
+							return this.#typeOf(ctx, otn);
 						}
 
 						ctx.log("Expected literal type");
@@ -486,33 +378,34 @@ export class Generator {
 						throw new Error("Unable to find index");
 					}
 
-					return this.typeOf(ctx, nodeToUse);
+					return this.#typeOf(ctx, nodeToUse);
 				})();
 			case ts.SyntaxKind.ParenthesizedType:
-				return this.parenthesizedType(ctx, node as tsm.ParenthesizedTypeNode);
+				return this.#parenthesizedType(ctx, node as tsm.ParenthesizedTypeNode);
 			case ts.SyntaxKind.TypeQuery:
-				return this.typeOf(ctx, (node as tsm.TypeQueryNode).getExprName());
+				return this.#typeOf(ctx, (node as tsm.TypeQueryNode).getExprName());
 			case ts.SyntaxKind.Identifier:
-				return this.identifier(ctx, node as tsm.Identifier);
+				return this.#identifier(ctx, node as tsm.Identifier);
 			case ts.SyntaxKind.VariableDeclaration:
-				return this.typeOf(
+				return this.#typeOf(
 					ctx,
 					(node as tsm.VariableDeclaration).getInitializerOrThrow("Initializer not found"),
 				);
 			case ts.SyntaxKind.AsExpression:
-				return this.typeOf(ctx, (node as tsm.AsExpression).getExpression());
+				return this.#typeOf(ctx, (node as tsm.AsExpression).getExpression());
 			case ts.SyntaxKind.ArrayLiteralExpression:
 				return {
 					type: "union",
 					values: (node as tsm.ArrayLiteralExpression)
 						.getElements()
-						.map((e) => this.typeOf(ctx, e)),
+						.map((e) => this.#typeOf(ctx, e)),
 				};
 			case ts.SyntaxKind.StringLiteral:
 				return { type: "literal", value: node.getText() };
 			case ts.SyntaxKind.TypeLiteral:
-				ctx.log("TypeLiteral", (node as tsm.TypeLiteralNode).getMembers()[0].getText());
-				return this.typeOf(ctx, (node as tsm.TypeLiteralNode).getMembers()[0]);
+				// ctx.log("TypeLiteral", (node as tsm.TypeLiteralNode).getMembers()[0].getText());
+				return this.#typeLiteral(ctx, node as tsm.TypeLiteralNode);
+			// return this.typeOf(ctx, (node as tsm.TypeLiteralNode).getMembers()[0]);
 			// return this.typeOf((node as tsm.VariableStatement).);
 		}
 
@@ -520,39 +413,57 @@ export class Generator {
 		return { type: "unknown" };
 	}
 
-	parenthesizedType(ctx: Context, node: tsm.ParenthesizedTypeNode): Type {
+	#typeLiteral(ctx: Context, node: tsm.TypeLiteralNode): Type {
+		const members = node.getMembers();
+		const lets: Prop[] = [];
+		members.forEach((m) => {
+			if (m.isKind(ts.SyntaxKind.PropertySignature)) {
+				const ps = m as tsm.PropertySignature;
+				const name = ps.getName();
+				const optional = ps.hasQuestionToken();
+				const type = this.#typeOf(ctx, ps.getTypeNodeOrThrow());
+				const description = ts.displayPartsToString(
+					ps.getSymbolOrThrow().compilerSymbol.getDocumentationComment(undefined),
+				);
+				lets.push({ name, type, description, optional });
+			}
+		});
+		return { type: "object", properties: lets };
+	}
+
+	#parenthesizedType(ctx: Context, node: tsm.ParenthesizedTypeNode): Type {
 		const children: tsm.Node[] = [];
 		node.forEachChild((c) => {
 			children.push(c);
 		});
 		if (children.length === 1) {
-			return this.typeOf(ctx, children[0]);
+			return this.#typeOf(ctx, children[0]);
 		}
 
 		throw new Error("Multiple children in parenthesized type for " + node.getText());
 	}
 
-	importSpecifier(ctx: Context, node: tsm.ImportSpecifier): Type {
+	#importSpecifier(ctx: Context, node: tsm.ImportSpecifier): Type {
 		let sym = node.getNameNode().getSymbolOrThrow();
 		if (sym.isAlias()) {
 			sym = sym.getAliasedSymbolOrThrow();
 		}
-		return this.typeOf(ctx, sym.getDeclarations()[0]);
+		return this.#typeOf(ctx, sym.getDeclarations()[0]);
 	}
 
-	identifier(ctx: Context, node: tsm.Identifier): Type {
+	#identifier(ctx: Context, node: tsm.Identifier): Type {
 		const sym = node.getSymbolOrThrow();
 		if (sym.isAlias()) {
-			return this.typeOf(ctx, sym.getAliasedSymbolOrThrow().getDeclarations()[0]);
+			return this.#typeOf(ctx, sym.getAliasedSymbolOrThrow().getDeclarations()[0]);
 		}
 		const decl = sym.getDeclarations()[0];
 		if (!decl) {
 			return { type: "unknown" };
 		}
-		return this.typeOf(ctx, decl);
+		return this.#typeOf(ctx, decl);
 	}
 
-	typeReference(ctx: Context, node: tsm.TypeReferenceNode): Type {
+	#typeReference(ctx: Context, node: tsm.TypeReferenceNode): Type {
 		// node.
 		// const type = node.getType();
 		// const symbol = type.getSymbol();
@@ -580,7 +491,7 @@ export class Generator {
 					const tuple = type as tsm.TupleTypeNode;
 					const tctx = new Context(tuple, ctx);
 					const types = tuple.getElements().map((e, i): SlotLet => {
-						return { name: `let_${i}`, type: this.typeOf(tctx, e) };
+						return { name: `let_${i}`, type: this.#typeOf(tctx, e) };
 					});
 					return { type: "snippet", lets: types };
 				} else {
@@ -597,7 +508,7 @@ export class Generator {
 		}
 
 		const decl = symbol.getDeclarations()[0];
-		return this.typeOf(ctx, decl);
+		return this.#typeOf(ctx, decl);
 	}
 }
 

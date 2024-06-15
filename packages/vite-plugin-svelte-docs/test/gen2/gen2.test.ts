@@ -4,7 +4,12 @@ import { Generator } from "../../src/generator.js";
 describe("v5", () => {
 	test("button", async () => {
 		const filename = "asdf.svelte";
-		const code = `<script lang="ts">
+		const code = `<!--
+  @component
+  Some simple *description* of the component
+  -->
+
+	<script lang="ts">
     import type { Snippet } from "svelte";
 
     type Props = {
@@ -26,12 +31,6 @@ describe("v5", () => {
 
     let { type = $bindable("button"), color = $bindable(), onClick, children, named }: Props = $props();
   </script>
-
-
-  <!--
-  @component
-  Some simple *description* of the component
-  -->
 
   <button
     {type}

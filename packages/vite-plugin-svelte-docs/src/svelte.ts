@@ -4,7 +4,7 @@ export function convert(filename: string, code: string) {
 	const transformed = svelte2tsx(code, {
 		filename: filename,
 		isTsFile: true,
-		mode: "dts",
+		mode: "ts",
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		//@ts-ignore
 		noSvelteComponentTyped: true,
