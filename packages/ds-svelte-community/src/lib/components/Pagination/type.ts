@@ -1,8 +1,6 @@
-import type { HTMLAttributes } from "svelte/elements";
-
 export const sizes = ["medium", "small", "xsmall"] as const;
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface Props {
 	/**
 	 * Changes padding, height and font-size.
 	 */

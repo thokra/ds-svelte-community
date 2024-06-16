@@ -62,13 +62,7 @@ interface ButtonProps extends BaseProps {
 	as?: "button";
 }
 interface AnchorProps extends BaseProps {
-	/**
-	 * Element to render
-	 */
 	as: "a";
-	/**
-	 * URL to navigate to. Required when `as` is set to `"a"`.
-	 */
 	href: string;
 }
 

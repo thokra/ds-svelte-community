@@ -1,12 +1,9 @@
-import type { Snippet } from "svelte";
-import type { HTMLAttributes } from "svelte/elements";
-
 /**
  * Changes font-size, padding and gaps
  */
 export const variants = ["circle", "rectangle", "rounded", "text"] as const;
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface Props {
 	/**
 	 * Changes the shape of the skeleton.
 	 */

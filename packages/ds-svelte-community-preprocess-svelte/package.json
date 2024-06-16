@@ -1,69 +1,70 @@
 {
-	"name": "@nais/ds-svelte-community-preprocess-svelte",
-	"version": "0.7.5",
-	"homepage": "https://nais.github.io/ds-svelte-community",
-	"repository": "https://github.com/nais/ds-svelte-community.git",
-	"license": "MIT",
-	"scripts": {
-		"check": "tsc",
-		"build": "tsc -p tsconfig.build.json",
-		"package": "bun run build && publint",
-		"update-components": "bun src/build/generate.ts",
-		"prepublishOnly": "bun run package",
-		"test": "bun test",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
-	},
-	"publishConfig": {
-		"types": "./dist/index.d.ts",
-		"exports": {
-			".": {
-				"types": "./dist/index.d.ts",
-				"default": "./dist/index.js"
-			},
-			"typesVersions": {
-				">4.0": {
-					"index.d.ts": [
-						"./dist/index.d.ts"
-					]
-				}
-			}
-		}
-	},
-	"exports": {
-		".": {
-			"bun": "./src/index.ts",
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"default": "./dist/index.js"
-		}
-	},
-	"typesVersions": {
-		">4.0": {
-			"index.d.ts": [
-				"./dist/index.d.ts"
-			]
-		}
-	},
-	"files": [
-		"dist",
-		"dist/**/*",
-		"dist/__snapshots__/**/*",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*",
-		"!dist/build/**/*",
-		"src/*.ts",
-		"!src/**/*.test.*",
-		"!src/build/**/*"
-	],
-	"peerDependencies": {
-		"svelte": "^3.59.0 || ^4.0.0-0 || ^5.0.0-next.0 || ^5.0.0"
-	},
-	"dependencies": {
-		"bun-types": "^1.1.13",
-		"prettier": "^3.3.2",
-		"typescript": "^5.4.5",
-		"svelte": "^5.0.0-next.154"
-	},
-	"type": "module"
+  "name": "@nais/ds-svelte-community-preprocess-svelte",
+  "version": "0.7.5",
+  "homepage": "https://nais.github.io/ds-svelte-community",
+  "repository": "https://github.com/nais/ds-svelte-community.git",
+  "license": "MIT",
+  "scripts": {
+    "check": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "package": "bun run build && publint",
+    "update-components": "bun src/build/generate.ts",
+    "prepublishOnly": "bun run package",
+    "test": "bun test",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write ."
+  },
+  "publishConfig": {
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "typesVersions": {
+        ">4.0": {
+          "index.d.ts": [
+            "./dist/index.d.ts"
+          ]
+        }
+      }
+    }
+  },
+  "exports": {
+    ".": {
+      "bun": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "typesVersions": {
+    ">4.0": {
+      "index.d.ts": [
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "dist/**/*",
+    "dist/__snapshots__/**/*",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*",
+    "!dist/build/**/*",
+    "src/*.ts",
+    "!src/**/*.test.*",
+    "!src/build/**/*"
+  ],
+  "peerDependencies": {
+    "svelte": "^3.59.0 || ^4.0.0-0 || ^5.0.0-next.0 || ^5.0.0"
+  },
+  "dependencies": {
+    "bun-types": "^1.1.13",
+    "estree-walker": "^3.0.3",
+    "prettier": "^3.3.2",
+    "svelte": "^5.0.0-next.154",
+    "typescript": "^5.4.5"
+  },
+  "type": "module"
 }

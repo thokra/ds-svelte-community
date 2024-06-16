@@ -8,6 +8,8 @@ import { convert } from "./svelte.js";
 import type {
 	Doc,
 	Snippet as DocSnippet,
+	Interface,
+	PObject,
 	Prop,
 	SlotLet,
 	Slots,
@@ -167,7 +169,20 @@ export class Generator {
 					bodySyntaxList.getText(),
 			);
 		}
-		const variableStatements = bodySyntaxList.getChildrenOfKind(ts.SyntaxKind.VariableStatement);
+		const variableStatements = bodySyntaxList
+			.getChildrenOfKind(ts.SyntaxKind.VariableStatement)
+			.filter((vs) => {
+				return (
+					vs.getDeclarations().filter((vsd) => {
+						const ce = vsd.getChildrenOfKind(ts.SyntaxKind.CallExpression);
+						if (ce.length != 1) {
+							return false;
+						}
+
+						return !!(ce[0].getExpressionIfKind(ts.SyntaxKind.Identifier)?.getText() == "$props");
+					}).length > 0
+				);
+			});
 		if (variableStatements.length !== 1) {
 			throw new Error("Expected 1 variable statement, got " + variableStatements.length);
 		}
@@ -192,11 +207,81 @@ export class Generator {
 				}
 				case ts.SyntaxKind.TypeReference: {
 					const tr = c as tsm.TypeReferenceNode;
-					const props = this.#typeOf(ctx, tr);
+					let props = this.#typeOf(ctx, tr);
 
-					if (Array.isArray(props) || props.type !== "object") {
-						cctx.log("Expected props to be object type", props);
-						throw new Error("Expected props to be object");
+					if (
+						Array.isArray(props) ||
+						(props.type != "union" && props.type != "object" && props.type != "interface")
+					) {
+						cctx.log("Expected props to be object or union type", props);
+						throw new Error("Expected props to be object or union");
+					}
+
+					const parseInterface = (i: Interface, combined: PObject, injectedInherits: string[]) => {
+						const combine = (np: Prop) => {
+							const existing = combined.properties.find((p) => p.name === np.name);
+							if (existing) {
+								if (existing.description == "") {
+									existing.description = np.description;
+								}
+								if (existing.optional && !np.optional) {
+									existing.optional = false;
+								}
+								if (existing.default == undefined && np.default != undefined) {
+									existing.default = np.default;
+								}
+								if (!existing.bindable && np.bindable) {
+									existing.bindable = true;
+								}
+								if (!Array.isArray(existing.type) && existing.type.type === "union") {
+									existing.type.values.push(np.type);
+								}
+								return;
+							}
+							combined.properties.push(np);
+						};
+						i.members?.forEach(combine);
+						if (i.inherits) {
+							if (!Array.isArray(i.inherits)) {
+								throw new Error("Expected inherits to be an array");
+							}
+							i.inherits.forEach((i) => {
+								if (Array.isArray(i) || i.type != "interface") {
+									cctx.log("Expected interface type in inherits", i);
+									throw new Error(
+										`Expected interface type in inherits, got ${Array.isArray(i) ? "array" : i.type}`,
+									);
+								}
+								if (injectedInherits.includes(i.name)) {
+									return;
+								}
+								i.members?.forEach(combine);
+								injectedInherits.push(i.name);
+							});
+						}
+					};
+
+					if (props.type == "union") {
+						// Combine all properties
+						const combined: PObject = { type: "object", properties: [] };
+
+						const injectedInherits: string[] = [];
+						props.values.forEach((p) => {
+							if (Array.isArray(p) || p.type != "interface") {
+								cctx.log("Expected interface type in union", p);
+								throw new Error(
+									`Expected interface type in union, got ${Array.isArray(p) ? "array" : p.type}`,
+								);
+							}
+
+							parseInterface(p, combined, injectedInherits);
+						});
+
+						props = combined;
+					} else if (props.type == "interface") {
+						const combined: PObject = { type: "object", properties: [] };
+						parseInterface(props, combined, []);
+						props = combined;
 					}
 
 					props.properties.forEach((p) => {
@@ -338,8 +423,64 @@ export class Generator {
 				return this.#importSpecifier(ctx, node as tsm.ImportSpecifier);
 			case ts.SyntaxKind.TypeAliasDeclaration:
 				return this.#typeOf(ctx, (node as tsm.TypeAliasDeclaration).getTypeNodeOrThrow());
-			case ts.SyntaxKind.InterfaceDeclaration:
-				return { type: "interface", name: (node as tsm.InterfaceDeclaration).getName() };
+			case ts.SyntaxKind.InterfaceDeclaration: {
+				const id = node as tsm.InterfaceDeclaration;
+				const i: Interface = {
+					type: "interface",
+					name: id.getName(),
+				};
+
+				if (id.getSourceFile().getFilePath().indexOf("node_modules") >= 0) {
+					return i;
+				}
+
+				i.members = id
+					.getMembers()
+					.map((m) => {
+						if (!m.isKind(ts.SyntaxKind.PropertySignature)) {
+							return;
+						}
+						return this.#propertySignature(new Context(m, ctx), m);
+					})
+					.filter((m) => m != undefined) as Prop[];
+
+				const heritage = id.getHeritageClauses();
+				if (heritage.length > 0) {
+					i.inherits = heritage.map((h) => {
+						return this.#typeOf(ctx, h.getTypeNodes()[0]);
+					});
+				}
+
+				return i;
+			}
+			case ts.SyntaxKind.ExpressionWithTypeArguments: {
+				const ewta = node as tsm.ExpressionWithTypeArguments;
+				if (ewta.getTypeArguments().length > 0) {
+					if (ewta.getExpressionIfKind(ts.SyntaxKind.Identifier)?.getText() != "Pick") {
+						ctx.log("Type arguments not supported", ewta.getText());
+						throw new Error("Type arguments not supported, got " + ewta.getTypeArguments().length);
+					}
+					const type = ewta.getTypeArguments()[0];
+					if (!type.isKind(ts.SyntaxKind.TypeReference)) {
+						ctx.log("Expected type reference", type.getText());
+						throw new Error("Expected type reference");
+					}
+					const o = this.#typeOf(ctx, type);
+					if (Array.isArray(o) || o.type != "interface") {
+						ctx.log("Expected interface type, got ", Array.isArray(o) ? "array" : o.type);
+						throw new Error("Expected interface type");
+					}
+
+					const pick = ewta.getTypeArguments().slice(1);
+					o.members = o.members?.filter((m) => {
+						return pick.find((p) => {
+							return p.getText().slice(1, -1) === m.name;
+						});
+					});
+					return o;
+				}
+				return this.#typeOf(ctx, ewta.getExpression());
+			}
 			case ts.SyntaxKind.PropertyAssignment:
 				break;
 			case ts.SyntaxKind.IndexedAccessType:
@@ -417,18 +558,22 @@ export class Generator {
 		const members = node.getMembers();
 		const lets: Prop[] = [];
 		members.forEach((m) => {
-			if (m.isKind(ts.SyntaxKind.PropertySignature)) {
-				const ps = m as tsm.PropertySignature;
-				const name = ps.getName();
-				const optional = ps.hasQuestionToken();
-				const type = this.#typeOf(ctx, ps.getTypeNodeOrThrow());
-				const description = ts.displayPartsToString(
-					ps.getSymbolOrThrow().compilerSymbol.getDocumentationComment(undefined),
-				);
-				lets.push({ name, type, description, optional });
+			if (!m.isKind(ts.SyntaxKind.PropertySignature)) {
+				return;
 			}
+			lets.push(this.#propertySignature(ctx, m as tsm.PropertySignature));
 		});
 		return { type: "object", properties: lets };
+	}
+
+	#propertySignature(ctx: Context, ps: tsm.PropertySignature): Prop {
+		const name = ps.getName();
+		const optional = ps.hasQuestionToken();
+		const type = this.#typeOf(ctx, ps.getTypeNodeOrThrow());
+		const description = ts.displayPartsToString(
+			ps.getSymbolOrThrow().compilerSymbol.getDocumentationComment(undefined),
+		);
+		return { name, type, description, optional };
 	}
 
 	#parenthesizedType(ctx: Context, node: tsm.ParenthesizedTypeNode): Type {
@@ -480,7 +625,7 @@ export class Generator {
 			const tas = node.getTypeArguments();
 			if (tas.length > 0) {
 				if (tas.length > 1) {
-					console.log(
+					ctx.log(
 						"Multiple type arguments",
 						tas.map((t) => t.getText()),
 					);
@@ -503,7 +648,7 @@ export class Generator {
 
 		const symbol = node.getTypeName().getSymbol();
 		if (!symbol) {
-			console.log(" Expected symbol");
+			ctx.log(" Expected symbol");
 			return { type: "unknown" };
 		}
 

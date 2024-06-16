@@ -34,6 +34,8 @@ export type Snippet = {
 export type Interface = {
 	type: "interface";
 	name: string;
+	members?: Prop[];
+	inherits?: Type;
 };
 
 export type Type =
