@@ -17,7 +17,7 @@
 		description = "",
 		size = "medium",
 		disabled = false,
-		checked = false,
+		checked = $bindable(false),
 		deactivateLabel = "Deactivate",
 		children,
 		...restProps
