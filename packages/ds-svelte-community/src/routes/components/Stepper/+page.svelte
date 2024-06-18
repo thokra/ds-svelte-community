@@ -5,7 +5,7 @@
 	import Story from "$doclib/Story.svelte";
 	import { Step, Stepper } from "$lib";
 
-	let activeStep = $state(3);
+	let activeStep = $state(2);
 </script>
 
 <Doc {doc}>

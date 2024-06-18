@@ -144,10 +144,13 @@
 	{#if isSwitch}
 		<Switch
 			checked={!!fromText(value)}
-			on:change={() => {
+			onchange={() => {
 				onChange(!value);
 			}}
-		/>
+			hideLabel
+		>
+			Toggle boolean
+		</Switch>
 	{:else if isSelect}
 		<div>
 			<Select

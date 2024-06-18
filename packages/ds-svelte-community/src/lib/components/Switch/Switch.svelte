@@ -4,52 +4,30 @@
 
 <script lang="ts">
 	import Loader from "../Loader/Loader.svelte";
-	import { classes } from "../helpers";
+	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Detail from "../typography/Detail/Detail.svelte";
 	import SelectedIcon from "./SelectedIcon.svelte";
+	import type { Props } from "./type";
 
-	/**
-	 * If enabled shows the label and description for screenreaders only.
-	 */
-	export let hideLabel = false;
-	/**
-	 * Toggles loading state with loader-component on switch.
-	 */
-	export let loading = false;
-	/**
-	 * Positions switch on left/right side of label.
-	 * @default "left"
-	 */
-	export let position: "left" | "right" = "left";
-	/**
-	 * Adds a description to extend labling of Switch.
-	 */
-	export let description = "";
-
-	/**
-	 * Changes font-size, padding and gaps.
-	 */
-	export let size: "medium" | "small" = "medium";
-
-	/**
-	 * Disables element.
-	 * @note Avoid using if possible for accessibility purposes.
-	 */
-	export let disabled = false;
-
-	/**
-	 * Checked state.
-	 */
-	export let checked = false;
-
-	export let deactivateLabel = "Deactivate";
+	let {
+		hideLabel = false,
+		loading = false,
+		position = "left",
+		description = "",
+		size = "medium",
+		disabled = false,
+		checked = false,
+		deactivateLabel = "Deactivate",
+		children,
+		...restProps
+	}: Props = $props();
 
 	const id = `switch-${newUniqueId()}`;
 </script>
 
 <div
-	class={classes($$restProps, "navds-switch", `navds-switch--${size}`, `navds-switch--${position}`)}
+	class={classes(restProps, "navds-switch", `navds-switch--${size}`, `navds-switch--${position}`)}
 	class:navds-switch--disabled={disabled ?? loading}
 	class:navds-switch--loading={loading}
 >
@@ -57,12 +35,9 @@
 		disabled={disabled || loading}
 		bind:checked
 		type="checkbox"
-		class={classes($$restProps, "navds-switch__input")}
+		class={classes(restProps, "navds-switch__input")}
 		{id}
-		on:click
-		on:change
-		on:mousedown
-		on:beforeinput
+		{...omit(restProps, "class")}
 	/>
 	<span class="navds-switch__track">
 		<span class="navds-switch__thumb">
@@ -80,7 +55,7 @@
 			class:navds-switch--with-description={!!description && !hideLabel}
 		>
 			<BodyShort as="div" {size} class="navds-switch__label">
-				<slot />
+				{@render children()}
 			</BodyShort>
 
 			{#if description}

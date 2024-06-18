@@ -97,7 +97,9 @@
 <SvelteMarkdown source={doc.description} />
 
 {#if extraDescription}
-	{@render extraDescription()}
+	<div class="extra">
+		{@render extraDescription()}
+	</div>
 {/if}
 
 <div class="menu">
@@ -146,5 +148,9 @@
 <style>
 	.menu {
 		margin-bottom: 0.5rem;
+	}
+
+	.extra {
+		margin-bottom: 1rem;
 	}
 </style>

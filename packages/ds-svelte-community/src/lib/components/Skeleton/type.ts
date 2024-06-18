@@ -1,3 +1,5 @@
+import type { Snippet } from "svelte";
+
 /**
  * Changes font-size, padding and gaps
  */

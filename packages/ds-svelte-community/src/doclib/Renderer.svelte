@@ -94,8 +94,8 @@
 	};
 </script>
 
-<div class="preview" class:center={options.center}>
-	<div class="preview-wrapper" style="width: {preview?.width}" class:show-code={code && showCode}>
+<div class="preview" class:center={options.center} class:show-code={code && showCode}>
+	<div class="preview-wrapper" style="width: {preview?.width}">
 		{@render children({ docProps: dejsonify(values) })}
 		<!-- <svelte:component this={component} children={defaultBody} {...restProps} /> -->
 	</div>
@@ -122,14 +122,15 @@
 		border-radius: var(--a-border-radius-medium);
 		min-height: 250px;
 		position: relative;
+
+		&.show-code {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		}
 	}
 
 	.preview-wrapper {
 		margin: 1rem;
-
-		&.show-code {
-			border-bottom-left-radius: 0;
-		}
 	}
 
 	.preview.center {
@@ -158,8 +159,10 @@
 			display: block;
 		}
 
-		:global(pre) {
+		& :global(pre) {
 			margin-top: 0;
+			border-bottom-left-radius: var(--a-border-radius-medium);
+			border-bottom-right-radius: var(--a-border-radius-medium);
 		}
 	}
 
