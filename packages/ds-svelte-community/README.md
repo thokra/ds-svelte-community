@@ -103,3 +103,7 @@ bun run gar-login
 # From this directory
 bun run publish
 ```
+
+### TODO
+
+- Stories doesn't include js/ts used in e.g. {#each} blocks;

@@ -4,8 +4,6 @@
 	import Doc from "$doclib/Doc.svelte";
 	import Story from "$doclib/Story.svelte";
 	import { Switch } from "$lib";
-
-	let activeStep = $state(2);
 </script>
 
 <Doc {doc}>

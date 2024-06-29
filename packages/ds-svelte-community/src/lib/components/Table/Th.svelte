@@ -3,23 +3,24 @@
 	import ArrowsUpDownIcon from "$lib/icons/ArrowsUpDownIcon.svelte";
 	import ArrowUpIcon from "$lib/icons/ArrowUpIcon.svelte";
 	import { classes, omit } from "../helpers";
-	import { aligns, getTableContext, type TableCellProps } from "./type";
+	import { getTableContext, type TableCellProps } from "./type.svelte";
 
-	type $$Props = TableCellProps;
+	// type $$Props = TableCellProps;
 
-	/**
-	 * Content alignment inside cell.
-	 */
-	export let align: (typeof aligns)[number] | undefined = undefined;
+	// /**
+	//  * Content alignment inside cell.
+	//  */
+	// export let align: (typeof aligns)[number] | undefined = undefined;
 
-	/**
-	 * Key to sort by.
-	 */
-	export let sortKey = "";
-	/**
-	 * Column is sortable, adds indicators to show sorting.
-	 */
-	export let sortable = false;
+	// /**
+	//  * Key to sort by.
+	//  */
+	// export let sortKey = "";
+	// /**
+	//  * Column is sortable, adds indicators to show sorting.
+	//  */
+	// export let sortable = false;
+	let { align, sortKey = "", sortable = false, children, ...restProps }: TableCellProps = $props();
 
 	const ctx = getTableContext();
 
@@ -27,27 +28,30 @@
 		throw new Error("HeaderCell: sortable is true, but sortKey is not set");
 	}
 
-	const sort = ctx.sort;
+	const onclick = () => {
+		if (sortable && sortKey && ctx.changeSort) {
+			ctx.changeSort(sortKey);
+		}
+	};
 </script>
 
 <th
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-table__header-cell", "navds-label", {
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-table__header-cell", "navds-label", {
 		[`navds-table__header-cell--align-${align}`]: !!align,
 	})}
 	class:navds-label--small={ctx.size == "small"}
-	aria-sort={sortable ? ($sort?.orderBy === sortKey ? $sort.direction : "none") : undefined}
+	aria-sort={sortable ? (ctx.sort?.orderBy === sortKey ? ctx.sort.direction : "none") : undefined}
 >
 	{#if sortable}
 		<button
 			type="button"
 			class="navds-table__sort-button"
-			on:click={sortable && sortKey ? () => ctx.changeSort(sortKey) : undefined}
+			onclick={sortable && sortKey ? () => onclick() : undefined}
 		>
-			<!-- Content -->
-			<slot />
-			{#if $sort?.orderBy == sortKey}
-				{#if $sort.direction == "ascending"}
+			{@render children()}
+			{#if ctx.sort?.orderBy == sortKey}
+				{#if ctx.sort.direction == "ascending"}
 					<ArrowUpIcon aria-hidden="true" />
 				{:else}
 					<ArrowDownIcon aria-hidden="true" />
@@ -57,7 +61,6 @@
 			{/if}
 		</button>
 	{:else}
-		<!-- Content -->
-		<slot />
+		{@render children()}
 	{/if}
 </th>

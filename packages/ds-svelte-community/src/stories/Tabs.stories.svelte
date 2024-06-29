@@ -1,6 +1,6 @@
 <script>
 	import { Tab, TabList, TabPanel, Tabs } from "$lib/components/Tabs";
-	import { iconPositions, sizes } from "$lib/components/Tabs/type";
+	import { iconPositions, sizes } from "$lib/components/Tabs/type.svelte";
 	// eslint-disable-next-line
 	// @ts-ignore
 	import ClockDashedIcon from "$lib/icons/ClockDashedIcon.svelte";

@@ -34,6 +34,9 @@ const config = {
 			$testlib: "./src/testlib",
 			$doclib: "./src/doclib",
 		},
+		prerender: {
+			handleMissingId: "ignore",
+		},
 	},
 };
 

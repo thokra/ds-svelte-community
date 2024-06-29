@@ -2,19 +2,19 @@
 	import { onMount } from "svelte";
 	import { Focus, classes, focusable, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
-	import { ases, getTabsContext, type TabProps } from "./type";
+	import { getTabsContext, type TabProps } from "./type.svelte";
 
-	type $$Props = TabProps;
-
-	export let value: string;
-	export let as: (typeof ases)[number] = "button";
+	let { value, as = "button", children, icon, ...restProps }: TabProps = $props();
 
 	const ctx = getTabsContext();
-	const currentValue = ctx.value;
-	const activeTab = ctx.activeTab;
-	let self: HTMLElement;
+	// const currentValue = ctx.value;
+	// const activeTab = ctx.activeTab;
+	let self: HTMLElement | undefined = $state();
 
 	onMount(() => {
+		if (!self) {
+			throw new Error("Tab element not found");
+		}
 		ctx.register(self, value);
 	});
 
@@ -40,6 +40,9 @@
 	};
 
 	const handleFocus = () => {
+		if (!self) {
+			return;
+		}
 		ctx.focusOn(self);
 		if (as != "a" && ctx.selectionFollowsFocus) {
 			ctx.activate(value);
@@ -47,6 +50,9 @@
 	};
 
 	const handleBlur = () => {
+		if (!self) {
+			return;
+		}
 		ctx.blur(self);
 	};
 </script>
@@ -54,29 +60,33 @@
 <svelte:element
 	this={as}
 	bind:this={self}
-	{...omit($$restProps, "class", "type", "role", "aria-selected", "tabindex")}
+	{...omit(restProps, "class", "type", "role", "aria-selected", "tabindex")}
 	class={classes(
-		$$restProps,
+		restProps,
 		"navds-tabs__tab",
 		`navds-tabs__tab--${ctx.size}`,
 		`navds-tabs__tab-icon--${ctx.iconPosition}`,
 	)}
-	class:navds-tabs__tab--icon-only={$$slots.icon && !$$slots.default}
+	class:navds-tabs__tab--icon-only={icon && !children}
 	class:unstyled={as === "a"}
 	type="button"
 	role="tab"
 	aria-controls={ctx.idFor("panel", value)}
 	id={ctx.idFor("tab", value)}
-	aria-selected={`${$currentValue == value}`}
-	tabindex={$activeTab == self ? 0 : -1}
-	on:click={() => as != "a" && ctx.activate(value)}
-	on:keydown={handleKeydown}
-	on:focus={handleFocus}
-	on:blur={handleBlur}
+	aria-selected={`${ctx.value == value}`}
+	tabindex={ctx.activeTab == self ? 0 : -1}
+	onclick={() => as != "a" && ctx.activate(value)}
+	onkeydown={handleKeydown}
+	onfocus={handleFocus}
+	onblur={handleBlur}
 >
 	<BodyShort as="span" class="navds-tabs__tab-inner" size={ctx.size}>
-		<slot name="icon" />
-		<slot />
+		{#if icon}
+			{@render icon()}
+		{/if}
+		{#if children}
+			{@render children()}
+		{/if}
 	</BodyShort>
 </svelte:element>
 

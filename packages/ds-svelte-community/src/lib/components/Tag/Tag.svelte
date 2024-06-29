@@ -1,23 +1,9 @@
 <script lang="ts">
-	import type { SvelteHTMLElements } from "svelte/elements";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Detail from "../typography/Detail/Detail.svelte";
-	import type { Props, sizes, variants } from "./type";
+	import type { Props } from "./type";
 
-	type $$Props = Props;
-
-	/**
-	 * Changes visual profile of tag.
-	 */
-	export let variant: (typeof variants)[number] = "info";
-	/**
-	 * Changes font size.
-	 */
-	export let size: (typeof sizes)[number] = "medium";
-	/**
-	 * Tag to use for the element.
-	 */
-	export let as: keyof SvelteHTMLElements = "span";
+	let { variant = "info", size = "medium", as = "span", children, text }: Props = $props();
 </script>
 
 <svelte:component
@@ -26,5 +12,9 @@
 	size={size == "medium" ? "medium" : "small"}
 	class="navds-tag navds-tag--{variant} navds-tag--{size}"
 >
-	<slot />
+	{#if children}
+		{@render children()}
+	{:else}
+		{text}
+	{/if}
 </svelte:component>

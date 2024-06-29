@@ -3,16 +3,15 @@
 	import ChevronRightIcon from "$lib/icons/ChevronRightIcon.svelte";
 	import { onMount } from "svelte";
 	import { classes, omit } from "../helpers";
-	import type { TabListProps } from "./type";
+	import type { TabListProps } from "./type.svelte";
 
-	type $$Props = TabListProps;
+	// type $$Props = TabListProps;
+	let { children, ...restProps }: TabListProps = $props();
 
-	let width: number | undefined;
 	let tabList: HTMLElement;
-
-	let showStepperLeft = false;
-	let showStepperRight = false;
-	let showSteppers = false;
+	let showStepperLeft = $state(false);
+	let showStepperRight = $state(false);
+	let showSteppers = $state(false);
 
 	const updateSteppers = () => {
 		if (!tabList) {
@@ -28,7 +27,7 @@
 		showSteppers = showStepperLeft || showStepperRight;
 	};
 
-	$: width && updateSteppers();
+	$effect(updateSteppers);
 
 	onMount(() => {
 		const resizeObserver = new ResizeObserver(updateSteppers);
@@ -57,7 +56,7 @@
 			class="navds-tabs__scroll-button"
 			class:navds-tabs__scroll-button--hidden={!showStepperLeft}
 			aria-hidden="true"
-			on:click={() => {
+			onclick={() => {
 				scroll(false);
 			}}
 		>
@@ -66,25 +65,25 @@
 	{/if}
 	<div
 		bind:this={tabList}
-		on:scroll={() => {
+		onscroll={() => {
 			updateSteppers();
 		}}
-		{...omit($$restProps, "class", "role", "aria-orientation")}
-		class={classes($$restProps, "navds-tabs__tablist")}
+		{...omit(restProps, "class", "role", "aria-orientation")}
+		class={classes(restProps, "navds-tabs__tablist")}
 		data-orientation="horizontal"
 		role="tablist"
 		aria-orientation="horizontal"
 		style="outline: none;"
 		tabindex="0"
 	>
-		<slot />
+		{@render children()}
 	</div>
 	{#if showSteppers}
 		<div
 			class="navds-tabs__scroll-button"
 			class:navds-tabs__scroll-button--hidden={!showStepperRight}
 			aria-hidden="true"
-			on:click={() => {
+			onclick={() => {
 				scroll(true);
 			}}
 		>

@@ -1,25 +1,15 @@
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import type { TableRowProps } from "./type";
+	import type { TableRowProps } from "./type.svelte";
 
-	type $$Props = TableRowProps;
-
-	/**
-	 * Highlight row as selected.
-	 */
-	export let selected = false;
-	/**
-	 * Shade row on hover.
-	 */
-	export let shadeOnHover = true;
+	let { selected = false, shadeOnHover = true, children, ...restProps }: TableRowProps = $props();
 </script>
 
 <tr
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-table__row")}
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-table__row")}
 	class:navds-table__row--selected={selected}
 	class:navds-table__row--shade-on-hover={shadeOnHover}
 >
-	<!-- Content -->
-	<slot />
+	{@render children()}
 </tr>

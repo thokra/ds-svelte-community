@@ -1,23 +1,20 @@
 <script lang="ts">
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
-	import { aligns, getTableContext, type DataCellProps } from "./type";
+	import { getTableContext, type DataCellProps } from "./type.svelte";
 
-	type $$Props = DataCellProps;
-
-	export let align: (typeof aligns)[number] | undefined = undefined;
+	let { align, children, ...restProps }: DataCellProps = $props();
 
 	const ctx = getTableContext();
 </script>
 
 <BodyShort
-	{...omit($$restProps)}
+	{...omit(restProps)}
 	as="td"
-	class={classes($$restProps, "navds-table__data-cell", {
+	class={classes(restProps, "navds-table__data-cell", {
 		[`navds-table__data-cell--align-${align}`]: !!align,
 	})}
 	size={ctx.size}
 >
-	<!-- Content -->
-	<slot />
+	{@render children()}
 </BodyShort>

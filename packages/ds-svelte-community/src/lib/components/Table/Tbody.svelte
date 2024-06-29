@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { classes, omit } from "../helpers";
-	import type { BodyProps } from "./type";
+	import type { BodyProps } from "./type.svelte";
 
-	type $$Props = BodyProps;
+	let { children, ...restProps }: BodyProps = $props();
 </script>
 
-<tbody {...omit($$restProps, "class")} class={classes($$restProps, "navds-table__body")}>
+<tbody {...omit(restProps, "class")} class={classes(restProps, "navds-table__body")}>
 	<!-- Content -->
-	<slot />
+	{@render children()}
 </tbody>

@@ -1,4 +1,5 @@
-import type { HTMLAnchorAttributes, HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
+import type { Snippet } from "svelte";
+import type { SvelteHTMLElements } from "svelte/elements";
 
 export const variants = [
 	"warning",
@@ -21,17 +22,25 @@ export const variants = [
 
 export const sizes = ["medium", "small", "xsmall"] as const;
 
-export interface BaseProps {
+export interface Props {
+	/**
+	 * Changes visual profile of tag.
+	 */
 	variant?: (typeof variants)[number];
+	/**
+	 * Changes font size.
+	 */
 	size?: (typeof sizes)[number];
-}
-
-export interface GeneralProps extends BaseProps, HTMLAttributes<HTMLElement> {
+	/**
+	 * Tag to use for the element.
+	 */
 	as?: keyof SvelteHTMLElements;
+	/**
+	 * Tag content.
+	 */
+	children?: Snippet;
+	/**
+	 * Tag content. Will be used if `children` is not provided.
+	 */
+	text?: string;
 }
-
-export interface AProps extends BaseProps, HTMLAnchorAttributes {
-	as: "a";
-}
-
-export type Props = GeneralProps | AProps;

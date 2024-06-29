@@ -29,7 +29,12 @@
 								{@const href = `/${key}/${component}/`}
 								<li>
 									<!-- eslint-disable-next-line svelte/valid-compile using $ to access stores currently errors the validator -->
-									<a class="unstyled" class:active={$page.url.pathname === href} {href}>
+									<a
+										class="unstyled"
+										class:active={$page.url.pathname === href}
+										{href}
+										data-sveltekit-preload-data="tap"
+									>
 										{component}
 									</a>
 								</li>
