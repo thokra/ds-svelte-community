@@ -86,15 +86,6 @@ export const Components: KnownComponents = {
 		Link: {
 			path: "components/typography/Link/Link.svelte",
 		},
-		LinkPanel: {
-			path: "components/LinkPanel/LinkPanel.svelte",
-		},
-		LinkPanelDescription: {
-			path: "components/LinkPanel/LinkPanelDescription.svelte",
-		},
-		LinkPanelTitle: {
-			path: "components/LinkPanel/LinkPanelTitle.svelte",
-		},
 		Loader: {
 			path: "components/Loader/Loader.svelte",
 		},
@@ -109,9 +100,6 @@ export const Components: KnownComponents = {
 		},
 		Pagination: {
 			path: "components/Pagination/Pagination.svelte",
-		},
-		Panel: {
-			path: "components/Panel/Panel.svelte",
 		},
 		Popover: {
 			path: "components/Popover/Popover.svelte",

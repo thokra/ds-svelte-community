@@ -19,8 +19,7 @@
 		"module": "esnext",
 		"target": "esnext",
 		"ignoreDeprecations": "5.0",
-		"moduleDetection": "force",
-		"types": ["bun-types"]
+		"moduleDetection": "force"
 	},
 	"include": ["src/**/*"]
 }

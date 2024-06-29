@@ -5,87 +5,110 @@
 <script lang="ts">
 	import { BodyShort, Detail, ErrorMessage, Label } from "$lib";
 	import { classes, omit } from "../helpers";
-	import type { Props, sizes, types } from "./type";
+	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let {
+		value = $bindable(""),
+		id = "tf-" + newUniqueId(),
+		hideLabel = false,
+		type = "text",
+		error = "",
+		errorId = "tf-" + newUniqueId(),
+		size = "medium",
+		disabled = false,
+		htmlSize,
+		label,
+		description,
+		...restProps
+	}: Props = $props();
 
-	/**
-	 * Controlled value.
-	 */
-	export let value: string | number = "";
+	// type $$Props = Props;
 
-	/**
-	 * Exposes the HTML size attribute.
-	 */
-	export let htmlSize: number | undefined = undefined;
+	// /**
+	//  * Controlled value.
+	//  */
+	// export let value: string | number = "";
 
-	/**
-	 * If enabled shows the label and description for screenreaders only.
-	 */
-	export let hideLabel = false;
+	// /**
+	//  * Exposes the HTML size attribute.
+	//  */
+	// export let htmlSize: number | undefined = undefined;
 
-	/**
-	 * Type of form control. Picking the correct type helps user fill inn their required information.
-	 */
-	export let type: (typeof types)[number] = "text";
+	// /**
+	//  * If enabled shows the label and description for screenreaders only.
+	//  */
+	// export let hideLabel = false;
 
-	/**
-	 * Error message for element.
-	 */
-	export let error = "";
+	// /**
+	//  * Type of form control. Picking the correct type helps user fill inn their required information.
+	//  */
+	// export let type: (typeof types)[number] = "text";
 
-	/**
-	 * Override internal errorId.
-	 */
-	export let errorId = "tf-" + newUniqueId();
+	// /**
+	//  * Error message for element.
+	//  */
+	// export let error = "";
 
-	/**
-	 * Changes font-size, padding and gaps.
-	 */
-	export let size: (typeof sizes)[number] = "medium";
+	// /**
+	//  * Override internal errorId.
+	//  */
+	// export let errorId = "tf-" + newUniqueId();
 
-	/**
-	 * Disables element.
-	 * @note Avoid using if possible for accessibility purposes.
-	 */
-	export let disabled = false;
+	// /**
+	//  * Changes font-size, padding and gaps.
+	//  */
+	// export let size: (typeof sizes)[number] = "medium";
 
-	/**
-	 * Override internal id.
-	 */
-	export let id = "tf-" + newUniqueId();
+	// /**
+	//  * Disables element.
+	//  * @note Avoid using if possible for accessibility purposes.
+	//  */
+	// export let disabled = false;
+
+	// /**
+	//  * Override internal id.
+	//  */
+	// export let id = "tf-" + newUniqueId();
 
 	const inputDescriptionId = `tf-desc-${id}`;
 
-	$: srOnlyClass = hideLabel ? " navds-sr-only" : "";
-	$: inputProps = {
+	let srOnlyClass = $derived(hideLabel ? " navds-sr-only" : "");
+	let inputProps = $derived({
 		id,
 		"aria-invalid": (error ? "true" : undefined) as "true" | undefined,
 		"aria-describedby": inputDescriptionId,
 		class: "navds-text-field__input navds-body-short navds-body-short--" + size,
 		size: htmlSize,
-		...omit($$restProps, "id", "class", "aria-invalid", "size"),
-	};
+		...omit(restProps, "id", "class", "aria-invalid", "size"),
+	});
 </script>
 
 <div
-	class={classes($$restProps, "navds-form-field", `navds-form-field--${size}`)}
+	class={classes(restProps, "navds-form-field", `navds-form-field--${size}`)}
 	class:navds-text-field--error={!!error}
 	class:navds-text-field--disabled={disabled}
 	class:navds-form-field--disabled={disabled}
 >
 	<Label for={id} {size} class={"navds-form-field__label" + srOnlyClass}>
-		<slot name="label" />
+		{#if typeof label === "string"}
+			{label}
+		{:else}
+			{@render label()}
+		{/if}
 	</Label>
 
-	{#if $$slots.description}
+	{#if description}
 		{#if size == "medium"}
 			<BodyShort
 				class={"navds-form-field__description" + srOnlyClass}
 				id={inputDescriptionId}
 				as="div"
 			>
-				<slot name="description" />
+				{#if typeof description === "string"}
+					{description}
+				{:else}
+					{@render description()}
+				{/if}
 			</BodyShort>
 		{:else}
 			<Detail
@@ -93,92 +116,16 @@
 				id={inputDescriptionId}
 				as="div"
 			>
-				<slot name="description" />
+				{#if typeof description === "string"}
+					{description}
+				{:else}
+					{@render description()}
+				{/if}
 			</Detail>
 		{/if}
 	{/if}
 
-	{#if type == "text"}
-		<input
-			{...inputProps}
-			type="text"
-			bind:value
-			on:keydown
-			on:keypress
-			on:blur
-			on:change
-			on:focus
-			on:input
-			on:keyup
-		/>
-	{:else if type == "password"}
-		<input
-			{...inputProps}
-			type="password"
-			bind:value
-			on:keydown
-			on:keypress
-			on:blur
-			on:change
-			on:focus
-			on:input
-			on:keyup
-		/>
-	{:else if type == "url"}
-		<input
-			{...inputProps}
-			type="url"
-			bind:value
-			on:keydown
-			on:keypress
-			on:blur
-			on:change
-			on:focus
-			on:input
-			on:keyup
-		/>
-	{:else if type == "number"}
-		<input
-			{...inputProps}
-			type="number"
-			bind:value
-			on:keydown
-			on:keypress
-			on:blur
-			on:change
-			on:focus
-			on:input
-			on:keyup
-		/>
-	{:else if type == "email"}
-		<input
-			{...inputProps}
-			type="email"
-			bind:value
-			on:keydown
-			on:keypress
-			on:blur
-			on:change
-			on:focus
-			on:input
-			on:keyup
-		/>
-	{:else if type == "tel"}
-		<input
-			{...inputProps}
-			type="tel"
-			bind:value
-			on:keydown
-			on:keypress
-			on:blur
-			on:change
-			on:focus
-			on:input
-			on:keyup
-		/>
-	{:else}
-		<h1 style="background: red; color: white; padding: 10px;">INVALID TYPE {type}</h1>
-	{/if}
+	<input {type} {...inputProps} bind:value />
 	<div
 		class="navds-form-field__error"
 		id={errorId}
