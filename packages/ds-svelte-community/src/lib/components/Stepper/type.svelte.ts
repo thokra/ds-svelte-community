@@ -3,17 +3,6 @@ import type { HTMLAnchorAttributes, HTMLOlAttributes } from "svelte/elements";
 
 export const orientations = ["horizontal", "vertical"] as const;
 
-// export type StepperContext = {
-// 	activeStep: $state()
-// 	orientation: (typeof orientations)[number];
-// 	interactive: Readable<boolean>;
-
-// 	steps: Readable<string[]>;
-// 	register: (el: string) => number;
-// 	unregister: (el: string) => void;
-// 	setStep: (step: number, event: MouseEvent) => void;
-// };
-
 export class StepperContext {
 	activeStep: number = $state(1);
 	orientation: (typeof orientations)[number] = $state("horizontal");

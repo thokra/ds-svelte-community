@@ -18,46 +18,6 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	import Label from "../typography/Label/Label.svelte";
 	import type { Props } from "./type";
 
-	// type $$Props = Props;
-
-	// // /**
-	// //  * Exposes the HTML size attribute.
-	// //  */
-	// // export let htmlSize: number | undefined = undefined;
-	// /**
-	//  * Label for select.
-	//  */
-	// export let label = "";
-	// /**
-	//  * If enabled shows the label and description for screenreaders only.
-	//  */
-	// export let hideLabel = false;
-	// /**
-	//  * Sets inline-style on select wrapper.
-	//  */
-	// export let style: string | undefined = undefined;
-
-	// /**
-	//  * Changes font-size, padding and gaps.
-	//  */
-	// export let size: (typeof sizes)[number] = "medium";
-
-	// /**
-	//  * Disables element.
-	//  * @note Avoid using if possible for accessibility purposes.
-	//  */
-	// export let disabled = false;
-
-	// /**
-	//  * Error message for element.
-	//  */
-	// export let error = "";
-
-	// /**
-	//  * Selected value.
-	//  */
-	// export let value = "";
-
 	let {
 		label = "",
 		hideLabel = false,

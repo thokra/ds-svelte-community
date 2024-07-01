@@ -1,3 +1,9 @@
+<!--
+@component
+TextField is a classic input element that gives users the ability to write short texts or numbers.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/textfield).
+-->
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>

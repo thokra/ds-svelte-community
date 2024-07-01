@@ -10,22 +10,6 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	import { classes, omit } from "../helpers";
 	import { StepperContext, contextKey, type Props } from "./type.svelte";
 
-	// type $$Props = Props;
-
-	// /**
-	//  * The direction the component grows.
-	//  */
-	// export let orientation: (typeof orientations)[number] = "vertical";
-	// /**
-	//  * Current active step.
-	//  * @note Stepper index starts at 1, not 0
-	//  */
-	// export let activeStep = 1;
-	// /**
-	//  * Makes stepper non-interactive if false
-	//  */
-	// export let interactive = true;
-
 	let {
 		orientation = "vertical",
 		activeStep = 1,
@@ -34,29 +18,6 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 		children,
 		...restProps
 	}: Props = $props();
-
-	// const active = writable<number>(activeStep);
-	// $: active.set(activeStep);
-	// const interactiveStore = writable<boolean>(interactive);
-	// $: interactiveStore.set(interactive);
-
-	// let steps = writable<string[]>([]);
-	// const context: StepperContext = {
-	// 	activeStep: active,
-	// 	orientation,
-	// 	interactive: interactiveStore,
-	// 	steps,
-	// 	register: (el: string) => {
-	// 		steps.update((steps) => [...steps, el]);
-	// 		return $steps.length;
-	// 	},
-	// 	unregister: (el: string) => {
-	// 		steps.update((steps) => steps.filter((step) => step !== el));
-	// 	},
-	// 	setStep: (step, event) => {
-	// 		onChange && onChange({ step, event });
-	// 	},
-	// };
 
 	const context = new StepperContext(activeStep, orientation, interactive, onChange);
 	$effect(() => {

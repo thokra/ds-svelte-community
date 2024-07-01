@@ -12,13 +12,6 @@
 	import HelpTextIcon from "./HelpTextIcon.svelte";
 	import type { HelpTextProps } from "./type";
 
-	// type $$Props = HelpTextProps;
-
-	// export let title: string;
-	// export let wrapperClass: string = "";
-	// export let placement: HelpTextProps["placement"] = "top";
-	// export let strategy: HelpTextProps["strategy"] = "absolute";
-
 	let {
 		title,
 		wrapperClass = "",

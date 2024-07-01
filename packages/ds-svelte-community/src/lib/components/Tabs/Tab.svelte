@@ -11,8 +11,6 @@
 	let { value, as = "button", children, icon, ...restProps }: TabProps = $props();
 
 	const ctx = getTabsContext();
-	// const currentValue = ctx.value;
-	// const activeTab = ctx.activeTab;
 	let self: HTMLElement | undefined = $state();
 
 	onMount(() => {

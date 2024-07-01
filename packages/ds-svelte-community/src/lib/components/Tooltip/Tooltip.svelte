@@ -1,3 +1,9 @@
+<!--
+@component
+A tooltip is a small box with text that is activated on focus or hover. The tooltip summarizes the content or use.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/tooltip).
+-->
 <script lang="ts">
 	import { Detail } from "$lib";
 	import { classes } from "../helpers";
@@ -144,7 +150,6 @@
 	bind:clientHeight={height}
 	role="tooltip"
 >
-	<!-- Content to which the tooltip will activate -->
 	{@render children()}
 
 	{#if open}

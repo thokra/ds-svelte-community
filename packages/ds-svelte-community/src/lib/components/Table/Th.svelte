@@ -5,21 +5,6 @@
 	import { classes, omit } from "../helpers";
 	import { getTableContext, type TableCellProps } from "./type.svelte";
 
-	// type $$Props = TableCellProps;
-
-	// /**
-	//  * Content alignment inside cell.
-	//  */
-	// export let align: (typeof aligns)[number] | undefined = undefined;
-
-	// /**
-	//  * Key to sort by.
-	//  */
-	// export let sortKey = "";
-	// /**
-	//  * Column is sortable, adds indicators to show sorting.
-	//  */
-	// export let sortable = false;
 	let { align, sortKey = "", sortable = false, children, ...restProps }: TableCellProps = $props();
 
 	const ctx = getTableContext();

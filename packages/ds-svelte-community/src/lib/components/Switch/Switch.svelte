@@ -1,3 +1,10 @@
+<!--
+@component
+Switch is used to quickly change between two states. Often to toggle preferences or settings.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/switch).
+-->
+
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>

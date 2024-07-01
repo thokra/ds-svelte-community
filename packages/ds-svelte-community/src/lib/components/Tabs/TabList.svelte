@@ -5,7 +5,6 @@
 	import { classes, omit } from "../helpers";
 	import type { TabListProps } from "./type.svelte";
 
-	// type $$Props = TabListProps;
 	let { children, ...restProps }: TabListProps = $props();
 
 	let tabList: HTMLElement;

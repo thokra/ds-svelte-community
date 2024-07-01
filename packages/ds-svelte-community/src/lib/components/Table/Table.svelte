@@ -1,24 +1,16 @@
+<!--
+@component
+Tables are used to organize and display data in an efficient way. They can be simple with few rows and columns, but they can also be rich with interactive components such as links, buttons, checkboxes and dropdown lists.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/table).
+
+The component names differ from `@navikt/ds-react` to align with the HTML standard.
+-->
+
 <script lang="ts">
 	import { setContext } from "svelte";
 	import { classes, omit } from "../helpers";
 	import { TableContext, contextKey, type TableProps } from "./type.svelte";
-
-	// type $$Props = TableProps;
-
-	// /**
-	//  * Changes padding.
-	//  * @default "medium"
-	//  */
-	// export let size: (typeof tableSizes)[number] = "medium";
-	// /**
-	//  * Zebra striped table.
-	//  * @default false
-	//  */
-	// export let zebraStripes = false;
-	// /**
-	//  * Sort state.
-	//  */
-	// export let sort: TableSortState | undefined = undefined;
 
 	let {
 		size = "medium",
@@ -38,13 +30,6 @@
 		ctx.sort = sort;
 	});
 
-	// let sortState = writable<TableSortState | undefined>(sort);
-	// $: sortState.set(sort);
-
-	// const sortDispatch = createEventDispatcher<{
-	// 	sortChange: { key: string };
-	// }>();
-
 	setContext<TableContext>(contextKey, ctx);
 </script>
 
@@ -53,6 +38,5 @@
 	class={classes(restProps, "navds-table", `navds-table--${size}`)}
 	class:navds-table--zebra-stripes={zebraStripes}
 >
-	<!-- Content -->
 	{@render children()}
 </table>

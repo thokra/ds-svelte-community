@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let completedLabel = "Completed";
+	let {
+		completedLabel = "Completed",
+	}: {
+		completedLabel?: string;
+	} = $props();
 </script>
 
 <svg
