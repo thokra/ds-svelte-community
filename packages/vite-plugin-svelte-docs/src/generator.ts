@@ -79,6 +79,11 @@ class Context {
 export class Generator {
 	#project: Project;
 
+	/*
+	 * Files that have been checked for various types
+	 */
+	#checkedFiles: Set<string> = new Set();
+
 	constructor(svelte2tsxPath: string) {
 		this.#project = new Project({
 			compilerOptions: {
@@ -112,7 +117,7 @@ export class Generator {
 		this.#project.createSourceFile(filename, dts, { overwrite: true });
 	}
 
-	docFor(filename: string, debug = false): Doc {
+	docFor(filename: string, debug = false): { doc: Doc; files: string[] } {
 		filename = this.#renameFile(filename);
 
 		const sourceFile = this.#project.getSourceFileOrThrow(filename);
@@ -388,10 +393,18 @@ export class Generator {
 		ret.slots = ret.slots.sort(sortFn);
 		ret.events = ret.events.sort(sortFn);
 
-		return ret;
+		this.#checkedFiles.delete(filename);
+		const files = Array.from(this.#checkedFiles);
+
+		return {
+			files,
+			doc: ret,
+		};
 	}
 
 	#typeOf(parentContext: Context, node: tsm.Node): Type {
+		this.#checkedFiles.add(node.getSourceFile().getFilePath());
+
 		const ctx = new Context(node, parentContext);
 		switch (node.getKind()) {
 			case ts.SyntaxKind.PropertySignature:

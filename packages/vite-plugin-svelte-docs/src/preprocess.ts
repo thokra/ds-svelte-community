@@ -15,10 +15,15 @@ export default function myPlugin(svelte2tsxPath: string): VitePlugin {
 				const source = await fs.promises.readFile(filename);
 				gen.addSvelteFile(filename, source.toString("utf-8"));
 
-				const js = gen.docFor(filename);
+				const { doc, files } = gen.docFor(filename);
+
+				this.addWatchFile(filename);
+				files.forEach((file) => {
+					this.addWatchFile(file);
+				});
 
 				return {
-					code: `export default ${JSON.stringify(js, undefined, 2)}`,
+					code: `export default ${JSON.stringify(doc, undefined, 2)}`,
 					meta: {
 						vite: {
 							lang: "json",
