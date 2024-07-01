@@ -1,10 +1,10 @@
 import type { ResponsiveProp, SpacingScale } from "$lib/components/utils/types";
-import type { HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
+import type { Snippet } from "svelte";
 
 export type BleedSpacingInline = "0" | "full" | "px" | SpacingScale;
 export type BleedSpacingBlock = "0" | "px" | SpacingScale;
 
-export interface BleedProps extends HTMLAttributes<HTMLDivElement> {
+export interface BleedProps {
 	/** **Negative** horizontal margin around children.
 	 *  Accepts a spacing token or an object of spacing tokens for different breakpoints.
 	 * @example
@@ -29,5 +29,9 @@ export interface BleedProps extends HTMLAttributes<HTMLDivElement> {
 	/**
 	 * HTML element to render as.
 	 */
-	as?: keyof SvelteHTMLElements;
+	as?: string;
+	/**
+	 * Content
+	 */
+	children: Snippet;
 }

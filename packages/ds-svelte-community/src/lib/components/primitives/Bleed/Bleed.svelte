@@ -1,45 +1,32 @@
+<!--
+@component
+Simple primitive to add negative margin that lets content slide out of the parent's container.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/primitives/bleed).
+-->
+
 <script lang="ts">
 	import { classes, omit } from "$lib/components/helpers";
 	import { combineStyles, getResponsiveProps } from "$lib/components/utils/css";
 	import type { BleedProps } from "./type";
 
-	type $$Props = BleedProps;
-
-	/** **Negative** horizontal margin around children.
-	 *  Accepts a spacing token or an object of spacing tokens for different breakpoints.
-	 * @example
-	 * marginInline='4'
-	 * marginInline='4 5'
-	 * marginInline={{xs: '0 32', sm: '3', md: '4 5', lg: '5', xl: '6', "2xl": '12'}}
-	 */
-	export let marginInline: BleedProps["marginInline"] = undefined;
-	/** **Negative** vertical margin around children.
-	 *  Accepts a spacing token or an object of spacing tokens for different breakpoints.
-	 * @example
-	 * marginBlock='4'
-	 * marginBlock='4 5'
-	 * marginBlock={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6', "2xl": '12'}}
-	 */
-	export let marginBlock: BleedProps["marginBlock"] = undefined;
-	/**
-	 * When true, set the padding to mirror the margin.
-	 * This maintains the apparent width of the element prior to adding Bleed.
-	 */
-	export let reflectivePadding: BleedProps["reflectivePadding"] = undefined;
-
-	/**
-	 * HTML element to render as.
-	 */
-	export let as: BleedProps["as"] = "div";
+	let {
+		marginInline,
+		marginBlock,
+		reflectivePadding,
+		as = "div",
+		children,
+		...restProps
+	}: BleedProps = $props();
 </script>
 
 <svelte:element
 	this={as}
-	{...omit($$restProps, "class")}
-	class={classes($$restProps, "navds-bleed")}
+	{...omit(restProps, "class")}
+	class={classes(restProps, "navds-bleed")}
 	class:navds-bleed--padding={reflectivePadding}
 	style={combineStyles(
-		$$restProps,
+		restProps,
 		getResponsiveProps("bleed", "margin-inline", "spacing", marginInline, true, [
 			"0",
 			"full",
@@ -56,5 +43,5 @@
 		reflectivePadding
 			? getResponsiveProps("bleed", "padding-block", "spacing", marginBlock, false, ["0", "px"])
 			: {},
-	)}><slot /></svelte:element
+	)}>{@render children()}</svelte:element
 >

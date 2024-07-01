@@ -7,9 +7,10 @@ import type {
 	SpaceDelimitedAttribute,
 	SpacingScale,
 } from "$lib/components/utils/types";
-import type { HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
+import type { Snippet } from "svelte";
+import type { SvelteHTMLElements } from "svelte/elements";
 
-export interface BoxProps extends HTMLAttributes<HTMLDivElement> {
+export interface BoxProps {
 	/** Background color. Accepts a color token. */
 	background?: BackgroundToken;
 	/** Border color. Accepts a color token. */
@@ -58,4 +59,11 @@ export interface BoxProps extends HTMLAttributes<HTMLDivElement> {
 	 * HTML element to render as.
 	 */
 	as?: keyof SvelteHTMLElements;
+
+	/**
+	 * Content
+	 */
+	children: Snippet;
+
+	[key: string]: unknown;
 }
