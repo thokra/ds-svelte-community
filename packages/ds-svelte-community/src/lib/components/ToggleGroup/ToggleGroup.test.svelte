@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ToggleGroup, ToggleGroupItem } from ".";
-	import type { ToggleGroupProps } from "./type";
+	import type { ToggleGroupProps } from "./type.svelte";
 
 	export let value: string;
 	export let items: string[];

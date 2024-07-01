@@ -1,48 +1,26 @@
 <script lang="ts">
 	import { Detail } from "$lib";
 	import { classes } from "../helpers";
-	import type { placements } from "./type";
+	import type { TooltipProps } from "./type";
 
-	/**
-	 * Open state for tooltip.
-	 */
-	export let open = false;
+	let {
+		content,
+		open = false,
+		placement = "top",
+		arrow = true,
+		offset = 10,
+		maxChar = 80,
+		delay = 150,
+		keys = [],
+		children,
+		...restProps
+	}: TooltipProps = $props();
 
-	/**
-	 * Orientation for tooltip.
-	 */
-	export let placement: (typeof placements)[number] = "top";
-	/**
-	 * Toggles rendering of arrow.
-	 * @default true
-	 */
-	export let arrow = true;
-	/**
-	 * Distance from anchor to tooltip.
-	 */
-	export let offset = 10;
-	/**
-	 * Text-content inside tooltip.
-	 */
-	export let content: string;
-	/**
-	 * Sets max allowed character length.
-	 */
-	export let maxChar = 80;
-	/**
-	 * Adds a delay in milliseconds before opening tooltip.
-	 */
-	export let delay = 150;
-	/**
-	 * List of Keyboard-keys for shortcuts.
-	 */
-	export let keys: string[] = [];
-
-	$: {
+	$effect(() => {
 		if (content.length > maxChar) {
 			console.warn(`Tooltip: content exceeds maxChar (${maxChar}). Content: ${content}`);
 		}
-	}
+	});
 
 	let timeout: ReturnType<typeof setTimeout>;
 
@@ -57,10 +35,10 @@
 		open = false;
 	}
 
-	let width: number;
-	let height: number;
-	let tooltipWidth: number;
-	let tooltipHeight: number;
+	let width: number = $state(0);
+	let height: number = $state(0);
+	let tooltipWidth: number = $state(0);
+	let tooltipHeight: number = $state(0);
 
 	const calculateTooltipStyles = (
 		width: number,
@@ -150,27 +128,31 @@
 			.join(" ");
 	};
 
-	$: tooltipStyles = calculateTooltipStyles(width, height, tooltipWidth, tooltipHeight, placement);
-	$: arrowStyles = calculateArrowStyles(width, height, tooltipWidth, tooltipHeight, placement);
+	let tooltipStyles = $derived(
+		calculateTooltipStyles(width, height, tooltipWidth, tooltipHeight, placement),
+	);
+	let arrowStyles = $derived(
+		calculateArrowStyles(width, height, tooltipWidth, tooltipHeight, placement),
+	);
 </script>
 
 <div
 	class="ds-svelte-tooltip-wrapper"
-	on:mouseenter={handleMouseEnter}
-	on:mouseleave={handleMouseLeave}
+	onmouseenter={handleMouseEnter}
+	onmouseleave={handleMouseLeave}
 	bind:clientWidth={width}
 	bind:clientHeight={height}
 	role="tooltip"
 >
 	<!-- Content to which the tooltip will activate -->
-	<slot />
+	{@render children()}
 
 	{#if open}
 		<div
 			tabindex="-1"
 			role="tooltip"
 			id="r7"
-			class={classes($$restProps, "navds-tooltip", "navds-detail", "navds-detail--small")}
+			class={classes(restProps, "navds-tooltip", "navds-detail", "navds-detail--small")}
 			data-side={placement}
 			style="position: absolute;  visibility: visible; {tooltipStyles}"
 			bind:clientWidth={tooltipWidth}
@@ -188,7 +170,7 @@
 				</span>
 			{/if}
 			{#if arrow}
-				<div class="navds-tooltip__arrow" style={arrowStyles} />
+				<div class="navds-tooltip__arrow" style={arrowStyles}></div>
 			{/if}
 		</div>
 	{/if}

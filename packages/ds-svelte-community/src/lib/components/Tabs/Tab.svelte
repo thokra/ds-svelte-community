@@ -1,3 +1,7 @@
+<!--
+	@component
+	Tab is an individual tab in a Tabs component. It should be used inside a TabList component.
+-->
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { Focus, classes, focusable, omit } from "../helpers";

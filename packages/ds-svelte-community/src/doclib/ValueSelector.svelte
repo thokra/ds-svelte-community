@@ -133,10 +133,12 @@
 	</Button>
 {:else if !Array.isArray(typ) && (typ.type === "string" || typ.type === "number")}
 	<TextField
+		label="Value for property"
+		hideLabel
 		value={fromText(value || '""') as string}
 		size="small"
 		type={typ.type === "number" ? "number" : "text"}
-		on:change={(e) => {
+		onchange={(e: InputEvent) => {
 			onChange(toText((e.target as HTMLInputElement).value));
 		}}
 	/>

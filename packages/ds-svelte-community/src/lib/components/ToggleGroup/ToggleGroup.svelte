@@ -1,63 +1,48 @@
+<!--
+@component
+ToggleGroup lets the user make choices that affect the content of the page. The component consists of a group of buttons that are connected and only one button can be selected at a time.
+
+Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/toggle-group).
+-->
+
 <script lang="ts">
 	import { Label } from "$lib";
-	import { createEventDispatcher, onDestroy, setContext } from "svelte";
-	import { writable } from "svelte/store";
+	import { setContext } from "svelte";
 	import { classes, omit } from "../helpers";
-	import {
-		contextKey,
-		type ToggleGroupContext,
-		type ToggleGroupProps,
-		type sizes,
-		type variants,
-	} from "./type";
+	import { contextKey, ToggleGroupContext, type ToggleGroupProps } from "./type.svelte";
 
-	type $$Props = ToggleGroupProps;
+	let {
+		size = "medium",
+		value = $bindable(),
+		label = "",
+		variant = "action",
+		children,
+		onChange,
+		...restProps
+	}: ToggleGroupProps = $props();
 
-	/**
-	 * Changes padding and font-size.
-	 */
-	export let size: (typeof sizes)[number] = "medium";
-	/**
-	 * Controlled selected value.
-	 */
-	export let value: string;
+	const ctx = new ToggleGroupContext();
+	ctx.size = size;
+	ctx.value = value;
 
-	/**
-	 * Label describing ToggleGroup.
-	 */
-	export let label = "";
+	setContext<ToggleGroupContext>(contextKey, ctx);
 
-	/**
-	 * Changes design and interaction-visuals.
-	 */
-	export let variant: (typeof variants)[number] = "action";
-
-	const currentValue = writable<string>(value);
-
-	let previousValue = value;
-	$: {
-		if ($currentValue != previousValue) {
-			value = $currentValue;
-			previousValue = value;
-		} else if (value != previousValue) {
-			currentValue.set(value);
-			previousValue = value;
+	let preValue = $state.snapshot(value);
+	$effect(() => {
+		if (preValue !== value) {
+			preValue = $state.snapshot(value);
+			console.log("Do something with callback");
+			onChange?.(value);
 		}
-	}
-
-	setContext<ToggleGroupContext>(contextKey, {
-		value: currentValue,
-		size,
 	});
 
-	const dispatch = createEventDispatcher();
-	const unsubscribe = currentValue.subscribe((value) => {
-		dispatch("change", value);
+	$effect(() => {
+		ctx.value = value;
+		console.log("value set to ", value);
 	});
-	onDestroy(unsubscribe);
 </script>
 
-<div {...omit($$restProps, "class")} class={classes($$restProps, "navds-toggle-group__wrapper")}>
+<div {...omit(restProps, "class")} class={classes(restProps, "navds-toggle-group__wrapper")}>
 	{#if label}
 		<Label {size} class="navds-toggle-group__label">{label}</Label>
 	{/if}
@@ -69,7 +54,6 @@
 		style="outline:none"
 		tabindex="0"
 	>
-		<!-- One or more `<ToggleGroupItem>`-->
-		<slot />
+		{@render children()}
 	</div>
 </div>

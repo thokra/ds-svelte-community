@@ -24,7 +24,7 @@ export interface PageProps extends HTMLAttributes<HTMLDivElement> {
 	contentBlockPadding?: "end" | "none";
 }
 
-export interface PageBlockProps extends HTMLAttributes<HTMLDivElement> {
+export interface PageBlockProps {
 	/**
 	 * Predefined max-width
 	 * @example
@@ -46,4 +46,6 @@ export interface PageBlockProps extends HTMLAttributes<HTMLDivElement> {
 	gutters?: boolean;
 
 	as?: keyof SvelteHTMLElements;
+
+	[key: string]: unknown;
 }

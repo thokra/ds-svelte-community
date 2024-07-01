@@ -52,24 +52,26 @@ export function getTabsContext(): TabContext {
 	return context;
 }
 
-interface TabPropsBase {
+export interface TabProps {
+	/**
+	 * Value of the tab.
+	 */
 	value: string;
+	/**
+	 * Label of the tab.
+	 */
 	children?: Snippet;
+	/**
+	 * Icon to display in the tab.
+	 */
 	icon?: Snippet;
+	/**
+	 * Element to render as.
+	 */
+	as?: (typeof ases)[number];
 
 	[key: string]: unknown;
 }
-
-interface TabPropsButton extends TabPropsBase {
-	as?: "button";
-	value: string;
-}
-interface TabPropsA extends TabPropsBase {
-	as: "a";
-	value: string;
-}
-
-export type TabProps = TabPropsButton | TabPropsA;
 
 export interface TabListProps {
 	/**
@@ -81,7 +83,13 @@ export interface TabListProps {
 }
 
 export interface TabPanelProps {
+	/**
+	 * Value of the tab.
+	 */
 	value: string;
+	/**
+	 * Content of the tab panel.
+	 */
 	children: Snippet;
 
 	[key: string]: unknown;

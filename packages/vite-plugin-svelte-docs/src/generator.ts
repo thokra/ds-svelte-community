@@ -403,7 +403,10 @@ export class Generator {
 	}
 
 	#typeOf(parentContext: Context, node: tsm.Node): Type {
-		this.#checkedFiles.add(node.getSourceFile().getFilePath());
+		const nodeFilePath = node.getSourceFile().getFilePath();
+		if (nodeFilePath.indexOf("node_modules") < 0) {
+			this.#checkedFiles.add(nodeFilePath);
+		}
 
 		const ctx = new Context(node, parentContext);
 		switch (node.getKind()) {

@@ -1,23 +1,17 @@
 <script lang="ts">
 	import { BodyShort } from "$lib";
 	import { classes, omit } from "../helpers";
-	import { getToggleGroupContext, type ToggleGroupItemProps } from "./type";
+	import { getToggleGroupContext, type ToggleGroupItemProps } from "./type.svelte";
 
-	type $$Props = ToggleGroupItemProps;
-
-	/**
-	 * Value of this tab.
-	 */
-	export let value: string;
+	let { value, children, ...restProps }: ToggleGroupItemProps = $props();
 
 	const ctx = getToggleGroupContext();
-	let active = ctx.value;
 
-	$: state = $active === value ? "on" : "off";
+	let state = $derived(ctx.value === value ? "on" : "off");
 
 	function handleClick() {
 		if (state === "off") {
-			$active = value;
+			ctx.value = value;
 		}
 	}
 
@@ -61,17 +55,17 @@
 </script>
 
 <button
-	{...omit($$restProps, "class", "data-state", "role", "aria-checked", "tabindex")}
-	class={classes($$restProps, "navds-toggle-group__button")}
+	{...omit(restProps, "class", "data-state", "role", "aria-checked", "tabindex")}
+	class={classes(restProps, "navds-toggle-group__button")}
 	data-state={state}
 	role="radio"
 	aria-checked={state === "on"}
 	tabindex={state == "on" ? 0 : -1}
 	type="button"
-	on:click={handleClick}
-	on:keydown={keydown}
+	onclick={handleClick}
+	onkeydown={keydown}
 >
 	<BodyShort as="span" class="navds-toggle-group__button-inner" size={ctx.size}>
-		<slot />
+		{@render children()}
 	</BodyShort>
 </button>

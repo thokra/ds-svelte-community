@@ -142,6 +142,9 @@
 
 {#each extraChildrenDoc as doc}
 	<h3>{doc.name}</h3>
+	{#if doc.description}
+		<SvelteMarkdown source={doc.description} />
+	{/if}
 	<Properties {doc} />
 {/each}
 
