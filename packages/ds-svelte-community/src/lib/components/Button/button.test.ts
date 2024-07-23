@@ -3,18 +3,19 @@ import type { Props } from "$lib/components/Button/type";
 import { bunmatch } from "$testlib/bunmatch";
 import { Button as ReactButton } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte" with { type: "browser" };
-import { afterEach, describe, expect, it } from "bun:test";
-import { mount } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 
 describe("Button", () => {
-	it.only("renders a button with a label", () => {
-		mount;
+	it("renders a button with a label", () => {
 		const r = render(Button, {});
-		expect(r.container.innerHTML).toContain("Click me!");
+		console.log(r.container.innerText);
+		expect(r.container.innerText).toContain("Click me!");
 	});
 
 	it("renders with HTML similar to ds-react", async () => {
-		expect(await bunmatch(render(Button, {}), ReactButton, { children: ["Click me!"] })).toBeTrue();
+		expect(
+			await bunmatch(render(Button, {}), ReactButton, { children: ["Click me!"] }),
+		).toBeTruthy();
 	});
 
 	it("renders with HTML similar to ds-react with props", async () => {
@@ -27,7 +28,7 @@ describe("Button", () => {
 		};
 		expect(
 			await bunmatch(render(Button, { props }), ReactButton, { props, children: ["Click me!"] }),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	it("renders with HTML similar to ds-react with disabled", async () => {
@@ -36,7 +37,7 @@ describe("Button", () => {
 		};
 		expect(
 			await bunmatch(render(Button, { props }), ReactButton, { props, children: ["Click me!"] }),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	// Cannot test loading because of client side check required
@@ -66,7 +67,7 @@ describe("Button", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

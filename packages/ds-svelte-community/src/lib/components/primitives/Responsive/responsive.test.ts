@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Hide as ReactHide, Show as ReactShow } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Hide from "./Hide.test.svelte";
 import Show from "./Show.test.svelte";
 import type { BaseResponsiveProps } from "./type";
@@ -19,7 +19,7 @@ describe("Responsive", () => {
 					props,
 					children: ["body"],
 				}),
-			).toBeTrue();
+			).toBeTruthy();
 		});
 	});
 
@@ -35,7 +35,7 @@ describe("Responsive", () => {
 					props,
 					children: ["body"],
 				}),
-			).toBeTrue();
+			).toBeTruthy();
 		});
 	});
 

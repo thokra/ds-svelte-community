@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { TextField as ReactTextField } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import TextField from "./TextField.test.svelte";
 import type { Props } from "./type";
 
@@ -24,7 +24,7 @@ describe("TextField", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

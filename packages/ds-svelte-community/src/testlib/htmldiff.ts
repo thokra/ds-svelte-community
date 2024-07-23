@@ -1,6 +1,7 @@
 import type { RenderResult } from "@testing-library/svelte";
 import * as Diff from "diff";
 import prettier from "prettier";
+import htmlPrettier from "prettier/parser-html";
 import type { FunctionComponent, ReactNode } from "react";
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
@@ -171,7 +172,7 @@ async function prettyDiff(a: string, b: string, before: number, after: number) {
 		`${before} lines before and ${after} lines after a change are shown.\n`,
 	];
 
-	const opts = { parser: "html", singleAttributePerLine: true };
+	const opts = { parser: "html", singleAttributePerLine: true, plugins: [htmlPrettier] };
 
 	const afmt = await prettier.format(a, opts);
 	const bfmt = await prettier.format(b, opts);
@@ -213,7 +214,7 @@ async function doExpect<T extends SvelteComponent>(
 				container: HTMLElement;
 			};
 			if (Object.keys(r).includes("container")) {
-				received = r.container.firstElementChild!;
+				received = r.container!;
 			}
 		}
 	}

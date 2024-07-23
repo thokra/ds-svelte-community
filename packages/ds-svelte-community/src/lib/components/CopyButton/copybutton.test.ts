@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { CopyButton as ReactCopyButton } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import CopyButton from "./CopyButton.test.svelte";
 import type { Props } from "./type";
 
@@ -31,7 +31,7 @@ describe("CopyButton", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	it("renders with HTML similar to ds-react with text", async () => {
@@ -59,7 +59,7 @@ describe("CopyButton", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

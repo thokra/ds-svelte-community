@@ -35,25 +35,18 @@ await plugin({
 		};
 
 		const renderSvelteTS: OnLoadCallback = async ({ path }) => {
-			const contents = compileModule(
-				await preprocess(readFileSync(path, "utf8"), vitePreprocess()).then(
-					(processed) => processed.code,
-				),
-				{
-					filename: path,
-					generate: "client",
-				},
-			).js.code.replaceAll(
-				'import * as Svelte from "svelte"',
-				`import * as Svelte from "svelte" with { type: "browser" }`,
-			);
-
-			console.log(contents);
-
 			try {
 				return {
 					// Use the preprocessor of your choice.
-					contents,
+					contents: compileModule(
+						await preprocess(readFileSync(path, "utf8"), vitePreprocess()).then(
+							(processed) => processed.code,
+						),
+						{
+							filename: path,
+							generate: "client",
+						},
+					).js.code,
 					loader: "js",
 				};
 			} catch (e) {

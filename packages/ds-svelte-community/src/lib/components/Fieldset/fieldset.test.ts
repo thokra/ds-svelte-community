@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Fieldset as ReactFieldset } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Fieldset from "./Fieldset.test.svelte";
 import type { FieldsetProps } from "./type";
 
@@ -28,7 +28,7 @@ describe("Fieldset", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

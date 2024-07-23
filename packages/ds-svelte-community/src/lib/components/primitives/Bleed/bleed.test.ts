@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Bleed as ReactBleed } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Bleed from "./Bleed.test.svelte";
 import type { BleedProps } from "./type";
 
@@ -18,7 +18,7 @@ describe("Bleed", () => {
 				props,
 				children: ["Bleed body"],
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

@@ -1,9 +1,9 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Tabs as ReactTabs } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import Tabs from "./Tabs.test.svelte";
 
 describe("Tabs", () => {
@@ -66,7 +66,7 @@ describe("Tabs", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

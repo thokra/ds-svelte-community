@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Loader as ReactLoader } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Loader from "./Loader.svelte";
 import type { Props } from "./type";
 
@@ -30,7 +30,7 @@ describe("Loader", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

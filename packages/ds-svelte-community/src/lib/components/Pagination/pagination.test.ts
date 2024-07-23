@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Pagination as ReactPagination } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Pagination from "./Pagination.test.svelte";
 import type { Props } from "./type";
 
@@ -32,7 +32,7 @@ describe("Pagination", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

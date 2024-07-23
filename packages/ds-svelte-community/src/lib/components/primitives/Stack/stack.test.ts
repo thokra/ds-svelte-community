@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { HStack as ReactHStack, VStack as ReactVStack } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import HStack from "./HStack.svelte";
 import Stack, { type StackPropsTest } from "./Stack.test.svelte";
 import VStack from "./VStack.svelte";
@@ -21,7 +21,7 @@ describe("Stack", () => {
 					React.createElement("div", { key: "2" }),
 				],
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	it("renders VStack with HTML similar to ds-react", async () => {
@@ -37,7 +37,7 @@ describe("Stack", () => {
 					React.createElement("div", { key: "2" }),
 				],
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

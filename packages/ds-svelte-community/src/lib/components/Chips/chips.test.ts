@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Chips as ReactChips } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import Chips from "./Chips.test.svelte";
 
 describe("Chips", () => {
@@ -25,7 +25,7 @@ describe("Chips", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	it("renders Chips Toggle similar to ds-react", async () => {
@@ -53,7 +53,7 @@ describe("Chips", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 	afterEach(cleanup);
 });

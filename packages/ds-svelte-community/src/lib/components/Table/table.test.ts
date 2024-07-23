@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Table as ReactTable } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import Table from "./Table.test.svelte";
 
 describe("Table", () => {
@@ -72,7 +72,7 @@ describe("Table", () => {
 				// 	},
 				// },
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

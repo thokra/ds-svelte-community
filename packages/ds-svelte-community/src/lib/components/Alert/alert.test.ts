@@ -2,7 +2,7 @@ import { bunmatch } from "$testlib/bunmatch";
 import { IgnoreKnownUnique } from "$testlib/stdopts";
 import { Alert as ReactAlert } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Alert from "./Alert.test.svelte";
 import { sizes, variants, type Props } from "./type";
 
@@ -12,13 +12,14 @@ describe("Alert", () => {
 		expect(r.container.innerHTML).toContain("Some alert");
 	});
 
-	const testVariants = sizes.flatMap((size) => variants.map((variant) => ({ size, variant })));
+	const testVariants = sizes.flatMap((size) => variants.map((variant) => [size, variant]));
 
-	testVariants.forEach(({ size, variant }) => {
-		it("renders similar to ds-reacth with size %s and variant %s", async () => {
-			const props: Props = {
-				size: size as never,
-				variant: variant as never,
+	it.each(testVariants)(
+		"renders similar to ds-reacth with size '%s' and variant '%s'",
+		async (size, variant) => {
+			const props: Omit<Props, "children"> = {
+				size: size,
+				variant: variant,
 			};
 
 			const iconTexts: Record<(typeof variants)[number], string> = {
@@ -48,12 +49,12 @@ describe("Alert", () => {
 						},
 					},
 				),
-			).toBeTrue();
-		});
-	});
+			).toBeTruthy();
+		},
+	);
 
 	it("renders similar to ds-reacth with other props", async () => {
-		const props: Props = {
+		const props: Omit<Props, "children"> = {
 			fullWidth: true,
 			inline: true,
 			variant: "info",
@@ -73,7 +74,7 @@ describe("Alert", () => {
 					opts: IgnoreKnownUnique,
 				},
 			),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

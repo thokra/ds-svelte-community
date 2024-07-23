@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { ErrorMessage as ReactErrorMessage } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import ErrorMessage from "./ErrorMessage.test.svelte";
 
 describe("ErrorMessage", () => {
@@ -20,7 +20,7 @@ describe("ErrorMessage", () => {
 							props,
 							children: ["ErrorMessage content"],
 						}),
-					).toBeTrue();
+					).toBeTruthy();
 				});
 			});
 		});

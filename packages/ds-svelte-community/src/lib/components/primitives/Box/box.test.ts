@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Box as ReactBox } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Box from "./Box.test.svelte";
 import type { BoxProps } from "./type";
 
@@ -23,7 +23,7 @@ describe("Box", () => {
 				props,
 				children: ["Box body"],
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

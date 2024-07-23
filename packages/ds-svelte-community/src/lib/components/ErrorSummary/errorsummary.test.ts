@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { ErrorSummary as ReactErrorSummary } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import ErrorSummary from "./ErrorSummary.test.svelte";
 
 describe("ErrorSummary", () => {
@@ -38,7 +38,7 @@ describe("ErrorSummary", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

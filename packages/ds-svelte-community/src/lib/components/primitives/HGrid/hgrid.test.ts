@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { HGrid as ReactHGrid } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import HGrid from "./HGrid.test.svelte";
 import type { HGridProps } from "./type";
 
@@ -22,7 +22,7 @@ describe("HGrid", () => {
 					React.createElement("div", { key: "2" }),
 				],
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

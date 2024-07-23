@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Heading as ReactHeading } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import Heading from "./Heading.test.svelte";
 
 describe("Heading", () => {
@@ -22,7 +22,7 @@ describe("Heading", () => {
 								props,
 								children: ["Heading content"],
 							}),
-						).toBeTrue();
+						).toBeTruthy();
 					});
 				});
 			});

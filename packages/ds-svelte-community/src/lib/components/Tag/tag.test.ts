@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Tag as ReactTag } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Tag from "./Tag.test.svelte";
 import { variants, type Props } from "./type";
 
@@ -25,7 +25,7 @@ describe("Tag", () => {
 						// },
 					},
 				}),
-			).toBeTrue();
+			).toBeTruthy();
 		});
 	});
 

@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { BodyShort as ReactBodyShort } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import BodyShort from "./BodyShort.test.svelte";
 
 describe("BodyShort", () => {
@@ -20,7 +20,7 @@ describe("BodyShort", () => {
 							props,
 							children: ["Body short content"],
 						}),
-					).toBeTrue();
+					).toBeTruthy();
 				});
 			});
 		});

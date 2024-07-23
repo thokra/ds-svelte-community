@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { ConfirmationPanel as ReactConfirmationPanel } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import ConfirmationPanel from "./ConfirmationPanel.test.svelte";
 import type { Props } from "./type";
 
@@ -27,7 +27,7 @@ describe("ConfirmationPanel", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

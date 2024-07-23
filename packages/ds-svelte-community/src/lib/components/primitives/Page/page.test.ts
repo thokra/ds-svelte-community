@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Page as ReactPage } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import Page from "./Page.test.svelte";
 import type { PageProps } from "./type";
 
@@ -25,7 +25,7 @@ describe("Page", () => {
 					]),
 				],
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

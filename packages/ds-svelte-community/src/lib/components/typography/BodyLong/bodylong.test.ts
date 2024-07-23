@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { BodyLong as ReactBodyLong } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import BodyLong from "./BodyLong.test.svelte";
 
 describe("BodyLong", () => {
@@ -20,7 +20,7 @@ describe("BodyLong", () => {
 							props,
 							children: ["Body long content"],
 						}),
-					).toBeTrue();
+					).toBeTruthy();
 				});
 			});
 		});

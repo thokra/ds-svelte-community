@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Modal as ReactModal } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import Modal from "./Modal.test.svelte";
 import type { Props } from "./type";
 
@@ -50,7 +50,7 @@ describe("Modal", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

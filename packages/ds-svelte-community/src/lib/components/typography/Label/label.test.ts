@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Label as ReactLabel } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import Label from "./Label.test.svelte";
 
 describe("Label", () => {
@@ -20,7 +20,7 @@ describe("Label", () => {
 							props,
 							children: ["Label content"],
 						}),
-					).toBeTrue();
+					).toBeTruthy();
 				});
 			});
 		});

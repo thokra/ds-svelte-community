@@ -106,12 +106,14 @@
 		"@sveltejs/kit": "^2.5.18",
 		"@sveltejs/package": "^2.3.2",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
+		"@testing-library/jest-dom": "^6.4.7",
 		"@testing-library/svelte": "^5.2.0",
 		"@types/bun": "^1.1.6",
 		"@types/diff": "^5.2.1",
 		"@types/react-dom": "^18.3.0",
 		"@typescript-eslint/eslint-plugin": "^7.12.0",
 		"@typescript-eslint/parser": "^7.12.0",
+		"@vitest/ui": "^2.0.4",
 		"autoprefixer": "^10.4.19",
 		"clsx": "^2.1.1",
 		"diff": "^5.2.0",
@@ -135,7 +137,8 @@
 		"totalist": "^3.0.1",
 		"tslib": "^2.6.3",
 		"typescript": "5.4.5",
-		"vite": "5.3.4"
+		"vite": "5.3.4",
+		"vitest": "^2.0.4"
 	},
 	"dependencies": {
 		"@nais/vite-plugin-svelte-docs": "workspace:*",

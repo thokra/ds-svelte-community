@@ -12,7 +12,7 @@ export const variants = [
 
 export const sizes = ["medium", "small", "xsmall"] as const;
 
-interface BaseProps {
+export interface BaseProps {
 	/**
 	 * Replaces button content with a Loader component, keeps width.
 	 */

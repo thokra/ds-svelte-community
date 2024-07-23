@@ -1,5 +1,5 @@
 import { cleanup } from "@testing-library/svelte";
-import { afterEach, describe, it } from "bun:test";
+import { afterEach, describe, it } from "vitest";
 
 describe("Tooltip", () => {
 	it.skip("renders with HTML similar to ds-react. This is known different than ds-react", () => {

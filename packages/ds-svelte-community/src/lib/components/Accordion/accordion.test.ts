@@ -1,7 +1,7 @@
 import { Accordion as ReactAccordion } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
+import { afterEach, describe, expect, it } from "vitest";
 import Accordion, { type TestProps } from "./Accordion.test.svelte";
 
 describe("Accordion", () => {
@@ -18,7 +18,10 @@ describe("Accordion", () => {
 				return React.createElement(ReactAccordion.Item, {
 					defaultOpen: v.open,
 					children: [
-						React.createElement(ReactAccordion.Header, { key: `h-${i}`, children: v.heading }),
+						React.createElement(ReactAccordion.Header, {
+							key: `h-${i}`,
+							children: v.heading as string,
+						}),
 						React.createElement(ReactAccordion.Content, { key: `c-${i}`, children: v.content }),
 					],
 					key: i,

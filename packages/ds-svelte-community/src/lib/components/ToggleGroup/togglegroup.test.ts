@@ -1,9 +1,9 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { ToggleGroup as ReactToggleGroup } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import { omit } from "../helpers";
 import ToggleGroup from "./ToggleGroup.test.svelte";
 
@@ -54,7 +54,7 @@ describe("ToggleGroup", () => {
 					// },
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

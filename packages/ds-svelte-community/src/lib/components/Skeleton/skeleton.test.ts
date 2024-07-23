@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Skeleton as ReactSkeleton } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import Skeleton from "./Skeleton.svelte";
 import { variants, type Props } from "./type";
 
@@ -15,7 +15,7 @@ describe("Skeleton", () => {
 				await bunmatch(render(Skeleton, props), ReactSkeleton, {
 					props,
 				}),
-			).toBeTrue();
+			).toBeTruthy();
 		});
 	});
 

@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { Detail as ReactDetail } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
 import type { ComponentProps } from "svelte";
+import { afterEach, describe, expect, it } from "vitest";
 import Detail from "./Detail.test.svelte";
 
 describe("Detail", () => {
@@ -20,7 +20,7 @@ describe("Detail", () => {
 							props,
 							children: ["Detail content"],
 						}),
-					).toBeTrue();
+					).toBeTruthy();
 				});
 			});
 		});

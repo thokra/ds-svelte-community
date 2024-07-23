@@ -1,7 +1,7 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { GuidePanel as ReactGuidePanel } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { afterEach, describe, expect, it } from "vitest";
 import GuidePanel from "./GuidePanel.test.svelte";
 import type { Props } from "./type";
 
@@ -29,7 +29,7 @@ describe("GuidePanel", () => {
 					},
 				},
 			}),
-		).toBeTrue();
+		).toBeTruthy();
 	});
 
 	afterEach(cleanup);

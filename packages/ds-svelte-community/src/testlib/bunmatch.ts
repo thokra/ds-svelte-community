@@ -9,7 +9,7 @@ export async function bunmatch<T extends SvelteComponent>(
 ): Promise<boolean> {
 	const t = await toMimicReact(svelte, react, options);
 	if (!t.pass) {
-		process.stderr.write(t.message() + "\n");
+		console.log(t.message() + "\n");
 	}
 	return t.pass;
 }
