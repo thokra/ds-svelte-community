@@ -54,7 +54,7 @@ describe("v5", () => {
 		const gen = new Generator(require.resolve("svelte2tsx"));
 		gen.addSvelteFile(filename, code);
 
-		const doc = gen.docFor(filename, false);
+		const { doc } = gen.docFor(filename, false);
 		expect(doc).toEqual({
 			name: "asdf",
 			description: "Some simple *description* of the component",

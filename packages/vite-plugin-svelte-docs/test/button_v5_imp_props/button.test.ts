@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import * as fs from "fs/promises";
 import * as path from "path";
+import { join } from "path";
 import { Doc } from "../../src";
 import { Generator } from "../../src/generator";
 
@@ -11,7 +12,7 @@ describe("v5", () => {
 
 		const gen = new Generator(require.resolve("svelte2tsx"));
 		gen.addSvelteFile(filename, code);
-		const doc = gen.docFor(filename, false);
+		const { doc, files } = gen.docFor(filename, false);
 
 		const expected: Doc = {
 			name: "Button",
@@ -84,5 +85,6 @@ describe("v5", () => {
 		expect(doc.props).toStrictEqual(expected.props);
 		expect(doc.slots).toStrictEqual(expected.slots);
 		expect(doc.events).toStrictEqual(expected.events);
+		expect(files).toStrictEqual([join(import.meta.dir, "types.ts")]);
 	});
 });
