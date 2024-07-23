@@ -2,7 +2,7 @@
 	import Button from "./Button.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let { ...restProps }: Props = $props();
 </script>
 
-<Button {...$$props}>Click me!</Button>
+<Button {...restProps}>Click me!</Button>

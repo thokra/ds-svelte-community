@@ -1,3 +1,5 @@
+telemetry = false
+
 [test]
 preload = ["./src/testlib/bun_setup.ts", "./src/testlib/test_helper.ts"]
 root = "./src/"
