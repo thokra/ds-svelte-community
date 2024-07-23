@@ -1,17 +1,22 @@
 <script lang="ts" context="module">
 	import newUniqueId from "$lib/components/local-unique-id";
-	import type { SVGAttributes } from "svelte/elements";
 </script>
 
 <script lang="ts">
-	/**
-	 * Title of the icon, used for accessibility
-	 */
-	export let title = "";
+	import type { Snippet } from "svelte";
 
-	type $$Props = SVGAttributes<SVGElement> & {
+	type Props = {
+		/**
+		 * Title of the icon, used for accessibility
+		 */
 		title?: string;
+
+		children?: Snippet;
+
+		[key: string]: unknown;
 	};
+
+	let { title, children, ...restProps }: Props = $props();
 
 	const id = newUniqueId();
 </script>
@@ -25,12 +30,14 @@
 	role="img"
 	viewBox="0 0 24 24"
 	aria-labelledby={title ? id : undefined}
-	{...$$restProps}
+	{...restProps}
 >
 	{#if title}
 		<title {id}>{title}</title>
 	{/if}
-	<slot />
+	{#if children}
+		{@render children()}
+	{/if}
 	<path
 		fill="currentColor"
 		d="M7.7 14.835c.224 0 .401.063.532.189a.625.625 0 0 1 .203.49.647.647 0 0 1-.203.497c-.13.121-.308.182-.532.182h-.693v-1.358H7.7Zm4.302.035c.215 0 .388.06.518.182a.62.62 0 0 1 .196.476v1.827c0 .2-.065.362-.196.483a.731.731 0 0 1-.518.182h-.609v-3.15h.61Z"
