@@ -1,0 +1,78 @@
+---
+title: Home
+---
+
+
+# ds-svelte-community
+
+ds-svelte-community contains [Aksel](https://aksel.nav.no) components in Svelte. This is not maintained by the Aksel team.
+
+## Installation
+
+The package is available on Google Artifact Registry, and can be installed with npm:
+
+```bash
+# Add @nais to .npmrc
+echo "@nais:registry=https://europe-north1-npm.pkg.dev/nais-io/nais-public-npm/" >> .npmrc
+
+# Add ds-svelte-community to your project
+npm install @nais/ds-svelte-community --save-dev
+```
+
+### Using Bun
+
+```toml
+# Add the following to your `bunfig.toml`:
+[install.scopes]
+nais = "https://europe-north1-npm.pkg.dev/nais-io/nais-public-npm/"
+```
+
+Install the package:
+
+```bash
+bun install @nais/ds-svelte-community --save-dev
+```
+
+## Preprocessor
+
+To make development quicker, we recommend adding our custom preprocessor:
+
+```bash
+npm install @nais/ds-svelte-community-preprocess-svelte --save-dev
+# or with Bun
+bun install @nais/ds-svelte-community-preprocess-svelte --save-dev
+
+```
+
+Then add the following to your `svelte.config.js`:
+
+```ts
+// Import the preprocessor
+import { optimizeImports } from "@nais/ds-svelte-community-preprocess-svelte";
+
+const config = {
+	preprocess: [
+		vitePreprocess(),
+		// Add it to the list of preprocessors
+		optimizeImports(),
+	],
+};
+```
+
+## What it does
+
+When you import either components or icons like
+
+```ts
+import { Button } from "@nais/ds-svelte-community";
+import { AirplaneIcon } from "@nais/ds-svelte-community/icons";
+```
+
+the preprocessor will automatically add the following to your `svelte.config.js`:
+
+```ts
+import Button from "@nais/ds-svelte-community/components/Button/Button.svelte";
+import AirplaneIcon from "@nais/ds-svelte-community/icons/AirplaneIcon.svelte";
+```
+
+This will reduce the number of files that needs to be compiled and requested.

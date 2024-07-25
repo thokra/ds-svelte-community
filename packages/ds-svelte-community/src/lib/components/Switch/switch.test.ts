@@ -9,7 +9,7 @@ import Switch from "./Switch.svelte";
 describe("Switch", () => {
 	[false, true].forEach((checked) => {
 		it(`renders with HTML similar to ds-react checked ${checked}`, async () => {
-			const props: ComponentProps<Switch> = {
+			const props: Omit<ComponentProps<Switch>, "children"> = {
 				checked,
 				deactivateLabel: "Deaktiver valg",
 			};

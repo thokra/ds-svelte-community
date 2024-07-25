@@ -141,7 +141,6 @@
 
 	.code-preview {
 		font-size: var(--a-font-size-small);
-		tab-size: 2;
 		position: relative;
 
 		.copy-code {

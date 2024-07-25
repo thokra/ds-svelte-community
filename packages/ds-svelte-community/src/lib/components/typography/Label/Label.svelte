@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from "@nais/vite-plugin-svelte-docs";
+	import type { Snippet } from "svelte";
 	import { classes } from "../../helpers";
 
 	type Props = {
@@ -49,5 +49,5 @@
 	class:navds-label--small={size == "small"}
 	class:navds-typo--spacing={spacing}
 >
-	{children}
+	{@render children()}
 </svelte:element>

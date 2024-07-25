@@ -1,0 +1,17 @@
+---
+title: CSS
+---
+
+# CSS
+
+You should add the following import to your root `+layout.svelte` file:
+
+```svelte
+<script>
+	import "@nais/ds-svelte-community/css";
+</script>
+```
+
+This CSS extends [@navikt/ds-css](https://github.com/navikt/aksel/tree/main/%40navikt/core/css) and will style `a`s as `Link` components.
+
+If you want unstyled `a`, you can add the class `unstyled` to prevent this styling.

@@ -16,3 +16,17 @@ code {
 		font-size: 1rem;
 	}
 }
+
+pre {
+	tab-size: 2;
+}
+
+.header-anchor a {
+	position: relative;
+	color: inherit;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}

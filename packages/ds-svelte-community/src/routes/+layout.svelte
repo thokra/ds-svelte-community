@@ -4,14 +4,15 @@
 	import "../doclib/styles.css";
 	import "../lib/css/index.css";
 	import type { LayoutData } from "./$types";
+	import type { Snippet } from "svelte";
 
-	export let data: LayoutData;
+	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
 	function toTitle(str: string) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
 
-	let showSidebar = false;
+	let showSidebar = $state(false);
 </script>
 
 <Page background="bg-subtle">
@@ -41,7 +42,9 @@
 						<strong>{toTitle(key)}</strong>
 						<ul>
 							{#each paths as component}
-								{@const href = `/${key}/${component}/`}
+								{@const href = (
+									key == "pages" ? `/${component}/` : `/${key}/${component}/`
+								).replaceAll("//", "/")}
 								<li>
 									<!-- eslint-disable-next-line svelte/valid-compile using $ to access stores currently errors the validator -->
 									<a
@@ -50,7 +53,7 @@
 										{href}
 										data-sveltekit-preload-data="tap"
 									>
-										{component}
+										{component ? component : "Home"}
 									</a>
 								</li>
 							{/each}
@@ -59,7 +62,7 @@
 				</div>
 			</div>
 			<Box style="flex-grow: 1;" paddingInline="3">
-				<slot />
+				{@render children()}
 			</Box>
 		</div>
 	</PageBlock>

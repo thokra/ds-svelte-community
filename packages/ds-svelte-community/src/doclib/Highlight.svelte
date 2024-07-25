@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getHighlighter, type BundledLanguage, type BundledTheme } from "shiki";
+	import { getSingletonHighlighter, type BundledLanguage, type BundledTheme } from "shiki";
 
 	let {
 		code,
@@ -8,7 +8,7 @@
 	}: { code: string; lang?: BundledLanguage; theme?: BundledTheme } = $props();
 
 	// TODO: We can probably make this global
-	const highlighter = getHighlighter({
+	const highlighter = getSingletonHighlighter({
 		themes: [theme],
 		langs: [lang],
 	});
