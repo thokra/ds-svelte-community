@@ -1,35 +1,36 @@
 <script lang="ts">
+	import type { Snippet } from "svelte";
 	import { classes } from "../../helpers";
 
-	/**
-	 * Heading level
-	 * @default "1"
-	 */
-	export let level: "1" | "2" | "3" | "4" | "5" | "6" = "1";
+	type Props = {
+		/** Heading level */
+		level?: "1" | "2" | "3" | "4" | "5" | "6";
+		/** Heading size */
+		size?: "xlarge" | "large" | "medium" | "small" | "xsmall";
+		/** Adds margin-bottom */
+		spacing?: boolean;
+		/** Tag to use for the heading */
+		as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span" | undefined;
 
-	/**
-	 * Heading size
-	 * @default "medium"
-	 */
-	export let size: "xlarge" | "large" | "medium" | "small" | "xsmall" = "medium";
+		children: Snippet;
+		[key: string]: unknown;
+	};
 
-	/**
-	 * Adds margin-bottom
-	 * @default false
-	 */
-	export let spacing = false;
-
-	/**
-	 * Tag to use for the heading
-	 */
-	export let as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span" | undefined = undefined;
+	let {
+		level = "1",
+		size = "medium",
+		spacing = false,
+		as,
+		children,
+		...restProps
+	}: Props = $props();
 </script>
 
 <svelte:element
 	this={as ? as : "h" + level}
-	{...$$restProps}
-	class={classes($$restProps, "navds-heading", `navds-heading--${size}`)}
+	{...restProps}
+	class={classes(restProps, "navds-heading", `navds-heading--${size}`)}
 	class:navds-typo--spacing={spacing}
 >
-	<slot />
+	{@render children()}
 </svelte:element>

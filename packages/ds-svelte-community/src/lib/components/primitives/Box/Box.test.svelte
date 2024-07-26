@@ -2,7 +2,7 @@
 	import Box from "./Box.svelte";
 	import type { BoxProps } from "./type";
 
-	type $$Props = BoxProps;
+	let props: Omit<BoxProps, "children"> = $props();
 </script>
 
-<Box {...$$props}>Box body</Box>
+<Box {...props}>Box body</Box>

@@ -2,10 +2,10 @@
 	import { Step, Stepper } from ".";
 	import type { Props } from "./type.svelte";
 
-	type $$Props = Props;
+	let props: Omit<Props, "children"> = $props();
 </script>
 
-<Stepper {...$$props}>
+<Stepper {...props}>
 	<Step href="#f1" completedLabel="Fullført" completed={true}>Account information</Step>
 	<Step href="#f2" completedLabel="Fullført" completed={true}>About you</Step>
 	<Step href="#f3" completedLabel="Fullført" completed={false}>How did you hear about us</Step>

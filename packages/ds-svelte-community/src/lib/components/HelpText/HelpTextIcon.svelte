@@ -5,8 +5,21 @@
 <script lang="ts">
 	import { classes } from "../helpers";
 
-	export let title: string;
-	export let filled = false;
+	type Props = {
+		/**
+		 * The title of the icon
+		 */
+		title?: string;
+
+		/**
+		 * Whether the icon should be filled
+		 */
+		filled?: boolean;
+
+		[key: string]: unknown;
+	};
+
+	let { title, filled, ...restProps }: Props = $props();
 
 	const titleId = "ht-" + newUniqueId();
 </script>
@@ -20,7 +33,7 @@
 	focusable="false"
 	role="img"
 	aria-labelledby={titleId}
-	class={classes($$restProps, "navds-help-text__icon")}
+	class={classes(restProps, "navds-help-text__icon")}
 	class:navds-help-text__icon--filled={filled}
 >
 	{#if title}

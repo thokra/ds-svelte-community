@@ -20,6 +20,6 @@ Check out the full list of icons at [Aksel ikoner](https://aksel.nav.no/ikoner).
 
 Importing directly from `@nais/ds-svelte-community/icons` will result in a large bundle size. To reduce bundle size, you can import icons directly from `@nais/ds-svelte-community/icons/<icon>`.
 
-You might also want to [use our preprocessor](/docs/pages-docs--docs#preprocessor).
+You might also want to [use our preprocessor](/#preprocessor).
 
 We will also be adding a preprocessor to optimize imports at a later date.

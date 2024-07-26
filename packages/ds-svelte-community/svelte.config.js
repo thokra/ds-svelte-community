@@ -5,7 +5,10 @@ import { mdsvex } from "mdsvex";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { codeToHtml } from "shiki";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 let theme = "dark-plus";
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -15,18 +18,8 @@ const config = {
 	extensions: [".svelte", ".svx"],
 	preprocess: [
 		vitePreprocess(),
-		optimizeImports({
-			componentsImportPrefix: {
-				match: "$lib",
-				prefix: "$lib/",
-			},
-			iconImportPrefix: {
-				match: "$lib/icons",
-				prefix: "$lib/",
-			},
-		}),
 		mdsvex({
-			layout: "./src/routes/layout.svx.svelte",
+			layout: __dirname + "/src/routes/layout.svx.svelte",
 			rehypePlugins: [
 				rehypeSlug,
 				[
@@ -56,6 +49,16 @@ const config = {
 						],
 					});
 				},
+			},
+		}),
+		optimizeImports({
+			componentsImportPrefix: {
+				match: "$lib",
+				prefix: "$lib/",
+			},
+			iconImportPrefix: {
+				match: "$lib/icons",
+				prefix: "$lib/",
 			},
 		}),
 	],

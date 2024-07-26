@@ -2,7 +2,7 @@
 	import GuidePanel from "./GuidePanel.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let props: Omit<Props, "children"> = $props();
 </script>
 
-<GuidePanel>Guide Panel Content</GuidePanel>
+<GuidePanel {...props}>Guide Panel Content</GuidePanel>

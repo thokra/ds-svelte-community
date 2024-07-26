@@ -2,7 +2,7 @@
 	import type { ComponentProps } from "svelte";
 	import ErrorMessage from "./ErrorMessage.svelte";
 
-	type $$Props = ComponentProps<ErrorMessage>;
+	let props: Omit<ComponentProps<ErrorMessage>, "children"> = $props();
 </script>
 
-<ErrorMessage {...$$props}>ErrorMessage content</ErrorMessage>
+<ErrorMessage {...props}>ErrorMessage content</ErrorMessage>

@@ -2,13 +2,12 @@
 	import { ToggleGroup, ToggleGroupItem } from ".";
 	import type { ToggleGroupProps } from "./type.svelte";
 
-	export let value: string;
-	export let items: string[];
-
-	type $$Props = ToggleGroupProps & {
+	type Props = ToggleGroupProps & {
 		value: string;
 		items: string[];
 	};
+
+	let { value, items }: Props = $props();
 </script>
 
 <ToggleGroup {value}>

@@ -1,19 +1,16 @@
 <script lang="ts" context="module">
+	import type { Component } from "svelte";
 	import type { StackProps } from "./type";
-	export type StackPropsTest = StackProps & {
-		component: ComponentType;
+	export type StackPropsTest = Omit<StackProps, "children"> & {
+		component: Component;
 	};
 </script>
 
 <script lang="ts">
-	import type { ComponentType } from "svelte";
-
-	export let component: ComponentType;
-
-	type $$Props = StackPropsTest;
+	let { component, ...restProps }: StackPropsTest = $props();
 </script>
 
-<svelte:component this={component} {...$$restProps}>
-	<div />
-	<div />
+<svelte:component this={component} {...restProps}>
+	<div></div>
+	<div></div>
 </svelte:component>

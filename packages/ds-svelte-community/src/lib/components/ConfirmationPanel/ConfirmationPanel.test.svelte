@@ -2,11 +2,13 @@
 	import ConfirmationPanel from "./ConfirmationPanel.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let props: Omit<Omit<Props, "label">, "children"> = $props();
 </script>
 
-<ConfirmationPanel {...$$props}>
-	<svelte:fragment slot="label">Label fragment</svelte:fragment>
+<ConfirmationPanel {...props}>
+	{#snippet label()}
+		Label fragment
+	{/snippet}
 
 	Confirmation body
 </ConfirmationPanel>

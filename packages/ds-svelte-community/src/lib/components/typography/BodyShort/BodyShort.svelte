@@ -1,29 +1,33 @@
 <script lang="ts">
+	import type { Snippet } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
 	import { classes } from "../../helpers";
 
-	/**
-	 * medium: 18px, small: 16px
-	 * @default "medium"
-	 */
-	export let size: "medium" | "small" = "medium";
+	type Props = {
+		/**
+		 * medium: 18px, small: 16px
+		 */
+		size?: "medium" | "small";
+		/**
+		 * Adds margin-bottom
+		 */
+		spacing?: boolean;
+		/**
+		 * Tag to use for the body
+		 */
+		as?: keyof SvelteHTMLElements;
+		children: Snippet;
+		[key: string]: unknown;
+	};
 
-	/**
-	 * Adds margin-bottom
-	 */
-	export let spacing = false;
-
-	/**
-	 * Tag to use for the body
-	 */
-	export let as: keyof SvelteHTMLElements = "p";
+	let { size, spacing, as, children, ...restProps }: Props = $props();
 </script>
 
 <svelte:element
 	this={as}
-	{...$$restProps}
-	class={classes($$restProps, "navds-body-short", `navds-body-short--${size}`)}
+	{...restProps}
+	class={classes(restProps, "navds-body-short", `navds-body-short--${size}`)}
 	class:navds-typo--spacing={spacing}
 >
-	<slot />
+	{@render children()}
 </svelte:element>

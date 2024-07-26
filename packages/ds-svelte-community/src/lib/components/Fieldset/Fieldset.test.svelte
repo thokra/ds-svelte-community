@@ -2,11 +2,11 @@
 	import Fieldset from "./Fieldset.svelte";
 	import type { FieldsetProps } from "./type";
 
-	type $$Props = FieldsetProps;
+	let props: Omit<Omit<Omit<FieldsetProps, "children">, "legend">, "description"> = $props();
 </script>
 
-<Fieldset {...$$props}>
-	<svelte:fragment slot="legend">Legend</svelte:fragment>
-	<svelte:fragment slot="description">Description</svelte:fragment>
+<Fieldset {...props}>
+	{#snippet legend()}Legend{/snippet}
+	{#snippet description()}Description{/snippet}
 	Fieldset body
 </Fieldset>

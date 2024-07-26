@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { omit } from "../helpers";
 	import Modal from "./Modal.svelte";
 	import type { Props } from "./type";
 
-	export let open = true;
+	// type $$Props = Props;
 
-	type $$Props = Props;
+	let open = true;
+	let props: Omit<Omit<Omit<Props, "children">, "header">, "footer"> = $props();
 </script>
 
-<Modal {open} {...omit($$props, "open")}>
-	<svelte:fragment slot="header">ModalHeader</svelte:fragment>
-
-	<svelte:fragment slot="footer">ModalFooter</svelte:fragment>
+<Modal {open} {...props}>
+	{#snippet header()}ModalHeader{/snippet}
+	{#snippet footer()}ModalFooter{/snippet}
 	ModalContent
 </Modal>

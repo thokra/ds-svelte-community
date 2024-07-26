@@ -2,10 +2,10 @@
 	import HGrid from "./HGrid.svelte";
 	import type { HGridProps } from "./type";
 
-	type $$Props = HGridProps;
+	let props: Omit<HGridProps, "children"> = $props();
 </script>
 
-<HGrid {...$$props}>
-	<div />
-	<div />
+<HGrid {...props}>
+	<div></div>
+	<div></div>
 </HGrid>

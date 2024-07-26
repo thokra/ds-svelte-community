@@ -2,7 +2,7 @@
 	import type { ComponentProps } from "svelte";
 	import Detail from "./Detail.svelte";
 
-	type $$Props = ComponentProps<Detail>;
+	let props: Omit<ComponentProps<Detail>, "children"> = $props();
 </script>
 
-<Detail {...$$props}>Detail content</Detail>
+<Detail {...props}>Detail content</Detail>

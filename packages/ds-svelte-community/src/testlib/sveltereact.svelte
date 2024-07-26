@@ -34,5 +34,5 @@
 {#if $$slots.default}
 	<div bind:this={container} class={$$props.class}><slot /></div>
 {:else}
-	<div bind:this={container} class={$$props.class} />
+	<div bind:this={container} class={$$props.class}></div>
 {/if}

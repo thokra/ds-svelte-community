@@ -2,36 +2,24 @@
 	import { classes, omit } from "$lib/components/helpers";
 	import type { PageProps } from "./type";
 
-	type $$Props = PageProps;
+	let {
+		as = "div",
+		background = "bg-default",
+		footerPosition = undefined,
+		contentBlockPadding = "end",
+		children,
+		footer,
+		...restProps
+	}: PageProps = $props();
 
-	/**
-	 * Overrides html-tag
-	 * @default "div"
-	 */
-	export let as: PageProps["as"] = "div";
-	/**
-	 * Background color. Accepts a color token.
-	 * @default bg-default
-	 */
-	export let background: PageProps["background"] = "bg-default";
-	/**
-	 * Places footer below page-fold
-	 */
-	export let footerPosition: PageProps["footerPosition"] = undefined;
-	/**
-	 * Adds a standardised padding of 4rem between content and footer
-	 * @default end
-	 */
-	export let contentBlockPadding: PageProps["contentBlockPadding"] = "end";
-
-	$: belowFold = footerPosition === "belowFold";
+	let belowFold = $derived(footerPosition === "belowFold");
 </script>
 
 <svelte:element
 	this={as}
-	{...omit($$restProps, "class", "style")}
-	class={classes($$restProps, "navds-page")}
-	style={`--__ac-page-background: var(--a-${background}) ${$$restProps.style || ""}`}
+	{...omit(restProps, "class", "style")}
+	class={classes(restProps, "navds-page")}
+	style={`--__ac-page-background: var(--a-${background}) ${restProps.style || ""}`}
 >
 	<div
 		class={classes(
@@ -43,7 +31,10 @@
 			},
 		)}
 	>
-		<slot />
+		{@render children()}
 	</div>
-	<slot name="footer" />
+
+	{#if footer}
+		{@render footer()}
+	{/if}
 </svelte:element>

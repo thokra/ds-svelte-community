@@ -2,7 +2,7 @@
 	import Responsive from "./Responsive.svelte";
 	import type { BaseResponsiveProps } from "./type";
 
-	type $$Props = BaseResponsiveProps;
+	let props: BaseResponsiveProps = $props();
 </script>
 
-<Responsive variant="hide" {...$$props}><slot /></Responsive>
+<Responsive variant="hide" {...props} />

@@ -1,1 +1,1 @@
-<div class="navds-stack__spacer" />
+<div class="navds-stack__spacer"></div>

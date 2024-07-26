@@ -2,7 +2,7 @@
 	import Tag from "./Tag.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let props: Omit<Props, "children"> = $props();
 </script>
 
-<Tag {...$$props}>Tag content</Tag>
+<Tag {...props}>Tag content</Tag>

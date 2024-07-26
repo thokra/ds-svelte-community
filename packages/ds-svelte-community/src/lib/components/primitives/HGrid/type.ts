@@ -1,7 +1,8 @@
 import type { ResponsiveProp, SpacingScale } from "$lib/components/utils/types";
-import type { HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
+import type { Snippet } from "svelte";
+import type { SvelteHTMLElements } from "svelte/elements";
 
-export interface HGridProps extends HTMLAttributes<HTMLDivElement> {
+export interface HGridProps {
 	/**
 	 * Number of columns to display. Can be a number, a string with a unit or tokens for spesific breakpoints.
 	 * Sets `grid-template-columns`, so `fr`, `minmax` etc. works.
@@ -28,4 +29,8 @@ export interface HGridProps extends HTMLAttributes<HTMLDivElement> {
 	 * HTML element to render as.
 	 */
 	as?: keyof SvelteHTMLElements;
+
+	children: Snippet;
+
+	[key: string]: unknown;
 }

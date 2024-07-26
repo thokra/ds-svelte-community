@@ -1,8 +1,9 @@
-import type { HTMLAnchorAttributes, SvelteHTMLElements } from "svelte/elements";
+import type { Snippet } from "svelte";
+import type { SvelteHTMLElements } from "svelte/elements";
 
 export const variants = ["action", "neutral", "subtle"] as const;
 
-export interface LinkProps extends HTMLAnchorAttributes {
+export interface LinkProps {
 	href: string;
 
 	/**
@@ -22,4 +23,8 @@ export interface LinkProps extends HTMLAnchorAttributes {
 	inlineText?: boolean;
 
 	as?: keyof SvelteHTMLElements;
+
+	children: Snippet;
+
+	[key: string]: unknown;
 }

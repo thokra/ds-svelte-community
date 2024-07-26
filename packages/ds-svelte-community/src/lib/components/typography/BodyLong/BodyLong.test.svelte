@@ -2,7 +2,7 @@
 	import type { ComponentProps } from "svelte";
 	import BodyLong from "./BodyLong.svelte";
 
-	type $$Props = ComponentProps<BodyLong>;
+	let props: Omit<ComponentProps<BodyLong>, "children"> = $props();
 </script>
 
-<BodyLong {...$$props}>Body long content</BodyLong>
+<BodyLong {...props}>Body long content</BodyLong>

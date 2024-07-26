@@ -2,7 +2,7 @@
 	import type { ComponentProps } from "svelte";
 	import Heading from "./Heading.svelte";
 
-	type $$Props = ComponentProps<Heading>;
+	let props: Omit<ComponentProps<Heading>, "children"> = $props();
 </script>
 
-<Heading {...$$props}>Heading content</Heading>
+<Heading {...props}>Heading content</Heading>

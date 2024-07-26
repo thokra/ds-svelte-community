@@ -2,7 +2,7 @@
 	import Bleed from "./Bleed.svelte";
 	import type { BleedProps } from "./type";
 
-	type $$Props = BleedProps;
+	let props: Omit<BleedProps, "children"> = $props();
 </script>
 
-<Bleed {...$$props}>Bleed body</Bleed>
+<Bleed {...props}>Bleed body</Bleed>

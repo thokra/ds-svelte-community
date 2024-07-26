@@ -1,4 +1,5 @@
 import type { ResponsiveProp, SpacingScale } from "$lib/components/utils/types";
+import type { Snippet } from "svelte";
 import type { HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
 
 export interface FullStackProps extends StackProps {
@@ -33,4 +34,8 @@ export interface StackProps extends HTMLAttributes<HTMLDivElement> {
 	 * HTML element to render as.
 	 */
 	as?: keyof SvelteHTMLElements;
+
+	children: Snippet;
+
+	[key: string]: unknown;
 }

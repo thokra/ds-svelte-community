@@ -2,7 +2,7 @@
 	import Hide from "./Hide.svelte";
 	import type { BaseResponsiveProps } from "./type";
 
-	type $$Props = BaseResponsiveProps;
+	let props: Omit<BaseResponsiveProps, "children"> = $props();
 </script>
 
-<Hide {...$$props}>body</Hide>
+<Hide {...props}>body</Hide>

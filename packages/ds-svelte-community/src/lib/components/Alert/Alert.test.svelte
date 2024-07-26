@@ -2,7 +2,7 @@
 	import Alert from "./Alert.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let props: Omit<Props, "children"> = $props();
 </script>
 
-<Alert {...$$props}>Some alert</Alert>
+<Alert {...props}>Some alert</Alert>

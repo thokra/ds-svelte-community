@@ -2,10 +2,10 @@
 	import Select from "./Select.svelte";
 	import type { Props } from "./type";
 
-	type $$Props = Props;
+	let props: Omit<Props, "children"> = $props();
 </script>
 
-<Select {...$$props}>
+<Select {...props}>
 	<option value="">Choose country</option>
 	<option value="norway">Norway</option>
 	<option value="sweden">Sweden</option>

@@ -4,10 +4,10 @@
 
 	import type { PageProps } from "./type";
 
-	type $$Props = PageProps;
+	let props: Omit<PageProps, "children"> = $props();
 </script>
 
-<Page {...$$props}>
+<Page {...props}>
 	<PageBlock gutters width="lg">Header</PageBlock>
 	<PageBlock gutters width="lg">Content</PageBlock>
 	<svelte:fragment slot="footer">

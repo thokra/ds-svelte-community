@@ -1,16 +1,15 @@
 import bgColors from "@navikt/ds-tokens/src/colors-bg.json";
-import type { HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
+import type { Snippet } from "svelte";
+import type { SvelteHTMLElements } from "svelte/elements";
 export const widths = ["text", "md", "lg", "xl", "2xl"] as const;
 
-export interface PageProps extends HTMLAttributes<HTMLDivElement> {
+export interface PageProps {
 	/**
 	 * Overrides html-tag
-	 * @default "div"
 	 */
 	as?: "div" | "body";
 	/**
 	 * Background color. Accepts a color token.
-	 * @default bg-default
 	 */
 	background?: keyof typeof bgColors.a | "surface-subtle";
 	/**
@@ -19,9 +18,20 @@ export interface PageProps extends HTMLAttributes<HTMLDivElement> {
 	footerPosition?: "belowFold";
 	/**
 	 * Adds a standardised padding of 4rem between content and footer
-	 * @default end
 	 */
 	contentBlockPadding?: "end" | "none";
+
+	/**
+	 * Content
+	 */
+	children: Snippet;
+
+	/**
+	 * Footer content
+	 */
+	footer?: Snippet;
+
+	[key: string]: unknown;
 }
 
 export interface PageBlockProps {
@@ -33,7 +43,6 @@ export interface PageBlockProps {
 	 * lg:   1024px
 	 * xl:   1280px
 	 * 2xl:  1440px
-	 * @default max-width: 100%;
 	 */
 	width?: (typeof widths)[number];
 	/**
@@ -41,11 +50,15 @@ export interface PageBlockProps {
 	 * @example
 	 * 3rem on > md
 	 * 1rem on < md
-	 * @default false
 	 */
 	gutters?: boolean;
 
 	as?: keyof SvelteHTMLElements;
+
+	/**
+	 * Content
+	 */
+	children: Snippet;
 
 	[key: string]: unknown;
 }

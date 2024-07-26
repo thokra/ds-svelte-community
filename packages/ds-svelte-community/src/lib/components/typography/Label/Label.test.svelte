@@ -2,7 +2,7 @@
 	import type { ComponentProps } from "svelte";
 	import Label from "./Label.svelte";
 
-	type $$Props = ComponentProps<Label>;
+	let props: Omit<ComponentProps<Label>, "children"> = $props();
 </script>
 
-<Label {...$$props}>Label content</Label>
+<Label {...props}>Label content</Label>

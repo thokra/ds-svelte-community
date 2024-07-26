@@ -1,11 +1,11 @@
 import type { BreakpointsAlias } from "$lib/components/utils/types";
-import type { HTMLAttributes } from "svelte/elements";
+import type { Snippet } from "svelte";
 
 export interface ResponsiveProps extends BaseResponsiveProps {
 	variant: "show" | "hide";
 }
 
-export interface BaseResponsiveProps extends HTMLAttributes<HTMLDivElement> {
+export interface BaseResponsiveProps {
 	/**
 	 * @example
 	 * above='md'
@@ -21,4 +21,9 @@ export interface BaseResponsiveProps extends HTMLAttributes<HTMLDivElement> {
 	 * HTML element to render as.
 	 */
 	as?: "div" | "span";
+
+	/**
+	 * Content
+	 */
+	children: Snippet;
 }
