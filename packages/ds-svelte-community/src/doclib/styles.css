@@ -19,6 +19,10 @@ code {
 
 pre {
 	tab-size: 2;
+
+	&.shiki {
+		overflow: auto;
+	}
 }
 
 .header-anchor a {

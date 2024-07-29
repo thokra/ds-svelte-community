@@ -89,7 +89,7 @@
 </script>
 
 <svelte:head>
-	<title>{customTitle ?? doc.name} - ds-svelte-community</title>
+	<title>{customTitle ?? doc.name} &bullet; ds-svelte-community</title>
 </svelte:head>
 
 <h1>{customTitle ?? doc.name}</h1>

@@ -94,4 +94,25 @@ describe("optimize-imports", () => {
 			pp.script!({ content: script, filename: "src/+page.svelte" } as never),
 		).toMatchSnapshot();
 	});
+
+	it("doesn't do anything when importing star", () => {
+		const script = `
+		import * as icons from "$lib/icons";
+		`;
+
+		const pp = optimizeImports({
+			componentsImportPrefix: {
+				match: "$lib",
+				prefix: "$lib/",
+			},
+			iconImportPrefix: {
+				match: "$lib/icons",
+				prefix: "$lib/",
+			},
+		});
+
+		const d = pp.script!({ content: script, filename: "src/+page.svelte" } as never);
+		console.log(d);
+		expect(d).toMatchSnapshot();
+	});
 });

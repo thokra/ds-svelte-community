@@ -3,6 +3,7 @@ import { getContext, type Snippet } from "svelte";
 export class ToggleGroupContext {
 	value: string = $state("");
 	size: "medium" | "small" = $state("medium");
+	setValue: (value: string) => void = () => {};
 }
 
 export const contextKey = Symbol("ToggleGroupContext");

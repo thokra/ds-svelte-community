@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { Box, Button, HStack, Page, PageBlock } from "$lib";
+	import type { Snippet } from "svelte";
 	import "../doclib/styles.css";
 	import "../lib/css/index.css";
 	import type { LayoutData } from "./$types";
-	import type { Snippet } from "svelte";
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
@@ -20,7 +20,9 @@
 		<PageBlock width="2xl" gutters={false}>
 			<Box padding="3">
 				<HStack justify="space-between">
-					ds-svelte-community
+					<a href="/" class="unstyled">ds-svelte-community</a>
+
+					<a href="https://docs.nais.io" class="unstyled docs-link">NAIS docs</a>
 					<div class="mobile">
 						<Button
 							variant={"primary-neutral"}
@@ -79,6 +81,15 @@
 		display: none;
 	}
 
+	a.unstyled {
+		color: inherit;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
 	.sidebar {
 		width: 200px;
 		min-width: 200px;
@@ -134,7 +145,18 @@
 		}
 	}
 
+	.docs-link {
+		opacity: 0.7;
+		&:hover {
+			opacity: 1;
+		}
+	}
+
 	@media (max-width: 1000px) {
+		.docs-link {
+			display: none;
+		}
+
 		.wrapper {
 			flex-direction: column;
 		}

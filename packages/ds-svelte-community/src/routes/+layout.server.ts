@@ -5,7 +5,8 @@ export const load: LayoutServerLoad = async () => {
 		pages: [""],
 	};
 
-	const pagesGlob = new Bun.Glob("*/{+page.svx}");
+	// _page.svelte.js, _page.svx.js is when building for production
+	const pagesGlob = new Bun.Glob("*/{+page.svx,+page.svelte,_page.svelte.js,_page.svx.js}");
 	const pagesList = pagesGlob.scan(import.meta.dirname);
 
 	for await (const path of pagesList) {

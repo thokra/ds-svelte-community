@@ -24,6 +24,10 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	const ctx = new ToggleGroupContext();
 	ctx.size = size;
 	ctx.value = value;
+	ctx.setValue = (v: string) => {
+		value = v;
+		ctx.value = v;
+	};
 
 	setContext<ToggleGroupContext>(contextKey, ctx);
 
@@ -31,14 +35,12 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	$effect(() => {
 		if (preValue !== value) {
 			preValue = $state.snapshot(value);
-			console.log("Do something with callback");
 			onChange?.(value);
 		}
 	});
 
 	$effect(() => {
 		ctx.value = value;
-		console.log("value set to ", value);
 	});
 </script>
 

@@ -77,3 +77,13 @@ import CarIcon from "$lib/icons/CarIcon.svelte";
 ,
 }
 `;
+
+exports[`optimize-imports doesn't do anything when importing star 1`] = `
+{
+  "code": 
+"
+		import * as icons from "$lib/icons";
+		"
+,
+}
+`;

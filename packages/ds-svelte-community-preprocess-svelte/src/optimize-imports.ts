@@ -32,7 +32,7 @@ export function optimizeImports({
 						content,
 						filename,
 					},
-					({ node }, replaceContent) => {
+					({ node }, replaceContent, getContent) => {
 						if (node.type === "ImportDeclaration") {
 							switch (node.source.value) {
 								case iconImportPrefix.match:
@@ -40,6 +40,10 @@ export function optimizeImports({
 										node,
 										node.specifiers
 											.map(({ local, imported }) => {
+												if (!imported) {
+													return getContent(node);
+												}
+
 												if (imported.name in Components.icons) {
 													return `import ${local.name} from "${
 														iconImportPrefix.prefix + Components.icons[imported.name].path
@@ -59,6 +63,9 @@ export function optimizeImports({
 										node,
 										node.specifiers
 											.map(({ local, imported }) => {
+												if (!imported) {
+													return getContent(node);
+												}
 												if (imported.name in Components.components) {
 													return `import ${local.name} from "${
 														componentsImportPrefix.prefix +

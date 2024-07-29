@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>{title} - ds-svelte-community</title>
+	<title>{title} &bullet; ds-svelte-community</title>
 </svelte:head>
 
 {@render children()}

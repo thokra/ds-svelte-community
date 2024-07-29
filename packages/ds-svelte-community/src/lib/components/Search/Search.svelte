@@ -101,6 +101,7 @@
 				{...omit(restProps, "class", "value", "type", "role")}
 				bind:this={input}
 				bind:value
+				id={baseID}
 				type="search"
 				role="searchbox"
 				class="navds-search__input navds-search__input--{variant} navds-text-field__input navds-body-short navds-body-short--{size}"

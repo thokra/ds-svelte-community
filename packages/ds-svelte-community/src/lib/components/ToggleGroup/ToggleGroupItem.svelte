@@ -11,7 +11,7 @@
 
 	function handleClick() {
 		if (state === "off") {
-			ctx.value = value;
+			ctx.setValue(value);
 		}
 	}
 
