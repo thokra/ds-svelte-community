@@ -101,7 +101,7 @@ export function getResponsiveProps<T extends string>(
 
 export function combineStyles(
 	props: SvelteRestProps,
-	...args: Record<string, string | number>[]
+	...args: Record<string, string | number | null>[]
 ): string {
 	let styles = "";
 	if (props.style) {
@@ -113,6 +113,7 @@ export function combineStyles(
 		args
 			.map((x) =>
 				Object.entries(x)
+					.filter(([, value]) => value !== null)
 					.map(([key, value]) => `${key}: ${value};`)
 					.join(""),
 			)

@@ -3,7 +3,6 @@
 	export type ComponentOptions = {
 		center?: boolean;
 		package?: string;
-		body?: string;
 		extraComponents?: string[];
 	};
 </script>

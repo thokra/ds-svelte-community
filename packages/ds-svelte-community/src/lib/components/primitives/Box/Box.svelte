@@ -9,6 +9,7 @@
 <script lang="ts">
 	import { classes, omit } from "$lib/components/helpers";
 	import { combineStyles, getResponsiveProps } from "$lib/components/utils/css";
+	import BasePrimitive from "../base/BasePrimitive.svelte";
 	import type { BoxProps } from "./type";
 
 	let {
@@ -16,9 +17,6 @@
 		borderColor,
 		borderRadius,
 		borderWidth,
-		padding,
-		paddingInline,
-		paddingBlock,
 		shadow,
 		as = "div",
 		children,
@@ -26,25 +24,30 @@
 	}: BoxProps = $props();
 </script>
 
-<svelte:element
+<BasePrimitive
 	this={as}
 	{...omit(restProps, "class")}
-	class={classes(restProps, "navds-box")}
+	class={classes(restProps, "navds-box", {
+		"navds-box-bg": !!background,
+		"navds-box-border-color": !!borderColor,
+		"navds-box-border-width": !!borderWidth,
+		"navds-box-border-radius": !!borderRadius,
+		"navds-box-shadow": !!shadow,
+	})}
 	style={combineStyles(
 		restProps,
 		getResponsiveProps("box", "border-radius", "border-radius", borderRadius, false, ["0"]),
-		getResponsiveProps("box", "padding", "spacing", padding),
-		getResponsiveProps("box", "padding-inline", "spacing", paddingInline),
-		getResponsiveProps("box", "padding-block", "spacing", paddingBlock),
+		{
+			"--__ac-box-background": background ? `var(--a-${background})` : null,
+			"--__ac-box-border-color": borderColor ? `var(--a-${borderColor})` : null,
+			"--__ac-box-border-width": borderWidth
+				? borderWidth
+						.split(" ")
+						.map((x) => `${x}px`)
+						.join(" ")
+				: null,
+			"--__ac-box-shadow": shadow ? `var(--a-shadow-${shadow})` : null,
+		},
 	)}
-	style:--__ac-box-background={background ? `var(--a-${background})` : null}
-	style:--__ac-box-border-color={borderColor ? `var(--a-${borderColor})` : null}
-	style:--__ac-box-border-width={borderWidth
-		? borderWidth
-				.split(" ")
-				.map((x) => `${x}px`)
-				.join(" ")
-		: null}
-	style:--__ac-box-shadow={shadow ? `var(--a-shadow-${shadow})` : null}
-	>{#if children}{@render children()}{/if}</svelte:element
+	>{#if children}{@render children()}{/if}</BasePrimitive
 >
