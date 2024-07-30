@@ -132,7 +132,7 @@
 	</Story>
 
 	<Story name="Panel" locked>
-		<Box background="surface-default" padding="6">
+		<Box background="surface-subtle" padding="6">
 			<BodyLong spacing>
 				If you are fully or partially unemployed or laid off, you may be entitled to financial
 				support from NAV.

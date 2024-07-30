@@ -82,7 +82,7 @@
 					<span>{icon.name}</span>
 					<span>{icon.category}</span>
 				</div>
-				<svelte:component this={getIcon(icon.name)} style="width: 100%; height: 100%" />
+				<svelte:component this={getIcon(icon.name)} style="width: {size}rem; height: {size}rem" />
 			</button>
 		{/each}
 	</div>
@@ -160,6 +160,7 @@
 		grid-template-columns: repeat(auto-fill, minmax(calc(var(--size) + 1rem), 1fr));
 		gap: 1rem;
 		flex: 1;
+		place-items: center;
 	}
 
 	.wrapper {
