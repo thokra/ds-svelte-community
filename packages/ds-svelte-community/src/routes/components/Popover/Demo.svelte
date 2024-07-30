@@ -13,7 +13,10 @@
 	size="small"
 	variant={placement.indexOf("-") >= 0 ? "secondary" : "primary"}
 	bind:ref={el}
-	onclick={() => (open = !open)}>○</Button
+	onclick={() => {
+		open = !open;
+		console.log(el);
+	}}>○</Button
 >
 <Popover anchorEl={el} bind:open {placement}>
 	{placement}

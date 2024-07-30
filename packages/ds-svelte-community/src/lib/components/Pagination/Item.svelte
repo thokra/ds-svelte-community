@@ -47,5 +47,4 @@
 	})}
 	type="button"
 	{children}
-	onclick
 />

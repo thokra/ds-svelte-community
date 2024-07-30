@@ -90,7 +90,7 @@
 	<Story name="Optical alignment">
 		<VStack gap="6" align="start">
 			<HStack gap="2" align="center">
-				Med
+				With
 				<Box
 					paddingBlock="1"
 					paddingInline="2"
@@ -104,7 +104,7 @@
 			</HStack>
 
 			<HStack gap="2" align="center">
-				Uten
+				Without
 				<Box
 					paddingBlock="1"
 					paddingInline="2"

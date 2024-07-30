@@ -5,7 +5,6 @@
 	type Props = {
 		/**
 		 * medium: 18px, small: 16px
-		 * @default "medium"
 		 */
 		size?: "medium" | "small";
 		/**
@@ -25,20 +24,6 @@
 		[key: string]: unknown;
 	};
 
-	// /**
-	//  * medium: 18px, small: 16px
-	//  * @default "medium"
-	//  */
-	// export let size: "medium" | "small" = "medium";
-	// /**
-	//  * Adds margin-bottom
-	//  */
-	// export let spacing = false;
-
-	// /**
-	//  * Tag to use for the label
-	//  */
-	// export let as: "label" | "legend" | "span" = "label";
 	let { size = "medium", spacing = false, as = "label", children, ...restProps }: Props = $props();
 </script>
 

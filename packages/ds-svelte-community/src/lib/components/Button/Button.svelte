@@ -51,9 +51,7 @@
 			<span class="navds-button__icon">{@render iconLeft()}</span>
 		{/if}
 		{#if children}
-			<Label as="span" size={size === "medium" ? "medium" : "small"}>
-				{@render children()}
-			</Label>
+			<Label as="span" size={size === "medium" ? "medium" : "small"} {children} />
 		{/if}
 
 		{#if iconRight}

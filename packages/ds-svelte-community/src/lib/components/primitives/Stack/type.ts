@@ -1,6 +1,6 @@
 import type { ResponsiveProp, SpacingScale } from "$lib/components/utils/types";
 import type { Snippet } from "svelte";
-import type { HTMLAttributes, SvelteHTMLElements } from "svelte/elements";
+import type { BasePrimitiveProps } from "../base/type";
 
 export interface FullStackProps extends StackProps {
 	/**
@@ -9,7 +9,7 @@ export interface FullStackProps extends StackProps {
 	direction?: ResponsiveProp<"row" | "column">;
 }
 
-export interface StackProps extends HTMLAttributes<HTMLDivElement> {
+export interface StackProps extends Omit<BasePrimitiveProps, "direction"> {
 	/**
 	 * Justify-content
 	 */
@@ -30,10 +30,6 @@ export interface StackProps extends HTMLAttributes<HTMLDivElement> {
 	 * gap={{xs: '2', sm: '3', md: '4', lg: '5', xl: '6'}}
 	 */
 	gap?: ResponsiveProp<SpacingScale>;
-	/**
-	 * HTML element to render as.
-	 */
-	as?: keyof SvelteHTMLElements;
 
 	children: Snippet;
 
