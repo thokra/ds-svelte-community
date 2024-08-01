@@ -52,6 +52,7 @@ describe("v5", () => {
   `;
 
 		const gen = new Generator(require.resolve("svelte2tsx"));
+		await gen.setup();
 		gen.addSvelteFile(filename, code);
 
 		const { doc } = gen.docFor(filename, false);

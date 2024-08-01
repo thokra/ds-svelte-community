@@ -9,6 +9,7 @@ export default function myPlugin(svelte2tsxPath: string): VitePlugin {
 		async transform(_code, id) {
 			if (id.endsWith(".svelte?doc")) {
 				const gen = new Generator(svelte2tsxPath);
+				await gen.setup();
 				const filename = id.replace(/\?doc$/, "");
 
 				// const source = Bun.file(filename);

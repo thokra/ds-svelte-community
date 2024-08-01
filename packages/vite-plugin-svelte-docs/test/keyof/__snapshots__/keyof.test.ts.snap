@@ -1,0 +1,771 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`keyof inline 1`] = `
+{
+  "description": "",
+  "events": [],
+  "name": "asdf",
+  "props": [
+    {
+      "description": "",
+      "name": "as",
+      "optional": false,
+      "type": {
+        "type": "union",
+        "values": [
+          {
+            "type": "literal",
+            "value": ""a"",
+          },
+          {
+            "type": "literal",
+            "value": ""div"",
+          },
+        ],
+      },
+    },
+  ],
+  "slots": [],
+}
+`;
+
+exports[`keyof svelte elements 1`] = `
+{
+  "description": "",
+  "events": [],
+  "name": "asdf",
+  "props": [
+    {
+      "description": "",
+      "name": "as",
+      "optional": false,
+      "type": {
+        "type": "union",
+        "values": [
+          {
+            "type": "literal",
+            "value": ""a"",
+          },
+          {
+            "type": "literal",
+            "value": ""abbr"",
+          },
+          {
+            "type": "literal",
+            "value": ""address"",
+          },
+          {
+            "type": "literal",
+            "value": ""area"",
+          },
+          {
+            "type": "literal",
+            "value": ""article"",
+          },
+          {
+            "type": "literal",
+            "value": ""aside"",
+          },
+          {
+            "type": "literal",
+            "value": ""audio"",
+          },
+          {
+            "type": "literal",
+            "value": ""b"",
+          },
+          {
+            "type": "literal",
+            "value": ""base"",
+          },
+          {
+            "type": "literal",
+            "value": ""bdi"",
+          },
+          {
+            "type": "literal",
+            "value": ""bdo"",
+          },
+          {
+            "type": "literal",
+            "value": ""big"",
+          },
+          {
+            "type": "literal",
+            "value": ""blockquote"",
+          },
+          {
+            "type": "literal",
+            "value": ""body"",
+          },
+          {
+            "type": "literal",
+            "value": ""br"",
+          },
+          {
+            "type": "literal",
+            "value": ""button"",
+          },
+          {
+            "type": "literal",
+            "value": ""canvas"",
+          },
+          {
+            "type": "literal",
+            "value": ""caption"",
+          },
+          {
+            "type": "literal",
+            "value": ""cite"",
+          },
+          {
+            "type": "literal",
+            "value": ""code"",
+          },
+          {
+            "type": "literal",
+            "value": ""col"",
+          },
+          {
+            "type": "literal",
+            "value": ""colgroup"",
+          },
+          {
+            "type": "literal",
+            "value": ""data"",
+          },
+          {
+            "type": "literal",
+            "value": ""datalist"",
+          },
+          {
+            "type": "literal",
+            "value": ""dd"",
+          },
+          {
+            "type": "literal",
+            "value": ""del"",
+          },
+          {
+            "type": "literal",
+            "value": ""details"",
+          },
+          {
+            "type": "literal",
+            "value": ""dfn"",
+          },
+          {
+            "type": "literal",
+            "value": ""dialog"",
+          },
+          {
+            "type": "literal",
+            "value": ""div"",
+          },
+          {
+            "type": "literal",
+            "value": ""dl"",
+          },
+          {
+            "type": "literal",
+            "value": ""dt"",
+          },
+          {
+            "type": "literal",
+            "value": ""em"",
+          },
+          {
+            "type": "literal",
+            "value": ""embed"",
+          },
+          {
+            "type": "literal",
+            "value": ""fieldset"",
+          },
+          {
+            "type": "literal",
+            "value": ""figcaption"",
+          },
+          {
+            "type": "literal",
+            "value": ""figure"",
+          },
+          {
+            "type": "literal",
+            "value": ""footer"",
+          },
+          {
+            "type": "literal",
+            "value": ""form"",
+          },
+          {
+            "type": "literal",
+            "value": ""h1"",
+          },
+          {
+            "type": "literal",
+            "value": ""h2"",
+          },
+          {
+            "type": "literal",
+            "value": ""h3"",
+          },
+          {
+            "type": "literal",
+            "value": ""h4"",
+          },
+          {
+            "type": "literal",
+            "value": ""h5"",
+          },
+          {
+            "type": "literal",
+            "value": ""h6"",
+          },
+          {
+            "type": "literal",
+            "value": ""head"",
+          },
+          {
+            "type": "literal",
+            "value": ""header"",
+          },
+          {
+            "type": "literal",
+            "value": ""hgroup"",
+          },
+          {
+            "type": "literal",
+            "value": ""hr"",
+          },
+          {
+            "type": "literal",
+            "value": ""html"",
+          },
+          {
+            "type": "literal",
+            "value": ""i"",
+          },
+          {
+            "type": "literal",
+            "value": ""iframe"",
+          },
+          {
+            "type": "literal",
+            "value": ""img"",
+          },
+          {
+            "type": "literal",
+            "value": ""input"",
+          },
+          {
+            "type": "literal",
+            "value": ""ins"",
+          },
+          {
+            "type": "literal",
+            "value": ""kbd"",
+          },
+          {
+            "type": "literal",
+            "value": ""keygen"",
+          },
+          {
+            "type": "literal",
+            "value": ""label"",
+          },
+          {
+            "type": "literal",
+            "value": ""legend"",
+          },
+          {
+            "type": "literal",
+            "value": ""li"",
+          },
+          {
+            "type": "literal",
+            "value": ""link"",
+          },
+          {
+            "type": "literal",
+            "value": ""main"",
+          },
+          {
+            "type": "literal",
+            "value": ""map"",
+          },
+          {
+            "type": "literal",
+            "value": ""mark"",
+          },
+          {
+            "type": "literal",
+            "value": ""menu"",
+          },
+          {
+            "type": "literal",
+            "value": ""menuitem"",
+          },
+          {
+            "type": "literal",
+            "value": ""meta"",
+          },
+          {
+            "type": "literal",
+            "value": ""meter"",
+          },
+          {
+            "type": "literal",
+            "value": ""nav"",
+          },
+          {
+            "type": "literal",
+            "value": ""noscript"",
+          },
+          {
+            "type": "literal",
+            "value": ""object"",
+          },
+          {
+            "type": "literal",
+            "value": ""ol"",
+          },
+          {
+            "type": "literal",
+            "value": ""optgroup"",
+          },
+          {
+            "type": "literal",
+            "value": ""option"",
+          },
+          {
+            "type": "literal",
+            "value": ""output"",
+          },
+          {
+            "type": "literal",
+            "value": ""p"",
+          },
+          {
+            "type": "literal",
+            "value": ""param"",
+          },
+          {
+            "type": "literal",
+            "value": ""picture"",
+          },
+          {
+            "type": "literal",
+            "value": ""pre"",
+          },
+          {
+            "type": "literal",
+            "value": ""progress"",
+          },
+          {
+            "type": "literal",
+            "value": ""q"",
+          },
+          {
+            "type": "literal",
+            "value": ""rp"",
+          },
+          {
+            "type": "literal",
+            "value": ""rt"",
+          },
+          {
+            "type": "literal",
+            "value": ""ruby"",
+          },
+          {
+            "type": "literal",
+            "value": ""s"",
+          },
+          {
+            "type": "literal",
+            "value": ""samp"",
+          },
+          {
+            "type": "literal",
+            "value": ""slot"",
+          },
+          {
+            "type": "literal",
+            "value": ""script"",
+          },
+          {
+            "type": "literal",
+            "value": ""section"",
+          },
+          {
+            "type": "literal",
+            "value": ""select"",
+          },
+          {
+            "type": "literal",
+            "value": ""small"",
+          },
+          {
+            "type": "literal",
+            "value": ""source"",
+          },
+          {
+            "type": "literal",
+            "value": ""span"",
+          },
+          {
+            "type": "literal",
+            "value": ""strong"",
+          },
+          {
+            "type": "literal",
+            "value": ""style"",
+          },
+          {
+            "type": "literal",
+            "value": ""sub"",
+          },
+          {
+            "type": "literal",
+            "value": ""summary"",
+          },
+          {
+            "type": "literal",
+            "value": ""sup"",
+          },
+          {
+            "type": "literal",
+            "value": ""table"",
+          },
+          {
+            "type": "literal",
+            "value": ""template"",
+          },
+          {
+            "type": "literal",
+            "value": ""tbody"",
+          },
+          {
+            "type": "literal",
+            "value": ""td"",
+          },
+          {
+            "type": "literal",
+            "value": ""textarea"",
+          },
+          {
+            "type": "literal",
+            "value": ""tfoot"",
+          },
+          {
+            "type": "literal",
+            "value": ""th"",
+          },
+          {
+            "type": "literal",
+            "value": ""thead"",
+          },
+          {
+            "type": "literal",
+            "value": ""time"",
+          },
+          {
+            "type": "literal",
+            "value": ""title"",
+          },
+          {
+            "type": "literal",
+            "value": ""tr"",
+          },
+          {
+            "type": "literal",
+            "value": ""track"",
+          },
+          {
+            "type": "literal",
+            "value": ""u"",
+          },
+          {
+            "type": "literal",
+            "value": ""ul"",
+          },
+          {
+            "type": "literal",
+            "value": ""var"",
+          },
+          {
+            "type": "literal",
+            "value": ""video"",
+          },
+          {
+            "type": "literal",
+            "value": ""wbr"",
+          },
+          {
+            "type": "literal",
+            "value": ""webview"",
+          },
+          {
+            "type": "literal",
+            "value": ""svg"",
+          },
+          {
+            "type": "literal",
+            "value": ""animate"",
+          },
+          {
+            "type": "literal",
+            "value": ""animateMotion"",
+          },
+          {
+            "type": "literal",
+            "value": ""animateTransform"",
+          },
+          {
+            "type": "literal",
+            "value": ""circle"",
+          },
+          {
+            "type": "literal",
+            "value": ""clipPath"",
+          },
+          {
+            "type": "literal",
+            "value": ""defs"",
+          },
+          {
+            "type": "literal",
+            "value": ""desc"",
+          },
+          {
+            "type": "literal",
+            "value": ""ellipse"",
+          },
+          {
+            "type": "literal",
+            "value": ""feBlend"",
+          },
+          {
+            "type": "literal",
+            "value": ""feColorMatrix"",
+          },
+          {
+            "type": "literal",
+            "value": ""feComponentTransfer"",
+          },
+          {
+            "type": "literal",
+            "value": ""feComposite"",
+          },
+          {
+            "type": "literal",
+            "value": ""feConvolveMatrix"",
+          },
+          {
+            "type": "literal",
+            "value": ""feDiffuseLighting"",
+          },
+          {
+            "type": "literal",
+            "value": ""feDisplacementMap"",
+          },
+          {
+            "type": "literal",
+            "value": ""feDistantLight"",
+          },
+          {
+            "type": "literal",
+            "value": ""feDropShadow"",
+          },
+          {
+            "type": "literal",
+            "value": ""feFlood"",
+          },
+          {
+            "type": "literal",
+            "value": ""feFuncA"",
+          },
+          {
+            "type": "literal",
+            "value": ""feFuncB"",
+          },
+          {
+            "type": "literal",
+            "value": ""feFuncG"",
+          },
+          {
+            "type": "literal",
+            "value": ""feFuncR"",
+          },
+          {
+            "type": "literal",
+            "value": ""feGaussianBlur"",
+          },
+          {
+            "type": "literal",
+            "value": ""feImage"",
+          },
+          {
+            "type": "literal",
+            "value": ""feMerge"",
+          },
+          {
+            "type": "literal",
+            "value": ""feMergeNode"",
+          },
+          {
+            "type": "literal",
+            "value": ""feMorphology"",
+          },
+          {
+            "type": "literal",
+            "value": ""feOffset"",
+          },
+          {
+            "type": "literal",
+            "value": ""fePointLight"",
+          },
+          {
+            "type": "literal",
+            "value": ""feSpecularLighting"",
+          },
+          {
+            "type": "literal",
+            "value": ""feSpotLight"",
+          },
+          {
+            "type": "literal",
+            "value": ""feTile"",
+          },
+          {
+            "type": "literal",
+            "value": ""feTurbulence"",
+          },
+          {
+            "type": "literal",
+            "value": ""filter"",
+          },
+          {
+            "type": "literal",
+            "value": ""foreignObject"",
+          },
+          {
+            "type": "literal",
+            "value": ""g"",
+          },
+          {
+            "type": "literal",
+            "value": ""image"",
+          },
+          {
+            "type": "literal",
+            "value": ""line"",
+          },
+          {
+            "type": "literal",
+            "value": ""linearGradient"",
+          },
+          {
+            "type": "literal",
+            "value": ""marker"",
+          },
+          {
+            "type": "literal",
+            "value": ""mask"",
+          },
+          {
+            "type": "literal",
+            "value": ""metadata"",
+          },
+          {
+            "type": "literal",
+            "value": ""mpath"",
+          },
+          {
+            "type": "literal",
+            "value": ""path"",
+          },
+          {
+            "type": "literal",
+            "value": ""pattern"",
+          },
+          {
+            "type": "literal",
+            "value": ""polygon"",
+          },
+          {
+            "type": "literal",
+            "value": ""polyline"",
+          },
+          {
+            "type": "literal",
+            "value": ""radialGradient"",
+          },
+          {
+            "type": "literal",
+            "value": ""rect"",
+          },
+          {
+            "type": "literal",
+            "value": ""stop"",
+          },
+          {
+            "type": "literal",
+            "value": ""switch"",
+          },
+          {
+            "type": "literal",
+            "value": ""symbol"",
+          },
+          {
+            "type": "literal",
+            "value": ""text"",
+          },
+          {
+            "type": "literal",
+            "value": ""textPath"",
+          },
+          {
+            "type": "literal",
+            "value": ""tspan"",
+          },
+          {
+            "type": "literal",
+            "value": ""use"",
+          },
+          {
+            "type": "literal",
+            "value": ""view"",
+          },
+          {
+            "type": "literal",
+            "value": ""'svelte:window'"",
+          },
+          {
+            "type": "literal",
+            "value": ""'svelte:document'"",
+          },
+          {
+            "type": "literal",
+            "value": ""'svelte:body'"",
+          },
+          {
+            "type": "literal",
+            "value": ""'svelte:fragment'"",
+          },
+          {
+            "type": "literal",
+            "value": ""'svelte:options'"",
+          },
+          {
+            "type": "literal",
+            "value": ""'svelte:head'"",
+          },
+        ],
+      },
+    },
+  ],
+  "slots": [],
+}
+`;

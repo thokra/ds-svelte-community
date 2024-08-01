@@ -11,6 +11,11 @@ export type Union = {
 	values: Type[];
 };
 
+export type Array = {
+	type: "array";
+	of: Type;
+};
+
 export type Literal = {
 	type: "literal";
 	value: string;
@@ -36,6 +41,14 @@ export type Interface = {
 	name: string;
 	members?: Prop[];
 	inherits?: Type;
+	external?: boolean;
+	typeArguments?: TypeParameter[];
+};
+
+export type TypeParameter = {
+	type: "typeParameter";
+	name: string;
+	constraint?: Type;
 };
 
 export type Type =
@@ -47,7 +60,9 @@ export type Type =
 	| PFunction
 	| Snippet
 	| SimpleType
-	| Interface;
+	| Interface
+	| TypeParameter
+	| Array;
 
 export type SlotLet = {
 	name: string;

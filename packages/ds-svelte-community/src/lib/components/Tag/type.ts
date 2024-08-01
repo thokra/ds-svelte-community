@@ -1,5 +1,5 @@
+import type { HTMLElements } from "$lib/components/utils/elements";
 import type { Snippet } from "svelte";
-import type { SvelteHTMLElements } from "svelte/elements";
 
 export const variants = [
 	"warning",
@@ -34,7 +34,7 @@ export interface Props {
 	/**
 	 * Tag to use for the element.
 	 */
-	as?: keyof SvelteHTMLElements;
+	as?: HTMLElements;
 	/**
 	 * Tag content.
 	 */

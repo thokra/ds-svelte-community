@@ -1,5 +1,5 @@
+import type { HTMLElements } from "$lib/components/utils/elements";
 import type { Snippet } from "svelte";
-import type { SvelteHTMLElements } from "svelte/elements";
 
 export const variants = ["action", "neutral", "subtle"] as const;
 
@@ -22,7 +22,7 @@ export interface LinkProps {
 	 */
 	inlineText?: boolean;
 
-	as?: keyof SvelteHTMLElements;
+	as?: HTMLElements;
 
 	children: Snippet;
 

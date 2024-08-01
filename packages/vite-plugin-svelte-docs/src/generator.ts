@@ -3,6 +3,7 @@
 import path from "path";
 import type * as tsm from "ts-morph";
 import { Project, ts } from "ts-morph";
+import { tsconfigResolver } from "tsconfig-resolver";
 
 import { convert } from "./svelte.js";
 import type {
@@ -15,6 +16,7 @@ import type {
 	Slots,
 	SvelteEvent,
 	Type,
+	TypeParameter,
 } from "./types.js";
 
 type ContextNode = {
@@ -74,10 +76,22 @@ class Context {
 		}
 		console.timeEnd(label);
 	}
+
+	hasChecked(node: tsm.Node): boolean {
+		if (this.node === node) {
+			return true;
+		}
+		if (!this.parent) {
+			return false;
+		}
+		return this.parent.hasChecked(node);
+	}
 }
 
 export class Generator {
-	#project: Project;
+	#project?: Project;
+	#svelte2tsxPath: string;
+	#cache: Map<tsm.Node, Type> = new Map();
 
 	/*
 	 * Files that have been checked for various types
@@ -85,16 +99,23 @@ export class Generator {
 	#checkedFiles: Set<string> = new Set();
 
 	constructor(svelte2tsxPath: string) {
+		this.#svelte2tsxPath = svelte2tsxPath;
+	}
+
+	async setup() {
+		const config = await tsconfigResolver({ cache: "always", ignoreExtends: true });
+
 		this.#project = new Project({
 			compilerOptions: {
 				lib: ["esnext"],
 				noEmit: true,
 				allowJs: true,
 			},
+			tsConfigFilePath: config.path,
 		});
 
 		const svelteTsxFiles = ["./svelte-shims-v4.d.ts", "./svelte-jsx-v4.d.ts"].map((f) =>
-			ts.sys.resolvePath(path.resolve(path.dirname(svelte2tsxPath), f)),
+			ts.sys.resolvePath(path.resolve(path.dirname(this.#svelte2tsxPath), f)),
 		);
 
 		this.#project.addSourceFilesAtPaths(svelteTsxFiles);
@@ -114,13 +135,13 @@ export class Generator {
 		// console.log(dts);
 		// console.log("-----------------");
 
-		this.#project.createSourceFile(filename, dts, { overwrite: true });
+		this.#project!.createSourceFile(filename, dts, { overwrite: true });
 	}
 
 	docFor(filename: string, debug = false): { doc: Doc; files: string[] } {
 		filename = this.#renameFile(filename);
 
-		const sourceFile = this.#project.getSourceFileOrThrow(filename);
+		const sourceFile = this.#project!.getSourceFileOrThrow(filename);
 		if (!sourceFile) {
 			throw new Error(`Source file ${filename} not found`);
 		}
@@ -251,6 +272,9 @@ export class Generator {
 								throw new Error("Expected inherits to be an array");
 							}
 							i.inherits.forEach((i) => {
+								if (!Array.isArray(i) && i.type == "unknown") {
+									return;
+								}
 								if (Array.isArray(i) || i.type != "interface") {
 									cctx.log("Expected interface type in inherits", i);
 									throw new Error(
@@ -403,8 +427,20 @@ export class Generator {
 	}
 
 	#typeOf(parentContext: Context, node: tsm.Node): Type {
+		if (this.#cache.has(node)) {
+			return this.#cache.get(node)!;
+		}
+
+		const ret = this.#typeOfUncached(parentContext, node);
+		this.#cache.set(node, ret);
+		return ret;
+	}
+	#typeOfUncached(parentContext: Context, node: tsm.Node): Type {
 		if (!node) {
 			parentContext.log("No node");
+			return { type: "unknown" };
+		}
+		if (parentContext.hasChecked(node)) {
 			return { type: "unknown" };
 		}
 		const nodeFilePath = node.getSourceFile().getFilePath();
@@ -413,6 +449,8 @@ export class Generator {
 		}
 
 		const ctx = new Context(node, parentContext);
+
+		ctx.log();
 		switch (node.getKind()) {
 			case ts.SyntaxKind.PropertySignature:
 				return this.#typeOf(ctx, (node as tsm.PropertySignature).getTypeNodeOrThrow());
@@ -435,8 +473,24 @@ export class Generator {
 				return { type: "null" };
 			case ts.SyntaxKind.FunctionType:
 				return { type: "function", signature: node.getText() };
+			case (ts.SyntaxKind.UnknownKeyword, ts.SyntaxKind.AnyKeyword):
+				return { type: "unknown" };
 			case ts.SyntaxKind.ImportType:
 				return { type: "unknown" };
+			case ts.SyntaxKind.IntersectionType:
+				return {
+					type: "union",
+					values: (node as tsm.IntersectionTypeNode)
+						.getTypeNodes()
+						.map((t) => this.#typeOf(ctx, t)),
+				};
+			case ts.SyntaxKind.ArrayType:
+				return {
+					type: "array",
+					of: this.#typeOf(ctx, (node as tsm.ArrayTypeNode).getElementTypeNode()),
+				};
+			case ts.SyntaxKind.TypeParameter:
+				return { type: "typeParameter", name: (node as tsm.TypeParameterDeclaration).getName() };
 			case ts.SyntaxKind.TypeReference:
 				return this.#typeReference(ctx, node as tsm.TypeReferenceNode);
 			case ts.SyntaxKind.ImportSpecifier:
@@ -451,7 +505,7 @@ export class Generator {
 				};
 
 				if (id.getSourceFile().getFilePath().indexOf("node_modules") >= 0) {
-					return i;
+					i.external = true;
 				}
 
 				i.members = id
@@ -471,33 +525,50 @@ export class Generator {
 					});
 				}
 
+				id.getTypeParameters().forEach((tp) => {
+					const name = tp.getName();
+					const constraint = tp.getConstraint();
+					const tpp: TypeParameter = {
+						type: "typeParameter",
+						name,
+					};
+					i.typeArguments = i.typeArguments || [];
+					if (constraint) {
+						tpp.constraint = this.#typeOf(ctx, constraint);
+					}
+					i.typeArguments.push(tpp);
+				});
+
 				return i;
 			}
 			case ts.SyntaxKind.ExpressionWithTypeArguments: {
 				const ewta = node as tsm.ExpressionWithTypeArguments;
 				if (ewta.getTypeArguments().length > 0) {
-					if (ewta.getExpressionIfKind(ts.SyntaxKind.Identifier)?.getText() != "Pick") {
-						ctx.log("Type arguments not supported", ewta.getText());
-						throw new Error("Type arguments not supported, got " + ewta.getTypeArguments().length);
-					}
-					const type = ewta.getTypeArguments()[0];
-					if (!type.isKind(ts.SyntaxKind.TypeReference)) {
-						ctx.log("Expected type reference", type.getText());
-						throw new Error("Expected type reference");
-					}
-					const o = this.#typeOf(ctx, type);
-					if (Array.isArray(o) || o.type != "interface") {
-						ctx.log("Expected interface type, got ", Array.isArray(o) ? "array" : o.type);
-						throw new Error("Expected interface type");
+					if (ewta.getExpressionIfKind(ts.SyntaxKind.Identifier)?.getText() == "Pick") {
+						const type = ewta.getTypeArguments()[0];
+						if (!type.isKind(ts.SyntaxKind.TypeReference)) {
+							ctx.log("Expected type reference", type.getText());
+							throw new Error("Expected type reference");
+						}
+						const o = this.#typeOf(ctx, type);
+						if (Array.isArray(o) || o.type != "interface") {
+							ctx.log("Expected interface type, got ", Array.isArray(o) ? "array" : o.type);
+							throw new Error("Expected interface type");
+						}
+
+						const pick = ewta.getTypeArguments().slice(1);
+						o.members = o.members?.filter((m) => {
+							return pick.find((p) => {
+								return p.getText().slice(1, -1) === m.name;
+							});
+						});
 					}
 
-					const pick = ewta.getTypeArguments().slice(1);
-					o.members = o.members?.filter((m) => {
-						return pick.find((p) => {
-							return p.getText().slice(1, -1) === m.name;
-						});
-					});
-					return o;
+					console.log("Expression with type argument");
+					return { type: "unknown" };
+
+					const type = ewta.getTypeArguments()[0];
+					return this.#typeOf(ctx, type);
 				}
 				return this.#typeOf(ctx, ewta.getExpression());
 			}
@@ -563,6 +634,15 @@ export class Generator {
 				};
 			case ts.SyntaxKind.StringLiteral:
 				return { type: "literal", value: node.getText() };
+			case ts.SyntaxKind.TypeOperator: {
+				const totn = node as tsm.TypeOperatorTypeNode;
+
+				if (totn.getChildrenOfKind(ts.SyntaxKind.KeyOfKeyword).length > 0) {
+					return this.#keyof(ctx, totn);
+				}
+				console.log("TypeOperator not supported", totn.getText());
+				break;
+			}
 			case ts.SyntaxKind.TypeLiteral:
 				// ctx.log("TypeLiteral", (node as tsm.TypeLiteralNode).getMembers()[0].getText());
 				return this.#typeLiteral(ctx, node as tsm.TypeLiteralNode);
@@ -572,6 +652,34 @@ export class Generator {
 
 		console.log(" unknown kind", node.getKindName(), node.getText());
 		return { type: "unknown" };
+	}
+
+	#keyof(ctx: Context, node: tsm.TypeOperatorTypeNode): Type {
+		const type = this.#typeOf(ctx, node.getTypeNode());
+		if (Array.isArray(type) || (type.type != "object" && type.type != "interface")) {
+			if (!Array.isArray(type) && type.type === "unknown") {
+				return { type: "unknown" };
+			}
+			ctx.log("Expected object type", type);
+			throw new Error(
+				"Expected object type, got " + (Array.isArray(type) ? "array of types" : type.type),
+			);
+		}
+		let keys: string[];
+
+		if (type.type === "object") {
+			keys = type.properties.map((p) => {
+				return p.name;
+			});
+		} else if (type.type === "interface") {
+			keys =
+				type.members?.map((m) => {
+					return m.name;
+				}) || [];
+		} else {
+			throw new Error("Unknown type");
+		}
+		return { type: "union", values: keys.map((k) => ({ type: "literal", value: `"${k}"` })) };
 	}
 
 	#typeLiteral(ctx: Context, node: tsm.TypeLiteralNode): Type {
@@ -613,6 +721,7 @@ export class Generator {
 		if (sym.isAlias()) {
 			sym = sym.getAliasedSymbolOrThrow();
 		}
+
 		return this.#typeOf(ctx, sym.getDeclarations()[0]);
 	}
 
@@ -669,102 +778,11 @@ export class Generator {
 		const symbol = node.getTypeName().getSymbol();
 		if (!symbol) {
 			ctx.log(" Expected symbol");
+			console.log("Expected symbol");
 			return { type: "unknown" };
 		}
 
 		const decl = symbol.getDeclarations()[0];
 		return this.#typeOf(ctx, decl);
 	}
-}
-
-export function typekind(typ: tsm.Type<ts.Type>) {
-	if (typ.isAnonymous()) {
-		return "Anonymous";
-	}
-	if (typ.isAny()) {
-		return "Any";
-	}
-	if (typ.isArray()) {
-		return "Array";
-	}
-	if (typ.isBoolean()) {
-		return "Boolean";
-	}
-	if (typ.isBooleanLiteral()) {
-		return "BooleanLiteral";
-	}
-	if (typ.isClass()) {
-		return "Class";
-	}
-	if (typ.isClassOrInterface()) {
-		return "ClassOrInterface";
-	}
-	if (typ.isEnum()) {
-		return "Enum";
-	}
-	if (typ.isEnumLiteral()) {
-		return "EnumLiteral";
-	}
-	if (typ.isInterface()) {
-		return "Interface";
-	}
-	if (typ.isIntersection()) {
-		return "Intersection";
-	}
-	if (typ.isLiteral()) {
-		return "Literal";
-	}
-	if (typ.isNever()) {
-		return "Never";
-	}
-	if (typ.isNull()) {
-		return "Null";
-	}
-	if (typ.isNullable()) {
-		return "Nullable";
-	}
-	if (typ.isNumber()) {
-		return "Number";
-	}
-	if (typ.isNumberLiteral()) {
-		return "NumberLiteral";
-	}
-	if (typ.isObject()) {
-		return "Object";
-	}
-	if (typ.isReadonlyArray()) {
-		return "ReadonlyArray";
-	}
-	if (typ.isString()) {
-		return "String";
-	}
-	if (typ.isStringLiteral()) {
-		return "StringLiteral";
-	}
-	if (typ.isTemplateLiteral()) {
-		return "TemplateLiteral";
-	}
-	if (typ.isTuple()) {
-		return "Tuple";
-	}
-	if (typ.isTypeParameter()) {
-		return "TypeParameter";
-	}
-	if (typ.isUndefined()) {
-		return "Undefined";
-	}
-	if (typ.isUnion()) {
-		return "Union";
-	}
-	if (typ.isUnionOrIntersection()) {
-		return "UnionOrIntersection";
-	}
-	if (typ.isUnknown()) {
-		return "Unknown";
-	}
-	if (typ.isVoid()) {
-		return "Void";
-	}
-
-	return "Unknown";
 }

@@ -1,3 +1,4 @@
+import type { HTMLElements } from "$lib/components/utils/elements";
 import type {
 	BackgroundToken,
 	BorderColorToken,
@@ -8,7 +9,6 @@ import type {
 	SpacingScale,
 } from "$lib/components/utils/types";
 import type { Snippet } from "svelte";
-import type { SvelteHTMLElements } from "svelte/elements";
 
 export interface BoxProps {
 	/** Background color. Accepts a color token. */
@@ -58,7 +58,7 @@ export interface BoxProps {
 	/**
 	 * HTML element to render as.
 	 */
-	as?: keyof SvelteHTMLElements;
+	as?: HTMLElements;
 
 	/**
 	 * Content

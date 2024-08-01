@@ -1,6 +1,6 @@
+import type { HTMLElements } from "$lib/components/utils/elements";
 import type { ResponsiveProp, SpacingScale } from "$lib/components/utils/types";
 import type { Snippet } from "svelte";
-import type { SvelteHTMLElements } from "svelte/elements";
 
 export interface HGridProps {
 	/**
@@ -28,7 +28,7 @@ export interface HGridProps {
 	/**
 	 * HTML element to render as.
 	 */
-	as?: keyof SvelteHTMLElements;
+	as?: HTMLElements;
 
 	children: Snippet;
 

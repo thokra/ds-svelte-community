@@ -11,6 +11,7 @@ describe("v5", () => {
 		const code = (await fs.readFile(filename.replace(".ts", ".svelte"))).toString();
 
 		const gen = new Generator(require.resolve("svelte2tsx"));
+		await gen.setup();
 		gen.addSvelteFile(filename, code);
 		const { doc, files } = gen.docFor(filename, false);
 

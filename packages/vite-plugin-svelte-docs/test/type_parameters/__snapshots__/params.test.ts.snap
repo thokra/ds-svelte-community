@@ -1,0 +1,20 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`params svelte elements 1`] = `
+{
+  "description": "",
+  "events": [],
+  "name": "asdf",
+  "props": [
+    {
+      "description": "",
+      "name": "num",
+      "optional": false,
+      "type": {
+        "type": "unknown",
+      },
+    },
+  ],
+  "slots": [],
+}
+`;

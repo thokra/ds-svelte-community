@@ -1,6 +1,6 @@
+import type { HTMLElements } from "$lib/components/utils/elements";
 import bgColors from "@navikt/ds-tokens/src/colors-bg.json";
 import type { Snippet } from "svelte";
-import type { SvelteHTMLElements } from "svelte/elements";
 export const widths = ["text", "md", "lg", "xl", "2xl"] as const;
 
 export interface PageProps {
@@ -53,7 +53,7 @@ export interface PageBlockProps {
 	 */
 	gutters?: boolean;
 
-	as?: keyof SvelteHTMLElements;
+	as?: HTMLElements;
 
 	/**
 	 * Content
