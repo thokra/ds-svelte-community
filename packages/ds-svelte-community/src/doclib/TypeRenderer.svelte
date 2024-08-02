@@ -3,7 +3,11 @@
 	import Button from "$lib/components/Button/Button.svelte";
 	import type { Type } from "@nais/vite-plugin-svelte-docs";
 
-	let { type: typ, show = true }: { type: Type; show?: boolean } = $props();
+	let {
+		type: typ,
+		show = true,
+		suffix = "",
+	}: { type: Type; show?: boolean; suffix?: string } = $props();
 
 	const maxItems = 10;
 	let shouldShowAll = $derived(
@@ -25,17 +29,19 @@
 			<svelte:self type={t} show={shouldShowAll || showAll || i < maxItems} />
 		{/each}
 	{:else if ["string", "number", "boolean", "undefined", "null"].includes(typ.type)}
-		<code>{typ.type}</code>
+		<code>{typ.type}{suffix}</code>
 	{:else if typ.type == "literal"}
-		<code>{typ.value}</code>
+		<code>{typ.value}{suffix}</code>
 	{:else if typ.type == "interface"}
-		<code>{typ.name}</code>
+		<code>{typ.name}{suffix}</code>
 	{:else if typ.type == "unknown"}
-		<code>unknown</code>
+		<code>unknown{suffix}</code>
 	{:else if typ.type == "snippet"}
-		<code>Snippet</code>
+		<code>Snippet{suffix}</code>
+	{:else if typ.type == "array"}
+		<svelte:self type={typ.of} suffix="[]" />
 	{:else}
-		<code class:err={dev}>{typ.type}</code>
+		<code class:err={dev}>{typ.type}{suffix}</code>
 	{/if}
 {/if}
 

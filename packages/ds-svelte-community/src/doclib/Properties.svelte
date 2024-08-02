@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ArrowUndoIcon, ChevronDownIcon, ChevronRightIcon } from "$lib/icons";
-	import type { Doc } from "@nais/vite-plugin-svelte-docs";
+	import type { Doc, Slots } from "@nais/vite-plugin-svelte-docs";
 	import Markdown from "svelte-markdown";
 	import TypeRenderer from "./TypeRenderer.svelte";
 	import ValueSelector from "./ValueSelector.svelte";
@@ -10,11 +10,38 @@
 
 	let showProps = $state(true);
 	let showEvents = $state(true);
-	let showSlots = $state(true);
+	let showSnippets = $state(true);
 
 	let isV5 = $derived(doc.slots.filter((s) => s.snippet).length > 0);
 
 	let valueSelectorProps = $derived($state.snapshot(values));
+
+	let snippets = $derived.by((): Slots[] => {
+		return [
+			...doc.slots,
+			...doc.props
+				.filter((p) => {
+					if (Array.isArray(p.type)) {
+						if (p.type.find((t) => !Array.isArray(t) && t.type === "snippet")) {
+							return true;
+						}
+					} else {
+						if (p.type.type === "union") {
+							return p.type.values.find((t) => !Array.isArray(t) && t.type === "snippet");
+						}
+					}
+				})
+				.map((p): Slots => {
+					return {
+						name: p.name,
+						description: p.description,
+						snippet: true,
+						lets: [],
+						optional: true,
+					};
+				}),
+		];
+	});
 </script>
 
 {#if doc.props.length + doc.slots.length + doc.events.length > 0}
@@ -109,12 +136,12 @@
 				{/if}
 
 				<!--
-					MARK: Slots / Snippets
+					MARK: Snippets
 				-->
-				{#if doc.slots.length > 0}
-					<tr onclick={() => (showSlots = !showSlots)}>
+				{#if snippets.length > 0}
+					<tr onclick={() => (showSnippets = !showSnippets)}>
 						<td colspan="99" class="title">
-							{#if showSlots}
+							{#if showSnippets}
 								<ChevronDownIcon />
 							{:else}
 								<ChevronRightIcon />
@@ -127,11 +154,11 @@
 						</td>
 					</tr>
 
-					{#if showSlots}
-						{#each doc.slots as slot}
+					{#if showSnippets}
+						{#each snippets as snippet}
 							<tr>
-								<td><strong>{slot.name}</strong></td>
-								<td class="description"><Markdown source={slot.description} /></td>
+								<td><strong>{snippet.name}</strong></td>
+								<td class="description"><Markdown source={snippet.description} /></td>
 								<td>&nbsp;</td>
 								<td>-</td>
 							</tr>

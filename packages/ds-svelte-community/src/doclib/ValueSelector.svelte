@@ -6,7 +6,7 @@
 	import type { Type } from "@nais/vite-plugin-svelte-docs";
 
 	let {
-		type: typ,
+		type: outerType,
 		onChange,
 		init = undefined,
 		value,
@@ -21,6 +21,21 @@
 	} = $props();
 
 	let isEditable = $state(false);
+
+	let subType = $derived.by(() => {
+		if (Array.isArray(outerType)) {
+			return outerType;
+		}
+
+		if (outerType.type === "union") {
+			let u = outerType.values.filter((v) => Array.isArray(v) || v.type != "snippet");
+			if (u.length === 1) {
+				return u[0];
+			}
+		}
+
+		return outerType;
+	});
 
 	const selectOptions = (t: Type): unknown[] | false => {
 		if (Array.isArray(t)) {
@@ -57,12 +72,18 @@
 			return false;
 		}
 
-		console.error("Unsupported type", t);
+		if (t.type === "snippet") {
+			return false;
+		} else if (t.type === "array") {
+			return false;
+		}
+
+		console.error("Unsupported type for select option", t);
 		return false;
 	};
 
 	let options = $derived.by(() => {
-		return selectOptions(typ);
+		return selectOptions(subType);
 	});
 	let isSwitch = $derived.by(() => {
 		return !!options && options.length === 2 && options.every((o) => typeof o === "boolean");
@@ -70,21 +91,6 @@
 	let isSelect = $derived.by(() => {
 		return !!options && !isSwitch;
 	});
-
-	// $effect(() => {
-	// 	console.log("VALUE CHANGED", editable, value);
-	// 	if (value === undefined || (isSelect && value === "")) {
-	// 		return;
-	// 	}
-
-	// 	// onChange(toText(value as string));
-	// });
-
-	// $effect(() => {
-	// 	if (editable && isSwitch && value === "" && options) {
-	// 		onChange(toText(value as string));
-	// 	}
-	// });
 
 	$effect(() => {
 		isEditable = forceEditable;
@@ -109,63 +115,77 @@
 
 		return JSON.stringify(v);
 	};
+
+	let canBeEdited = $derived.by(() => {
+		if (options) {
+			return true;
+		}
+
+		if (Array.isArray(subType)) {
+			return false;
+		}
+
+		return subType.type === "string" || subType.type === "number";
+	});
 </script>
 
-{#if !isEditable && !forceEditable}
-	<Button
-		size="xsmall"
-		variant="secondary-neutral"
-		onclick={() => {
-			isEditable = true;
-			if (isSwitch) {
-				value = init ? fromText(init) : true;
-			} else {
-				if (init) {
-					value = init;
-				} else if (options && options.length > 0) {
-					value = options[0];
+{#if canBeEdited}
+	{#if !isEditable && !forceEditable}
+		<Button
+			size="xsmall"
+			variant="secondary-neutral"
+			onclick={() => {
+				isEditable = true;
+				if (isSwitch) {
+					value = init ? fromText(init) : true;
+				} else {
+					if (init) {
+						value = init;
+					} else if (options && options.length > 0) {
+						value = options[0];
+					}
 				}
-			}
-			onChange(value);
-		}}
-	>
-		Set value
-	</Button>
-{:else if !Array.isArray(typ) && (typ.type === "string" || typ.type === "number")}
-	<TextField
-		label="Value for property"
-		hideLabel
-		value={fromText(value || '""') as string}
-		size="small"
-		type={typ.type === "number" ? "number" : "text"}
-		onchange={(e: InputEvent) => {
-			onChange(toText((e.target as HTMLInputElement).value));
-		}}
-	/>
-{:else if options}
-	{#if isSwitch}
-		<Switch
-			checked={!!fromText(value)}
-			onchange={() => {
-				onChange(!value);
+				onChange(value);
 			}}
-			hideLabel
 		>
-			Toggle boolean
-		</Switch>
-	{:else if isSelect}
-		<div>
-			<Select
-				bind:value
-				size="small"
+			Set value
+		</Button>
+	{:else if !Array.isArray(subType) && (subType.type === "string" || subType.type === "number")}
+		<TextField
+			label="Value for property"
+			hideLabel
+			value={fromText(value || '""') as string}
+			size="small"
+			type={subType.type === "number" ? "number" : "text"}
+			onchange={(e: InputEvent) => {
+				onChange(toText((e.target as HTMLInputElement).value));
+			}}
+		/>
+	{:else if options}
+		{#if isSwitch}
+			<Switch
+				checked={!!fromText(value)}
 				onchange={() => {
-					onChange(value);
+					onChange(!value);
 				}}
+				hideLabel
 			>
-				{#each options as option}
-					<option value={toText(option)}>{toText(option)}</option>
-				{/each}
-			</Select>
-		</div>
+				Toggle boolean
+			</Switch>
+		{:else if isSelect}
+			<div>
+				<Select
+					bind:value
+					size="small"
+					onchange={() => {
+						onChange(value);
+					}}
+				>
+					{#each options as option}
+						<option value={toText(option)}>{toText(option)}</option>
+					{/each}
+				</Select>
+			</div>
+		{/if}
 	{/if}
 {/if}

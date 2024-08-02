@@ -473,7 +473,9 @@ export class Generator {
 				return { type: "null" };
 			case ts.SyntaxKind.FunctionType:
 				return { type: "function", signature: node.getText() };
-			case (ts.SyntaxKind.UnknownKeyword, ts.SyntaxKind.AnyKeyword):
+			case ts.SyntaxKind.UnknownKeyword:
+				return { type: "unknown" };
+			case ts.SyntaxKind.AnyKeyword:
 				return { type: "unknown" };
 			case ts.SyntaxKind.ImportType:
 				return { type: "unknown" };
