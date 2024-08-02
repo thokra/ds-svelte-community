@@ -170,7 +170,7 @@
 	</section>
 {/if}
 
-<style lang="postcss">
+<style>
 	.title {
 		font-size: var(--a-font-size-medium);
 		font-weight: var(--a-font-weight-bold);
