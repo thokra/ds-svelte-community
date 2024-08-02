@@ -24,7 +24,7 @@ describe("params", () => {
 		await gen.setup();
 		gen.addSvelteFile(filename, code);
 
-		const { doc } = gen.docFor(filename, true);
+		const { doc } = gen.docFor(filename, false);
 		expect(doc).toMatchSnapshot();
 	});
 });

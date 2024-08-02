@@ -499,6 +499,7 @@ export class Generator {
 				return this.#typeOf(ctx, (node as tsm.TypeAliasDeclaration).getTypeNodeOrThrow());
 			case ts.SyntaxKind.InterfaceDeclaration: {
 				const id = node as tsm.InterfaceDeclaration;
+
 				const i: Interface = {
 					type: "interface",
 					name: id.getName(),
@@ -506,6 +507,14 @@ export class Generator {
 
 				if (id.getSourceFile().getFilePath().indexOf("node_modules") >= 0) {
 					i.external = true;
+
+					if (
+						id.getName() === "Element" &&
+						id.getSourceFile().getFilePath().indexOf("/node_modules/typescript/lib/lib.dom.d.ts") >=
+							0
+					) {
+						return i;
+					}
 				}
 
 				i.members = id
@@ -562,9 +571,10 @@ export class Generator {
 								return p.getText().slice(1, -1) === m.name;
 							});
 						});
+						return o;
 					}
 
-					console.log("Expression with type argument");
+					// console.log("Expression with type argument");
 					return { type: "unknown" };
 
 					const type = ewta.getTypeArguments()[0];

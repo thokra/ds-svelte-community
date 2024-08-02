@@ -5,17 +5,17 @@ import { Doc } from "../../src";
 import { Generator } from "../../src/generator";
 
 describe("v5", () => {
-	test("pluck_full", async () => {
-		const filename = path.resolve(import.meta.dir, "Pluck.svelte").replace(".svelte", ".ts");
+	test("pick_full", async () => {
+		const filename = path.resolve(import.meta.dir, "Pick.svelte").replace(".svelte", ".ts");
 		const code = (await fs.readFile(filename.replace(".ts", ".svelte"))).toString();
 
 		const gen = new Generator(require.resolve("svelte2tsx"));
 		await gen.setup();
 		gen.addSvelteFile(filename, code);
-		const { doc } = gen.docFor(filename, true);
+		const { doc } = gen.docFor(filename, false);
 
 		const expected: Doc = {
-			name: "Pluck",
+			name: "Pick",
 			description: "",
 			props: [
 				{

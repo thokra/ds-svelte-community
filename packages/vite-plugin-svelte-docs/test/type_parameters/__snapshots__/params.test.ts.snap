@@ -11,7 +11,47 @@ exports[`params svelte elements 1`] = `
       "name": "num",
       "optional": false,
       "type": {
-        "type": "unknown",
+        "members": [
+          {
+            "description": "",
+            "name": "zeroValue",
+            "optional": false,
+            "type": {
+              "name": "NumType",
+              "type": "typeParameter",
+            },
+          },
+          {
+            "description": "",
+            "name": "y",
+            "optional": false,
+            "type": {
+              "name": "X",
+              "type": "typeParameter",
+            },
+          },
+          {
+            "description": "",
+            "name": "add",
+            "optional": false,
+            "type": {
+              "signature": "(x: NumType, y: NumType) => NumType",
+              "type": "function",
+            },
+          },
+        ],
+        "name": "GenericNumber",
+        "type": "interface",
+        "typeArguments": [
+          {
+            "name": "NumType",
+            "type": "typeParameter",
+          },
+          {
+            "name": "X",
+            "type": "typeParameter",
+          },
+        ],
       },
     },
   ],
