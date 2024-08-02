@@ -406,6 +406,9 @@ export const Components: KnownComponents = {
 		BookIcon: {
 			path: "icons/BookIcon.svelte",
 		},
+		BookmarkDashIcon: {
+			path: "icons/BookmarkDashIcon.svelte",
+		},
 		BookmarkFillIcon: {
 			path: "icons/BookmarkFillIcon.svelte",
 		},
@@ -784,6 +787,12 @@ export const Components: KnownComponents = {
 		ChildEyesIcon: {
 			path: "icons/ChildEyesIcon.svelte",
 		},
+		ChildHairEyesFillIcon: {
+			path: "icons/ChildHairEyesFillIcon.svelte",
+		},
+		ChildHairEyesIcon: {
+			path: "icons/ChildHairEyesIcon.svelte",
+		},
 		CigaretteFillIcon: {
 			path: "icons/CigaretteFillIcon.svelte",
 		},
@@ -792,6 +801,12 @@ export const Components: KnownComponents = {
 		},
 		CircleBrokenIcon: {
 			path: "icons/CircleBrokenIcon.svelte",
+		},
+		CircleFillIcon: {
+			path: "icons/CircleFillIcon.svelte",
+		},
+		CircleIcon: {
+			path: "icons/CircleIcon.svelte",
 		},
 		CircleSlashFillIcon: {
 			path: "icons/CircleSlashFillIcon.svelte",
@@ -930,6 +945,12 @@ export const Components: KnownComponents = {
 		},
 		Density3Icon: {
 			path: "icons/Density3Icon.svelte",
+		},
+		DiamondFillIcon: {
+			path: "icons/DiamondFillIcon.svelte",
+		},
+		DiamondIcon: {
+			path: "icons/DiamondIcon.svelte",
 		},
 		DishwasherFillIcon: {
 			path: "icons/DishwasherFillIcon.svelte",
@@ -1873,6 +1894,15 @@ export const Components: KnownComponents = {
 		NokIcon: {
 			path: "icons/NokIcon.svelte",
 		},
+		NotePencilDashIcon: {
+			path: "icons/NotePencilDashIcon.svelte",
+		},
+		NotePencilFillIcon: {
+			path: "icons/NotePencilFillIcon.svelte",
+		},
+		NotePencilIcon: {
+			path: "icons/NotePencilIcon.svelte",
+		},
 		NumberListIcon: {
 			path: "icons/NumberListIcon.svelte",
 		},
@@ -1974,6 +2004,12 @@ export const Components: KnownComponents = {
 		},
 		PencilWritingIcon: {
 			path: "icons/PencilWritingIcon.svelte",
+		},
+		PentagonFillIcon: {
+			path: "icons/PentagonFillIcon.svelte",
+		},
+		PentagonIcon: {
+			path: "icons/PentagonIcon.svelte",
 		},
 		PercentIcon: {
 			path: "icons/PercentIcon.svelte",
@@ -2506,6 +2542,12 @@ export const Components: KnownComponents = {
 		SpoonIcon: {
 			path: "icons/SpoonIcon.svelte",
 		},
+		SquareFillIcon: {
+			path: "icons/SquareFillIcon.svelte",
+		},
+		SquareIcon: {
+			path: "icons/SquareIcon.svelte",
+		},
 		SquarerootIcon: {
 			path: "icons/SquarerootIcon.svelte",
 		},
@@ -2724,6 +2766,12 @@ export const Components: KnownComponents = {
 		},
 		TrendUpIcon: {
 			path: "icons/TrendUpIcon.svelte",
+		},
+		TriangleFillIcon: {
+			path: "icons/TriangleFillIcon.svelte",
+		},
+		TriangleIcon: {
+			path: "icons/TriangleIcon.svelte",
 		},
 		TruckFillIcon: {
 			path: "icons/TruckFillIcon.svelte",
