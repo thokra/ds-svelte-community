@@ -4,11 +4,9 @@ import { bunmatch } from "$testlib/bunmatch";
 import { Button as ReactButton } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte" with { type: "browser" };
 import { afterEach, describe, expect, it } from "bun:test";
-import { mount } from "svelte";
 
 describe("Button", () => {
 	it.only("renders a button with a label", () => {
-		mount;
 		const r = render(Button, {});
 		expect(r.container.innerHTML).toContain("Click me!");
 	});

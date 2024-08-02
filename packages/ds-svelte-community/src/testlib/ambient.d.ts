@@ -17,7 +17,8 @@ interface CustomMatchers {
 }
 
 declare module "bun:test" {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unused-vars
 	interface Matchers<T> extends CustomMatchers {}
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 	interface AsymmetricMatchers extends CustomMatchers {}
 }

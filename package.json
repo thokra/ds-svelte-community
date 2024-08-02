@@ -1,6 +1,7 @@
 {
 	"name": "ds-svelte-community",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"gar-login": "bun x google-artifactregistry-auth"
 	},
@@ -8,7 +9,7 @@
 		"packages/*"
 	],
 	"dependencies": {
-		"@types/eslint": "^8.56.10",
+		"@types/eslint": "^9.6.0",
 		"ts-morph": "^22.0.0"
 	},
 	"devDependencies": {

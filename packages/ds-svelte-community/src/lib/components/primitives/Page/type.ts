@@ -1,5 +1,5 @@
 import type { HTMLElements } from "$lib/components/utils/elements";
-import bgColors from "@navikt/ds-tokens/src/colors-bg.json";
+import type bgColors from "@navikt/ds-tokens/src/colors-bg.json";
 import type { Snippet } from "svelte";
 export const widths = ["text", "md", "lg", "xl", "2xl"] as const;
 

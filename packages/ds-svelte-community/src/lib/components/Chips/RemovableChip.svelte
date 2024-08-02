@@ -32,7 +32,9 @@
 	onclick={(e) => {
 		console.log("ON CLICK", ondelete);
 		e.preventDefault();
-		ondelete && ondelete();
+		if (ondelete) {
+			ondelete();
+		}
 		if (restProps && "onclick" in restProps && typeof restProps.onclick === "function") {
 			restProps.onclick(e);
 		}

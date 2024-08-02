@@ -28,7 +28,11 @@ export const shortcut = (node: HTMLElement, params: Params) => {
 				if (!params.bubble) {
 					e.preventDefault();
 				}
-				params.callback ? params.callback() : node.click();
+				if (params.callback) {
+					params.callback();
+				} else {
+					node.click();
+				}
 			};
 			window.addEventListener("keydown", handler);
 		};

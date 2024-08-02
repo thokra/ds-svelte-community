@@ -52,7 +52,9 @@
 
 	function handleClearClick(event: MouseEvent) {
 		// Called when clear is triggered
-		onClear && onClear({ event, trigger: "Click" });
+		if (onClear) {
+			onClear({ event, trigger: "Click" });
+		}
 		value = "";
 		input?.focus();
 	}
@@ -60,7 +62,9 @@
 	function handleInputKeypress(event: KeyboardEvent) {
 		if (event.key === "Escape" && value != "") {
 			// Called when clear is triggered
-			onClear && onClear({ event, trigger: "Escape" });
+			if (onClear) {
+				onClear({ event, trigger: "Escape" });
+			}
 			value = "";
 			input?.focus();
 			event.preventDefault();

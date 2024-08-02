@@ -46,11 +46,15 @@
 		navigator.clipboard.writeText(copyText);
 		active = true;
 
-		activeChanged && activeChanged(active);
+		if (activeChanged) {
+			activeChanged(active);
+		}
 
 		timeout = setTimeout(() => {
 			active = false;
-			activeChanged && activeChanged(active);
+			if (activeChanged) {
+				activeChanged(active);
+			}
 
 			timeout = null;
 		}, activeDuration);

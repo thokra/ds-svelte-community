@@ -39,7 +39,6 @@
 
 	let tab = $state("Default");
 	if (dev) {
-		// eslint-disable-next-line svelte/valid-compile
 		tab = $page.url.searchParams.get("tab") || "Default";
 	}
 

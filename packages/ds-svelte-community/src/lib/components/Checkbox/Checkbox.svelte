@@ -77,7 +77,9 @@
 			/**
 			 * Trigger when the checkbox changes. Will pass the event object as argument.
 			 */
-			onchange && onchange(e);
+			if (onchange) {
+				onchange(e);
+			}
 		}}
 	/>
 	<label for={id} class="navds-checkbox__label" id={lblID}>

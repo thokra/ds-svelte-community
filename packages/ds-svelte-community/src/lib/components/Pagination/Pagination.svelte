@@ -62,7 +62,9 @@
 	let steps = $derived(getSteps(page));
 
 	const handlePageChange = (page: number) => {
-		onChange && onChange({ page });
+		if (onChange) {
+			onChange({ page });
+		}
 	};
 </script>
 

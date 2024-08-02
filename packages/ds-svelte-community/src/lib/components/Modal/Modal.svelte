@@ -33,7 +33,11 @@
 
 	$effect(() => {
 		if (dialog && open && dialog.showModal) {
-			isModal ? dialog.showModal() : dialog.show();
+			if (isModal) {
+				dialog.showModal();
+			} else {
+				dialog.show();
+			}
 		}
 	});
 	$effect(() => {
