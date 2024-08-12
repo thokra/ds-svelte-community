@@ -67,12 +67,8 @@
 		bind:checked
 		{value}
 		onchange={(e) => {
-			if (ctx && ctx.groupControlled) {
-				if (ctx.values.includes(value)) {
-					ctx.values.splice(ctx.values.indexOf(value), 1);
-				} else {
-					ctx.values.push(value);
-				}
+			if (ctx) {
+				ctx.onchange(value);
 			}
 			/**
 			 * Trigger when the checkbox changes. Will pass the event object as argument.

@@ -67,6 +67,18 @@ export class CheckboxGroupContext {
 	// values: Readable<unknown[]>;
 	// hasError: Readable<boolean>;
 	// size: (typeof sizes)[number];
+
+	onchange(value: unknown) {
+		if (!this.groupControlled) {
+			return;
+		}
+
+		if (this.values.includes(value)) {
+			this.values.splice(this.values.indexOf(value), 1);
+		} else {
+			this.values.push(value);
+		}
+	}
 }
 
 export interface CheckboxProps {
