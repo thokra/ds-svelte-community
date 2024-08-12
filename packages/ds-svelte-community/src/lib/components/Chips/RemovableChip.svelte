@@ -30,7 +30,6 @@
 	class:navds-chips--icon-right={true}
 	aria-label={`${value} ${removeLabel}`}
 	onclick={(e) => {
-		console.log("ON CLICK", ondelete);
 		e.preventDefault();
 		if (ondelete) {
 			ondelete();

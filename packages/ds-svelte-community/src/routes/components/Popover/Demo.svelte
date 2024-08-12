@@ -15,7 +15,6 @@
 	bind:ref={el}
 	onclick={() => {
 		open = !open;
-		console.log(el);
 	}}>○</Button
 >
 <Popover anchorEl={el} bind:open {placement}>
