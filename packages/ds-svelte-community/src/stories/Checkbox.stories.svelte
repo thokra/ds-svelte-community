@@ -90,8 +90,8 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 		value="parent"
 		indeterminate={child1 != child2}
 		checked={child1 && child2}
-		on:change={(e) => {
-			child1 = child2 = e.detail.currentTarget.checked;
+		onchange={(e) => {
+			child1 = child2 = e.currentTarget.checked;
 		}}
 	>
 		Parent

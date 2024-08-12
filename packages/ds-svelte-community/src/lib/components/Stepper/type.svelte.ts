@@ -1,5 +1,5 @@
 import { getContext, type Snippet } from "svelte";
-import type { HTMLAnchorAttributes, HTMLOlAttributes } from "svelte/elements";
+import type { HTMLAnchorAttributes } from "svelte/elements";
 
 export const orientations = ["horizontal", "vertical"] as const;
 
@@ -7,19 +7,19 @@ export class StepperContext {
 	activeStep: number = $state(1);
 	orientation: (typeof orientations)[number] = $state("horizontal");
 	interactive: boolean = $state(true);
-	onChange?: (step: number, event: MouseEvent) => void;
+	onchange?: (step: number, event: MouseEvent) => void;
 	steps = $state<string[]>([]);
 
 	constructor(
 		activeStep: number,
 		orientation: (typeof orientations)[number],
 		interactive: boolean,
-		onChange?: (step: number, event: MouseEvent) => void,
+		onchange?: (step: number, event: MouseEvent) => void,
 	) {
 		this.activeStep = activeStep;
 		this.orientation = orientation;
 		this.interactive = interactive;
-		this.onChange = onChange;
+		this.onchange = onchange;
 	}
 
 	register = (el: string) => {
@@ -33,8 +33,8 @@ export class StepperContext {
 		}
 	};
 	setStep = (step: number, event: MouseEvent) => {
-		if (this.onChange) {
-			this.onChange(step, event);
+		if (this.onchange) {
+			this.onchange(step, event);
 		}
 	};
 }
@@ -48,7 +48,7 @@ export const getStepperContext = (): StepperContext => {
 	return context;
 };
 
-export interface Props extends HTMLOlAttributes {
+export interface Props {
 	/**
 	 * Current active step.
 	 * @note Stepper index starts at 1, not 0
@@ -68,7 +68,7 @@ export interface Props extends HTMLOlAttributes {
 	 */
 	children: Snippet;
 
-	onChange?: (step: number, event: MouseEvent) => void;
+	onchange?: (step: number, event: MouseEvent) => void;
 
 	[key: string]: unknown;
 }

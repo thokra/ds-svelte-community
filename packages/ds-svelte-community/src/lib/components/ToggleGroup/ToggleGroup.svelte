@@ -17,7 +17,7 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 		label = "",
 		variant = "action",
 		children,
-		onChange,
+		onchange,
 		...restProps
 	}: ToggleGroupProps = $props();
 
@@ -35,7 +35,7 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	$effect(() => {
 		if (preValue !== value) {
 			preValue = $state.snapshot(value);
-			onChange?.(value);
+			onchange?.(value);
 		}
 	});
 

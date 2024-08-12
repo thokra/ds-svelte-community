@@ -44,7 +44,7 @@ export interface ToggleGroupProps {
 	/**
 	 * Callback when value changes.
 	 */
-	onChange?: (value: string) => void;
+	onchange?: (value: string) => void;
 
 	[key: string]: unknown;
 }

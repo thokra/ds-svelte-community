@@ -123,7 +123,7 @@
 											type={prop.type}
 											value={valueSelectorProps[prop.name]}
 											forceEditable={values[prop.name] !== undefined}
-											onChange={(v) => {
+											onchange={(v) => {
 												values[prop.name] = v;
 											}}
 										/>

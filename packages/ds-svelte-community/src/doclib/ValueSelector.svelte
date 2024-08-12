@@ -7,7 +7,7 @@
 
 	let {
 		type: outerType,
-		onChange,
+		onchange,
 		init = undefined,
 		value,
 		forceEditable = false,
@@ -15,7 +15,7 @@
 		type: Type;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		value: any;
-		onChange: (val: unknown) => void;
+		onchange: (val: unknown) => void;
 		init: string | undefined;
 		forceEditable?: boolean;
 	} = $props();
@@ -145,7 +145,7 @@
 						value = options[0];
 					}
 				}
-				onChange(value);
+				onchange(value);
 			}}
 		>
 			Set value
@@ -158,7 +158,7 @@
 			size="small"
 			type={subType.type === "number" ? "number" : "text"}
 			onchange={(e: InputEvent) => {
-				onChange(toText((e.target as HTMLInputElement).value));
+				onchange(toText((e.target as HTMLInputElement).value));
 			}}
 		/>
 	{:else if options}
@@ -166,7 +166,7 @@
 			<Switch
 				checked={!!fromText(value)}
 				onchange={() => {
-					onChange(!value);
+					onchange(!value);
 				}}
 				hideLabel
 			>
@@ -178,7 +178,7 @@
 					bind:value
 					size="small"
 					onchange={() => {
-						onChange(value);
+						onchange(value);
 					}}
 				>
 					{#each options as option}

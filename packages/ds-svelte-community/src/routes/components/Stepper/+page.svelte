@@ -13,7 +13,7 @@
 		<Stepper
 			aria-labelledby="stepper-heading"
 			{activeStep}
-			onChange={(index, event) => {
+			onchange={(index, event) => {
 				event.preventDefault();
 				activeStep = index;
 			}}

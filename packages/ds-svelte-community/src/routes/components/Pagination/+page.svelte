@@ -15,6 +15,6 @@
 
 <Doc {doc}>
 	<Story>
-		<Pagination {count} {page} onChange={pageChange} />
+		<Pagination {count} {page} onchange={pageChange} />
 	</Story>
 </Doc>

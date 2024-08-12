@@ -7,7 +7,7 @@ export interface Props {
 	size?: (typeof sizes)[number];
 
 	/**
-	 * Current page. If set will require implementation of `on:change` event.
+	 * Current page. If set will require implementation of `onchange` event.
 	 * @note Pagination indexing starts at 1.
 	 */
 	page?: number;
@@ -40,7 +40,7 @@ export interface Props {
 	 */
 	prevNextTexts?: boolean;
 
-	onChange?: (_: { page: number }) => void;
+	onchange?: (_: { page: number }) => void;
 
 	[key: string]: unknown;
 }

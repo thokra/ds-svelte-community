@@ -10,10 +10,9 @@
 <Stepper
 	aria-labelledby="stepper-heading"
 	activeStep={3}
-	on:change={(e) => {
-		const { index, event } = e.detail;
+	onchange={(step, event) => {
 		event.preventDefault();
-		activeStep = index;
+		activeStep = step;
 	}}
 >
 	<Step href="#f" completed={true}>Account information</Step>

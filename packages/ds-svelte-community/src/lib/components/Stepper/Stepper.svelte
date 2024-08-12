@@ -14,17 +14,17 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 		orientation = "vertical",
 		activeStep = 1,
 		interactive = true,
-		onChange,
+		onchange,
 		children,
 		...restProps
 	}: Props = $props();
 
-	const context = new StepperContext(activeStep, orientation, interactive, onChange);
+	const context = new StepperContext(activeStep, orientation, interactive, onchange);
 	$effect(() => {
 		context.activeStep = activeStep;
 		context.orientation = orientation;
 		context.interactive = interactive;
-		context.onChange = onChange;
+		context.onchange = onchange;
 	});
 
 	setContext<StepperContext>(contextKey, context);

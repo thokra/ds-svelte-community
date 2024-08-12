@@ -25,7 +25,7 @@
 		nextText = "Next",
 		prevText = "Previous",
 		prevNextTexts = false,
-		onChange,
+		onchange,
 		...restProps
 	}: Props = $props();
 
@@ -62,8 +62,8 @@
 	let steps = $derived(getSteps(page));
 
 	const handlePageChange = (page: number) => {
-		if (onChange) {
-			onChange({ page });
+		if (onchange) {
+			onchange({ page });
 		}
 	};
 </script>
