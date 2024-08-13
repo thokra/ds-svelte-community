@@ -9,7 +9,9 @@ describe("storyparser", async () => {
 	const tests = new Glob(path.join(import.meta.dir, "testdata", "storyparser", "*.svelte")).scan();
 
 	for await (const path of tests) {
-		if (path.includes(".after.")) continue;
+		if (path.includes(".after.")) {
+			continue;
+		}
 
 		const before = await Bun.file(path).text();
 		const after = await Bun.file(path.replace(".svelte", ".after.svelte")).text();

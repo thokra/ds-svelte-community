@@ -30,4 +30,9 @@ export default [
 	{
 		ignores: ["packages/*/build/", "packages/*/.svelte-kit/", "packages/*/dist/"],
 	},
+	{
+		rules: {
+			curly: "error",
+		},
+	},
 ];

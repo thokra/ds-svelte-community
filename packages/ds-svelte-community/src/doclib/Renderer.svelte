@@ -37,7 +37,9 @@
 	const options = { ...defaultOptions, ...componentOptions };
 
 	const code = $derived.by(() => {
-		if (!source) return "";
+		if (!source) {
+			return "";
+		}
 		return source.replace(/(\s*\{docProps\}\s*)/g, (p1) => {
 			if (Object.keys(values).length === 0) {
 				return p1.indexOf("\n") >= 0 ? "\n" : "";
