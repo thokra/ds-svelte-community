@@ -11,10 +11,11 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	import type { Props } from "./type";
 
 	let { variant = "info", size = "medium", as = "span", children, text }: Props = $props();
+
+	const Component = $derived(size == "medium" ? BodyShort : Detail);
 </script>
 
-<svelte:component
-	this={size == "medium" ? BodyShort : Detail}
+<Component
 	{as}
 	size={size == "medium" ? "medium" : "small"}
 	class="navds-tag navds-tag--{variant} navds-tag--{size}"
@@ -24,4 +25,4 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 	{:else}
 		{text}
 	{/if}
-</svelte:component>
+</Component>

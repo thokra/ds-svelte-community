@@ -5,7 +5,7 @@
 	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/search).
 -->
 
-<script lang="ts" context="module">
+<script lang="ts" module>
 	/* TODO: Add error handling */
 
 	import newUniqueId from "$lib/components/local-unique-id";

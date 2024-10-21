@@ -5,7 +5,7 @@ Switch is used to quickly change between two states. Often to toggle preferences
 Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/switch).
 -->
 
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>
 

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import type { Component } from "svelte";
 	import type { StackProps } from "./type";
 	export type StackPropsTest = Omit<StackProps, "children"> & {

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import "svelte-highlight/styles/github-dark.css";
 	export type ComponentOptions = {
 		center?: boolean;

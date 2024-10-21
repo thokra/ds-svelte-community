@@ -134,7 +134,7 @@ function templateSvelte(source: string, filename: string) {
 		},
 	});
 
-	return `<script lang="ts" context="module">
+	return `<script lang="ts" module>
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>
 

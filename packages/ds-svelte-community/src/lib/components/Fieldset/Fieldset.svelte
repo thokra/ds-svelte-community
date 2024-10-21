@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import newUniqueId from "$lib/components/local-unique-id";
 	import { type FieldsetProps } from "./type";
 </script>

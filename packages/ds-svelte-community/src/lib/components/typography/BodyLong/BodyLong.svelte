@@ -17,7 +17,7 @@
 		/**
 		 * Tag to use for the body
 		 */
-		as?: "p" | "span";
+		as?: "p" | "span" | "div";
 
 		children: Snippet;
 

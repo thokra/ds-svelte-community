@@ -62,11 +62,11 @@
 	"dependencies": {
 		"estree-walker": "^3.0.3",
 		"prettier": "^3.3.3",
-		"svelte": "5.0.0-next.216",
+		"svelte": "5.0.0-next.264",
 		"typescript": "^5.5.4"
 	},
 	"type": "module",
 	"devDependencies": {
-		"@types/bun": "^1.1.6"
+		"@types/bun": "^1.1.11"
 	}
 }

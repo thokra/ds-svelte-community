@@ -6,7 +6,7 @@
 	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/accordion).
  -->
 
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { getContext } from "svelte";
 	import type { AccordionContext, Props } from "./type";
 

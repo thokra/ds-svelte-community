@@ -1,8 +1,8 @@
 import { bunmatch } from "$testlib/bunmatch";
 import { IgnoreKnownUnique } from "$testlib/stdopts";
 import { Alert as ReactAlert } from "@navikt/ds-react";
-import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "bun:test";
+import { render } from "@testing-library/svelte";
+import { describe, expect, it } from "bun:test";
 import Alert from "./Alert.test.svelte";
 import { sizes, variants, type Props } from "./type";
 
@@ -76,5 +76,5 @@ describe("Alert", () => {
 		).toBeTrue();
 	});
 
-	afterEach(cleanup);
+	// afterEach(cleanup);
 });

@@ -5,7 +5,7 @@
 	Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/popover).
 -->
 
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { flip as flipMW, offset as offsetMW, shift as shiftMW } from "svelte-floating-ui/dom";
 </script>
 

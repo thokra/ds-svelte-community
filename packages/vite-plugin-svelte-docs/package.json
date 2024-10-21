@@ -3,13 +3,13 @@
 	"module": "dist/index.js",
 	"type": "module",
 	"devDependencies": {
-		"@types/bun": "1.1.6",
-		"eslint": "^9.9.0",
+		"@types/bun": "1.1.11",
+		"eslint": "^9.12.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.43.0",
+		"eslint-plugin-svelte": "^2.44.1",
 		"prettier": "^3.3.3",
-		"prettier-plugin-svelte": "^3.2.6",
-		"svelte": "5.0.0-next.216",
+		"prettier-plugin-svelte": "^3.2.7",
+		"svelte": "5.0.0-next.264",
 		"tsconfig-resolver": "^3.0.1",
 		"typescript": "~5.5.4"
 	},
@@ -21,7 +21,7 @@
 		"typescript": "~5.5.4"
 	},
 	"dependencies": {
-		"svelte2tsx": "0.7.15",
+		"svelte2tsx": "0.7.21",
 		"vite": "^5.4.0"
 	},
 	"publishConfig": {

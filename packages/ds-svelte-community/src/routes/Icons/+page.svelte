@@ -46,6 +46,8 @@
 
 	let activeImport = $derived(`import { ${active}Icon } from "@nais/ds-svelte-community/icons";`);
 	let activeUsage = $derived(`<${active}Icon title="a11y-title" style="font-size: 1.5rem" />`);
+
+	let PreviewIcon = $derived(getIcon(active));
 </script>
 
 <svelte:head>
@@ -71,6 +73,7 @@
 <div class="wrapper">
 	<div class="grid" style="--size: {size}rem">
 		{#each iconData as icon}
+			{@const Icon = getIcon(icon.name)}
 			<button
 				class="icon"
 				class:active={active == icon.name}
@@ -82,14 +85,14 @@
 					<span>{icon.name}</span>
 					<span>{icon.category}</span>
 				</div>
-				<svelte:component this={getIcon(icon.name)} style="width: {size}rem; height: {size}rem" />
+				<Icon style="width: {size}rem; height: {size}rem" />
 			</button>
 		{/each}
 	</div>
 
 	<div class="sidebar" class:visible={active != ""}>
 		<div class="preview">
-			<svelte:component this={getIcon(active)} style="width: 100%; height: 100%" />
+			<PreviewIcon style="width: 100%; height: 100%" />
 		</div>
 		<Heading level="2">{active}</Heading>
 

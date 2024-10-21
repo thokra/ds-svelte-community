@@ -23,9 +23,7 @@
 
 	<Story name="Children">
 		<Skeleton variant="rounded">
-			<TextField>
-				<svelte:fragment slot="label">Email</svelte:fragment>
-			</TextField>
+			<TextField label="Email"></TextField>
 			<Button>Send inn</Button>
 		</Skeleton>
 	</Story>

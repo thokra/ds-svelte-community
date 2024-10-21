@@ -2,6 +2,7 @@
 	import { dev } from "$app/environment";
 	import Button from "$lib/components/Button/Button.svelte";
 	import type { Type } from "@nais/vite-plugin-svelte-docs";
+	import TypeRenderer from "./TypeRenderer.svelte";
 
 	let {
 		type: typ,
@@ -22,11 +23,11 @@
 {#if show}
 	{#if Array.isArray(typ)}
 		{#each typ as t, i}
-			<svelte:self type={t} show={shouldShowAll || showAll || i < maxItems} />
+			<TypeRenderer type={t} show={shouldShowAll || showAll || i < maxItems} />
 		{/each}
 	{:else if typ.type == "union"}
 		{#each typ.values as t, i}
-			<svelte:self type={t} show={shouldShowAll || showAll || i < maxItems} />
+			<TypeRenderer type={t} show={shouldShowAll || showAll || i < maxItems} />
 		{/each}
 	{:else if ["string", "number", "boolean", "undefined", "null"].includes(typ.type)}
 		<code>{typ.type}{suffix}</code>
@@ -39,7 +40,7 @@
 	{:else if typ.type == "snippet"}
 		<code>Snippet{suffix}</code>
 	{:else if typ.type == "array"}
-		<svelte:self type={typ.of} suffix="[]" />
+		<TypeRenderer type={typ.of} suffix="[]" />
 	{:else}
 		<code class:err={dev}>{typ.type}{suffix}</code>
 	{/if}

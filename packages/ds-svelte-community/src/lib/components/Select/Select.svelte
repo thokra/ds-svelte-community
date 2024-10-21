@@ -5,7 +5,7 @@ Select gives the user the ability to choose from predefined answer options.
 Read more about this component in the [Aksel documentation](https://aksel.nav.no/komponenter/core/select).
 -->
 
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import newUniqueId from "$lib/components/local-unique-id";
 </script>
 
