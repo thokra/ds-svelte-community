@@ -8,7 +8,7 @@
 	let text = "hello";
 </script>
 
-{#snippet docSnippet1({ docProps })}
+{#snippet docSnippet1({ docProps }: { docProps: { [key: string]: unknown } })}
 	<Button onclick={() => clicks++} variant="secondary" {...docProps}>
 		Clicked {clicks} times
 	</Button>
@@ -16,7 +16,7 @@
 		<p>Clicks are over 5</p>
 	{/if}
 {/snippet}
-{#snippet docSnippet0({ docProps })}
+{#snippet docSnippet0({ docProps }: { docProps: { [key: string]: unknown } })}
 	<Button loading variant="secondary" {...docProps}>{text}</Button>
 {/snippet}
 <Doc

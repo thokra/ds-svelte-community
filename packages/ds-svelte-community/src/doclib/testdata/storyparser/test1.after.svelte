@@ -8,19 +8,19 @@
 	let clicks = $state(0);
 </script>
 
-{#snippet docSnippet2({ docProps })}
+{#snippet docSnippet2({ docProps }: { docProps: { [key: string]: unknown } })}
 	<Button variant="secondary" {...docProps}>
 		{#snippet iconLeft()}
 			<GlobeFillIcon />
 		{/snippet}
 	</Button>
 {/snippet}
-{#snippet docSnippet1({ docProps })}
+{#snippet docSnippet1({ docProps }: { docProps: { [key: string]: unknown } })}
 	<Button onclick={() => clicks++} variant="secondary" {...docProps}>
 		Clicked {clicks} times
 	</Button>
 {/snippet}
-{#snippet docSnippet0({ docProps })}
+{#snippet docSnippet0({ docProps }: { docProps: { [key: string]: unknown } })}
 	<Button loading variant="secondary" {...docProps}>Button</Button>
 {/snippet}
 <Doc

@@ -84,7 +84,7 @@ export class StoryParser {
 				`{name: "${storyName}", source: "${btoa(ret.source)}", snippet: ${snippetName}, locked: ${ret.locked}, props: ${JSON.stringify(ret.props)}, lockedProps: ${JSON.stringify(ret.lockedProps)}}`,
 			);
 
-			const snippet = `{#snippet ${snippetName}({docProps})}\n${ret.snippet}\n{/snippet}\n`;
+			const snippet = `{#snippet ${snippetName}({docProps}: { docProps: { [key: string]: unknown } })}\n${ret.snippet}\n{/snippet}\n`;
 			this.magicString.prependLeft(doc!.start, snippet);
 		}
 

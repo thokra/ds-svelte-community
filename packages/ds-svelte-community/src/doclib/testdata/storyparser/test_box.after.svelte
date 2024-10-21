@@ -7,7 +7,7 @@
 	let selected = $state(false);
 </script>
 
-{#snippet docSnippet0({ docProps })}
+{#snippet docSnippet0({ docProps }: { docProps: { [key: string]: unknown } })}
 	<Checkbox bind:checked={selected} {...docProps}>Checkbox text</Checkbox>
 	<p>Checkbox is {selected}</p>
 {/snippet}
