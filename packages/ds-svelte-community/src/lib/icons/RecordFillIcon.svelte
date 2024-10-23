@@ -41,7 +41,7 @@
 	<path
 		fill="currentColor"
 		fill-rule="evenodd"
-		d="M6.25 12a5.75 5.75 0 1 1 11.5 0 5.75 5.75 0 0 1-11.5 0Z"
+		d="M6.25 12a5.75 5.75 0 1 1 11.5 0 5.75 5.75 0 0 1-11.5 0"
 		clip-rule="evenodd"
 	/>
 </svg>
