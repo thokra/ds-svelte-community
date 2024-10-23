@@ -1,9 +1,9 @@
 import type { RenderResult } from "@testing-library/svelte";
-import type { SvelteComponent } from "svelte";
+import type { Component } from "svelte";
 import { toMimicReact, type Options, type ReactComponent } from "./htmldiff";
 
-export async function bunmatch<T extends SvelteComponent>(
-	svelte: RenderResult<T>,
+export async function bunmatch<C extends Component>(
+	svelte: RenderResult<C>,
 	react: ReactComponent,
 	options?: Options,
 ): Promise<boolean> {

@@ -12,7 +12,7 @@
 	import Accordion from "./Accordion.svelte";
 	import AccordionItem from "./AccordionItem.svelte";
 
-	export let items: TestItem[];
+	let { items }: TestProps = $props();
 </script>
 
 <Accordion>

@@ -44,7 +44,7 @@ describe("storyparser", async () => {
 			});
 
 			if (addedOrRemoved > 0) {
-				console.log(lines.join(""));
+				console.log(lines.join("|"));
 			}
 			expect(addedOrRemoved).toBe(0);
 		});

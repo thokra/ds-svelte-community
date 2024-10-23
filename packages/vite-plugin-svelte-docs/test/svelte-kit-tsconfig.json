@@ -7,9 +7,8 @@
 			"$testlib/*": ["../src/testlib/*"]
 		},
 		"rootDirs": ["..", "./types"],
-		"importsNotUsedAsValues": "error",
+		"verbatimModuleSyntax": true,
 		"isolatedModules": true,
-		"preserveValueImports": true,
 		"lib": ["esnext", "DOM", "DOM.Iterable"],
 		"moduleResolution": "node",
 		"module": "esnext",

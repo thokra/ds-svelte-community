@@ -5,7 +5,7 @@ import prettierHTML from "prettier/parser-html";
 import type { FunctionComponent, ReactNode } from "react";
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
-import type { SvelteComponent } from "svelte";
+import type { Component } from "svelte";
 
 export type ReactComponent = unknown;
 
@@ -205,7 +205,7 @@ async function prettyDiff(a: string, b: string, before: number, after: number) {
 	return lines.join("");
 }
 
-async function doExpect<T extends SvelteComponent>(
+async function doExpect<T extends Component>(
 	opts: DiffOptions,
 	input: RenderResult<T>,
 	comp: ReactComponent,
@@ -255,7 +255,7 @@ export type Options = {
 	children?: ReactNode[];
 };
 
-export async function toMimicReact<T extends SvelteComponent>(
+export async function toMimicReact<T extends Component>(
 	received: RenderResult<T>,
 	comp: ReactComponent,
 	opts?: Options,

@@ -13,19 +13,16 @@ await plugin({
 		const { readFileSync } = await import("fs");
 
 		const renderSvelte: OnLoadCallback = async ({ path }) => {
+			console.log(path);
+			const before = readFileSync(path, "utf8");
 			try {
 				return {
 					// Use the preprocessor of your choice.
-					contents: compile(
-						await preprocess(readFileSync(path, "utf8"), vitePreprocess()).then(
-							(processed) => processed.code,
-						),
-						{
-							filename: path,
-							generate: "client",
-							runes: true,
+					contents: compile(before, {
+						warningFilter: () => {
+							return true;
 						},
-					).js.code,
+					}).js.code,
 					loader: "js",
 				};
 			} catch (e) {
@@ -43,12 +40,9 @@ await plugin({
 					filename: path,
 					generate: "client",
 				},
-			).js.code.replaceAll(
-				'import * as Svelte from "svelte"',
-				`import * as Svelte from "svelte" with { type: "browser" }`,
-			);
+			).js.code;
 
-			console.log(contents);
+			// console.log(contents);
 
 			try {
 				return {
@@ -57,7 +51,7 @@ await plugin({
 					loader: "js",
 				};
 			} catch (e) {
-				console.log("Error in svelte loader", path);
+				console.log("Error in svelte ts loader", path);
 				throw e;
 			}
 		};

@@ -92,7 +92,9 @@
 
 	<div class="sidebar" class:visible={active != ""}>
 		<div class="preview">
-			<PreviewIcon style="width: 100%; height: 100%" />
+			{#if PreviewIcon}
+				<PreviewIcon style="width: 100%; height: 100%" />
+			{/if}
 		</div>
 		<Heading level="2">{active}</Heading>
 

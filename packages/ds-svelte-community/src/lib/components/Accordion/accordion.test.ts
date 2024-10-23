@@ -18,7 +18,10 @@ describe("Accordion", () => {
 				return React.createElement(ReactAccordion.Item, {
 					defaultOpen: v.open,
 					children: [
-						React.createElement(ReactAccordion.Header, { key: `h-${i}`, children: v.heading }),
+						React.createElement(ReactAccordion.Header, {
+							key: `h-${i}`,
+							children: v.heading as string,
+						}),
 						React.createElement(ReactAccordion.Content, { key: `c-${i}`, children: v.content }),
 					],
 					key: i,

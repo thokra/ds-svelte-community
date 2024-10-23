@@ -17,8 +17,8 @@
 		"format": "prettier --write .",
 		"generate-icons": "./hack/generate-icons.sh",
 		"test": "bun run test:unit",
-		"test:unit": "bun test",
-		"test:unit:watch": "bun test --watch"
+		"test:unit": "bun test --conditions browser",
+		"test:unit:watch": "bun test --conditions browser --watch"
 	},
 	"publishConfig": {
 		"types": "./dist/index.d.ts",
@@ -89,7 +89,7 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"vite": "^4.0.0-0 || ^5.0.0"
+		"vite": "^5.4.9"
 	},
 	"optionalDependencies": {
 		"svelte-floating-ui": "^1.5.9"
@@ -97,23 +97,23 @@
 	"devDependencies": {
 		"@happy-dom/global-registrator": "^15.7.4",
 		"@nais/ds-svelte-community-preprocess-svelte": "workspace:*",
-		"@navikt/aksel-icons": "^7.2.0",
-		"@navikt/ds-react": "^7.2.0",
-		"@navikt/ds-tailwind": "^7.2.0",
+		"@navikt/aksel-icons": "^7.3.1",
+		"@navikt/ds-react": "^7.3.1",
+		"@navikt/ds-tailwind": "^7.3.1",
 		"@sveltejs/adapter-auto": "^3.2.5",
 		"@sveltejs/adapter-static": "^3.0.5",
-		"@sveltejs/kit": "^2.6.4",
+		"@sveltejs/kit": "^2.7.2",
 		"@sveltejs/package": "^2.3.5",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
-		"@testing-library/svelte": "^5.2.3",
+		"@testing-library/svelte": "^5.2.4",
 		"@types/bun": "^1.1.11",
 		"@types/diff": "^5.2.3",
-		"@types/react-dom": "^18.3.0",
+		"@types/react-dom": "^18.3.1",
 		"autoprefixer": "^10.4.20",
 		"diff": "^7.0.0",
-		"eslint": "^9.12.0",
+		"eslint": "^9.13.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.44.1",
+		"eslint-plugin-svelte": "^2.46.0",
 		"mdsvex": "^0.12.3",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.7",
@@ -122,21 +122,21 @@
 		"react-dom": "^18.3.1",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-slug": "^6.0.0",
-		"svelte": "5.0.0-next.264",
-		"svelte-check": "^4.0.4",
+		"shiki": "^1.22.0",
+		"svelte-check": "^4.0.5",
 		"svelte-floating-ui": "^1.5.9",
-		"svgo": "3.0.3",
-		"tailwindcss": "^3.4.9",
+		"svelte": "5.0.5",
+		"svgo": "3.3.2",
+		"tailwindcss": "^3.4.14",
 		"totalist": "^3.0.1",
-		"typescript": "5.5.4",
-		"typescript-eslint": "^8.0.1",
-		"vite": "5.4.0"
+		"typescript": "5.6.3",
+		"typescript-eslint": "^8.11.0",
+		"vite": "^5.4.9"
 	},
 	"dependencies": {
 		"@nais/vite-plugin-svelte-docs": "workspace:*",
-		"@navikt/ds-css": "^7.2.0",
-		"@navikt/ds-tokens": "^7.2.0",
-		"shiki": "^1.22.0"
+		"@navikt/ds-css": "^7.3.1",
+		"@navikt/ds-tokens": "^7.3.1"
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
