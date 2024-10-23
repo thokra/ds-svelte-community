@@ -222,7 +222,7 @@ async function doExpect<T extends Component>(
 				container: HTMLElement;
 			};
 			if (Object.keys(r).includes("container")) {
-				received = r.container.firstElementChild!;
+				received = r.container!;
 			}
 		}
 	}

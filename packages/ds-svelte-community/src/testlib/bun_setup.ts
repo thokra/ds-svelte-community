@@ -13,7 +13,6 @@ await plugin({
 		const { readFileSync } = await import("fs");
 
 		const renderSvelte: OnLoadCallback = async ({ path }) => {
-			console.log(path);
 			const before = readFileSync(path, "utf8");
 			try {
 				return {

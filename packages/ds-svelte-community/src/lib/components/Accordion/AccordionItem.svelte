@@ -6,13 +6,7 @@
 	import { GetAccordionContext } from "./Accordion.svelte";
 	import type { ItemProps } from "./type";
 
-	let {
-		open = false,
-		heading,
-		showMoreText = "Show more",
-		children,
-		...restProps
-	}: ItemProps = $props();
+	let { open = false, heading, children, ...restProps }: ItemProps = $props();
 
 	const ctx = GetAccordionContext();
 
@@ -37,11 +31,7 @@
 >
 	<button class="navds-accordion__header" aria-expanded={open} type="button" onclick={handleClick}>
 		<span class="navds-accordion__icon-wrapper">
-			<ChevronDownIcon
-				class="navds-accordion__header-chevron"
-				title={showMoreText}
-				aria-hidden="true"
-			/>
+			<ChevronDownIcon class="navds-accordion__header-chevron" aria-hidden="true" />
 		</span>
 		<Heading size={ctx?.headingSize} as="span" class="navds-accordion__header-content">
 			{#if typeof heading === "string"}

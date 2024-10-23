@@ -21,7 +21,14 @@
 	import { setContext } from "svelte";
 	import { classes, omit } from "../helpers";
 
-	let { variant, headingSize, size, indent, children, ...restProps }: Props = $props();
+	let {
+		variant,
+		headingSize = "small",
+		size = "medium",
+		indent = true,
+		children,
+		...restProps
+	}: Props = $props();
 
 	class Context {
 		variant: Props["variant"] = $derived(variant);
