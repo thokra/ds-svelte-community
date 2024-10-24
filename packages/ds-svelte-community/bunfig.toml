@@ -1,5 +1,8 @@
 telemetry = false
 
 [test]
-preload = ["./src/testlib/bun_setup.ts", "./src/testlib/test_helper.ts"]
-root = "./src/"
+	preload = [ "./src/testlib/bun_setup.ts", "./src/testlib/test_helper.ts" ]
+	root    = "./src/"
+
+[run]
+	bun = true

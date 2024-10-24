@@ -2,7 +2,7 @@ import fs from "fs";
 import type { Plugin as VitePlugin } from "vite";
 import { Generator } from "./generator.js";
 
-export default function myPlugin(svelte2tsxPath: string): VitePlugin {
+export default function docProcess(svelte2tsxPath: string): VitePlugin {
 	return {
 		name: "dssc-docs",
 
