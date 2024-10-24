@@ -32,8 +32,8 @@ jobs:
       - name: Install
         run: |-
           bun install --frozen-lockfile
-          bun run sync
           bun run build:libs
+          bun run sync
 
       - name: Test and lint ds-svelte-community
         run: |-
