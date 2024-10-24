@@ -2,6 +2,7 @@
 	"name": "@nais/vite-plugin-svelte-docs",
 	"module": "dist/index.js",
 	"type": "module",
+	"private": true,
 	"devDependencies": {
 		"@types/bun": "1.1.12",
 		"eslint": "^9.13.0",
