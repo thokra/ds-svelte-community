@@ -18,7 +18,8 @@
 		"generate-icons": "./hack/generate-icons.sh",
 		"test": "bun run test:unit",
 		"test:unit": "bun test --conditions browser",
-		"test:unit:watch": "bun test --conditions browser --watch"
+		"test:unit:watch": "bun test --conditions browser --watch",
+		"sync": "svelte-kit sync"
 	},
 	"publishConfig": {
 		"types": "./dist/index.d.ts",

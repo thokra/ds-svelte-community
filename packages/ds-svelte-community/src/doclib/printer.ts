@@ -1,5 +1,8 @@
 import * as prettier from "prettier";
-import type { PrettierConfig } from "prettier-plugin-svelte";
+import { default as PrettierPluginSvelte, type PrettierConfig } from "prettier-plugin-svelte";
+import BabelPrettier from "prettier/parser-babel";
+import TSPrettier from "prettier/parser-typescript";
+import ESTreePrettier from "prettier/plugins/estree.js";
 import { parse, type LegacyInlineComponent, type LegacySvelteNode } from "svelte/compiler";
 
 export async function format(code: string) {
@@ -10,7 +13,7 @@ export async function format(code: string) {
 		useTabs: true,
 		overrides: [{ files: "*.svelte", options: { parser: "svelte" } }],
 		printWidth: 100,
-		plugins: ["prettier-plugin-svelte"],
+		plugins: [TSPrettier, PrettierPluginSvelte, BabelPrettier, ESTreePrettier],
 	};
 
 	return await prettier.format(code, formatConfig);

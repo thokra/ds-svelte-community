@@ -3,7 +3,12 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"gar-login": "bun x google-artifactregistry-auth"
+		"gar-login": "bun x google-artifactregistry-auth",
+		"build:libs": "bun run --filter @nais/ds-svelte-community-preprocess-svelte build && bun run --filter @nais/vite-plugin-svelte-docs build",
+		"test": "bun run --filter './packages/**' test",
+		"lint": "bun run --filter './packages/**' lint",
+		"check": "bun run --filter './packages/**' check",
+		"sync": "bun run --filter './packages/**' sync"
 	},
 	"workspaces": [
 		"packages/*"

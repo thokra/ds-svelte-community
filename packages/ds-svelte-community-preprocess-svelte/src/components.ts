@@ -358,12 +358,6 @@ export const Components: KnownComponents = {
 		BarChartIcon: {
 			path: "icons/BarChartIcon.svelte",
 		},
-		BeaconSignalsFillIcon: {
-			path: "icons/BeaconSignalsFillIcon.svelte",
-		},
-		BeaconSignalsIcon: {
-			path: "icons/BeaconSignalsIcon.svelte",
-		},
 		BedFillIcon: {
 			path: "icons/BedFillIcon.svelte",
 		},
@@ -498,18 +492,6 @@ export const Components: KnownComponents = {
 		},
 		Buildings3Icon: {
 			path: "icons/Buildings3Icon.svelte",
-		},
-		Buldings2FillIcon: {
-			path: "icons/Buldings2FillIcon.svelte",
-		},
-		Buldings2Icon: {
-			path: "icons/Buldings2Icon.svelte",
-		},
-		Buldings3FillIcon: {
-			path: "icons/Buldings3FillIcon.svelte",
-		},
-		Buldings3Icon: {
-			path: "icons/Buldings3Icon.svelte",
 		},
 		BulletListIcon: {
 			path: "icons/BulletListIcon.svelte",
@@ -832,6 +814,12 @@ export const Components: KnownComponents = {
 		ClipboardLinkIcon: {
 			path: "icons/ClipboardLinkIcon.svelte",
 		},
+		ClipboardXMarkFillIcon: {
+			path: "icons/ClipboardXMarkFillIcon.svelte",
+		},
+		ClipboardXMarkIcon: {
+			path: "icons/ClipboardXMarkIcon.svelte",
+		},
 		ClockDashedIcon: {
 			path: "icons/ClockDashedIcon.svelte",
 		},
@@ -1117,6 +1105,12 @@ export const Components: KnownComponents = {
 		EyeWithPupilIcon: {
 			path: "icons/EyeWithPupilIcon.svelte",
 		},
+		FaceCryFillIcon: {
+			path: "icons/FaceCryFillIcon.svelte",
+		},
+		FaceCryIcon: {
+			path: "icons/FaceCryIcon.svelte",
+		},
 		FaceFillIcon: {
 			path: "icons/FaceFillIcon.svelte",
 		},
@@ -1128,6 +1122,12 @@ export const Components: KnownComponents = {
 		},
 		FaceIcon: {
 			path: "icons/FaceIcon.svelte",
+		},
+		FaceLaughFillIcon: {
+			path: "icons/FaceLaughFillIcon.svelte",
+		},
+		FaceLaughIcon: {
+			path: "icons/FaceLaughIcon.svelte",
 		},
 		FaceSmileFillIcon: {
 			path: "icons/FaceSmileFillIcon.svelte",
@@ -2535,6 +2535,18 @@ export const Components: KnownComponents = {
 		},
 		SpeakerSoundWave3Icon: {
 			path: "icons/SpeakerSoundWave3Icon.svelte",
+		},
+		SplitHorizontalFillIcon: {
+			path: "icons/SplitHorizontalFillIcon.svelte",
+		},
+		SplitHorizontalIcon: {
+			path: "icons/SplitHorizontalIcon.svelte",
+		},
+		SplitVerticalFillIcon: {
+			path: "icons/SplitVerticalFillIcon.svelte",
+		},
+		SplitVerticalIcon: {
+			path: "icons/SplitVerticalIcon.svelte",
 		},
 		SpoonFillIcon: {
 			path: "icons/SpoonFillIcon.svelte",
