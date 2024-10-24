@@ -6,9 +6,9 @@
 -->
 
 <script lang="ts" module>
+	import Fieldset from "$lib/components/Fieldset/Fieldset.svelte";
 	import newUniqueId from "$lib/components/local-unique-id";
 	import { getContext } from "svelte";
-	import Fieldset from "../Fieldset/Fieldset.svelte";
 	import { CheckboxGroupContext, type Props } from "./type.svelte";
 
 	const contextKey = Symbol("CheckboxGroupContext");

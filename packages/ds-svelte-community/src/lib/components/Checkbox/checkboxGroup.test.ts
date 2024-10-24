@@ -3,30 +3,43 @@ import { Checkbox as ReactCheckbox, CheckboxGroup as ReactCheckboxGroup } from "
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
-import Checkbox, { type ItemProps } from "./CheckboxGroup.test.svelte";
-import type { Props } from "./type.svelte";
+import { createRawSnippet, type Snippet } from "svelte";
+import Checkbox from "./CheckboxGroup.test.svelte";
+import { type CheckboxProps, type Props } from "./type.svelte";
 
 describe("CheckboxGroup", () => {
 	it("renders CheckboxGroup similar to ds-react", async () => {
-		const props = {
-			wrapper: {
-				legend: "Checkbox legend",
-				value: ["val2", "val3"],
-			} as Props,
-			items: [
-				{ value: "val1", content: "Checkbox content 1" },
-				{ value: "val2", content: "Checkbox content 2" },
-				{ value: "val3", content: "Checkbox content 3" },
-				{ value: "val4", content: "Checkbox content 4" },
-			] as ItemProps[],
+		const props: Omit<Props, "children"> = {
+			legend: "Checkbox legend",
+			value: ["val2", "val3"],
 		};
+
+		const snippetText = (v: string): Snippet => {
+			return createRawSnippet(() => ({
+				render: () => v,
+			}));
+		};
+
+		const items: { value: string; content: string }[] = [
+			{ value: "val1", content: "Checkbox content 1" },
+			{ value: "val2", content: "Checkbox content 2" },
+			{ value: "val3", content: "Checkbox content 3" },
+			{ value: "val4", content: "Checkbox content 4" },
+		];
+
+		const svelteItems: CheckboxProps[] = items.map((v) => {
+			return {
+				value: v.value,
+				children: snippetText(v.content),
+			};
+		});
 		expect(
-			await bunmatch(render(Checkbox, props), ReactCheckboxGroup, {
+			await bunmatch(render(Checkbox, { wrapper: props, items: svelteItems }), ReactCheckboxGroup, {
 				props: {
-					legend: props.wrapper.legend!,
-					defaultValue: props.wrapper.value,
+					legend: props.legend!,
+					defaultValue: props.value,
 				},
-				children: props.items.map((v, i) => {
+				children: items.map((v, i) => {
 					return React.createElement(ReactCheckbox, {
 						value: v.value,
 						children: v.content,
@@ -70,26 +83,40 @@ describe("CheckboxGroup", () => {
 		).toBeTrue();
 	});
 
-	it("renders CheckboxGroup similar to ds-react with descriptions", async () => {
-		const props = {
-			wrapper: {
-				legend: "Checkbox legend",
-				description: "Checkbox description",
-				value: ["val4"],
-			} as Props,
-			items: [
-				{ value: "val1", description: "Desc", content: "Checkbox content 1" },
-				{ value: "val4", content: "Checkbox content 4" },
-			] as ItemProps[],
+	// TODO(thokra): Check sizes etc.
+	it(`renders CheckboxGroup similar to ds-react with descriptions`, async () => {
+		const props: Omit<Props, "children"> = {
+			legend: "Checkbox legend",
+			description: "Checkbox description",
+			value: ["val4"],
 		};
+
+		const snippetText = (v: string): Snippet => {
+			return createRawSnippet(() => ({
+				render: () => v,
+			}));
+		};
+
+		const items: { value: string; description?: string; content: string }[] = [
+			{ value: "val1", description: "Desc", content: "Checkbox content 1" },
+			{ value: "val4", content: "Checkbox content 4" },
+		];
+
+		const svelteItems: CheckboxProps[] = items.map((v) => {
+			return {
+				value: v.value,
+				description: v.description,
+				children: snippetText(v.content),
+			};
+		});
 		expect(
-			await bunmatch(render(Checkbox, props), ReactCheckboxGroup, {
+			await bunmatch(render(Checkbox, { wrapper: props, items: svelteItems }), ReactCheckboxGroup, {
 				props: {
-					legend: props.wrapper.legend!,
-					description: props.wrapper.description!,
-					defaultValue: props.wrapper.value,
+					legend: props.legend!,
+					description: props.description!,
+					defaultValue: props.value,
 				},
-				children: props.items.map((v, i) => {
+				children: items.map((v, i) => {
 					return React.createElement(ReactCheckbox, {
 						value: v.value,
 						description: v.description,

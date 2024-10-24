@@ -48,6 +48,7 @@
 		{#if size == "medium"}
 			<BodyShort
 				class={"navds-fieldset__description" + srOnlyClass}
+				{size}
 				id={inputDescriptionId}
 				as="div"
 			>
