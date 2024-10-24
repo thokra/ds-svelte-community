@@ -57,7 +57,6 @@
 <button
 	{...omit(restProps, "class", "data-state", "role", "aria-checked", "tabindex")}
 	class={classes(restProps, "navds-toggle-group__button")}
-	data-state={state}
 	role="radio"
 	aria-checked={state === "on"}
 	tabindex={state == "on" ? 0 : -1}

@@ -10,6 +10,7 @@ describe("Pagination", () => {
 		const props: Props = {
 			count: 100,
 			page: 22,
+			prevNextTexts: true,
 		};
 		const svelteProps = {
 			...props,

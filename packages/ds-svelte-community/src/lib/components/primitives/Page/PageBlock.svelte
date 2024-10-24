@@ -14,7 +14,8 @@
 <svelte:element
 	this={as}
 	{...omit(restProps, "class", "style")}
-	class={classes(restProps, "navds-pageblock", `navds-pageblock--${width}`, {
+	class={classes(restProps, "navds-pageblock", {
+		[`navds-pageblock--${width}`]: !!width,
 		"navds-pageblock--gutters": !!gutters,
 	})}
 >

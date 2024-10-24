@@ -1,13 +1,15 @@
-<script lang="ts">
-	import { ToggleGroup, ToggleGroupItem } from ".";
+<script lang="ts" module>
 	import type { ToggleGroupProps } from "./type.svelte";
-
-	type Props = ToggleGroupProps & {
+	export type ToggleGroupTestProps = Omit<ToggleGroupProps, "children"> & {
 		value: string;
 		items: string[];
 	};
+</script>
 
-	let { value, items }: Props = $props();
+<script lang="ts">
+	import { ToggleGroup, ToggleGroupItem } from ".";
+
+	let { value, items }: ToggleGroupTestProps = $props();
 </script>
 
 <ToggleGroup {value}>

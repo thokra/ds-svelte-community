@@ -3,13 +3,12 @@ import { ToggleGroup as ReactToggleGroup } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
-import type { ComponentProps } from "svelte";
 import { omit } from "../helpers";
-import ToggleGroup from "./ToggleGroup.test.svelte";
+import ToggleGroup, { type ToggleGroupTestProps } from "./ToggleGroup.test.svelte";
 
 describe("ToggleGroup", () => {
 	it("renders with HTML similar to ds-react (tabindex exception)", async () => {
-		const props: ComponentProps<ToggleGroup> = {
+		const props: ToggleGroupTestProps = {
 			value: "val2",
 			items: ["val1", "val2", "val3"],
 		};

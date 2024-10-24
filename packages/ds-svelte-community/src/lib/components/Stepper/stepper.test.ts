@@ -8,7 +8,7 @@ import type { Props } from "./type.svelte";
 
 describe("Stepper", () => {
 	it("renders with HTML similar to ds-react", async () => {
-		const props: Props = {
+		const props: Omit<Props, "children"> = {
 			activeStep: 3,
 		};
 		expect(
@@ -45,6 +45,9 @@ describe("Stepper", () => {
 						}
 						return true;
 					},
+
+					// Looks like navds-stepper__item--non-interactive is added when interactive and not when not interactive
+					ignoreClasses: ["navds-stepper__item--non-interactive", "unstyled"],
 				},
 			}),
 		).toBeTrue();

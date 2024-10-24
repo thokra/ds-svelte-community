@@ -11,8 +11,6 @@
 	<PageBlock gutters width="lg">Header</PageBlock>
 	<PageBlock gutters width="lg">Content</PageBlock>
 	{#snippet footer()}
-	
-			<PageBlock as="footer">Footer</PageBlock>
-		
+		<PageBlock as="footer">Footer</PageBlock>
 	{/snippet}
 </Page>

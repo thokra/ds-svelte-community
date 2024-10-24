@@ -34,7 +34,6 @@
 
 <div
 	{...omit(restProps, "class", "dir")}
-	dir="ltr"
 	class={classes(restProps, "navds-tabs", `navds-tabs--${size}`)}
 	data-orientation="horizontal"
 >

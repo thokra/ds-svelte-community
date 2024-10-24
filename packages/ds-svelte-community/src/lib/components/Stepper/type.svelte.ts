@@ -82,7 +82,6 @@ export interface StepProps extends HTMLAnchorAttributes {
 	 * Makes step non-interactive if false. Step will be set to a <div>, overriding `as`-prop
 	 */
 	interactive?: boolean;
-	completedLabel?: string;
 
 	children: Snippet;
 

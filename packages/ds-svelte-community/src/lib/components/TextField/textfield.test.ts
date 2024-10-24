@@ -7,7 +7,7 @@ import type { Props } from "./type";
 
 describe("TextField", () => {
 	it("renders with HTML similar to ds-react", async () => {
-		const props: Props = {};
+		const props: Omit<Omit<Omit<Props, "children">, "label">, "description"> = {};
 		expect(
 			await bunmatch(render(TextField, props), ReactTextField, {
 				props: {

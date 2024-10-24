@@ -20,7 +20,7 @@
 		[key: string]: unknown;
 	};
 
-	let { size, spacing, as = "p", children, ...restProps }: Props = $props();
+	let { size = "medium", spacing, as = "p", children, ...restProps }: Props = $props();
 </script>
 
 <svelte:element

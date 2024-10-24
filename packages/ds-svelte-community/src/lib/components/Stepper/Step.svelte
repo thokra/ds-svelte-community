@@ -9,13 +9,7 @@
 	import CompletedIcon from "./CompletedIcon.svelte";
 	import { getStepperContext, type StepProps } from "./type.svelte";
 
-	let {
-		completed = false,
-		interactive,
-		completedLabel = "Completed",
-		children,
-		...restProps
-	}: StepProps = $props();
+	let { completed = false, interactive, children, ...restProps }: StepProps = $props();
 
 	const id = newUniqueId();
 	const ctx = getStepperContext();
@@ -57,14 +51,14 @@
 		class:navds-stepper__step--non-interactive={!isInteractive}
 		class:navds-stepper__step--completed={completed}
 		class:unstyled={as == "a"}
-		aria-current={index == ctx.activeStep}
+		aria-current={index == ctx.activeStep ? "step" : undefined}
 		onclick={isInteractive ? handleClick : null}
 		role={isInteractive ? "button" : undefined}
 		tabindex={isInteractive ? 0 : undefined}
 	>
 		{#if completed}
 			<span class="navds-stepper__circle navds-stepper__circle--success">
-				<CompletedIcon {completedLabel} />
+				<CompletedIcon />
 			</span>
 		{:else}
 			<Label class="navds-stepper__circle" as="span" aria-hidden="true">

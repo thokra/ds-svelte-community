@@ -25,7 +25,7 @@
 </script>
 
 <BasePrimitive
-	this={as}
+	{as}
 	{...omit(restProps, "class")}
 	class={classes(restProps, "navds-box", {
 		"navds-box-bg": !!background,

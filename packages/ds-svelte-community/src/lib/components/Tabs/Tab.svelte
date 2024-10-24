@@ -83,12 +83,17 @@
 	onblur={handleBlur}
 >
 	<BodyShort as="span" class="navds-tabs__tab-inner" size={ctx.size}>
-		{#if icon}
-			{@render icon()}
-		{/if}
-		{#if children}
-			{@render children()}
-		{/if}
+		<span aria-hidden={!!children}>
+			{#if icon}
+				{@render icon()}
+			{/if}
+		</span>
+
+		<span>
+			{#if children}
+				{@render children()}
+			{/if}
+		</span>
 	</BodyShort>
 </svelte:element>
 

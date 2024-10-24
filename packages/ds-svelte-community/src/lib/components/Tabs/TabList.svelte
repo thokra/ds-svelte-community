@@ -72,8 +72,6 @@
 		data-orientation="horizontal"
 		role="tablist"
 		aria-orientation="horizontal"
-		style="outline: none;"
-		tabindex="0"
 	>
 		{@render children()}
 	</div>

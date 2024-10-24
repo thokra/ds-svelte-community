@@ -51,9 +51,7 @@ Read more about this component in the [Aksel documentation](https://aksel.nav.no
 
 	<div
 		role="radiogroup"
-		dir="ltr"
 		class="navds-toggle-group navds-toggle-group--{size} navds-toggle-group--{variant}"
-		style="outline:none"
 		tabindex="0"
 	>
 		{@render children()}

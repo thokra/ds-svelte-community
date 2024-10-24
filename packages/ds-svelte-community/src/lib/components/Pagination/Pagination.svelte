@@ -11,7 +11,6 @@
 	import { classes, omit } from "../helpers";
 	import BodyShort from "../typography/BodyShort/BodyShort.svelte";
 	import Item from "./Item.svelte";
-	import ItemWithIcon from "./ItemWithIcon.svelte";
 	import type { Props } from "./type";
 
 	// TODO: Fix bug when navigating back and forth. Some pages will not show, but ellipsis will.
@@ -74,70 +73,64 @@
 >
 	<ul class="navds-pagination__list">
 		<li>
-			<ItemWithIcon
+			<Item
 				class={classes({}, "navds-pagination__prev-next", {
 					"navds-pagination--invisible": page === 1,
 					"navds-pagination--prev-next--with-text": prevNextTexts,
 				})}
 				disabled={page === 1}
+				data-page={page - 1}
 				page={page - 1}
 				{size}
-				iconOnly={!prevNextTexts}
 				onclick={() => handlePageChange(page - 1)}
 			>
-				{#snippet icon()}
-					<ChevronLeftIcon
-						class="navds-pagination__prev-next-icon"
-						{...prevNextTexts ? { "aria-hidden": true } : { title: prevText }}
-					/>
+				{#snippet iconLeft()}
+					<ChevronLeftIcon {...prevNextTexts ? { "aria-hidden": true } : { title: prevText }} />
 				{/snippet}
 				{#if prevNextTexts}
-					<BodyShort size={size === "xsmall" ? "small" : size} class="navds-pagination__prev-text">
-						{prevText}
-					</BodyShort>
+					{prevText}
 				{/if}
-			</ItemWithIcon>
+			</Item>
 		</li>
 		{#each steps as step}
 			{@const n = Number(step)}
 			{#if isNaN(n)}
 				<li class="navds-pagination__ellipsis">
-					<BodyShort size={size === "xsmall" ? "small" : size}>...</BodyShort>
+					<BodyShort as="span" size={size === "xsmall" ? "small" : size}>...</BodyShort>
 				</li>
 			{:else}
 				<li>
-					<Item selected={page === n} page={n} {size} onclick={() => handlePageChange(n)}>
-						<BodyShort size={size === "xsmall" ? "small" : size}>
-							{n}
-						</BodyShort>
+					<Item
+						selected={page === n}
+						page={n}
+						data-page={n}
+						{size}
+						onclick={() => handlePageChange(n)}
+					>
+						{n}
 					</Item>
 				</li>
 			{/if}
 		{/each}
 		<li>
-			<ItemWithIcon
+			<Item
 				class={classes({}, "navds-pagination__prev-next", {
 					"navds-pagination--invisible": page === count,
 					"navds-pagination--prev-next--with-text": prevNextTexts,
 				})}
 				disabled={page === count}
+				data-page={page + 1}
 				page={page + 1}
 				{size}
 				onclick={() => handlePageChange(page + 1)}
-				iconOnly={!prevNextTexts}
 			>
-				{#snippet icon()}
-					<ChevronRightIcon
-						class="navds-pagination__prev-next-icon"
-						{...prevNextTexts ? { "aria-hidden": true } : { title: nextText }}
-					/>
+				{#snippet iconRight()}
+					<ChevronRightIcon {...prevNextTexts ? { "aria-hidden": true } : { title: nextText }} />
 				{/snippet}
 				{#if prevNextTexts}
-					<BodyShort size={size === "xsmall" ? "small" : size} class="navds-pagination__prev-text">
-						{nextText}
-					</BodyShort>
+					{nextText}
 				{/if}
-			</ItemWithIcon>
+			</Item>
 		</li>
 	</ul>
 </nav>

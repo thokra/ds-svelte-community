@@ -38,7 +38,7 @@
 	class={classes(restProps, "navds-button", `navds-button--${variant}`, `navds-button--${size}`)}
 	class:navds-button--loading={loading}
 	class:navds-button--disabled={disabled || overrideWidth > 0}
-	class:navds-button--icon-only={(iconLeft || iconRight) && !children}
+	class:navds-button--icon-only={(!!iconLeft || !!iconRight) && !children}
 	class:unstyled={as === "a"}
 	bind:this={ref}
 	role={as != "button" ? "button" : undefined}

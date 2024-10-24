@@ -4,14 +4,7 @@
 	import type { ResponsiveProp } from "$lib/components/utils/types";
 	import type { HGridProps } from "./type";
 
-	let {
-		columns = undefined,
-		gap = undefined,
-		align = undefined,
-		as = "div",
-		children,
-		...restProps
-	}: HGridProps = $props();
+	let { columns, gap, align, as = "div", children, ...restProps }: HGridProps = $props();
 
 	function formatGrid(props?: ResponsiveProp<number | string>): ResponsiveProp<number | string> {
 		if (!props) {
@@ -42,7 +35,10 @@
 <svelte:element
 	this={as}
 	{...omit(restProps, "class")}
-	class={classes(restProps, "navds-hgrid")}
+	class={classes(restProps, "navds-hgrid", {
+		"navds-hgrid-align": !!align,
+		"navds-hgrid-gap": !!gap,
+	})}
 	style={combineStyles(
 		restProps,
 		getResponsiveProps(`hgrid`, "gap", "spacing", gap),
