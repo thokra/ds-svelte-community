@@ -16,7 +16,7 @@
 		toggle = false,
 		size = "medium",
 		variant = "action",
-		selected = ""
+		selected = "",
 	}: Props_1 = $props();
 </script>
 
@@ -26,7 +26,7 @@
 			{#if toggle}
 				<ToggleChip selected={value == selected} {value}>{value}</ToggleChip>
 			{:else}
-				<RemovableChip {variant} {value}>{value}</RemovableChip>
+				<RemovableChip removeLabel="slett" {variant} {value}>{value}</RemovableChip>
 			{/if}
 		</li>
 	{/each}

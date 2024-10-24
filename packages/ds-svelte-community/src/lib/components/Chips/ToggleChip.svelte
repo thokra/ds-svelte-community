@@ -71,7 +71,6 @@
 		</svg>
 	{/if}
 
-	<!-- Content of the ToggleChip. Falls back to `value` prop if no content. -->
 	<span class="navds-chips__chip-text">
 		{#if children}
 			{@render children()}
