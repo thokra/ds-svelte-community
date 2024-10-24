@@ -3,11 +3,21 @@
 	import Chips from "./Chips.svelte";
 	import type { Props, RemovableProps } from "./type";
 
-	export let values: string[];
-	export let toggle = false;
-	export let size: Props["size"] = "medium";
-	export let variant: RemovableProps["variant"] = "action";
-	export let selected = "";
+	interface Props_1 {
+		values: string[];
+		toggle?: boolean;
+		size?: Props["size"];
+		variant?: RemovableProps["variant"];
+		selected?: string;
+	}
+
+	let {
+		values,
+		toggle = false,
+		size = "medium",
+		variant = "action",
+		selected = ""
+	}: Props_1 = $props();
 </script>
 
 <Chips {size}>

@@ -8,9 +8,11 @@
 
 <script lang="ts">
 	let { component, ...restProps }: StackPropsTest = $props();
+
+	const SvelteComponent = $derived(component);
 </script>
 
-<svelte:component this={component} {...restProps}>
+<SvelteComponent {...restProps}>
 	<div></div>
 	<div></div>
-</svelte:component>
+</SvelteComponent>

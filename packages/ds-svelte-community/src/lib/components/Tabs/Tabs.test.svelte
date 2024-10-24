@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { Tab, TabList, TabPanel, Tabs } from "./";
 
-	export let data: { value: string; tab: string; content: string }[];
-	export let value: string;
+	interface Props {
+		data: { value: string; tab: string; content: string }[];
+		value: string;
+	}
+
+	let { data, value }: Props = $props();
 </script>
 
 <Tabs {value}>

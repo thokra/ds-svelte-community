@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { Table, Tbody, Td, Th, Thead, Tr } from ".";
 
-	export let data: Record<string, string>[];
+	interface Props {
+		data: Record<string, string>[];
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <Table>

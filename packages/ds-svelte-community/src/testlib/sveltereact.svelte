@@ -2,9 +2,15 @@
 	import React from "react";
 	import ReactDOM from "react-dom";
 	import { onMount } from "svelte";
+	interface Props {
+		children?: import('svelte').Snippet;
+		[key: string]: any
+	}
+
+	let { ...props_1 }: Props = $props();
 
 	const e = React.createElement;
-	let container: HTMLElement;
+	let container: HTMLElement = $state();
 
 	/**
 	 * Svelte compiles on the server/statically, React renders on the client.
@@ -13,7 +19,7 @@
 	onMount(() => {
 		console.log("On mount");
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { el, children, class: _, ...props } = $$props;
+		const { el, children, class: _, ...props } = props_1;
 		try {
 			ReactDOM.render(e(el, props, children), container);
 		} catch (err) {
@@ -33,8 +39,8 @@
 	});
 </script>
 
-{#if $$slots.default}
-	<div bind:this={container} class={$$props.class}><slot /></div>
+{#if props_1.children}
+	<div bind:this={container} class={props_1.class}>{@render props_1.children?.()}</div>
 {:else}
-	<div bind:this={container} class={$$props.class}></div>
+	<div bind:this={container} class={props_1.class}></div>
 {/if}

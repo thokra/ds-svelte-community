@@ -7,21 +7,21 @@
 	import Story from "$doclib/Story.svelte";
 	import { Chips, RemovableChip, ToggleChip } from "$lib";
 
-	let values = [
+	let values = $state([
 		{ name: "Norwegian" },
 		{ name: "Danish" },
 		{ name: "Swedish" },
 		{ name: "German" },
 		{ name: "Spanish" },
-	];
+	]);
 
-	let toggleValues = [
+	let toggleValues = $state([
 		{ name: "Name", selected: true },
 		{ name: "Date", selected: false },
 		{ name: "Size", selected: true },
 		{ name: "Type", selected: false },
 		{ name: "Status", selected: false },
-	];
+	]);
 </script>
 
 <Doc {doc} extraChildrenDoc={[toggleDoc, removableDoc]}>

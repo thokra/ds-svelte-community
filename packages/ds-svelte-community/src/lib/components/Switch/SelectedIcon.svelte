@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let label = "Deactivate";
+	interface Props {
+		label?: string;
+	}
+
+	let { label = "Deactivate" }: Props = $props();
 </script>
 
 <svg

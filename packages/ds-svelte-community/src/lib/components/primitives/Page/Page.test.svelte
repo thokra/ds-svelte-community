@@ -10,7 +10,9 @@
 <Page {...props}>
 	<PageBlock gutters width="lg">Header</PageBlock>
 	<PageBlock gutters width="lg">Content</PageBlock>
-	<svelte:fragment slot="footer">
-		<PageBlock as="footer">Footer</PageBlock>
-	</svelte:fragment>
+	{#snippet footer()}
+	
+			<PageBlock as="footer">Footer</PageBlock>
+		
+	{/snippet}
 </Page>
