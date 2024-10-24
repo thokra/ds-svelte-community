@@ -34,5 +34,29 @@ export interface Props {
 	 */
 	children: Snippet;
 
+	/**
+	 * Sets max-width on the content to 43.5rem.
+	 */
+	contentMaxWidth?: boolean;
+
+	/**
+	 * Adds a close-button (X).
+	 *
+	 * **Requires onClose to be set**.
+	 */
+	closeButton?: boolean;
+
+	/**
+	 * Icon text for screen readers used for the close button.
+	 */
+	closeButtonIconText?: string;
+
+	/**
+	 * Callback for alert wanting to close.
+	 *
+	 * **Requires closeButton to be true**.
+	 */
+	onClose?: () => void;
+
 	[key: string]: unknown;
 }

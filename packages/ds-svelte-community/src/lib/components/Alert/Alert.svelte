@@ -6,6 +6,8 @@
 -->
 
 <script lang="ts">
+	import Button from "$lib/components/Button/Button.svelte";
+	import { XMarkIcon } from "$lib/icons";
 	import { default as SuccessFilledIcon } from "$lib/icons/CheckmarkCircleFillIcon.svelte";
 	import { default as WarningFilledIcon } from "$lib/icons/ExclamationmarkTriangleFillIcon.svelte";
 	import { default as InformationFilledIcon } from "$lib/icons/InformationSquareFillIcon.svelte";
@@ -18,9 +20,13 @@
 		variant = "info",
 		size = "medium",
 		fullWidth = false,
+		contentMaxWidth = true,
 		inline = false,
 		iconTitleText = "",
 		children,
+		closeButton = false,
+		closeButtonIconText = "Close message",
+		onClose = () => {},
 		...restProps
 	}: Props = $props();
 </script>
@@ -30,6 +36,7 @@
 	class={classes(restProps, "navds-alert", `navds-alert--${variant}`, `navds-alert--${size}`)}
 	class:navds-alert--full-width={fullWidth}
 	class:navds-alert--inline={inline}
+	class:navds-alert--close-button={closeButton}
 >
 	{#if variant == "error"}
 		<ErrorFilledIcon class="navds-alert__icon" title={iconTitleText ? iconTitleText : "Error"} />
@@ -49,7 +56,27 @@
 			title={iconTitleText ? iconTitleText : "Success"}
 		/>
 	{/if}
-	<BodyLong as="div" {size} class="navds-alert__wrapper">
+	<BodyLong
+		as="div"
+		{size}
+		class={`navds-alert__wrapper ${contentMaxWidth && "navds-alert__wrapper--maxwidth"}`}
+	>
 		{@render children()}
 	</BodyLong>
+
+	{#if closeButton && !inline}
+		<div class="navds-alert__button-wrapper">
+			<Button
+				class="navds-alert__button"
+				size="small"
+				variant="tertiary-neutral"
+				type="button"
+				onclick={onClose}
+			>
+				{#snippet iconLeft()}
+					<XMarkIcon title={closeButtonIconText} />
+				{/snippet}
+			</Button>
+		</div>
+	{/if}
 </div>

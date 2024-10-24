@@ -12,13 +12,16 @@ describe("Alert", () => {
 		expect(r.container.innerHTML).toContain("Some alert");
 	});
 
-	const testVariants = sizes.flatMap((size) => variants.map((variant) => ({ size, variant })));
+	const testVariants = [true, false].flatMap((close) =>
+		sizes.flatMap((size) => variants.map((variant) => ({ size, variant, close }))),
+	);
 
-	testVariants.forEach(({ size, variant }) => {
-		it("renders similar to ds-reacth with size %s and variant %s", async () => {
-			const props: Props = {
+	testVariants.forEach(({ size, variant, close }) => {
+		it(`renders similar to ds-reacth with size ${size} and variant ${variant}. close button: ${close}`, async () => {
+			const props: Omit<Props, "children"> = {
 				size: size as never,
 				variant: variant as never,
+				closeButton: close,
 			};
 
 			const iconTexts: Record<(typeof variants)[number], string> = {
@@ -28,11 +31,19 @@ describe("Alert", () => {
 				success: "Suksess",
 			};
 
+			const closeMsg: Record<(typeof variants)[number], string> = {
+				warning: "Lukk varsel",
+				error: "Lukk varsel",
+				info: "Lukk melding",
+				success: "Lukk melding",
+			};
+
 			expect(
 				await bunmatch(
 					render(Alert, {
 						...props,
 						iconTitleText: iconTexts[variant as unknown as (typeof variants)[number]],
+						closeButtonIconText: closeMsg[variant as unknown as (typeof variants)[number]],
 					}),
 					ReactAlert,
 					{
@@ -53,7 +64,7 @@ describe("Alert", () => {
 	});
 
 	it("renders similar to ds-reacth with other props", async () => {
-		const props: Props = {
+		const props: Omit<Props, "children"> = {
 			fullWidth: true,
 			inline: true,
 			variant: "info",
