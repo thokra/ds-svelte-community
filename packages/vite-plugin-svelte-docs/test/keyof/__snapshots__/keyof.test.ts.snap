@@ -396,6 +396,10 @@ exports[`keyof svelte elements 1`] = `
           },
           {
             "type": "literal",
+            "value": ""search"",
+          },
+          {
+            "type": "literal",
             "value": ""section"",
           },
           {
