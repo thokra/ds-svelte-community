@@ -5,10 +5,10 @@
 	import type { FullStackProps } from "./type";
 
 	let {
-		justify = undefined,
-		align = "stretch",
+		justify,
+		align,
 		wrap = true,
-		gap = undefined,
+		gap,
 		direction = "row",
 		as = "div",
 		...restProps
@@ -16,7 +16,7 @@
 </script>
 
 <BasePrimitive
-	this={as}
+	{as}
 	{...omit(restProps, "class", "style")}
 	class={classes(restProps, "navds-stack", {
 		"navds-vstack": direction === "column",
@@ -28,7 +28,6 @@
 	})}
 	style={combineStyles(
 		restProps,
-		{ "--__ac-stack-wrap": wrap ? "wrap" : "nowrap" },
 		getResponsiveProps("stack", "gap", "spacing", gap),
 		getResponsiveValue("stack", "direction", direction),
 		getResponsiveValue("stack", "align", align),

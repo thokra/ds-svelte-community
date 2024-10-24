@@ -9,7 +9,7 @@ import VStack from "./VStack.svelte";
 
 describe("Stack", () => {
 	it("renders HStack with HTML similar to ds-react", async () => {
-		const props: StackPropsTest = {
+		const props: Omit<StackPropsTest, "children"> = {
 			component: HStack,
 		};
 
@@ -25,7 +25,7 @@ describe("Stack", () => {
 	});
 
 	it("renders VStack with HTML similar to ds-react", async () => {
-		const props: StackPropsTest = {
+		const props: Omit<StackPropsTest, "children"> = {
 			component: VStack,
 		};
 

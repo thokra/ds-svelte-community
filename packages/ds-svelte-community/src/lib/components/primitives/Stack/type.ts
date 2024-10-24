@@ -9,7 +9,7 @@ export interface FullStackProps extends StackProps {
 	direction?: ResponsiveProp<"row" | "column">;
 }
 
-export interface StackProps extends Omit<BasePrimitiveProps, "direction"> {
+export interface StackProps extends BasePrimitiveProps {
 	/**
 	 * Justify-content
 	 */
