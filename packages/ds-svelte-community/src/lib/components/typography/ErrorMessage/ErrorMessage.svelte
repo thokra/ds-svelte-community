@@ -1,22 +1,14 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
 	import { classes } from "../../helpers";
+	import type { ErrorMessageProps } from "./type";
 
-	type Props = {
-		/**
-		 * The size of the body
-		 * medium: 18px, small: 16px
-		 */
-		size?: "medium" | "small";
-		/** Adds margin-bottom */
-		spacing?: boolean;
-		/** Tag to use for the body */
-		as?: "p" | "span";
-		children: Snippet;
-		[key: string]: unknown;
-	};
-
-	let { size = "medium", spacing = false, as = "p", children, ...restProps }: Props = $props();
+	let {
+		size = "medium",
+		spacing = false,
+		as = "p",
+		children,
+		...restProps
+	}: ErrorMessageProps = $props();
 </script>
 
 <svelte:element

@@ -7,7 +7,7 @@ import type { FieldsetProps } from "./type";
 
 describe("Fieldset", () => {
 	it("renders with HTML similar to ds-react", async () => {
-		const props: FieldsetProps = {
+		const props: Omit<Omit<FieldsetProps, "children">, "legend"> = {
 			error: "error",
 		};
 		expect(

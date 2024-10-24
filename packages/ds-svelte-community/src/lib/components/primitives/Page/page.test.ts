@@ -8,7 +8,7 @@ import type { PageProps } from "./type";
 
 describe("Page", () => {
 	it("renders with HTML similar to ds-react", async () => {
-		const props: PageProps = {};
+		const props: Omit<PageProps, "children"> = {};
 
 		expect(
 			await bunmatch(render(Page, props), ReactPage, {

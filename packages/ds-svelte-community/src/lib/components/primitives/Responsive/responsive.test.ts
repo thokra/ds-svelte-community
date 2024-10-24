@@ -2,8 +2,9 @@ import { bunmatch } from "$testlib/bunmatch";
 import { Hide as ReactHide, Show as ReactShow } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
-import Hide from "./Hide.test.svelte";
-import Show from "./Show.test.svelte";
+import { createRawSnippet } from "svelte";
+import Hide from "./Hide.svelte";
+import Show from "./Show.svelte";
 import type { BaseResponsiveProps } from "./type";
 
 describe("Responsive", () => {
@@ -12,6 +13,11 @@ describe("Responsive", () => {
 			const props: BaseResponsiveProps = {
 				above: "xl",
 				below: "xl",
+				children: createRawSnippet(() => ({
+					render() {
+						return "body";
+					},
+				})),
 			};
 
 			expect(
@@ -28,6 +34,11 @@ describe("Responsive", () => {
 			const props: BaseResponsiveProps = {
 				above: "xl",
 				below: "xl",
+				children: createRawSnippet(() => ({
+					render() {
+						return "body";
+					},
+				})),
 			};
 
 			expect(

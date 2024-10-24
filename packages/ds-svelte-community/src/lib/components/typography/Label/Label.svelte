@@ -1,30 +1,14 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
 	import { classes } from "../../helpers";
+	import type { LabelProps } from "./type";
 
-	type Props = {
-		/**
-		 * medium: 18px, small: 16px
-		 */
-		size?: "medium" | "small";
-		/**
-		 * Adds margin-bottom
-		 */
-		spacing?: boolean;
-		/**
-		 * Tag to use for the label
-		 */
-		as?: "label" | "legend" | "span";
-
-		/**
-		 * Content
-		 */
-		children: Snippet;
-
-		[key: string]: unknown;
-	};
-
-	let { size = "medium", spacing = false, as = "label", children, ...restProps }: Props = $props();
+	let {
+		size = "medium",
+		spacing = false,
+		as = "label",
+		children,
+		...restProps
+	}: LabelProps = $props();
 </script>
 
 <svelte:element

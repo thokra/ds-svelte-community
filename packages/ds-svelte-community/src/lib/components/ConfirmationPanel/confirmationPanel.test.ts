@@ -9,6 +9,7 @@ describe("ConfirmationPanel", () => {
 	it("renders with HTML similar to ds-react", async () => {
 		const props: Props = {
 			value: "val3",
+			label: "Label",
 		};
 		expect(
 			await bunmatch(render(ConfirmationPanel, props), ReactConfirmationPanel, {

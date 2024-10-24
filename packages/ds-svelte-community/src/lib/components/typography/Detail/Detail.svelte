@@ -1,28 +1,14 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
-	import type { SvelteHTMLElements } from "svelte/elements";
 	import { classes } from "../../helpers";
+	import type { DetailProps } from "./type";
 
-	type Props = {
-		/**
-		 * Adds margin-bottom
-		 */
-		spacing?: boolean;
-
-		/**
-		 * All caps
-		 */
-		uppercase?: boolean;
-
-		/**
-		 * Tag to use for the body
-		 */
-		as?: keyof SvelteHTMLElements;
-		children: Snippet;
-		[key: string]: unknown;
-	};
-
-	let { spacing = false, uppercase = false, as = "p", children, ...restProps }: Props = $props();
+	let {
+		spacing = false,
+		uppercase = false,
+		as = "p",
+		children,
+		...restProps
+	}: DetailProps = $props();
 </script>
 
 <svelte:element

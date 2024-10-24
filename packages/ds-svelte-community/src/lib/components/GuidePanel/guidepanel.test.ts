@@ -2,12 +2,19 @@ import { bunmatch } from "$testlib/bunmatch";
 import { GuidePanel as ReactGuidePanel } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
-import GuidePanel from "./GuidePanel.test.svelte";
+import { createRawSnippet } from "svelte";
+import GuidePanel from "./GuidePanel.svelte";
 import type { Props } from "./type";
 
 describe("GuidePanel", () => {
 	it("renders with HTML similar to ds-react", async () => {
-		const props: Props = {};
+		const props: Props = {
+			children: createRawSnippet(() => ({
+				render() {
+					return "Guide Panel Content";
+				},
+			})),
+		};
 		expect(
 			await bunmatch(render(GuidePanel, props), ReactGuidePanel, {
 				props,

@@ -3,14 +3,26 @@ import { Modal as ReactModal } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
-import Modal from "./Modal.test.svelte";
+import { createRawSnippet } from "svelte";
+import Modal from "./Modal.svelte";
 import type { Props } from "./type";
+
+function textSnippet(text: string) {
+	return createRawSnippet(() => ({
+		render() {
+			return text;
+		},
+	}));
+}
 
 describe("Modal", () => {
 	it("renders with HTML similar to ds-react", async () => {
 		const props: Props = {
 			open: true,
 			closeIconText: "Lukk",
+			children: textSnippet("ModalContent"),
+			footer: textSnippet("ModalFooter"),
+			header: textSnippet("ModalHeader"),
 		};
 		expect(
 			await bunmatch(render(Modal, props), ReactModal, {

@@ -3,12 +3,11 @@ import { Tabs as ReactTabs } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
 import React from "react";
-import type { ComponentProps } from "svelte";
-import Tabs from "./Tabs.test.svelte";
+import Tabs, { type TabsTestProps } from "./Tabs.test.svelte";
 
 describe("Tabs", () => {
 	it("renders with HTML similar to ds-react", async () => {
-		const props: ComponentProps<Tabs> = {
+		const props: TabsTestProps = {
 			value: "tab2",
 			data: [
 				{ value: "val1", tab: "tab1", content: "content1" },

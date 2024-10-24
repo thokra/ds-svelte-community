@@ -2,7 +2,8 @@ import { bunmatch } from "$testlib/bunmatch";
 import { Box as ReactBox } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
-import Box from "./Box.test.svelte";
+import { createRawSnippet } from "svelte";
+import Box from "./Box.svelte";
 import type { BoxProps } from "./type";
 
 describe("Box", () => {
@@ -16,6 +17,11 @@ describe("Box", () => {
 			shadow: "xsmall",
 			borderWidth: "4",
 			borderColor: "border-alt-3",
+			children: createRawSnippet(() => ({
+				render() {
+					return "Box body";
+				},
+			})),
 		};
 
 		expect(

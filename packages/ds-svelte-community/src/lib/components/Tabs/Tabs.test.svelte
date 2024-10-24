@@ -1,12 +1,14 @@
-<script lang="ts">
-	import { Tab, TabList, TabPanel, Tabs } from "./";
-
-	interface Props {
+<script lang="ts" module>
+	export interface TabsTestProps {
 		data: { value: string; tab: string; content: string }[];
 		value: string;
 	}
+</script>
 
-	let { data, value }: Props = $props();
+<script lang="ts">
+	import { Tab, TabList, TabPanel, Tabs } from "./";
+
+	let { data, value }: TabsTestProps = $props();
 </script>
 
 <Tabs {value}>

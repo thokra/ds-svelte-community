@@ -8,7 +8,7 @@ import type { Props } from "./type";
 
 describe("Select", () => {
 	it("renders with HTML similar to ds-react", async () => {
-		const props: Props = {
+		const props: Omit<Props, "children"> = {
 			label: "Select country",
 		};
 		expect(

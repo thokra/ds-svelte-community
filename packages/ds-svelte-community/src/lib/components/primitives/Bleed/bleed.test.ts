@@ -2,7 +2,8 @@ import { bunmatch } from "$testlib/bunmatch";
 import { Bleed as ReactBleed } from "@navikt/ds-react";
 import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, describe, expect, it } from "bun:test";
-import Bleed from "./Bleed.test.svelte";
+import { createRawSnippet } from "svelte";
+import Bleed from "./Bleed.svelte";
 import type { BleedProps } from "./type";
 
 describe("Bleed", () => {
@@ -11,6 +12,11 @@ describe("Bleed", () => {
 			marginInline: "4",
 			marginBlock: "4",
 			reflectivePadding: true,
+			children: createRawSnippet(() => ({
+				render() {
+					return "Bleed body";
+				},
+			})),
 		};
 
 		expect(
