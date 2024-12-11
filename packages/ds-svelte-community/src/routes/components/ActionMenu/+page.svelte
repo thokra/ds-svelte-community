@@ -3,11 +3,14 @@
 
 	import Doc from "$doclib/Doc.svelte";
 	import Story from "$doclib/Story.svelte";
-	import { Button, Table, Tbody, Td, Th, Thead, Tr } from "$lib";
+	import { Alert, Button, Table, Tbody, Td, Th, Thead, Tr } from "$lib";
 	import ActionMenu from "$lib/components/ActionMenu/ActionMenu.svelte";
+	import ActionMenuCheckboxItem from "$lib/components/ActionMenu/ActionMenuCheckboxItem.svelte";
 	import ActionMenuDivider from "$lib/components/ActionMenu/ActionMenuDivider.svelte";
 	import ActionMenuGroup from "$lib/components/ActionMenu/ActionMenuGroup.svelte";
 	import ActionMenuItem from "$lib/components/ActionMenu/ActionMenuItem.svelte";
+	import ActionMenuRadioGroup from "$lib/components/ActionMenu/ActionMenuRadioGroup.svelte";
+	import ActionMenuRadioItem from "$lib/components/ActionMenu/ActionMenuRadioItem.svelte";
 	import ActionMenuSub from "$lib/components/ActionMenu/ActionMenuSub.svelte";
 	import {
 		BarChartIcon,
@@ -37,9 +40,30 @@
 			status: "Mottatt",
 		},
 	];
+
+	let views = $state({
+		started: true,
+		fnr: false,
+		tags: true,
+	});
+	let rows = $state(5);
+
+	const handleCheckboxChange = (checkboxId: string, checked: boolean) => {
+		console.log(checkboxId, checked);
+	};
 </script>
 
 <Doc {doc}>
+	{#snippet extraDescription()}
+		<Alert variant="warning">
+			This component only includes the CSS from the React ActionMenu component and not a migration
+			of the logic. It is implemented using a CSS draft specification, which is currently only
+			<a href="https://caniuse.com/css-anchor-positioning">
+				supported in Chrome and Chromium-based browsers.
+			</a>
+		</Alert>
+	{/snippet}
+
 	<Story>
 		<ActionMenu>
 			{#snippet trigger(props)}
@@ -172,5 +196,51 @@
 				{/each}
 			</Tbody>
 		</Table>
+	</Story>
+
+	<Story name="Filter">
+		<ActionMenu>
+			{#snippet trigger(props)}
+				<Button variant="secondary-neutral" icon={ChevronDownIcon} iconPosition="right" {...props}>
+					Filter
+				</Button>
+			{/snippet}
+			<ActionMenuGroup label="Kolonner">
+				<ActionMenuCheckboxItem
+					checked={Object.values(views).every(Boolean)
+						? true
+						: Object.values(views).some(Boolean)
+							? "indeterminate"
+							: false}
+				>
+					Velg alle
+				</ActionMenuCheckboxItem>
+				<ActionMenuCheckboxItem
+					bind:checked={views.started}
+					onchange={(checked) => handleCheckboxChange("started", checked)}
+				>
+					Oppfølging startet
+				</ActionMenuCheckboxItem>
+				<ActionMenuCheckboxItem
+					bind:checked={views.fnr}
+					onchange={(checked) => handleCheckboxChange("fnr", checked)}
+				>
+					Fødselsnummer
+				</ActionMenuCheckboxItem>
+				<ActionMenuCheckboxItem
+					bind:checked={views.tags}
+					onchange={(checked) => handleCheckboxChange("tags", checked)}
+				>
+					Tags
+				</ActionMenuCheckboxItem>
+			</ActionMenuGroup>
+			<ActionMenuDivider />
+			<ActionMenuRadioGroup value={rows} label="Rader per side">
+				<ActionMenuRadioItem value="5">5</ActionMenuRadioItem>
+				<ActionMenuRadioItem value="10">10</ActionMenuRadioItem>
+				<ActionMenuRadioItem value="25">25</ActionMenuRadioItem>
+				<ActionMenuRadioItem value="50">50</ActionMenuRadioItem>
+			</ActionMenuRadioGroup>
+		</ActionMenu>
 	</Story>
 </Doc>

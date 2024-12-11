@@ -1,2 +1,6 @@
 @import "@navikt/ds-css";
 @import "a.css";
+
+button {
+	all: unset;
+}
